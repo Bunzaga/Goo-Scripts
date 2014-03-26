@@ -5,14 +5,11 @@ var state = 0;
 var setup = function(args, ctx, goo) {
 	_ctx = ctx;
 	_args = _args;
+	state = 0;
 };
 
 /* Implement this method to do cleanup on script stop and delete */
-var cleanup = function(parameters, context, goo) {
-	_ctx = null;
-	_args = null;
-	state = null;
-};
+var cleanup = function(parameters, context, goo) {};
 
 /**
  * This function will be called every frame
@@ -64,7 +61,18 @@ var cleanup = function(parameters, context, goo) {
         	}
         	return this;
         };
-        this.unbind = function(){};
+        this.unbind = function(e, o){
+	        if(null == listeners[e]){
+				return;
+			}
+			var n = listeners[e].first;
+			for(var n = listeners[e].first; n; n = n.next){
+				if(n.object === o){
+					listeners[e].remove(n);
+				}
+			}
+			return this;
+        };
 	    this.raise = function(){
 			var e = [].shift.apply(arguments);
 			if(null == e){return;}
@@ -85,7 +93,7 @@ var update = function(args, ctx, goo) {
 	switch(state){
 		case 0:
 		if(ctx.world.NodeList){
-			new EventManager("em", ctx.world);
+			new EventManager(_args.name, ctx.world);
 			state = 1;
 		}
 		break;
@@ -112,4 +120,4 @@ var update = function(args, ctx, goo) {
  *  exponential?: boolean, // Used together with slider
  * }
  */
-var parameters = [];
+var parameters = [{key:'name', default:'em', type:'string'}];
