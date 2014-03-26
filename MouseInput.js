@@ -7,7 +7,7 @@ var setup = function(args, ctx, goo) {
 	args.buttons = {};
 	args.callbacks = {};
 	
-	args.stringToCode = {"leftMouse":1, "rightMouse":2, "middleMouse":3, "scrollWheel":4, "mouseMove":5};
+	args.stringToCode = {"leftMouse":1, "rightMouse":2, "middleMouse":3, "mouseWheel":4, "mouseMove":5};
 
 	ctx.world.MouseInput = {};
 	ctx.world.MouseInput.movement = new goo.Vector2();
@@ -41,6 +41,8 @@ var setup = function(args, ctx, goo) {
 	document.documentElement.addEventListener('mousedown', mouseDown, false);
 	document.documentElement.addEventListener('mouseup', mouseUp, false);
 	document.documentElement.addEventListener('mousemove', mouseMove, false);
+	document.documentElement.addEventListener("mousewheel", mouseWheel, false);
+	document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 };
 
 /* Implement this method to do cleanup on script stop and delete */
@@ -48,6 +50,16 @@ var cleanup = function(args, ctx, goo) {
 	document.documentElement.removeEventListener('mousemove', mouseMove, false);
 	document.documentElement.removeEventListener('mousedown', mouseDown, false);
 	document.documentElement.removeEventListener('mouseup', mouseUp, false);
+	document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+	document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+};
+
+var mouseWheel = function(e){
+	e = e || window.event;
+	var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+	if(null == _args.buttons[4]){return;}
+	if(null == _args.callbacks[4]){return;}
+	_args.callbacks[4](wheelDelta);
 };
 
 var mouseDown = function(e){
