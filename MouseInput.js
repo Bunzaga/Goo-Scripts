@@ -4,20 +4,74 @@ var _ctx = null;
 var setup = function(args, ctx, goo) {
 	_args = args;
 	_ctx = ctx;
-	document.body.addEventListener('mousemove', mouseMove, false);
+	_ctx.world.MouseInput = {};
+	_ctx.world.MouseInput.movement = new goo.Vector2();
+	_ctx.world.MouseInput.delta = new goo.Vector2();
+	_ctx.world.MouseInput.old = new goo.Vector2();
+	_ctx.world.MouseInput.position = new goo.Vector2();
+	document.documentElement.addEventListener('mousedown', mouseDown, false);
+	document.documentElement.addEventListener('mouseup', mouseUp, false);
+	document.documentElement.addEventListener('mousemove', mouseMove, false);
 };
 
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
-	document.body.removeEventListener('mousemove', mouseMove, false);
-	_args = null;
-	_ctx = null;
+	document.documentElement.removeEventListener('mousemove', mouseMove, false);
+	document.documentElement.removeEventListener('mousedown', mouseDown, false);
+	document.documentElement.removeEventListener('mouseup', mouseUp, false);
 };
 
 function mouseMove(e){
 	updateMousePos(e);
-	_ctx.world.em.raise("MouseMove");
+	if(_ctx.world.em){
+		_ctx.world.em.raise("MouseMove");
+	}
 }
+function mouseDown(e){
+	var btn = 0;
+	if(null == e.which){
+		btn = e.button;
+	}
+	else{
+		switch(e.which){
+			case 1:
+				btn = 1;
+				break;
+			case 2:
+				btn = 4;
+				break;
+			case 3:
+				btn = 2;
+				break;
+		};
+	}
+	if(_ctx.world.em){
+		_ctx.world.em.raise("LeftMouse", true);
+	}
+};
+function mouseUp(e){
+	updateMousePos(e);
+	var btn = 0;
+	if(null == e.which){
+		btn = e.button;
+	}
+	else{
+		switch(e.which){
+			case 1:
+				btn = 1;
+				break;
+			case 2:
+				btn = 4;
+				break;
+			case 3:
+				btn = 2;
+				break;
+		};
+	}
+	if(_ctx.world.em){
+		_ctx.world.em.raise("LeftMouse", false);
+	}
+};
 
 function updateMousePos(e){
 	e = e || window.event;
@@ -32,15 +86,14 @@ function updateMousePos(e){
 
 	newX -= _ctx.domElement.offsetLeft;
 	newY -= _ctx.domElement.offsetTop;
-//	Input.movement.x = e.movementX;
-//	Input.movement.y = e.movementY;
-//	Input.mouseDelta.x = newX - Input.mousePosition.x;
-//	Input.mouseDelta.y = newY - Input.mousePosition.y;
-//	Input.mouseOld.x = Input.mousePosition.x;
-//	Input.mouseOld.y = Input.mousePosition.y;
-//	Input.mousePosition.x = newX;
-//	Input.mousePosition.y = newY;
-	console.log(newX+","+newY);
+	_ctx.world.MouseInput.movement.x = e.movementX;
+	_ctx.world.MouseInput.movement.y = e.movementY;
+	_ctx.world.MouseInput.delta.x = newX - _ctx.world.MouseInput.position.x;
+	_ctx.world.MouseInput.delta.y = newY - _ctx.world.MouseInput.position.y;
+	_ctx.world.MouseInput.old.x = _ctx.world.MouseInput.position.x;
+	_ctx.world.MouseInput.old.y = _ctx.world.MouseInput.position.y;
+	_ctx.world.MouseInput.position.x = newX;
+	_ctx.world.MouseInput.position.y = newY;
 };
 
 /**
@@ -63,9 +116,7 @@ function updateMousePos(e){
  * @param {object} goo Contains a bunch of helpful engine classes like
  * goo.Vector3, goo.Matrix3x3, etc. See api for more info
  */
-var update = function(args, ctx, goo) {
-
-};
+//var update = function(args, ctx, goo) {};
 
 /**
  * Parameters follow:
