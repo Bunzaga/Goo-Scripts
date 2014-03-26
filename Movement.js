@@ -1,24 +1,32 @@
 /* Implement this method to do initializing */
 var _args;
 var _ctx;
+var _goo;
 var state = 0;
 var setup = function(args, ctx, goo) {
 	_args = args;
 	_ctx = ctx;
+	_goo = goo;
 	args.rot0 = 0;
 	args.rot1 = 0;
-	args.pivot0 = ctx.world.by.name("Pivot0").first();
+	args.pivot0 = ctx.world.by.name("User").first();
 	args.pivot1 = ctx.world.by.name("Pivot1").first();
 	args.cam = ctx.world.by.name("ViewCam").first();
 };
 
 /* Implement this method to do cleanup on script stop and delete */
-var cleanup = function(args, ctx, goo) {};
+var cleanup = function(args, ctx, goo) {
+	ctx.world.em.unbind("MouseMove", _args, mouseTest);
+};
 
 function mouseTest(){
-	console.log(_ctx.world.MouseInput.delta.x);
-	_args.rot0 -= _ctx.world.MouseInput.delta.x * _args.xAxis;
-	_args.rot1 -= _ctx.world.MouseInput.delta.y * _args.yAxis;
+console.log( _ctx.world.MouseInput.movement.x + "," + _ctx.world.MouseInput.movement.y);
+	if(!document.pointerLockElement) {
+		_goo.GameUtils.requestPointerLock();
+	}
+	
+	_args.rot0 -= _ctx.world.MouseInput.movement.x * _args.xAxis;
+	_args.rot1 -= _ctx.world.MouseInput.movement.y * _args.yAxis;
 	_args.pivot0.transformComponent.transform.rotation.fromAngles(0, _args.rot0, 0);
 	_args.pivot0.transformComponent.setUpdated();
 	_args.pivot1.transformComponent.transform.rotation.fromAngles(_args.rot1, 0, 0);
@@ -49,7 +57,7 @@ var update = function(args, ctx, goo) {
 	switch(state){
 		case 0:
 		if(ctx.world.em){
-			ctx.world.em.bind("MouseMove", null, mouseTest);
+			ctx.world.em.bind("MouseMove", _args, mouseTest);
 			state = 1;
 		}
 		break;
