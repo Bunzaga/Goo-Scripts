@@ -18,7 +18,7 @@ var cleanup = function(args, ctx, goo) {};
 function mouseTest(){
 	console.log(_ctx.world.MouseInput.delta.x);
 	_args.rot0 -= _ctx.world.MouseInput.delta.x * _args.xAxis;
-	_args.rot1 += _ctx.world.MouseInput.delta.y * _args.yAxis;
+	_args.rot1 -= _ctx.world.MouseInput.delta.y * _args.yAxis;
 	_args.pivot0.transformComponent.transform.rotation.fromAngles(0, _args.rot0, 0);
 	_args.pivot0.transformComponent.setUpdated();
 	_args.pivot1.transformComponent.transform.rotation.fromAngles(_args.rot1, 0, 0);
