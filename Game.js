@@ -1,14 +1,102 @@
-if(null == NodeList){
-  document.body.write('<script type = "text/javascript" src = ""></script>');
-}
-window.em = null;
-var EventManager = function() {
-    if (em) {
-    } else {
-        this.bind = function(){};
-        this.unbind = function(){};
-        this.raise = function(){};
-        window.em = this;
-    }
-    return window.em;
+/* Implement this method to do initializing */
+var _ctx = null;
+var _args = null;
+var state = 0;
+var setup = function(args, ctx, goo) {
+	_ctx = ctx;
+	_args = _args;
 };
+
+/* Implement this method to do cleanup on script stop and delete */
+var cleanup = function(parameters, context, goo) {
+	_ctx = null;
+	_args = null;
+	state = null;
+};
+
+/**
+ * This function will be called every frame
+ *
+ * @param {object} parameters Contains all the parameters defined in externals.parameters
+ * with values defined in the script panel
+ *
+ * @param {object} context A contextual data object unique for the script
+ * {
+ *  world: World,
+ *  domElement: canvas
+ *  viewportWidth: number
+ *  viewportHeight: number
+ *  activeCameraEntity: Entity
+ *  entity: Entity
+ * }
+ * You can also add properties to this object that will be shared between the functions
+ *
+ * @param {object} goo Contains a bunch of helpful engine classes like
+ * goo.Vector3, goo.Matrix3x3, etc. See api for more info
+ */
+ function EventManager(name, ctx){
+    if (!ctx[name]){
+    	var listeners = {};
+        this.bind = function(e, o, c, p){
+        	if(null == listeners[e]){
+        		listeners[e] = new ctx.world.NodeList();
+        	}
+        	else{
+        		for(var n = listeners[e].first;n;n=n.next){
+        			if(n.object === o){
+        				console.warn("Callback already exists for this object!");
+        				return;
+        			}
+        		}
+        	}
+        	var node = {
+        		next:null,
+        		previous:null,
+        		callback:c,
+        		object:o
+        	};
+        	if(null == p){
+        		listeners[e].addFirst(node);
+        	}
+        	else{
+        		node.priority = p;
+        		listeners[e].addSorted(node);
+        	}
+        	return this;
+        };
+        this.unbind = function(){};
+        this.raise = function(t){console.log(t)};
+       	ctx[name] = this;
+    }
+    return ctx[name];
+};
+var update = function(args, ctx, goo) {
+	switch(state){
+		case 0:
+		new EventManager("em", ctx.world);
+		state = 1;
+		break;
+	}
+};
+
+/**
+ * Parameters follow:
+ * {
+ *  key: string,
+ *  name?: string,
+ *  type: enum ('int', 'float', 'string', 'boolean', 'vec3'),
+ *  control?: enum (
+ *   'slider', // For numbers with min and max.
+ *   'color', // For vec3 that are RGB and should have color pickers.
+ *   'select', // Used together with options.
+ *  ),
+ *  options?: *[] // Array of values of specified type.
+ *  'default: *, // Depending of data type. Should be one of the options if options are used.
+ *  min?: number, // Can be used when data type is float or int
+ *  max?: number, // Can be used when data type is float or int
+ *  scale?: number, // How fast number values will change when dragged up and down
+ *  decimals?: number, // Override number of decimals. Int defaults to 0 and float to 2.
+ *  exponential?: boolean, // Used together with slider
+ * }
+ */
+var parameters = [];
