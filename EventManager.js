@@ -35,7 +35,7 @@ var cleanup = function(parameters, context, goo) {
  * goo.Vector3, goo.Matrix3x3, etc. See api for more info
  */
  function EventManager(name, ctx){
-    if (!ctx.[name]){
+    if (!ctx[name]){
     	var listeners = {};
         this.bind = function(e, o, c, p){
         	if(null == listeners[e]){
@@ -77,7 +77,7 @@ var cleanup = function(parameters, context, goo) {
 			}
 			return this;
 		}
-       	ctx.[name] = this;
+       	ctx[name] = this;
     }
     return ctx[name];
 };
