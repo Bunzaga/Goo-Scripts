@@ -4,11 +4,40 @@ var _ctx = null;
 var setup = function(args, ctx, goo) {
 	_args = args;
 	_ctx = ctx;
-	_ctx.world.MouseInput = {};
-	_ctx.world.MouseInput.movement = new goo.Vector2();
-	_ctx.world.MouseInput.delta = new goo.Vector2();
-	_ctx.world.MouseInput.old = new goo.Vector2();
-	_ctx.world.MouseInput.position = new goo.Vector2();
+	args.buttons = {};
+	args.callbacks = {};
+	
+	args.stringToCode = {"leftMouse":1, "rightMouse":2, "middleMouse":3, "scrollWheel":4, "mouseMove":5};
+
+	ctx.world.MouseInput = {};
+	ctx.world.MouseInput.movement = new goo.Vector2();
+	ctx.world.MouseInput.delta = new goo.Vector2();
+	ctx.world.MouseInput.old = new goo.Vector2();
+	ctx.world.MouseInput.position = new goo.Vector2();
+	
+	ctx.world.MouseInput.getButton = function(btnCode){
+		var btn = typeof btnCode === 'number' ? btnCode : args.stringToCode[btnCode];
+		return args.buttons[btn];
+	}
+	
+	ctx.world.MouseInput.bind = function(btnCode, callback){
+		var btn = typeof btnCode === 'number' ? btnCode : args.stringToCode[btnCode];
+		args.buttons[btn] = false;
+		if(callback){
+			if(typeof callback === 'function'){
+				args.callbacks[btn] = callback;
+			}
+		}
+		return 	ctx.world.MouseInput;
+	}
+
+	ctx.world.MouseInput.unbind = function(btnCode){
+		var btn = typeof btnCode === 'number' ? btnCode : args.stringToCode[btnCode];
+		delete args.buttons[btn];
+		delete args.callbacks[btn];
+		return 	ctx.world.MouseInput;
+	}
+	
 	document.documentElement.addEventListener('mousedown', mouseDown, false);
 	document.documentElement.addEventListener('mouseup', mouseUp, false);
 	document.documentElement.addEventListener('mousemove', mouseMove, false);
@@ -21,13 +50,7 @@ var cleanup = function(args, ctx, goo) {
 	document.documentElement.removeEventListener('mouseup', mouseUp, false);
 };
 
-function mouseMove(e){
-	updateMousePos(e);
-	if(_ctx.world.em){
-		_ctx.world.em.raise("MouseMove");
-	}
-}
-function mouseDown(e){
+var mouseDown = function(e){
 	var btn = 0;
 	if(null == e.which){
 		btn = e.button;
@@ -45,11 +68,14 @@ function mouseDown(e){
 				break;
 		};
 	}
-	if(_ctx.world.em){
-		_ctx.world.em.raise("LeftMouse", true);
-	}
+	if(null == _args.buttons[btn]){return;}
+	if(true == _args.buttons[btn]){return;}
+	_args.buttons[btn] = true;
+	if(null == _args.callbacks[btn]){return;}
+	_args.callbacks[btn](true);
+	
 };
-function mouseUp(e){
+var mouseUp = function(e){
 	updateMousePos(e);
 	var btn = 0;
 	if(null == e.which){
@@ -68,12 +94,22 @@ function mouseUp(e){
 				break;
 		};
 	}
-	if(_ctx.world.em){
-		_ctx.world.em.raise("LeftMouse", false);
-	}
+	if(null == _args.buttons[btn]){return;}
+	if(false == _args.buttons[btn]){return;}
+	_args.buttons[btn] = false;
+	if(null == _args.callbacks[btn]){return;}
+	_args.callbacks[btn](false);
 };
 
-function updateMousePos(e){
+var mouseMove = function(e){
+	updateMousePos(e);
+	if(null == _args.buttons[5]){return;}
+	if(null == _args.callbacks[5]){return;}
+	_args.callbacks[5]();
+}
+
+
+var updateMousePos = function(e){
 	e = e || window.event;
 	if (e && e.preventDefault) {e.preventDefault();}
 	if (e && e.stopPropagation) {e.stopPropagation();}
