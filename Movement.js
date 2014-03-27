@@ -4,6 +4,7 @@ var _ctx;
 var _goo;
 var state = 0;
 var setup = function(args, ctx, goo) {
+	ctx.entityData.animSate = 0;
 	state = 0;
 	_args = args;
 	_ctx = ctx;
@@ -18,7 +19,9 @@ var setup = function(args, ctx, goo) {
 	args.pivot0 = ctx.world.by.name("User").first();
 	args.pivot1 = ctx.world.by.name("Pivot1").first();
 	args.cam = ctx.world.by.name("ViewCam").first();
+	ctx.entityData.mesh = ctx.world.by.name(args.mesh).first();
 	args.pivot1.transformComponent.transform.translation.z = -(_args.distance*.2);
+	args.pivot1.transformComponent.transform.translation.y = (_args.distance * .2)-1;
 	args.pivot1.transformComponent.setUpdated();
 };
 
@@ -46,6 +49,7 @@ var mouseWheel = function(delta){
 	_args.cam.transformComponent.transform.translation.z = _args.distance;
 	_args.cam.transformComponent.setUpdated();
 	_args.pivot1.transformComponent.transform.translation.z = -(_args.distance * .2);
+	_args.pivot1.transformComponent.transform.translation.y = (_args.distance * .2)-1;
 	_args.pivot1.transformComponent.setUpdated();
 }
 
@@ -112,13 +116,35 @@ var update = function(args, ctx, goo) {
 		}
 		break;
 		case 1:
+			var animState = 0;
 			if(args.dir.z != 0 || args.dir.x != 0){
+				if(args.dir.z != 0){
+					animState = 1;
+				}
+				else{
+					animState = 2;
+				}
 				args.localDir.copy(args.dir);
 				args.pivot0.transformComponent.transform.applyForwardVector(args.dir, args.localDir);
 				args.localDir.normalize().mul(args.speed * ctx.world.tpf);
 				args.pivot0.transformComponent.transform.translation.addv(args.localDir);
 				args.pivot0.transformComponent.setUpdated();
 			}
+			if(ctx.entityData.animState != animState){
+				switch(animState){
+					case 0:
+						goo.SystemBus.emit("Idle");
+					break;
+					case 1:
+						goo.SystemBus.emit("Run");
+					break;
+					case 2:
+						goo.SystemBus.emit("Strafe");
+					break;
+				}
+				ctx.entityData.animState = animState;
+			}
+
 		break;
 	}
 };
@@ -197,6 +223,7 @@ var moveRight = function(bool){
  * }
  */
 var parameters = [
+	{key:'mesh', type:'string', default:null},
 	{key:'forward', type:'string', default:'w'},
 	{key:'back', type:'string', default:'s'},
 	{key:'left', type:'string', default:'a'},
