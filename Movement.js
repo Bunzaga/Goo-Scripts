@@ -19,10 +19,15 @@ var setup = function(args, ctx, goo) {
 	args.pivot0 = ctx.world.by.name("User").first();
 	args.pivot1 = ctx.world.by.name("Pivot1").first();
 	args.cam = ctx.world.by.name("ViewCam").first();
+	ctx.entityData.wantRot = Math.PI;
 	ctx.entityData.mesh = ctx.world.by.name(args.mesh).first();
 	args.pivot1.transformComponent.transform.translation.z = -(_args.distance*.2);
 	args.pivot1.transformComponent.transform.translation.y = (_args.distance * .2)-1;
 	args.pivot1.transformComponent.setUpdated();
+	
+	if(!document.pointerLockElement){
+		goo.GameUtils.requestPointerLock();
+	}
 };
 
 /* Implement this method to do cleanup on script stop and delete */
@@ -117,9 +122,26 @@ var update = function(args, ctx, goo) {
 		break;
 		case 1:
 			var animState = 0;
+			var wantRot = Math.PI;
 			if(args.dir.z != 0 || args.dir.x != 0){
 				if(args.dir.z != 0){
 					animState = 1;
+					if(args.dir.x > 0){
+						if(args.dir.z > 0){
+							wantRot = Math.PI+(Math.PI*0.125);
+						}
+						else if(args.dir.z < 0){
+							wantRot = Math.PI-(Math.PI*0.125);
+						}
+					}
+					else if(args.dir.x < 0){
+						if(args.dir.z > 0){
+							wantRot = Math.PI-(Math.PI*0.125);
+						}
+						else if(args.dir.z < 0){
+							wantRot = Math.PI+(Math.PI*0.125);
+						}
+					}
 				}
 				else{
 					animState = 2;
@@ -143,6 +165,22 @@ var update = function(args, ctx, goo) {
 					break;
 				}
 				ctx.entityData.animState = animState;
+			}
+			if(ctx.entityData.wantRot != wantRot){
+				if(wantRot > ctx.entityData.wantRot){
+					ctx.entityData.wantRot += ctx.world.tpf*3;
+					if(ctx.entityData.wantRot > wantRot){
+						ctx.entityData.wantRot = wantRot;
+					}
+				}
+				else{
+					ctx.entityData.wantRot -= ctx.world.tpf*3;
+					if(ctx.entityData.wantRot < wantRot){
+						ctx.entityData.wantRot = wantRot;
+					}
+				}
+				ctx.entityData.mesh.transformComponent.transform.rotation.fromAngles(0, ctx.entityData.wantRot, 0);
+				ctx.entityData.mesh.transformComponent.setUpdated();
 			}
 
 		break;
