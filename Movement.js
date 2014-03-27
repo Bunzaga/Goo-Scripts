@@ -8,6 +8,8 @@ var setup = function(args, ctx, goo) {
 	_args = args;
 	_ctx = ctx;
 	_goo = goo;
+	args.dir = new goo.Vector3();
+	args.localDir = new goo.Vector3();
 	args.rot0 = 0;
 	args.rot1 = 0;
 	args.distance = 3.0;
@@ -16,16 +18,20 @@ var setup = function(args, ctx, goo) {
 	args.pivot0 = ctx.world.by.name("User").first();
 	args.pivot1 = ctx.world.by.name("Pivot1").first();
 	args.cam = ctx.world.by.name("ViewCam").first();
-	_args.pivot1.transformComponent.transform.translation.z = -(_args.distance*.2);
-	_args.pivot1.transformComponent.setUpdated();
+	args.pivot1.transformComponent.transform.translation.z = -(_args.distance*.2);
+	args.pivot1.transformComponent.setUpdated();
 };
 
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
-	ctx.world.MouseInput.unbind("mouseMove", mouseMove);
-	ctx.world.MouseInput.unbind("leftMouse", leftMouse);
-	ctx.world.MouseInput.unbind("mouseWheel", mouseWheel);
+	ctx.world.MouseInput.unbind("mouseMove");
+	ctx.world.MouseInput.unbind("leftMouse");
+	ctx.world.MouseInput.unbind("mouseWheel");
 	ctx.world.KeyInput.unbind("alt");
+	ctx.world.KeyInput.unbind(args.forward);
+	ctx.world.KeyInput.unbind(args.back);
+	ctx.world.KeyInput.unbind(args.left);
+	ctx.world.KeyInput.unbind(args.right);
 	_goo.GameUtils.exitPointerLock();
 };
 
@@ -98,11 +104,76 @@ var update = function(args, ctx, goo) {
 			ctx.world.MouseInput.bind("leftMouse", leftMouse);
 			ctx.world.MouseInput.bind("mouseWheel", mouseWheel);
 			ctx.world.KeyInput.bind("alt");
+			ctx.world.KeyInput.bind(args.forward, moveForward);
+			ctx.world.KeyInput.bind(args.back, moveBack);
+			ctx.world.KeyInput.bind(args.left, moveLeft);
+			ctx.world.KeyInput.bind(args.right, moveRight);
 			state = 1;
 		}
 		break;
+		case 1:
+			if(args.dir.z != 0 || args.dir.x != 0){
+				args.localDir.copy(args.dir);
+				args.pivot0.transformComponent.transform.applyForwardVector(args.dir, args.localDir);
+				args.pivot0.transformComponent.transform.translation.addv(args.localDir.mul(args.speed * ctx.world.tpf));
+				args.pivot0.transformComponent.setUpdated();
+			}
+		break;
 	}
 };
+
+var moveForward = function(bool){
+	if(bool){
+		_args.dir.z = -1;
+	}
+	else{
+		if(_ctx.world.KeyInput.getKey(_args.back)){
+			_args.dir.z = 1;
+		}
+		else{
+			_args.dir.z = 0;
+		}
+	}
+}
+var moveBack = function(bool){
+	if(bool){
+		_args.dir.z = 1;
+	}
+	else{
+		if(_ctx.world.KeyInput.getKey(_args.forward)){
+			_args.dir.z = -1;
+		}
+		else{
+			_args.dir.z = 0;
+		}
+	}
+}
+var moveLeft = function(bool){
+	if(bool){
+		_args.dir.x = -1;
+	}
+	else{
+		if(_ctx.world.KeyInput.getKey(_args.right)){
+			_args.dir.x = 1;
+		}
+		else{
+			_args.dir.x = 0;
+		}
+	}
+}
+var moveRight = function(bool){
+	if(bool){
+		_args.dir.x = 1;
+	}
+	else{
+		if(_ctx.world.KeyInput.getKey(_args.left)){
+			_args.dir.x = -1;
+		}
+		else{
+			_args.dir.x = 0;
+		}
+	}
+}
 
 /**
  * Parameters follow:
@@ -125,6 +196,11 @@ var update = function(args, ctx, goo) {
  * }
  */
 var parameters = [
+	{key:'forward', type:'string', default:'w'},
+	{key:'back', type:'string', default:'s'},
+	{key:'left', type:'string', default:'a'},
+	{key:'right', type:'string', default:'d'},
+	{key:'speed', type:'float', default:2.0},
 	{key:'xAxis', type:'float', default:0.001, decimals:3},
 	{key:'yAxis', type:'float', default:0.001, decimals:3},
 	{key:'yMinLimit', type:'float', default:-30.0, decimals:3},
