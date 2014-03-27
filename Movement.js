@@ -115,7 +115,8 @@ var update = function(args, ctx, goo) {
 			if(args.dir.z != 0 || args.dir.x != 0){
 				args.localDir.copy(args.dir);
 				args.pivot0.transformComponent.transform.applyForwardVector(args.dir, args.localDir);
-				args.pivot0.transformComponent.transform.translation.addv(args.localDir.mul(args.speed * ctx.world.tpf));
+				args.localDir.normalize().mul(args.speed * ctx.world.tpf);
+				args.pivot0.transformComponent.transform.translation.addv(args.localDir);
 				args.pivot0.transformComponent.setUpdated();
 			}
 		break;
