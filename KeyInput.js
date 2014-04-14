@@ -1,6 +1,3 @@
-/* local variables */
-var _ctx = null;
-
 /* Implement this method to do initializing */
 var setup = function(args, ctx, goo) {
 	ctx.keys = {};
@@ -29,7 +26,7 @@ var setup = function(args, ctx, goo) {
 		return KeyInput;
 	}
 
-	var keyDown = function(e){
+	ctx.keyDown = function(e){
 		e = e || window.event;
 		var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
 		if(undefined === ctx.keys[keyCode]){return;}
@@ -38,7 +35,7 @@ var setup = function(args, ctx, goo) {
 		if(null === ctx.callbacks[keyCode]){return;}
 		ctx.callbacks[keyCode](true);
 	}
-	var keyUp = function(e){
+	ctx.keyUp = function(e){
 		e = e || window.event;
 		var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
 		if(undefined === ctx.keys[keyCode]){return;}
@@ -47,14 +44,13 @@ var setup = function(args, ctx, goo) {
 		if(null === ctx.callbacks[keyCode]){return;}
 		ctx.callbacks[keyCode](false);
 	}
-	document.documentElement.addEventListener("keyup", keyUp, false);
-	document.documentElement.addEventListener("keydown", keyDown, false);
+	document.documentElement.addEventListener("keyup", ctx.keyUp, false);
+	document.documentElement.addEventListener("keydown", ctx.keyDown, false);
 	ctx.worldData.KeyInput = KeyInput;
-	_ctx = ctx;
 };
 
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
-	document.documentElement.removeEventListener("keyup", keyUp, false);
-	document.documentElement.removeEventListener("keydown", keyDown, false);
+	document.documentElement.removeEventListener("keyup", ctx.keyUp, false);
+	document.documentElement.removeEventListener("keydown", ctx.keyDown, false);
 };
