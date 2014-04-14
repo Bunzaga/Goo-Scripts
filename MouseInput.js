@@ -54,7 +54,7 @@ var setup = function(args, ctx, goo) {
 					break;
 			}
 		}
-		if(undefined === ctx.buttons[btn]){console.log("not listening: "+btn);return;}
+		if(undefined === ctx.buttons[btn]){return;}
 		if(true === ctx.buttons[btn]){return;}
 		ctx.buttons[btn] = true;
 		if(undefined === ctx.callbacks[btn]){return;}
