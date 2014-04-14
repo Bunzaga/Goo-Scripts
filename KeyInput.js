@@ -46,8 +46,12 @@ var cleanup = function(args, ctx, goo) {
 var keyDown = function(e){
 	e = e || window.event;
 	var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-	if(null == _ctx.entityData.keys[keyCode]){return;}
-	if(true == _ctx.entityData.keys[keyCode]){return;}
+	
+	console.log(keyCode);
+	
+	if(null == _ctx.entityData.keys[keyCode]){console.log("not listening");return;}
+	if(true == _ctx.entityData.keys[keyCode]){console.log("already down");return;}
+
 	_ctx.entityData.keys[keyCode] = true;
 	if(null == _ctx.entityData.callbacks[keyCode]){return;}
 	_ctx.entityData.callbacks[keyCode](true);
