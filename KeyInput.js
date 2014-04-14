@@ -29,7 +29,7 @@ KeyInput.unbind = function(keyCode){
 var keyDown = function(e){
 	e = e || window.event;
 	var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-	if(null === keys[keyCode]){return;}
+	if(undefined === keys[keyCode]){return;}
 	if(true === keys[keyCode]){return;}
 	keys[keyCode] = true;
 	if(null === callbacks[keyCode]){return;}
@@ -38,7 +38,7 @@ var keyDown = function(e){
 var keyUp = function(e){
 	e = e || window.event;
 	var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-	if(null === keys[keyCode]){return;}
+	if(undefined === keys[keyCode]){return;}
 	if(false === keys[keyCode]){return;}
 	keys[keyCode] = false;
 	if(null === callbacks[keyCode]){return;}
