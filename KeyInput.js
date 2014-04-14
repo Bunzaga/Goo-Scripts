@@ -32,7 +32,7 @@ var setup = function(args, ctx, goo) {
 		if(undefined === ctx.keys[keyCode]){return;}
 		if(true === ctx.keys[keyCode]){return;}
 		ctx.keys[keyCode] = true;
-		if(null === ctx.callbacks[keyCode]){return;}
+		if(undefined === ctx.callbacks[keyCode]){return;}
 		ctx.callbacks[keyCode](true);
 	}
 	ctx.keyUp = function(e){
@@ -41,7 +41,7 @@ var setup = function(args, ctx, goo) {
 		if(undefined === ctx.keys[keyCode]){return;}
 		if(false === ctx.keys[keyCode]){return;}
 		ctx.keys[keyCode] = false;
-		if(null === ctx.callbacks[keyCode]){return;}
+		if(undefined === ctx.callbacks[keyCode]){return;}
 		ctx.callbacks[keyCode](false);
 	}
 	document.documentElement.addEventListener("keyup", ctx.keyUp, false);
