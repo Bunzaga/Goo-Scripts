@@ -14,16 +14,16 @@ var setup = function(args, ctx, goo){
 				var hitIndex = -1;
 				var hitElement = -1;
 				var mrc = null;
-				var distance = typeof picking.pickRay.distance !== 'undefined' ? picking.pickRay.distance : Infinity;
+				var distance = typeof ctx.picking.pickRay.distance !== 'undefined' ? ctx.picking.pickRay.distance : Infinity;
 				for(var i = 0, ilen = result.length; i < ilen; i++){
 					mrc = result[i].entity.meshRendererComponent;
 					if(null === mrc){console.log("entity.meshRenderComponent does not exist!");}
 					else{
 						if(null !== result[i].entity.hitMask){
-							if((result[i].entity.hitMask & picking.mask) !== 0){
+							if((result[i].entity.hitMask & ctx.picking.mask) !== 0){
 								for(var j = 0, jlen = result[i].intersection.distances.length; j < jlen; j++){
 									if(result[i].intersection.distances[j] < distance){
-										if(picking.all){
+										if(ctx.picking.all){
 										}
 										else{
 											distance = result[i].intersection.distances[j];
@@ -77,5 +77,5 @@ var setup = function(args, ctx, goo){
     };
 	
 	ctx.worldData.SimplePick = SimplePick;
-	ctx.world.setSystem(picking);
+	ctx.world.setSystem(ctx.picking);
 }
