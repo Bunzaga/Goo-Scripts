@@ -3,7 +3,7 @@ var setup = function(args, ctx, goo) {
 	ctx.buttons = {};
 	ctx.callbacks = {};
 	ctx.stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
-	
+
 	var MouseInput = {};
 	MouseInput.movement = new goo.Vector2();
 	MouseInput.delta = new goo.Vector2();
@@ -59,7 +59,7 @@ var setup = function(args, ctx, goo) {
 		ctx.buttons[btn] = true;
 		if(undefined === ctx.callbacks[btn]){return;}
 		ctx.callbacks[btn](true);
-		
+
 	};
 	ctx.mouseUp = function(e){
 		//updateMousePos(e);
@@ -96,15 +96,15 @@ var setup = function(args, ctx, goo) {
 		e = e || window.event;
 		if (e && e.preventDefault) {e.preventDefault();}
 		if (e && e.stopPropagation) {e.stopPropagation();}
-		
+
 		var newX = e.pageX ? e.pageX : e.clientX + (document.documentElement.scrollLeft) ||
 			(document.body.scrollLeft - document.documentElement.clientLeft);
-			
+
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
-	
-		newX -= ctx.domElement.offsetLeft;
-		newY -= ctx.domElement.offsetTop;
+
+		newX -= /*ctx.domElement.offsetLeft*/ctx.domElement.getBoundingClientRect().left;
+		newY -= /*ctx.domElement.offsetTop*/ctx.domElement.getBoundingClientRect().top;
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
 		MouseInput.delta.x = newX - MouseInput.position.x;
@@ -114,7 +114,7 @@ var setup = function(args, ctx, goo) {
 		MouseInput.position.x = newX;
 		MouseInput.position.y = newY;
 	};
-	
+
 	document.documentElement.addEventListener('mousedown', ctx.mouseDown, false);
 	document.documentElement.addEventListener('mouseup', ctx.mouseUp, false);
 	document.documentElement.addEventListener('mousemove', ctx.mouseMove, false);
