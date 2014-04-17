@@ -3,6 +3,8 @@ var setup = function(args, ctx, goo) {
 	ctx.buttons = {};
 	ctx.callbacks = {};
 	ctx.stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
+	ctx.offsetLeft = ctx.domElement.getBoundingClientRect().left;
+	ctx.offsetTop = ctx.domElement.getBoundingClientRect().top;
 
 	var MouseInput = {};
 	MouseInput.movement = new goo.Vector2();
@@ -103,8 +105,8 @@ var setup = function(args, ctx, goo) {
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
 
-		newX -= /*ctx.domElement.offsetLeft*/ctx.domElement.getBoundingClientRect().left;
-		newY -= /*ctx.domElement.offsetTop*/ctx.domElement.getBoundingClientRect().top;
+		newX -= ctx.offsetLeft;
+		newY -= ctx.offsetTop;
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
 		MouseInput.delta.x = newX - MouseInput.position.x;
