@@ -20,8 +20,8 @@ var setup = function(args, ctx, goo) {
 		ctx.buttons[btn] = false;
 		if(callback){
 			if(typeof callback === 'function'){
-				console.log("ctx.callbacks["+btnCode+"]");
-				console.log(ctx.callbacks[btn]);
+			//	console.log("ctx.callbacks["+btnCode+"]");
+			//	console.log(ctx.callbacks[btn]);
 				if(undefined === ctx.callbacks[btn]){
 					ctx.callbacks[btn] = new NodeList();
 				}
