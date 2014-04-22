@@ -31,27 +31,26 @@ var setup = function(args, ctx, goo) {
 		return MouseInput;
 	}
 	MouseInput.unbind = function(btnCode, callback){
+		if(null === callback){
+			console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
+			MouseInput.unbindAll(btnCode);
+		}
 		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
 		if(undefined !== ctx.buttons[btn]){
 			if(undefined !== ctx.callbacks[btn]){
-				if(null !== callback){
-					if(typeof callback === 'function'){
-						var n = ctx.callbacks[btn].first;
-						while(null !== n){
-							if(callback === n.callback){
-								ctx.callbacks[btn].remove(n);
-								break;
-							}
-							n = n.next;
+				if(typeof callback === 'function'){
+					var n = ctx.callbacks[btn].first;
+					while(null !== n){
+						if(callback === n.callback){
+							ctx.callbacks[btn].remove(n);
+							break;
 						}
-						if(null === ctx.callbacks[btn].first){
-							delete ctx.buttons[btn];
-							delete ctx.callbacks[btn];
-						}
+						n = n.next;
 					}
-				}
-				else{
-					console.error("MouseInput.bind: You must pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
+					if(null === ctx.callbacks[btn].first){
+						delete ctx.buttons[btn];
+						delete ctx.callbacks[btn];
+					}
 				}
 			}
 		}
