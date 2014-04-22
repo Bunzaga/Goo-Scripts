@@ -20,12 +20,44 @@ var setup = function(args, ctx, goo) {
 		ctx.buttons[btn] = false;
 		if(callback){
 			if(typeof callback === 'function'){
-				ctx.callbacks[btn] = callback;
+				console.log("ctx.callbacks["+btnCode+"]");
+				console.log(ctx.callbacks[btn]);
+				if(undefined === ctx.callbacks[btn]){
+					ctx.callbacks[btn] = new NodeList();
+				}
+				ctx.callbacks[btn].add({previous:null, next:null, callback:callback});
 			}
 		}
 		return MouseInput;
 	}
-	MouseInput.unbind = function(btnCode){
+	MouseInput.unbind = function(btnCode, callback){
+		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
+		if(undefined !== ctx.buttons[btn]){
+			if(undefined !== ctx.callbacks[btn]){
+				if(null !== callback){
+					if(typeof callback === 'function'){
+						var n = ctx.callbacks[btn].first;
+						while(null !== n){
+							if(callback === n.callback){
+								ctx.callbacks[btn].remove(n);
+								break;
+							}
+							n = n.next;
+						}
+						if(null === ctx.callbacks[btn].first){
+							delete ctx.buttons[btn];
+							delete ctx.callbacks[btn];
+						}
+					}
+				}
+				else{
+					console.error("MouseInput.bind: You must pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
+				}
+			}
+		}
+		return MouseInput;
+	}
+	MouseInput.unbindAll = function(btnCode){
 		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
 		delete ctx.buttons[btn];
 		delete ctx.callbacks[btn];
@@ -36,7 +68,11 @@ var setup = function(args, ctx, goo) {
 		e = e || window.event;
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 		if(undefined === ctx.callbacks[8]){return;}
-		ctx.callbacks[8](wheelDelta);
+		var n = ctx.callbacks[8].first;
+		while(null !== n){
+			n.callback(wheelDelta);
+			n = n.next;
+		}
 	};
 	ctx.mouseDown = function(e){
 		var btn = 0;
@@ -60,8 +96,11 @@ var setup = function(args, ctx, goo) {
 		if(true === ctx.buttons[btn]){return;}
 		ctx.buttons[btn] = true;
 		if(undefined === ctx.callbacks[btn]){return;}
-		ctx.callbacks[btn](true);
-
+		var n = ctx.callbacks[btn].first;
+		while(null !== n){
+			n.callback(true);
+			n = n.next;
+		}
 	};
 	ctx.mouseUp = function(e){
 		//updateMousePos(e);
@@ -86,13 +125,21 @@ var setup = function(args, ctx, goo) {
 		if(false === ctx.buttons[btn]){return;}
 		ctx.buttons[btn] = false;
 		if(undefined === ctx.callbacks[btn]){return;}
-		ctx.callbacks[btn](false);
+		var n = ctx.callbacks[btn].first;
+		while(null !== n){
+			n.callback(false);
+			n = n.next;
+		}
 	};
 	ctx.mouseMove = function(e){
 		if(undefined === ctx.buttons[16]){return;}
 		ctx.updateMousePos(e);
 		if(undefined === ctx.callbacks[16]){return;}
-		ctx.callbacks[16]();
+		var n = ctx.callbacks[16].first;
+		while(null !== n){
+			n.callback();
+			n = n.next;
+		}
 	}
 	ctx.updateMousePos = function(e){
 		e = e || window.event;
@@ -122,6 +169,7 @@ var setup = function(args, ctx, goo) {
 	document.documentElement.addEventListener('mousemove', ctx.mouseMove, false);
 	document.documentElement.addEventListener("mousewheel", ctx.mouseWheel, false);
 	document.documentElement.addEventListener("DOMMouseScroll", ctx.mouseWheel, false); // Firefox
+
 	ctx.worldData.MouseInput = MouseInput;
 };
 
