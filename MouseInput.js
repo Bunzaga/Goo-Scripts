@@ -20,8 +20,7 @@ var setup = function(args, ctx, goo) {
 		ctx.buttons[btn] = false;
 		if(callback){
 			if(typeof callback === 'function'){
-				console.log("ctx.callbacks["+btnCode+"]");
-				console.log(ctx.callbacks[btn]);
+				console.log("MouseInput.bind:ctx.callbacks["+btnCode+"]");
 				if(undefined === ctx.callbacks[btn]){
 					ctx.callbacks[btn] = new NodeList();
 				}
@@ -150,7 +149,7 @@ var setup = function(args, ctx, goo) {
 
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
-			
+
 		newX -= (ctx.offsetLeft + ctx.domElement.offsetLeft);
 		newY -= (ctx.offsetTop + ctx.domElement.offsetTop);
 		MouseInput.movement.x = e.movementX;
