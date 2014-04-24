@@ -62,7 +62,7 @@ var setup = function(args, ctx, goo) {
 		return MouseInput;
 	}
 	ctx.mouseWheel = function(e){
-		if(undefined === ctx.buttons[4]){return;}
+		if(undefined === ctx.buttons[8]){return;}
 		e = e || window.event;
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 		if(undefined === ctx.callbacks[8]){return;}
