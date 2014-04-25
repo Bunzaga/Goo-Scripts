@@ -1,7 +1,6 @@
 /* Implement this method to do initializing */
 var setup = function(args, ctx, goo) {
 	ctx.buttons = {};
-	ctx.callbacks = {};
 	ctx.stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 	ctx.offsetLeft = ctx.domElement.getBoundingClientRect().left;
 	ctx.offsetTop = ctx.domElement.getBoundingClientRect().top;
@@ -21,10 +20,7 @@ var setup = function(args, ctx, goo) {
 		if(callback){
 			if(typeof callback === 'function'){
 				console.log("MouseInput.bind:ctx.callbacks["+btnCode+"]");
-				if(undefined === ctx.callbacks[btn]){
-					ctx.callbacks[btn] = new NodeList();
-				}
-				ctx.callbacks[btn].add({previous:null, next:null, callback:callback});
+				goo.SystemBus.addListener("MouseInput"+btn, callback);
 			}
 		}
 		return MouseInput;
@@ -36,41 +32,21 @@ var setup = function(args, ctx, goo) {
 		}
 		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
 		if(undefined !== ctx.buttons[btn]){
-			if(undefined !== ctx.callbacks[btn]){
-				if(typeof callback === 'function'){
-					var n = ctx.callbacks[btn].first;
-					while(null !== n){
-						if(callback === n.callback){
-							ctx.callbacks[btn].remove(n);
-							break;
-						}
-						n = n.next;
-					}
-					if(null === ctx.callbacks[btn].first){
-						delete ctx.buttons[btn];
-						delete ctx.callbacks[btn];
-					}
-				}
+			if(typeof callback === 'function'){
+				goo.SystemBus.removeListener("MouseInput"+btn, callback);
 			}
 		}
 		return MouseInput;
 	}
 	MouseInput.unbindAll = function(btnCode){
 		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
-		delete ctx.buttons[btn];
-		delete ctx.callbacks[btn];
+		goo.SystemBus.removeAllOnChannel("MouseInput"+btn);
 		return MouseInput;
 	}
 	ctx.mouseWheel = function(e){
-		if(undefined === ctx.buttons[8]){return;}
 		e = e || window.event;
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-		if(undefined === ctx.callbacks[8]){return;}
-		var n = ctx.callbacks[8].first;
-		while(null !== n){
-			n.callback(wheelDelta);
-			n = n.next;
-		}
+		goo.SystemBus.emit("MouseInput8", wheelDelta);
 	};
 	ctx.mouseDown = function(e){
 		var btn = 0;
@@ -90,15 +66,9 @@ var setup = function(args, ctx, goo) {
 					break;
 			}
 		}
-		if(undefined === ctx.buttons[btn]){return;}
 		if(true === ctx.buttons[btn]){return;}
 		ctx.buttons[btn] = true;
-		if(undefined === ctx.callbacks[btn]){return;}
-		var n = ctx.callbacks[btn].first;
-		while(null !== n){
-			n.callback(true);
-			n = n.next;
-		}
+		goo.SystemBus.emit("MouseInput"+btn, true);
 	};
 	ctx.mouseUp = function(e){
 		//updateMousePos(e);
@@ -119,25 +89,13 @@ var setup = function(args, ctx, goo) {
 					break;
 			}
 		}
-		if(undefined === ctx.buttons[btn]){return;}
 		if(false === ctx.buttons[btn]){return;}
 		ctx.buttons[btn] = false;
-		if(undefined === ctx.callbacks[btn]){return;}
-		var n = ctx.callbacks[btn].first;
-		while(null !== n){
-			n.callback(false);
-			n = n.next;
-		}
+		goo.SystemBus.emit("MouseInput"+btn, false);
 	};
 	ctx.mouseMove = function(e){
-		if(undefined === ctx.buttons[16]){return;}
 		ctx.updateMousePos(e);
-		if(undefined === ctx.callbacks[16]){return;}
-		var n = ctx.callbacks[16].first;
-		while(null !== n){
-			n.callback();
-			n = n.next;
-		}
+		goo.SystemBus.emit("MouseInput16", false);
 	}
 	ctx.updateMousePos = function(e){
 		e = e || window.event;
@@ -173,6 +131,11 @@ var setup = function(args, ctx, goo) {
 
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
+	goo.SystemBus.removeAllOnChannel("MouseInput1");
+	goo.SystemBus.removeAllOnChannel("MouseInput2");
+	goo.SystemBus.removeAllOnChannel("MouseInput4");
+	goo.SystemBus.removeAllOnChannel("MouseInput8");
+	goo.SystemBus.removeAllOnChannel("MouseInput16");
 	document.documentElement.removeEventListener('mousemove', ctx.mouseMove, false);
 	document.documentElement.removeEventListener('mousedown', ctx.mouseDown, false);
 	document.documentElement.removeEventListener('mouseup', ctx.mouseUp, false);
