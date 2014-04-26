@@ -13,7 +13,7 @@ function setup(args, ctx, goo){
 		}
 		ctx.picking.onPick = function(result){
 			var hit = null;
-			console.log(result);
+		//	console.log(result);
 			if(null !== result){
 				if(result.length > 0){
 					var distance = typeof ctx.picking.pickRay.distance !== 'undefined' ? ctx.picking.pickRay.distance : Infinity;
