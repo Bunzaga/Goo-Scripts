@@ -133,7 +133,7 @@ var setup = function(args, ctx, goo) {
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
 	for(var i in ctx.buttons){
-		ctx.worldData.MouseInput.removeAllOnChannel(ctx.buttons[i]);
+		goo.SystemBus.removeAllOnChannel("MouseInput"+i);
 	}
 	document.documentElement.removeEventListener('mousemove', ctx.mouseMove, false);
 	document.documentElement.removeEventListener('mousedown', ctx.mouseDown, false);
