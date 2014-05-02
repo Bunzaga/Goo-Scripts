@@ -132,14 +132,13 @@ var setup = function(args, ctx, goo) {
 
 /* Implement this method to do cleanup on script stop and delete */
 var cleanup = function(args, ctx, goo) {
-	goo.SystemBus.removeAllOnChannel("MouseInput1");
-	goo.SystemBus.removeAllOnChannel("MouseInput2");
-	goo.SystemBus.removeAllOnChannel("MouseInput4");
-	goo.SystemBus.removeAllOnChannel("MouseInput8");
-	goo.SystemBus.removeAllOnChannel("MouseInput16");
+	for(var i in ctx.buttons){
+		ctx.worldData.MouseInput.removeAllOnChannel(ctx.buttons[i]);
+	}
 	document.documentElement.removeEventListener('mousemove', ctx.mouseMove, false);
 	document.documentElement.removeEventListener('mousedown', ctx.mouseDown, false);
 	document.documentElement.removeEventListener('mouseup', ctx.mouseUp, false);
 	document.documentElement.removeEventListener("mousewheel", ctx.mouseWheel, false);
 	document.documentElement.removeEventListener("DOMMouseScroll", ctx.mouseWheel, false); // Firefox
+	delete ctx.worldData.MouseInput;
 };
