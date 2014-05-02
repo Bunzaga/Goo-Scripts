@@ -29,6 +29,7 @@ var setup = function(args, ctx, goo) {
 		if(null === callback){
 			console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
 			MouseInput.unbindAll(btnCode);
+			return MouseInput;
 		}
 		var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
 		if(undefined !== ctx.buttons[btn]){
