@@ -1,4 +1,4 @@
-var KeyInput = {};
+KeyInput = {};
 
 KeyInput.setup = function(args, ctx, goo){
 	ctx.keys = {};
