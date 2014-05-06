@@ -53,15 +53,15 @@ function KeyInput(args, ctx, goo){
 		keys[keyCode] = false;
 		goo.SystemBus.emit("Key"+keyCode, false);
 	}
-	document.documentElement.addEventListener("keyup", ctx.keyUp, false);
-	document.documentElement.addEventListener("keydown", ctx.keyDown, false);
+	document.documentElement.addEventListener("keyup", keyUp, false);
+	document.documentElement.addEventListener("keydown", keyDown, false);
 
-	/*this.cleanup = function(args, ctx, goo){
-		for(var i in ctx.keys){
+	this.cleanup = function(args, ctx, goo){
+		for(var i in keys){
 			goo.SystemBus.removeAllOnChannel("Key"+i);
 		}
-		document.documentElement.removeEventListener("keyup", ctx.keyUp, false);
-		document.documentElement.removeEventListener("keydown", ctx.keyDown, false);
+		document.documentElement.removeEventListener("keyup", keyUp, false);
+		document.documentElement.removeEventListener("keydown", keyDown, false);
 		delete ctx.worldData.KeyInput;
-	}*/
+	}
 }
