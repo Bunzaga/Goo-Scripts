@@ -15,13 +15,13 @@ function KeyInput(args, ctx, goo){
 				goo.SystemBus.addListener("Key"+key, callback);
 			}
 		}
-		return KeyInput;
+		return this;
 	}
 	this.unbind = function(keyCode, callback){
 		if(undefined === callback){
 			console.warn("KeyInput.unbind: You should pass in the callback to remove, did you mean 'KeyInput.unbindAll?");
 			this.unbindAll(keyCode);
-			return;
+			return this;
 		}
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 		goo.SystemBus.removeListener("Key"+key, callback);
@@ -29,13 +29,13 @@ function KeyInput(args, ctx, goo){
 		if(chan.listeners.length === 0){
 			delete keys[key];
 		}
-		return KeyInput;
+		return this;
 	}
 	KeyInput.unbindAll = function(keyCode){
 		var key = typeof keyCode === 'number' ? keyCode : ctx.stringToCode[""+keyCode];
 		goo.SystemBus.removeAllOnChannel("Key"+key, callback);
 		delete keys[key];
-		return KeyInput;
+		return this;
 	}
 	function keyDown(e){
 		e = e || window.event;
