@@ -40,7 +40,7 @@ function setup(args, ctx, goo){
 											ctx.cross.normalize();
 											
 											var dot = goo.Vector3.dot(ctx.cross, rayDir);
-											//if(dot < 0){
+											if(dot < 0){
 												if(null === hit){
 													hit = [];
 												}
@@ -54,7 +54,7 @@ function setup(args, ctx, goo){
 														new goo.Vector3().copy(v2)],
 													distance: entDistance
 												});
-											//}
+											}
 										}
 									}
 								}
@@ -86,7 +86,7 @@ function setup(args, ctx, goo){
 											dot = goo.Vector3.dot(ctx.cross, rayDir);
 											// dot the normal with the ray.dir to see if it is backfacing or not
 											// if not backfacing
-											//if(dot < 0){
+											if(dot < 0){
 												distance = result[i].intersection.distances[j];
 												if(null === hit){
 													hit = {
@@ -109,7 +109,7 @@ function setup(args, ctx, goo){
 													hit.vertices[2].copy(v2);
 													hit.distance = entDistance;
 												}
-											//}
+											}
 										}
 									}
 								}
