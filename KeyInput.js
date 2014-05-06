@@ -61,7 +61,7 @@ KeyInput.setup = function(args, ctx, goo){
 	ctx.worldData.KeyInput = KeyInput;
 }
 
-KeyInput.prototype.cleanup = function(args, ctx, goo){
+KeyInput.cleanup = function(args, ctx, goo){
 	for(var i in ctx.keys){
 		goo.SystemBus.removeAllOnChannel("Key"+i);
 	}
