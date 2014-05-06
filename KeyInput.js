@@ -58,7 +58,7 @@ KeyInput.setup = function(args, ctx, goo){
 	}
 	document.documentElement.addEventListener("keyup", ctx.keyUp, false);
 	document.documentElement.addEventListener("keydown", ctx.keyDown, false);
-	//ctx.worldData.KeyInput = KeyInput;
+	ctx.worldData.KeyInput = KeyInput;
 }
 
 KeyInput.cleanup = function(args, ctx, goo){
@@ -67,5 +67,5 @@ KeyInput.cleanup = function(args, ctx, goo){
 	}
 	document.documentElement.removeEventListener("keyup", ctx.keyUp, false);
 	document.documentElement.removeEventListener("keydown", ctx.keyDown, false);
-	//delete ctx.worldData.KeyInput;
+	delete ctx.worldData.KeyInput;
 }
