@@ -1,9 +1,9 @@
 function SimplePick(args, ctx, goo){
 	if(undefined === ctx.picking){
-		ctx.picking = new goo.PickingSystem({pickLogic: new goo.PrimitivePickLogic()});
-		ctx.v1 = new goo.Vector3();
-		ctx.v2 = new goo.Vector3();
-		ctx.cross = new goo.Vector3();
+		var picking = new goo.PickingSystem({pickLogic: new goo.PrimitivePickLogic()});
+		var v1 = new goo.Vector3();
+		var v2 = new goo.Vector3();
+		var cross = new goo.Vector3();
 
 
 		this.ray = new goo.Ray();
@@ -11,17 +11,16 @@ function SimplePick(args, ctx, goo){
 		var hitSort = function(a, b){
 			return a.distance-b.distance;
 		}
-		ctx.picking.onPick = function(result){
+		picking.onPick = function(result){
 			var hit = null;
-		//	console.log(result);
 			if(null !== result){
 				if(result.length > 0){
-					var distance = typeof ctx.picking.pickRay.distance !== 'undefined' ? ctx.picking.pickRay.distance : Infinity;
-					var rayDir = ctx.picking.pickRay.direction;
-					if(ctx.picking.mask){
-						if(ctx.picking.all){ // add all non-culled faces to hit array
+					var distance = typeof picking.pickRay.distance !== 'undefined' ? picking.pickRay.distance : Infinity;
+					var rayDir = picking.pickRay.direction;
+					if(picking.mask){
+						if(picking.all){ // add all non-culled faces to hit array
 							for(var i = 0, ilen = result.length; i < ilen; i++){
-								if((result[i].entity.hitMask & ctx.picking.mask) !== 0){
+								if((result[i].entity.hitMask & picking.mask) !== 0){
 									for(var j = 0, jlen = result[i].intersection.distances.length; j < jlen; j++){
 										var entDistance = result[i].intersection.distances[j];
 										if(entDistance < distance){
@@ -30,16 +29,16 @@ function SimplePick(args, ctx, goo){
 											var v1 = result[i].intersection.vertices[j][1];
 											var v2 = result[i].intersection.vertices[j][2];
 												
-											goo.Vector3.subv(v0, v1, ctx.v1);
-											goo.Vector3.subv(v0, v2, ctx.v2);
+											goo.Vector3.subv(v0, v1, v1);
+											goo.Vector3.subv(v0, v2, v2);
 											//ctx.v1.normalize();
 											//ctx.v2.normalize();
 											
 											// use the cross product of the face edges to get the 'normal'
-											goo.Vector3.cross(ctx.v1, ctx.v2, ctx.cross);
-											ctx.cross.normalize();
+											goo.Vector3.cross(v1, v2, cross);
+											cross.normalize();
 											
-											var dot = goo.Vector3.dot(ctx.cross, rayDir);
+											var dot = goo.Vector3.dot(cross, rayDir);
 											if(dot < 0){
 												if(null === hit){
 													hit = [];
@@ -47,7 +46,7 @@ function SimplePick(args, ctx, goo){
 												hit.push({
 													entity: result[i].entity,
 													point: new goo.Vector3().copy(result[i].intersection.points[j]),
-													normal: new goo.Vector3().copy(ctx.cross),
+													normal: new goo.Vector3().copy(cross),
 													vertices:[
 														new goo.Vector3().copy(v0),
 														new goo.Vector3().copy(v1),
@@ -65,7 +64,7 @@ function SimplePick(args, ctx, goo){
 						}
 						else{ // only return the closest non-culled face
 							for(i = 0, ilen = result.length; i < ilen; i++){
-								if((result[i].entity.hitMask & ctx.picking.mask) !== 0){
+								if((result[i].entity.hitMask & picking.mask) !== 0){
 									for(j = 0, jlen = result[i].intersection.distances.length; j < jlen; j++){
 										entDistance = result[i].intersection.distances[j];
 										if(entDistance < distance){
@@ -74,16 +73,16 @@ function SimplePick(args, ctx, goo){
 											v1 = result[i].intersection.vertices[j][1];
 											v2 = result[i].intersection.vertices[j][2];
 											
-											goo.Vector3.subv(v0, v1, ctx.v1);
-											goo.Vector3.subv(v0, v2, ctx.v2);
+											goo.Vector3.subv(v0, v1, v1);
+											goo.Vector3.subv(v0, v2, v2);
 											//ctx.v1.normalize();
 											//ctx.v2.normalize();
 											
 											// use the cross product of the face edges to get the 'normal'
-											goo.Vector3.cross(ctx.v1, ctx.v2, ctx.cross);
-											ctx.cross.normalize();
+											goo.Vector3.cross(v1, v2, cross);
+											cross.normalize();
 											
-											dot = goo.Vector3.dot(ctx.cross, rayDir);
+											dot = goo.Vector3.dot(cross, rayDir);
 											// dot the normal with the ray.dir to see if it is backfacing or not
 											// if not backfacing
 											if(dot < 0){
@@ -92,7 +91,7 @@ function SimplePick(args, ctx, goo){
 													hit = {
 														entity: result[i].entity,
 														point: new goo.Vector3().copy(result[i].intersection.points[j]),
-														normal: new goo.Vector3().copy(ctx.cross),
+														normal: new goo.Vector3().copy(cross),
 														vertices:[
 															new goo.Vector3().copy(v0),
 															new goo.Vector3().copy(v1),
@@ -103,7 +102,7 @@ function SimplePick(args, ctx, goo){
 												else{
 													hit.entity = result[i].entity;
 													hit.point.copy(result[i].intersection.points[j]);
-													hit.normal.copy(ctx.cross);
+													hit.normal.copy(cross);
 													hit.vertices[0].copy(v0);
 													hit.vertices[1].copy(v1);
 													hit.vertices[2].copy(v2);
@@ -121,22 +120,22 @@ function SimplePick(args, ctx, goo){
 					}
 				}
 			}
-			ctx.picking.hit = hit;
+			picking.hit = hit;
 		}
 		
-		this.added = function(ent){ctx.picking.added(ent);}
+		this.added = function(ent){picking.added(ent);}
 		
 		this.castRay = function(ray, mask, all){
-			ctx.picking.pickRay = ray;
-			ctx.picking.mask = mask;
-			ctx.picking.all = all;
-			ctx.picking._process();
-			return ctx.picking.hit;
+			picking.pickRay = ray;
+			picking.mask = mask;
+			picking.all = all;
+			picking._process();
+			return picking.hit;
 		}
 	}
     
 	if(undefined === ctx.world.getSystem("PickingSystem")){
-		ctx.world.setSystem(ctx.picking);
+		ctx.world.setSystem(picking);
 	}
 
 	/*if(undefined === ctx.worldData.SimplePick){
@@ -144,11 +143,10 @@ function SimplePick(args, ctx, goo){
 	}*/
 
 	this.cleanup = function(args, ctx, goo){
-		var index = ctx.world._systems.indexOf(ctx.picking);
+		var index = ctx.world._systems.indexOf(picking);
 		if(index !== -1){
 			ctx.world._systems.splice(index, 1);
 		}
-		delete ctx.picking;
 		delete ctx.worldData.SimplePick;
 	}
 }
