@@ -1,4 +1,4 @@
-function setup(args, ctx, goo){
+function SimplePick(args, ctx, goo){
 	if(undefined === ctx.picking){
 		ctx.picking = new goo.PickingSystem({pickLogic: new goo.PrimitivePickLogic()});
 		ctx.v1 = new goo.Vector3();
