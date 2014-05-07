@@ -13,8 +13,6 @@ function SimplePick(args, ctx, goo){
 	picking.onPick = function(result){
 		var hit = null;
 		if(null !== result){
-			console.log("result:");
-			console.log(result);
 			if(result.length > 0){
 				var distance = typeof picking.pickRay.distance !== 'undefined' ? picking.pickRay.distance : Infinity;
 				var rayDir = picking.pickRay.direction;
@@ -26,12 +24,12 @@ function SimplePick(args, ctx, goo){
 									var entDistance = result[i].intersection.distances[j];
 									if(entDistance < distance){
 										// create two CCW 'edge vectors' based on the points of the face hit
-										var v0 = result[i].intersection.vertices[j][0];
-										var v1 = result[i].intersection.vertices[j][1];
-										var v2 = result[i].intersection.vertices[j][2];
+										var vert0 = result[i].intersection.vertices[j][0];
+										var vert1 = result[i].intersection.vertices[j][1];
+										var vert2 = result[i].intersection.vertices[j][2];
 											
-										goo.Vector3.subv(v0, v1, v1);
-										goo.Vector3.subv(v0, v2, v2);
+										goo.Vector3.subv(vert0, vert1, v1);
+										goo.Vector3.subv(vert0, vert2, v2);
 										//ctx.v1.normalize();
 										//ctx.v2.normalize();
 										
@@ -49,9 +47,9 @@ function SimplePick(args, ctx, goo){
 												point: new goo.Vector3().copy(result[i].intersection.points[j]),
 												normal: new goo.Vector3().copy(cross),
 												vertices:[
-													new goo.Vector3().copy(v0),
-													new goo.Vector3().copy(v1),
-													new goo.Vector3().copy(v2)],
+													new goo.Vector3().copy(vert0),
+													new goo.Vector3().copy(vert1),
+													new goo.Vector3().copy(vert2)],
 												distance: entDistance
 											});
 										}
@@ -70,12 +68,12 @@ function SimplePick(args, ctx, goo){
 									entDistance = result[i].intersection.distances[j];
 									if(entDistance < distance){
 										// create two CCW 'edge vectors' based on the points of the face hit
-										v0 = result[i].intersection.vertices[j][0];
-										v1 = result[i].intersection.vertices[j][1];
-										v2 = result[i].intersection.vertices[j][2];
+										vert0 = result[i].intersection.vertices[j][0];
+										vert1 = result[i].intersection.vertices[j][1];
+										vert2 = result[i].intersection.vertices[j][2];
 										
-										goo.Vector3.subv(v0, v1, v1);
-										goo.Vector3.subv(v0, v2, v2);
+										goo.Vector3.subv(vert0, vert1, v1);
+										goo.Vector3.subv(vert0, vert2, v2);
 										//ctx.v1.normalize();
 										//ctx.v2.normalize();
 										
@@ -94,9 +92,9 @@ function SimplePick(args, ctx, goo){
 													point: new goo.Vector3().copy(result[i].intersection.points[j]),
 													normal: new goo.Vector3().copy(cross),
 													vertices:[
-														new goo.Vector3().copy(v0),
-														new goo.Vector3().copy(v1),
-														new goo.Vector3().copy(v2)],
+														new goo.Vector3().copy(vert0),
+														new goo.Vector3().copy(vert1),
+														new goo.Vector3().copy(vert2)],
 													distance: entDistance
 												}
 											}
@@ -104,9 +102,9 @@ function SimplePick(args, ctx, goo){
 												hit.entity = result[i].entity;
 												hit.point.copy(result[i].intersection.points[j]);
 												hit.normal.copy(cross);
-												hit.vertices[0].copy(v0);
-												hit.vertices[1].copy(v1);
-												hit.vertices[2].copy(v2);
+												hit.vertices[0].copy(vert0);
+												hit.vertices[1].copy(vert1);
+												hit.vertices[2].copy(vert2);
 												hit.distance = entDistance;
 											}
 										}
