@@ -142,13 +142,13 @@ function SimplePick(args, ctx, goo){
 	if(undefined === ctx.worldData.SimplePick){
 		ctx.worldData.SimplePick = SimplePick;
 	}
-}
 
-function cleanup(args, ctx, goo){
-	var index = ctx.world._systems.indexOf(ctx.picking);
-	if(index !== -1){
-		ctx.world._systems.splice(index, 1);
+	this.cleanup = function(args, ctx, goo){
+		var index = ctx.world._systems.indexOf(ctx.picking);
+		if(index !== -1){
+			ctx.world._systems.splice(index, 1);
+		}
+		delete ctx.picking;
+		delete ctx.worldData.SimplePick;
 	}
-	delete ctx.picking;
-	delete ctx.worldData.SimplePick;
 }
