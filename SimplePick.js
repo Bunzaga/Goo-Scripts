@@ -5,8 +5,8 @@ function SimplePick(args, ctx, goo){
 		ctx.v2 = new goo.Vector3();
 		ctx.cross = new goo.Vector3();
 
-		var SimplePick = {};
-		SimplePick.ray = new goo.Ray();
+
+		this.ray = new goo.Ray();
 		// extend our 'primitive pick logic' with something a little less primitive
 		var hitSort = function(a, b){
 			return a.distance-b.distance;
@@ -124,9 +124,9 @@ function SimplePick(args, ctx, goo){
 			ctx.picking.hit = hit;
 		}
 		
-		SimplePick.added = function(ent){ctx.picking.added(ent);}
+		this.added = function(ent){ctx.picking.added(ent);}
 		
-		SimplePick.castRay = function(ray, mask, all){
+		this.castRay = function(ray, mask, all){
 			ctx.picking.pickRay = ray;
 			ctx.picking.mask = mask;
 			ctx.picking.all = all;
@@ -139,9 +139,9 @@ function SimplePick(args, ctx, goo){
 		ctx.world.setSystem(ctx.picking);
 	}
 
-	if(undefined === ctx.worldData.SimplePick){
-		ctx.worldData.SimplePick = SimplePick;
-	}
+	/*if(undefined === ctx.worldData.SimplePick){
+		ctx.worldData.SimplePick = this;
+	}*/
 
 	this.cleanup = function(args, ctx, goo){
 		var index = ctx.world._systems.indexOf(ctx.picking);
