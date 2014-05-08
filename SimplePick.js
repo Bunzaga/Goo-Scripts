@@ -12,7 +12,8 @@ function SimplePick(args, ctx, goo){
 	}
 	picking.onPick = function(result){
 		var hit = null;
-		if(null !== result){
+		if(null !== result){v
+		console.log(result);
 			if(result.length > 0){
 				var distance = typeof picking.pickRay.distance !== 'undefined' ? picking.pickRay.distance : Infinity;
 				var rayDir = picking.pickRay.direction;
