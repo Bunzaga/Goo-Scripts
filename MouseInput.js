@@ -10,6 +10,7 @@ var MouseInput = (function(){
 			MouseInput.delta = new goo.Vector2();
 			MouseInput.old = new goo.Vector2();
 			MouseInput.position = new goo.Vector2();
+			MouseInput.wheelDelta = 0;
 			MouseInput.getButton = function(btnCode){
 				var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 				return buttons[btn];
@@ -27,7 +28,7 @@ var MouseInput = (function(){
 			MouseInput.unbind = function(btnCode, callback){
 				if(null === callback){
 					console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
-					this.unbindAll(btnCode);
+					MouseInput.unbindAll(btnCode);
 					return MouseInput;
 				}
 				var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
@@ -46,6 +47,7 @@ var MouseInput = (function(){
 			function mouseWheel(e){
 				e = e || window.event;
 				var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+				MouseInput.wheelDelta = wheelDelta;
 				goo.SystemBus.emit("MouseInput8", wheelDelta);
 			}
 			function mouseDown(e){
