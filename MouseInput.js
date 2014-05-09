@@ -126,7 +126,7 @@ var MouseInput = (function(){
 			document.documentElement.addEventListener("mousewheel", mouseWheel, false);
 			document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 
-			this.cleanup = function() {
+			MouseInput.cleanup = function() {
 				for(var i in buttons){
 					goo.SystemBus.removeAllOnChannel("MouseInput"+i);
 				}
@@ -139,6 +139,7 @@ var MouseInput = (function(){
 				delete MouseInput.bind;
 				delete MouseInput.unbind;
 				delete MouseInput.unbindAll;
+				delete MouseInput.cleanup;
 				delete MouseInput.movement;
 				delete MouseInput.delta;
 				delete MouseInput.old;
