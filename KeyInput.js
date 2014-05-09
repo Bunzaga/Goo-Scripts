@@ -8,8 +8,7 @@ var KeyInput = (function(){
 				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 				return keys[key];
 			};
-			KeyInput.bind = function(){
-				function(keyCode, callback){
+			KeyInput.bind = function(keyCode, callback){
 					var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 					keys[key] = false;
 					if(callback){
