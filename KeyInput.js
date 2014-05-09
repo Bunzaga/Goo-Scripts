@@ -64,7 +64,7 @@ var KeyInput = (function(){
 			_goo = goo;
 			ctx.domElement.addEventListener("keyup", keyUp, false);
 			ctx.domElement.addEventListener("keydown", keyDown, false);
-		}
+		},
 		cleanup:function(){
 			for(var i in keys){
 				_goo.SystemBus.removeAllOnChannel("Key"+i);
