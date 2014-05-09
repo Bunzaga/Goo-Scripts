@@ -22,13 +22,13 @@ var MouseInput = (function(){
 						goo.SystemBus.addListener("MouseInput"+btn, callback);
 					}
 				}
-				return this;
+				return MouseInput;
 			};
 			MouseInput.unbind = function(btnCode, callback){
 				if(null === callback){
 					console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
 					this.unbindAll(btnCode);
-					return this;
+					return MouseInput;
 				}
 				var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 				if(undefined !== buttons[btn]){
@@ -36,12 +36,12 @@ var MouseInput = (function(){
 						goo.SystemBus.removeListener("MouseInput"+btn, callback);
 					}
 				}
-				return this;
+				return MouseInput;
 			};
 			MouseInput.unbindAll = function(btnCode){
 				var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 				goo.SystemBus.removeAllOnChannel("MouseInput"+btn);
-				return this;
+				return MouseInput;
 			};
 			function mouseWheel(e){
 				e = e || window.event;
