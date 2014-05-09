@@ -147,7 +147,7 @@ var SimplePick = (function(){
 					ctx.world._systems.splice(index, 1);
 				}
 				delete SimplePick.added;
-				delete SinplePick.castRay;
+				delete SimplePick.castRay;
 				delete SimplePick.cleanup;
 			}
 		}
