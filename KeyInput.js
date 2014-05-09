@@ -9,15 +9,14 @@ var KeyInput = (function(){
 				return keys[key];
 			};
 			KeyInput.bind = function(keyCode, callback){
-					var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-					keys[key] = false;
-					if(callback){
-						if(typeof callback === 'function'){
-							goo.SystemBus.addListener("Key"+key, callback);
-						}
+				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
+				keys[key] = false;
+				if(callback){
+					if(typeof callback === 'function'){
+						goo.SystemBus.addListener("Key"+key, callback);
 					}
-					return KeyInput;
 				}
+				return KeyInput;
 			};
 			KeyInput.unbind = function(keyCode, callback){
 				if(undefined === callback){
