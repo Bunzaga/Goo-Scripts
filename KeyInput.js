@@ -63,6 +63,6 @@ var KeyInput = (function(){
 			};
 			ctx.domElement.addEventListener("keyup", keyUp, false);
 			ctx.domElement.addEventListener("keydown", keyDown, false);
-		};
-	}
+		}
+	};
 })();
