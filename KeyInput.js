@@ -58,11 +58,11 @@ var KeyInput = (function(){
 				for(var i in keys){
 					goo.SystemBus.removeAllOnChannel("Key"+i);
 				}
-				ctx.domElement.removeEventListener("keyup", keyUp, false);
-				ctx.domElement.removeEventListener("keydown", keyDown, false);
+				document.documentElement.removeEventListener("keyup", keyUp, false);
+				document.documentElement.removeEventListener("keydown", keyDown, false);
 			};
-			ctx.domElement.addEventListener("keyup", keyUp, false);
-			ctx.domElement.addEventListener("keydown", keyDown, false);
+			document.documentElement.addEventListener("keyup", keyUp, false);
+			document.documentElement.addEventListener("keydown", keyDown, false);
 		}
 	};
 })();
