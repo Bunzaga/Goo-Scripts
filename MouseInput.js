@@ -1,6 +1,6 @@
 var MouseInput = (function(){
 	return{
-		setup:function(){
+		setup:function(args, ctx, goo){
 			var buttons = {};
 			var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 			var offsetLeft = ctx.domElement.getBoundingClientRect().left;
