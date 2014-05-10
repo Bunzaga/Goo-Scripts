@@ -103,14 +103,13 @@ var MouseInput = (function(){
 				goo.SystemBus.emit("MouseInput"+btn, false);
 			}
 			function mouseMove(e){
+				e = e || window.event;
+				if (e && e.preventDefault) {e.preventDefault();}
+				if (e && e.stopPropagation) {e.stopPropagation();}
 				updateMousePos(e);
 				goo.SystemBus.emit("MouseInput16", false);
 			}
 			function updateMousePos(e){
-				e = e || window.event;
-				if (e && e.preventDefault) {e.preventDefault();}
-				if (e && e.stopPropagation) {e.stopPropagation();}
-
 				var newX = e.pageX ? e.pageX : e.clientX + (document.documentElement.scrollLeft) ||
 					(document.body.scrollLeft - document.documentElement.clientLeft);
 
