@@ -135,10 +135,10 @@ var TouchInput = (function(){
 				for(var i in touchTypes){
 					goo.SystemBus.removeAllOnChannel(i);
 				}
-				ctx.domElement.removeEventListener("touchstart", touchStart, false);
-				ctx.domElement.removeEventListener("touchmove", touchMove, false);
-				ctx.domElement.removeEventListener("touchend", touchEnd, false);
-				ctx.domElement.removeEventListener("touchcancel", touchCancel, false);
+				document.documentElement.removeEventListener("touchstart", touchStart, false);
+				document.documentElement.removeEventListener("touchmove", touchMove, false);
+				document.documentElement.removeEventListener("touchend", touchEnd, false);
+				document.documentElement.removeEventListener("touchcancel", touchCancel, false);
 				delete TouchInput.bind;
 				delete TouchInput.unbind;
 				delete TouchInput.unbindAll;
@@ -146,10 +146,10 @@ var TouchInput = (function(){
 				delete TouchInput.cleanup;
 			}
 			
-			ctx.domElement.addEventListener("touchstart", touchStart, false);
-			ctx.domElement.addEventListener("touchmove", touchMove, false);
-			ctx.domElement.addEventListener("touchend", touchEnd, false);
-			ctx.domElement.addEventListener("touchcancel", touchCancel, false);
+			document.documentElement.addEventListener("touchstart", touchStart, false);
+			document.documentElement.addEventListener("touchmove", touchMove, false);
+			document.documentElement.addEventListener("touchend", touchEnd, false);
+			document.documentElement.addEventListener("touchcancel", touchCancel, false);
 		}
 	}
 })();
