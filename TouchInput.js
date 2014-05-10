@@ -132,7 +132,7 @@ var TouchInput = (function(){
 			}
 			
 			TouchInput.cleanup = function(){
-				for(var i in touches){
+				for(var i in touchTypes){
 					console.log(i);
 					goo.SystemBus.removeAllOnChannel(i);
 				}
