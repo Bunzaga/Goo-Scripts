@@ -46,11 +46,16 @@ var MouseInput = (function(){
 			};
 			function mouseWheel(e){
 				e = e || window.event;
+				if (e && e.preventDefault) {e.preventDefault();}
+				if (e && e.stopPropagation) {e.stopPropagation();}
 				var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 				MouseInput.wheelDelta = wheelDelta;
 				goo.SystemBus.emit("MouseInput8", wheelDelta);
 			}
 			function mouseDown(e){
+				e = e || window.event;
+				if (e && e.preventDefault) {e.preventDefault();}
+				if (e && e.stopPropagation) {e.stopPropagation();}
 				var btn = 0;
 				if(null === e.which){
 					btn = e.button;
@@ -73,7 +78,9 @@ var MouseInput = (function(){
 				goo.SystemBus.emit("MouseInput"+btn, true);
 			}
 			function mouseUp(e){
-				//updateMousePos(e);
+				e = e || window.event;
+				if (e && e.preventDefault) {e.preventDefault();}
+				if (e && e.stopPropagation) {e.stopPropagation();}
 				var btn = 0;
 				if(null === e.which){
 					btn = e.button;
