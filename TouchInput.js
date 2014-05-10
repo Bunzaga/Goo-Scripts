@@ -43,12 +43,13 @@ var TouchInput = (function(){
 				}
 				return TouchInput;
 			};
-			TouchInput.unbindAll = function(){
+			TouchInput.unbindAll = function(touchEvent){
 				if(touchTypes[touchEvent] === undefined){
 					console.warn("TouchInput.unbind: Unrecognized touchEvent.");
 					console.warn(" ~ touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
 				}
 				else{
+					goo.SystemBus.removeAllOnChannel(touchEvent);
 				}
 				return TouchInput;
 			};
