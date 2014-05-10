@@ -24,11 +24,33 @@ var TouchInput = (function(){
 				}
 				return TouchInput;
 			};
-			TouchInput.unbind = function(){
+			TouchInput.unbind = function(touchEvent, callback){
 				
+				if(callback){
+					if(touchTypes[touchEvent] === undefined){
+						console.warn("TouchInput.unbind: Unrecognized touchEvent.");
+						console.warn(" ~ touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
+					}
+					else{
+						if(typeof callback === 'function'){
+							goo.SystemBus.removeListener(touchEvent, callback);
+						}
+					}
+				}
+				else{
+					console.warn("TouchInput.unbind: You should pass in the callback to remove, did you mean 'TouchInput.unbindAll ?");
+					TouchInput.unbindAll(touchEvent);
+				}
+				return TouchInput;
 			};
 			TouchInput.unbindAll = function(){
-				
+				if(touchTypes[touchEvent] === undefined){
+					console.warn("TouchInput.unbind: Unrecognized touchEvent.");
+					console.warn(" ~ touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
+				}
+				else{
+				}
+				return TouchInput;
 			};
 			
 			function touchStart(e){
