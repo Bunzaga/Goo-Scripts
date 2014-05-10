@@ -59,7 +59,7 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 				if(e.target !== ctx.domElement){return;}
-				console.log("touchStart");
+			//	console.log("touchStart");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					if(undefined === touches[e.changedTouches[i].identifier]){
 						touches[e.changedTouches[i].identifier] = {
@@ -83,7 +83,7 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 				if(e.target !== ctx.domElement){return;}
-				console.log("touchMove");
+			//	console.log("touchMove");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
 					goo.SystemBus.emit("TouchMove", touches[e.changedTouches[i].identifier]);
@@ -94,7 +94,7 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 				if(e.target !== ctx.domElement){return;}
-				console.log("touchEnd");
+			//	console.log("touchEnd");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
 					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
@@ -105,7 +105,7 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 				if(e.target !== ctx.domElement){return;}
-				console.log("touchCancel");
+			//	console.log("touchCancel");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
 					goo.SystemBus.emit("TouchCancel", touches[e.changedTouches[i].identifier]);
@@ -133,7 +133,6 @@ var TouchInput = (function(){
 			
 			TouchInput.cleanup = function(){
 				for(var i in touchTypes){
-					console.log(i);
 					goo.SystemBus.removeAllOnChannel(i);
 				}
 				ctx.domElement.removeEventListener("touchstart", touchStart, false);
