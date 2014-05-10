@@ -10,8 +10,8 @@ var TouchInput = (function(){
 			TouchInput.bind = function(touchEvent, callback){
 				console.log("touchType:"+touchTypes[touchEvent]);
 				if(touchTypes[touchEvent] === undefined){
-					console.warn("TouchInput.bind: Unrecognized touchEvent."+
-						"/n    'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
+					console.warn("TouchInput.bind: Unrecognized touchEvent.");
+					console.warn("touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
 					return TouchInput;
 				}
 				console.log("callback is "+callback);
