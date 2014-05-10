@@ -8,20 +8,19 @@ var TouchInput = (function(){
 			TouchInput.touches = touches;
 			//Object.freeze(TouchInput.touches);
 			TouchInput.bind = function(touchEvent, callback){
-				console.log("touchType:"+touchTypes[touchEvent]);
 				if(touchTypes[touchEvent] === undefined){
 					console.warn("TouchInput.bind: Unrecognized touchEvent.");
-					console.warn("touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
-					return TouchInput;
-				}
-				console.log("callback is "+callback);
-				if(callback){
-					if(typeof callback === 'function'){
-						goo.SystemBus.addListener(touchEvent, callback);
-					}
+					console.warn(" ~ touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
 				}
 				else{
-					console.warn("TouchInput.bind: You must pass in a callback as the secod argument.");
+					if(callback){
+						if(typeof callback === 'function'){
+							goo.SystemBus.addListener(touchEvent, callback);
+						}
+					}
+					else{
+						console.warn("TouchInput.bind: You must pass in a callback function as the secod argument.");
+					}
 				}
 				return TouchInput;
 			};
