@@ -133,6 +133,7 @@ var TouchInput = (function(){
 			
 			TouchInput.cleanup = function(){
 				for(var i in touches){
+					console.log(i);
 					goo.SystemBus.removeAllOnChannel(i);
 				}
 				ctx.domElement.removeEventListener("touchstart", touchStart, false);
