@@ -68,13 +68,10 @@ var TouchInput = (function(){
 							delta:new goo.Vector2(),
 							time:ctx.world.time,
 							old:new goo.Vector2()};
-						updateTouchPos(e.changedTouches[i]);
-						touches[e.changedTouches[i].identifier].delta.copy(goo.Vector2.ZERO);	
-						touches[e.changedTouches[i].identifier].old.copy(touches[e.changedTouches[i].identifier].position);
 					}
-					else{
-						updateTouchPos(e.changedTouches[i]);
-					}
+					updateTouchPos(e.changedTouches[i]);
+					touches[e.changedTouches[i].identifier].delta.copy(goo.Vector2.ZERO);	
+					touches[e.changedTouches[i].identifier].old.copy(touches[e.changedTouches[i].identifier].position);
 					goo.SystemBus.emit("TouchStart", touches[e.changedTouches[i].identifier]);
 				}
 			}
