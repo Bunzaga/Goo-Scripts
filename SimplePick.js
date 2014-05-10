@@ -149,6 +149,7 @@ var SimplePick = (function(){
 				delete SimplePick.added;
 				delete SimplePick.castRay;
 				delete SimplePick.cleanup;
+				delete SimplePick.ray;
 			}
 		}
 	}
