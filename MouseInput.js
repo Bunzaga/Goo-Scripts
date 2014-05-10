@@ -146,6 +146,7 @@ var MouseInput = (function(){
 				delete MouseInput.delta;
 				delete MouseInput.old;
 				delete MouseInput.position;
+				delete MouseInput.wheelDelta;
 			}
 		}
 	};
