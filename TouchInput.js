@@ -22,6 +22,7 @@ var TouchInput = (function(){
 						console.warn("TouchInput.bind: You must pass in a callback function as the secod argument.");
 					}
 				}
+				console.log("Done binding:"+touchEvent);
 				return TouchInput;
 			};
 			TouchInput.unbind = function(touchEvent, callback){
@@ -41,6 +42,7 @@ var TouchInput = (function(){
 					console.warn("TouchInput.unbind: You should pass in the callback to remove, did you mean 'TouchInput.unbindAll ?");
 					TouchInput.unbindAll(touchEvent);
 				}
+				console.log("Done unbinding:"+touchEvent);
 				return TouchInput;
 			};
 			TouchInput.unbindAll = function(touchEvent){
@@ -51,6 +53,7 @@ var TouchInput = (function(){
 				else{
 					goo.SystemBus.removeAllOnChannel(touchEvent);
 				}
+				console.log("Done unbindingAll:"+touchEvent);
 				return TouchInput;
 			};
 			
