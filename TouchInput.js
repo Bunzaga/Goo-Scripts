@@ -132,7 +132,7 @@ var TouchInput = (function(){
 
 				newX -= (offsetLeft + ctx.domElement.offsetLeft);
 				newY -= (offsetTop + ctx.domElement.offsetTop);
-
+				console.log("TouchInput: updateTouchPos e.identifier:"+e.identifier);
 				touches[e.identifier].delta.x = newX - touches[e.identifier].position.x;
 				touches[e.identifier].delta.y = newY - touches[e.identifier].position.y;
 				touches[e.identifier].old.x = touches[e.identifier].position.x;
