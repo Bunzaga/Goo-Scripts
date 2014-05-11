@@ -154,7 +154,9 @@ var TouchInput = (function(){
 				delete TouchInput.touches;
 				delete TouchInput.cleanup;
 			}
+			document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false);
 			document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
+			document.body.addEventListener('touchend', function(e) {e.preventDefault();}, false);
 			ctx.domElement.addEventListener("touchstart", touchStart, false);
 			ctx.domElement.addEventListener("touchmove", touchMove, false);
 			ctx.domElement.addEventListener("touchend", touchEnd, false);
