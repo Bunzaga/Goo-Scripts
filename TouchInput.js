@@ -117,10 +117,10 @@ var TouchInput = (function(){
 				console.log("TouchInput:touchCancel");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
-					console.log("ToucheInput:e.touches["+i+"].identifier:"+e.touches[i].identifier);
-					console.log("TouchInput:e.touches["+i+"]:");
-					console.log(e.touches[i]);
+					goo.SystemBus.emit("TouchCancel", touches[e.changedTouches[i].identifier]);
+					console.log("ToucheInput:e.changedTouches["+i+"].identifier:"+e.changedTouches[i].identifier);
+					console.log("TouchInput:e.changedTouches["+i+"]:");
+					console.log(e.changedTouches[i]);
 				}
 			}
 			
