@@ -19,15 +19,14 @@ var TouchInput = (function(){
 								eventList[touchEvent] = {first:null, last:null};
 							}
 							var node = {previous:null, next:null, callback:callback};
-							if( null === eventList[touchEvent].first ){
+							if(null === eventList[touchEvent].first){
 								eventList[touchEvent].first = node;
 								eventList[touchEvent].last = node;
 							}
 							else{
-								eventList[touchEvent].last.next = node;
-								node.previous = eventList[touchEvent].last;
-								node.next = null;
-								eventList[touchEvent].last = node;
+								node.next = eventList[touchEvent].first;
+								eventList[touchEvent].first.previous = node;
+								eventList[touchEvent].first = node;
 							}
 							
 						}
