@@ -82,7 +82,7 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchMove");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					updateTouchPos(e.touches[i]);
+					updateTouchPos(e.touches[e.touches[i].identifier]);
 					goo.SystemBus.emit("TouchMove", touches[e.touches[i].identifier]);
 				}
 			}
@@ -93,7 +93,7 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchEnd");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					updateTouchPos(e.touches[i]);
+					updateTouchPos(e.touches[e.touches[i].identifier]);
 					goo.SystemBus.emit("TouchEnd", touches[e.touches[i].identifier]);
 				}
 			}
@@ -104,7 +104,7 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchCancel");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					touchPos(e.changedTouches[i]);
+					touchPos(e.touches[e.touches[i].identifier]);
 					goo.SystemBus.emit("TouchCancel", touches[e.touches[i].identifier]);
 				}
 			}
