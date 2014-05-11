@@ -59,20 +59,20 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
-				console.log("touchStart");
-				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
-					if(undefined === touches[e.changedTouches[i].identifier]){
-						touches[e.changedTouches[i].identifier] = {
+				console.log("TouchInput:touchStart");
+				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
+					if(undefined === touches[e.touches[i].identifier]){
+						touches[e.touches[i].identifier] = {
 							position:new goo.Vector2(),
 							delta:new goo.Vector2(),
 							time:ctx.world.time,
 							old:new goo.Vector2()};
 					}
-					touches[e.changedTouches[i].identifier].id = e.changedTouches[i].identifier;
-					updateTouchPos(e.changedTouches[i]);
-					touches[e.changedTouches[i].identifier].delta.copy(goo.Vector2.ZERO);	
-					touches[e.changedTouches[i].identifier].old.copy(touches[e.changedTouches[i].identifier].position);
-					goo.SystemBus.emit("TouchStart", touches[e.changedTouches[i].identifier]);
+					touches[e.touches[i].identifier].id = e.changedTouches[i].identifier;
+					updateTouchPos(e.touches[i]);
+					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
+					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
+					goo.SystemBus.emit("TouchStart", touches[e.touches[i].identifier]);
 				}
 			}
 			function touchMove(e){
@@ -80,10 +80,10 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
-				console.log("touchMove");
-				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
-					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchMove", touches[e.changedTouches[i].identifier]);
+				console.log("TouchInput:touchMove");
+				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
+					updateTouchPos(e.touches[i]);
+					goo.SystemBus.emit("TouchMove", touches[e.touches[i].identifier]);
 				}
 			}
 			function touchEnd(e){
@@ -91,10 +91,10 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
-				console.log("touchEnd");
-				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
-					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
+				console.log("TouchInput:touchEnd");
+				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
+					updateTouchPos(e.touches[i]);
+					goo.SystemBus.emit("TouchEnd", touches[e.touches[i].identifier]);
 				}
 			}
 			function touchCancel(e){
@@ -102,10 +102,10 @@ var TouchInput = (function(){
 				if (e && e.preventDefault) {e.preventDefault();}
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
-				console.log("touchCancel");
-				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
-					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchCancel", touches[e.changedTouches[i].identifier]);
+				console.log("TouchInput:touchCancel");
+				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
+					touchPos(e.changedTouches[i]);
+					goo.SystemBus.emit("TouchCancel", touches[e.touches[i].identifier]);
 				}
 			}
 			
