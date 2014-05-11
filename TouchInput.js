@@ -60,6 +60,7 @@ var TouchInput = (function(){
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchStart");
+				console.log("TouchInput:e.touches.length:"+e.touches.length);
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
 					if(undefined === touches[e.touches[i].identifier]){
 						touches[e.touches[i].identifier] = {
@@ -69,8 +70,8 @@ var TouchInput = (function(){
 							old:new goo.Vector2()};
 					}
 					touches[e.touches[i].identifier].id = e.touches[i].identifier;
-					console.log(e.touches[i].identifier);
-					console.log(e.touches[i])
+					console.log("ToucheInput:e.touches[i].identifier"+e.touches[i].identifier);
+					console.log("TouchInput:e.touches[i]"+e.touches[i])
 					updateTouchPos(e.touches[i]);
 					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
