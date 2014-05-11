@@ -68,7 +68,7 @@ var TouchInput = (function(){
 							time:ctx.world.time,
 							old:new goo.Vector2()};
 					}
-					touches[e.touches[i].identifier].id = e.changedTouches[i].identifier;
+					touches[e.touches[i].identifier].id = e.touches[i].identifier;
 					updateTouchPos(e.touches[i]);
 					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
