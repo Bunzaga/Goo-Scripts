@@ -63,12 +63,12 @@ var TouchInput = (function(){
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					if(undefined === touches[e.changedTouches[i].identifier]){
 						touches[e.changedTouches[i].identifier] = {
-							id:e.changedTouches[i].identifier,
 							position:new goo.Vector2(),
 							delta:new goo.Vector2(),
 							time:ctx.world.time,
 							old:new goo.Vector2()};
 					}
+					touches[e.changedTouches[i].identifier].id = e.changedTouches[i].identifier;
 					updateTouchPos(e.changedTouches[i]);
 					touches[e.changedTouches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.changedTouches[i].identifier].old.copy(touches[e.changedTouches[i].identifier].position);
