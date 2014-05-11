@@ -105,7 +105,7 @@ var TouchInput = (function(){
 						touches[e.changedTouches[i].identifier] = {
 							position:new goo.Vector2(),
 							delta:new goo.Vector2(),
-							time:ctx.world.time,
+							time:0.0,
 							old:new goo.Vector2()
 						};
 					}
