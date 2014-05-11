@@ -62,14 +62,12 @@ var TouchInput = (function(){
 				console.log("TouchInput:touchStart");
 				console.log("TouchInput:e.touches.length:"+e.touches.length);
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					if(undefined === touches[e.touches[i].identifier]){
-						touches[e.touches[i].identifier] = {
-							position:new goo.Vector2(),
-							delta:new goo.Vector2(),
-							time:ctx.world.time,
-							old:new goo.Vector2()};
-					}
-					touches[e.touches[i].identifier].id = e.touches[i].identifier;
+					touches[e.touches[i].identifier] = {
+						id:Number(e.touches[i].identifier),
+						position:new goo.Vector2(),
+						delta:new goo.Vector2(),
+						time:ctx.world.time,
+						old:new goo.Vector2()};
 					updateTouchPos(e.touches[i]);
 					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
