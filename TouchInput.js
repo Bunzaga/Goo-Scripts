@@ -96,11 +96,11 @@ var TouchInput = (function(){
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchEnd");
-				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					console.log(e.touches[i].identifier);
-					console.log(e.touches[i])
-					updateTouchPos(e.touches[i]);
-					goo.SystemBus.emit("TouchEnd", touches[e.touches[i].identifier]);
+				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
+					console.log(e.changedTouches[i].identifier);
+					console.log(e.changedTouches[i])
+					updateTouchPos(e.changedTouches[i]);
+					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
 				}
 			}
 			function touchCancel(e){
@@ -109,9 +109,11 @@ var TouchInput = (function(){
 				if (e && e.stopPropagation) {e.stopPropagation();}
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchCancel");
-				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					updateTouchPos(e.touches[i]);
-					goo.SystemBus.emit("TouchCancel", touches[e.touches[i].identifier]);
+				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
+					console.log(e.changedTouches[i].identifier);
+					console.log(e.changedTouches[i])
+					updateTouchPos(e.changedTouches[i]);
+					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
 				}
 			}
 			
