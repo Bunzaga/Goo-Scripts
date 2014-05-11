@@ -5,6 +5,7 @@ var TouchInput = (function(){
 			var offsetTop = ctx.domElement.getBoundingClientRect().top;
 			var touches = {};
 			var touchTypes = {TouchStart:0, TouchMove:1, TouchEnd:2, TouchCancel:3};
+			var eventList = {};
 			TouchInput.touches = touches;
 			//Object.freeze(TouchInput.touches);
 			TouchInput.bind = function(touchEvent, callback){
@@ -15,7 +16,24 @@ var TouchInput = (function(){
 				else{
 					if(callback){
 						if(typeof callback === 'function'){
-							goo.SystemBus.addListener(touchEvent, callback);
+							//goo.SystemBus.addListener(touchEvent, callback);
+							if(undefined === eventList[touchEvent]){
+								eventList[touchEvent] = {first:null, last:null};
+							}
+							var node = {previous:null, next:null, callback:callback};
+							if( null === eventList[touchEvent].first ){
+								eventList[touchEvent].first = node;
+								eventList[touchEvent].last = node;
+								//node.next = null;
+								//node.previous = null;
+							}
+							else{
+								eventList[touchEvent].last.next = node;
+								node.previous = eventList[touchEvent].last;
+								node.next = null;
+								eventList[touchEvent].last = node;
+							}
+							
 						}
 					}
 					else{
@@ -34,7 +52,30 @@ var TouchInput = (function(){
 					}
 					else{
 						if(typeof callback === 'function'){
-							goo.SystemBus.removeListener(touchEvent, callback);
+							//goo.SystemBus.removeListener(touchEvent, callback);
+							if(eventList[touchEvent]){
+								var node = eventList[touchEvent].first;
+								while(node != null){
+									if(node.callback === callback){
+										break;
+									}
+									node = node.next;
+								}
+								if(node !== null){
+									if(eventList[touchEvent].first == node){
+										eventList[touchEvent].first = eventList[touchEvent].first.next;
+									}
+									if(eventList[touchEvent].last == node){
+										eventList[touchEvent].last = eventList[touchEvent].last.previous;
+									}
+									if(node.previous !== null){
+										node.previous.next = node.next;
+									}
+									if(node.next !== null ){
+										node.next.previous = node.previous;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -51,7 +92,16 @@ var TouchInput = (function(){
 					console.warn(" ~ touchEvents are 'TouchStart', 'TouchMove', 'TouchEnd', 'TouchCancel'.");
 				}
 				else{
-					goo.SystemBus.removeAllOnChannel(touchEvent);
+					//goo.SystemBus.removeAllOnChannel(touchEvent);
+					if(eventList[touchEvent]){
+						while( null != eventList[touchEvent].first ){
+							var node = eventList[touchEvent].first;
+							eventList[touchEvent].first = node.next;
+							node.previous = null;
+							node.next = null;
+						}
+						eventList[touchEvent].last = null;
+					}
 				}
 				console.log("Done unbindingAll:"+touchEvent);
 				return TouchInput;
@@ -74,7 +124,12 @@ var TouchInput = (function(){
 					updateTouchPos(e.touches[i]);
 					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
-					goo.SystemBus.emit("TouchStart", touches[e.touches[i].identifier]);
+					//goo.SystemBus.emit("TouchStart", touches[e.touches[i].identifier]);
+					var node = eventList["TouchStart"].first;
+					while(node !== null){
+						node.callback(touches[e.touches[i].identifier]);
+						node = node.next;
+					}
 					console.log("ToucheInput:e.touches["+i+"].identifier:"+e.touches[i].identifier);
 					console.log("TouchInput:e.touches["+i+"]:");
 					console.log(e.touches[i]);
@@ -89,7 +144,12 @@ var TouchInput = (function(){
 				console.log("TouchInput:e.touches.length:"+e.touches.length);
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
 					updateTouchPos(e.touches[i]);
-					goo.SystemBus.emit("TouchMove", touches[e.touches[i].identifier]);
+					//goo.SystemBus.emit("TouchMove", touches[e.touches[i].identifier]);
+					var node = eventList["TouchMove"].first;
+					while(node !== null){
+						node.callback(touches[e.touches[i].identifier]);
+						node = node.next;
+					}
 					console.log("ToucheInput:e.touches["+i+"].identifier:"+e.touches[i].identifier);
 					console.log("TouchInput:e.touches["+i+"]:");
 					console.log(e.touches[i]);
@@ -103,7 +163,12 @@ var TouchInput = (function(){
 				console.log("TouchInput:touchEnd");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
+					//goo.SystemBus.emit("TouchEnd", touches[e.changedTouches[i].identifier]);
+					var node = eventList["TouchEnd"].first;
+					while(node !== null){
+						node.callback(touches[e.changedTouches[i].identifier]);
+						node = node.next;
+					}
 					console.log("ToucheInput:e.changedTouches["+i+"].identifier:"+e.changedTouches[i].identifier);
 					console.log("TouchInput:e.changedTouches["+i+"]:");
 					console.log(e.changedTouches[i]);
@@ -117,7 +182,12 @@ var TouchInput = (function(){
 				console.log("TouchInput:touchCancel");
 				for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 					updateTouchPos(e.changedTouches[i]);
-					goo.SystemBus.emit("TouchCancel", touches[e.changedTouches[i].identifier]);
+					//goo.SystemBus.emit("TouchCancel", touches[e.changedTouches[i].identifier]);
+					var node = eventList["TouchCancel"].first;
+					while(node !== null){
+						node.callback(touches[e.changedTouches[i].identifier]);
+						node = node.next;
+					}
 					console.log("ToucheInput:e.changedTouches["+i+"].identifier:"+e.changedTouches[i].identifier);
 					console.log("TouchInput:e.changedTouches["+i+"]:");
 					console.log(e.changedTouches[i]);
