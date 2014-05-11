@@ -142,7 +142,7 @@ var TouchInput = (function(){
 				delete TouchInput.touches;
 				delete TouchInput.cleanup;
 			}
-			
+			document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
 			ctx.domElement.addEventListener("touchstart", touchStart, false);
 			ctx.domElement.addEventListener("touchmove", touchMove, false);
 			ctx.domElement.addEventListener("touchend", touchEnd, false);
