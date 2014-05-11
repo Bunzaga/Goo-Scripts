@@ -69,6 +69,8 @@ var TouchInput = (function(){
 							old:new goo.Vector2()};
 					}
 					touches[e.touches[i].identifier].id = e.touches[i].identifier;
+					console.log(e.touches[i].identifier);
+					console.log(e.touches[i])
 					updateTouchPos(e.touches[i]);
 					touches[e.touches[i].identifier].delta.copy(goo.Vector2.ZERO);	
 					touches[e.touches[i].identifier].old.copy(touches[e.touches[i].identifier].position);
@@ -82,7 +84,9 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchMove");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					updateTouchPos(e.touches[e.touches[i].identifier]);
+					console.log(e.touches[i].identifier);
+					console.log(e.touches[i])
+					updateTouchPos(e.touches[i]);
 					goo.SystemBus.emit("TouchMove", touches[e.touches[i].identifier]);
 				}
 			}
@@ -93,7 +97,9 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchEnd");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					updateTouchPos(e.touches[e.touches[i].identifier]);
+					console.log(e.touches[i].identifier);
+					console.log(e.touches[i])
+					updateTouchPos(e.touches[i]);
 					goo.SystemBus.emit("TouchEnd", touches[e.touches[i].identifier]);
 				}
 			}
@@ -104,7 +110,7 @@ var TouchInput = (function(){
 			//	if(e.target !== ctx.domElement){return;}
 				console.log("TouchInput:touchCancel");
 				for(var i = 0, ilen = e.touches.length; i < ilen; i++){
-					touchPos(e.touches[e.touches[i].identifier]);
+					updateTouchPos(e.touches[i]);
 					goo.SystemBus.emit("TouchCancel", touches[e.touches[i].identifier]);
 				}
 			}
