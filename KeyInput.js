@@ -9,7 +9,7 @@ var KeyInput = (function(){
 			};
 			KeyInput.setKey = function(keyCode, bool){
 				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-				if(undefined === keys[key]){return;}
+				if(undefined === keys[key]){return KeyInput;}
 				if(bool !== true && bool !== false){
 					console.warn("KeyInput.setKey: You must pass in a boolean value as the second parameter.");
 					return;
