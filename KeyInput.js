@@ -7,6 +7,18 @@ var KeyInput = (function(){
 				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 				return keys[key];
 			};
+			KeyInput.setKey = function(keyCode, bool){
+				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
+				if(undefined === keys[key]){return;}
+				if(bool !== true && bool !== false){
+					console.warn("KeyInput.setKey: You must pass in a boolean value as the second parameter.");
+					return;
+				}
+				if(bool === keys[key]){return;}
+				keys[key] = bool;
+				goo.SystemBus.emit("Key"+key, bool);
+				return KeyInput;
+			};
 			KeyInput.bind = function(keyCode, callback){
 				var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 				keys[key] = false;
