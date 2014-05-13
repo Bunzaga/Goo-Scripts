@@ -7,11 +7,11 @@ var MouseInput = (function(window, undefined){
 		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
 		var offsetTop = ctx.domElement.getBoundingClientRect().top;
 
-		MouseInput.movement = new goo.Vector2();
-		MouseInput.delta = new goo.Vector2();
-		MouseInput.old = new goo.Vector2();
-		MouseInput.position = new goo.Vector2();
-		MouseInput.wheelDelta = 0;
+		_this.movement = new goo.Vector2();
+		_this.delta = new goo.Vector2();
+		_this.old = new goo.Vector2();
+		_this.position = new goo.Vector2();
+		_this.wheelDelta = 0;
 		MouseInput.getButton = function(btnCode){
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 			return buttons[btn];
