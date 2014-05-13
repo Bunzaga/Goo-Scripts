@@ -1,9 +1,7 @@
 'use strict';
-(function(window, document, undefined){
-	
-	var MouseInput = {};
-	MouseInput.parameters = [{key:'test', default:0.0, type:'float'}];
-	MouseInput.setup = function(args, ctx, goo){
+var MouseInput = (function(window, document, undefined){
+	var _this = {};
+	_this.setup = function(args, ctx, goo){
 		var buttons = {};
 		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
@@ -158,9 +156,5 @@
 			delete MouseInput.wheelDelta;
 		}
 	};
-	
-	var global = global || window;
-	global.MouseInput = MouseInput;
-	
-
+	return _this;
 })(window, document);
