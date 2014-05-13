@@ -1,17 +1,17 @@
 'use strict';
-var MouseInput = (function(window, document, undefined){
-	var _this = {};
-	_this.setup = function(args, ctx, goo){
+(function(window, document, undefined){
+	MouseInput = {};
+	MouseInput.setup = function(args, ctx, goo){
 		var buttons = {};
 		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
 		var offsetTop = ctx.domElement.getBoundingClientRect().top;
 
-		_this.movement = new goo.Vector2();
-		_this.delta = new goo.Vector2();
-		_this.old = new goo.Vector2();
-		_this.position = new goo.Vector2();
-		_this.wheelDelta = 0;
+		MouseInput.movement = new goo.Vector2();
+		MouseInput.delta = new goo.Vector2();
+		MouseInput.old = new goo.Vector2();
+		MouseInput.position = new goo.Vector2();
+		MouseInput.wheelDelta = 0;
 		MouseInput.getButton = function(btnCode){
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 			return buttons[btn];
@@ -156,5 +156,6 @@ var MouseInput = (function(window, document, undefined){
 			delete MouseInput.wheelDelta;
 		}
 	};
-	return _this;
+	var global = global || window;
+	global.MouseInput = MouseInput;
 })(window, document);
