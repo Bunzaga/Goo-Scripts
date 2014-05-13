@@ -182,7 +182,7 @@
 
 		MouseInput.cleanup = function() {
 			for(var i in buttons){
-				goo.SystemBus.removeAllOnChannel("MouseInput"+i);
+				MouseInput.unbindAll("MouseInput"+i);
 			}
 			document.documentElement.removeEventListener('mousemove', mouseMove, false);
 			document.documentElement.removeEventListener('mousedown', mouseDown, false);
