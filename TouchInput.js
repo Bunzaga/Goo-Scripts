@@ -204,5 +204,5 @@
 		ctx.domElement.addEventListener("touchcancel", touchCancel, false);
 	}
 	var global = global || window;
-	window.TouchInput = TouchInput;
+	global.TouchInput = TouchInput;
 }(window, document));
