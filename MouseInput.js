@@ -1,5 +1,5 @@
 'use strict';
-var MouseInput = (function(window, document, undefined){
+var MouseInput = (function(window, undefined){
 	var _this = {};
 	_this.setup = function(args, ctx, goo){
 		var buttons = {};
@@ -157,4 +157,4 @@ var MouseInput = (function(window, document, undefined){
 		}
 	};
 	return _this;
-})(window, document);
+})(window);
