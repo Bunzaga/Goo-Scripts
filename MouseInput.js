@@ -1,5 +1,5 @@
 'use strict';
-(function(){
+(function(window, document, undefined){
 	
 	var MouseInput = {};
 	MouseInput.setup = function(args, ctx, goo){
@@ -162,4 +162,4 @@
 	global.MouseInput = MouseInput;
 	
 
-})();
+})(window, document);
