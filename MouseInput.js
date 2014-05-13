@@ -2,6 +2,7 @@
 (function(window, document, undefined){
 	
 	var MouseInput = {};
+	MouseInput.parameters = [{key:'test', default:0.0, type:'float'}];
 	MouseInput.setup = function(args, ctx, goo){
 		var buttons = {};
 		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
