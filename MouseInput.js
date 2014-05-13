@@ -96,7 +96,12 @@
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 			MouseInput.wheelDelta = wheelDelta;
-			goo.SystemBus.emit("MouseInput8", wheelDelta);
+			//goo.SystemBus.emit("MouseInput8", wheelDelta);
+			var node = eventList["MouseInput8"].first;
+			while(node !== null){
+				node.callback(wheelDelta);
+				node = node.next;
+			}
 		}
 		function mouseDown(e){
 			e = e || window.event;
@@ -121,7 +126,12 @@
 			}
 			if(true === buttons[btn]){return;}
 			buttons[btn] = true;
-			goo.SystemBus.emit("MouseInput"+btn, true);
+			//goo.SystemBus.emit("MouseInput"+btn, true);
+			var node = eventList["MouseInput"+btn].first;
+			while(node !== null){
+				node.callback(true);
+				node = node.next;
+			}
 		}
 		function mouseUp(e){
 			e = e || window.event;
@@ -146,14 +156,24 @@
 			}
 			if(false === buttons[btn]){return;}
 			buttons[btn] = false;
-			goo.SystemBus.emit("MouseInput"+btn, false);
+			//goo.SystemBus.emit("MouseInput"+btn, false);
+			var node = eventList["MouseInput"+btn].first;
+			while(node !== null){
+				node.callback(false);
+				node = node.next;
+			}
 		}
 		function mouseMove(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			updateMousePos(e);
-			goo.SystemBus.emit("MouseInput16", false);
+			//goo.SystemBus.emit("MouseInput16", false);
+			var node = eventList["MouseInput16"].first;
+			while(node !== null){
+				node.callback();
+				node = node.next;
+			}
 		}
 		function updateMousePos(e){
 			var newX = e.pageX ? e.pageX : e.clientX + (document.documentElement.scrollLeft) ||
