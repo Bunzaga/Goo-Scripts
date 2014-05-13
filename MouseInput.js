@@ -1,6 +1,6 @@
 'use strict';
 (function(window, document, undefined){
-	MouseInput = {};
+	var MouseInput = {};
 	MouseInput.setup = function(args, ctx, goo){
 		var buttons = {};
 		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
