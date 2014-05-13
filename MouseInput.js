@@ -6,6 +6,7 @@
 		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
 		var offsetTop = ctx.domElement.getBoundingClientRect().top;
+		var eventList = {};
 
 		MouseInput.movement = new goo.Vector2();
 		MouseInput.delta = new goo.Vector2();
@@ -21,7 +22,21 @@
 			buttons[btn] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					goo.SystemBus.addListener("MouseInput"+btn, callback);
+					//goo.SystemBus.addListener("MouseInput"+btn, callback);
+					if(undefined === eventList["MouseInput"+btn]){
+						eventList["MouseInput"+btn] = {first:null, last:null};
+					}
+					var node = {previous:null, next:null, callback:callback};
+					if(null === eventList["MouseInput"+btn].first){
+						eventList["MouseInput"+btn].first = node;
+						eventList["MouseInput"+btn].last = node;
+					}
+					else{
+						node.next = eventList["MouseInput"+btn].first;
+						eventList["MouseInput"+btn].first.previous = node;
+						eventList["MouseInput"+btn].first = node;
+					}
+					
 				}
 			}
 			return MouseInput;
@@ -35,14 +50,44 @@
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 			if(undefined !== buttons[btn]){
 				if(typeof callback === 'function'){
-					goo.SystemBus.removeListener("MouseInput"+btn, callback);
+					//goo.SystemBus.removeListener("MouseInput"+btn, callback);
+					var node = eventList["MouseInput"+btn].first;
+					while(node != null){
+						if(node.callback === callback){
+							break;
+						}
+						node = node.next;
+					}
+					if(node !== null){
+						if(eventList["MouseInput"+btn].first === node){
+							eventList["MouseInput"+btn].first = eventList["MouseInput"+btn].first.next;
+						}
+						if(eventList["MouseInput"+btn].last === node){
+							eventList["MouseInput"+btn].last = eventList["MouseInput"+btn].last.previous;
+						}
+						if(node.previous !== null){
+							node.previous.next = node.next;
+						}
+						if(node.next !== null ){
+							node.next.previous = node.previous;
+						}
+					}
 				}
 			}
 			return MouseInput;
 		};
 		MouseInput.unbindAll = function(btnCode){
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
-			goo.SystemBus.removeAllOnChannel("MouseInput"+btn);
+			//goo.SystemBus.removeAllOnChannel("MouseInput"+btn);
+			if(eventList["MouseInput"+btn]){
+				while(null !== eventList["MouseInput"+btn].first){
+					var node = eventList["MouseInput"+btn].first;
+					eventList["MouseInput"+btn].first = node.next;
+					node.previous = null;
+					node.next = null;
+				}
+				eventList["MouseInput"+btn].last = null;
+			}
 			return MouseInput;
 		};
 		function mouseWheel(e){
