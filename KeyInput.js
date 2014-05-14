@@ -73,7 +73,7 @@
 			return KeyInput;
 		};
 		KeyInput.unbindAll = function(keyCode){
-			var key = typeof keyCode === 'number' ? keyCode : ctx.stringToCode[""+keyCode];
+			var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 			console.log("unbinding key"+key);
 			if(eventList["Key"+key]){
 				while(null !== eventList["Key"+key].first){
