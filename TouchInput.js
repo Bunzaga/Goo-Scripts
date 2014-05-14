@@ -7,7 +7,7 @@
 		ctx.touches = {};
 		ctx.touchTypes = {TouchStart:0, TouchMove:1, TouchEnd:2, TouchCancel:3};
 		ctx.eventList = {};
-		TouchInput.touches = touches;
+		TouchInput.touches = ctx.touches;
 		TouchInput.bind = function(touchEvent, callback){
 			if(ctx.touchTypes[touchEvent] === undefined){
 				console.warn("TouchInput.bind: Unrecognized touchEvent.");
