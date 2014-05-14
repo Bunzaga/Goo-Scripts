@@ -102,6 +102,7 @@
 		};
 		
 		ctx.touchStart = function(e){
+			if(!ctx.eventList["TouchStart"]){return;}
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -127,6 +128,7 @@
 			}
 		}
 		ctx.touchMove = function(e){
+			if(!ctx.eventList["TouchMove"]){return;}
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -140,6 +142,7 @@
 			}
 		}
 		ctx.touchEnd = function(e){
+			if(!ctx.eventList["TouchEnd"]){return;}
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -153,6 +156,7 @@
 			}
 		}
 		ctx.touchCancel = function(e){
+			if(!ctx.eventList["TouchCancel"]){return;}
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
