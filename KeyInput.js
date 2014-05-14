@@ -118,7 +118,7 @@
 			if(eventList["Key"+keyCode]){
 				var node = eventList["Key"+keyCode].first;
 				while(node !== null){
-					node.callback(true);
+					node.callback(false);
 					node = node.next;
 				}
 			}
