@@ -25,7 +25,6 @@
 			keys[key] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					//goo.SystemBus.addListener("Key"+key, callback);
 					if(undefined === eventList["Key"+key]){
 						eventList["Key"+key] = {first:null, last:null};
 					}
@@ -50,11 +49,6 @@
 				return KeyInput;
 			}
 			var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-			//goo.SystemBus.removeListener("Key"+key, callback);
-			//var chan = goo.SystemBus._getNode("Key"+key);
-			//if(chan.listeners.length === 0){
-				//delete keys[key];
-			//}
 			var node = eventList["Key"+key].first;
 				while(node != null){
 					if(node.callback === callback){
@@ -80,8 +74,6 @@
 		};
 		KeyInput.unbindAll = function(keyCode){
 			var key = typeof keyCode === 'number' ? keyCode : ctx.stringToCode[""+keyCode];
-			//goo.SystemBus.removeAllOnChannel("Key"+key, callback);
-			//delete keys[key];
 			if(eventList["Key"+key]){
 				while(null !== eventList["Key"+key].first){
 					var node = eventList["Key"+key].first;
@@ -96,10 +88,8 @@
 		function keyDown(e){
 			e = e || window.event;
 			var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-			//if(undefined === keys[keyCode]){return;}
 			if(true === keys[keyCode]){return;}
 			keys[keyCode] = true;
-			//goo.SystemBus.emit("Key"+keyCode, true);
 			if(eventList["Key"+keyCode]){
 				var node = eventList["Key"+keyCode].first;
 				while(node !== null){
@@ -111,10 +101,8 @@
 		function keyUp(e){
 			e = e || window.event;
 			var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-			//if(undefined === keys[keyCode]){return;}
 			if(false === keys[keyCode]){return;}
 			keys[keyCode] = false;
-			//goo.SystemBus.emit("Key"+keyCode, false);
 			if(eventList["Key"+keyCode]){
 				var node = eventList["Key"+keyCode].first;
 				while(node !== null){
@@ -125,7 +113,6 @@
 		}
 		KeyInput.cleanup = function(){
 			for(var i in keys){
-				//goo.SystemBus.removeAllOnChannel("Key"+i);
 				KeyInput.unbindAll("Key"+i);
 			}
 			document.documentElement.removeEventListener("keyup", keyUp, false);
