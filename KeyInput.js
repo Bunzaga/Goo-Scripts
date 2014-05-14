@@ -79,5 +79,7 @@
 		};
 		document.documentElement.addEventListener("keyup", keyUp, false);
 		document.documentElement.addEventListener("keydown", keyDown, false);
-	};
+	}
+	var global = global || window;
+	global.KeyInput = KeyInput;
 }(window, document));
