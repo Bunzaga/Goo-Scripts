@@ -121,7 +121,7 @@
 				ctx.touches[e.changedTouches[i].identifier].old.copy(ctx.touches[e.changedTouches[i].identifier].position);
 				var node = ctx.eventList["TouchStart"].first;
 				while(node !== null){
-					node.callback(touches[e.changedTouches[i].identifier]);
+					node.callback(ctx.touches[e.changedTouches[i].identifier]);
 					node = node.next;
 				}
 			}
@@ -134,7 +134,7 @@
 				ctx.updateTouchPos(e.changedTouches[i]);
 				var node = ctx.eventList["TouchMove"].first;
 				while(node !== null){
-					node.callback(touches[e.changedTouches[i].identifier]);
+					node.callback(ctx.touches[e.changedTouches[i].identifier]);
 					node = node.next;
 				}
 			}
@@ -147,7 +147,7 @@
 				ctx.updateTouchPos(e.changedTouches[i]);
 				var node = ctx.eventList["TouchEnd"].first;
 				while(node !== null){
-					node.callback(touches[e.changedTouches[i].identifier]);
+					node.callback(ctx.touches[e.changedTouches[i].identifier]);
 					node = node.next;
 				}
 			}
@@ -160,7 +160,7 @@
 				ctx.updateTouchPos(e.changedTouches[i]);
 				var node = ctx.eventList["TouchCancel"].first;
 				while(node !== null){
-					node.callback(touches[e.changedTouches[i].identifier]);
+					node.callback(ctx.touches[e.changedTouches[i].identifier]);
 					node = node.next;
 				}
 			}
