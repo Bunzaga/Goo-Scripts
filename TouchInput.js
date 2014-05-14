@@ -16,7 +16,7 @@
 			else{
 				if(callback){
 					if(typeof callback === 'function'){
-						if(undefined === eventList[touchEvent]){
+						if(!eventList[touchEvent]){
 							eventList[touchEvent] = {first:null, last:null};
 						}
 						var node = {previous:null, next:null, callback:callback};
