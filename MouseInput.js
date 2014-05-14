@@ -70,7 +70,7 @@
 							node.next.previous = node.previous;
 						}
 					}
-					if null === ctx.eventList["MouseInput"+btn].first){
+					if(null === ctx.eventList["MouseInput"+btn].first){
 						delete ctx.eventList["MouseInput"];
 					}
 				}
