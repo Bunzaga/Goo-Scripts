@@ -185,7 +185,7 @@
 		}
 		
 		TouchInput.cleanup = function(){
-			for(var i in touchTypes){
+			for(var i in ctx.touchTypes){
 				TouchInput.unbindAll(""+i);
 			}
 			ctx.domElement.removeEventListener("touchstart", ctx.touchStart, false);
