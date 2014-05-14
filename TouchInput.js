@@ -194,7 +194,7 @@
 			}
 			document.documentElement.removeEventListener("touchstart", ctx.touchStart, false);
 			document.documentElement.removeEventListener("touchmove", ctx.touchMove, false);
-			document.documentElementdocument.documentElement.removeEventListener("touchend", ctx.touchEnd, false);
+			document.documentElement.removeEventListener("touchend", ctx.touchEnd, false);
 			document.documentElement.removeEventListener("touchcancel", ctx.touchCancel, false);
 			delete TouchInput.bind;
 			delete TouchInput.unbind;
