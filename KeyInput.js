@@ -74,7 +74,6 @@
 		};
 		KeyInput.unbindAll = function(keyCode){
 			var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-			console.log("unbinding key"+key);
 			if(eventList["Key"+key]){
 				while(null !== eventList["Key"+key].first){
 					var node = eventList["Key"+key].first;
@@ -114,7 +113,6 @@
 		}
 		KeyInput.cleanup = function(){
 			for(var i in keys){
-				console.log("keys["+i+"]:"+keys[i]);
 				KeyInput.unbindAll(Number(i));
 			}
 			document.documentElement.removeEventListener("keyup", keyUp, false);
