@@ -203,7 +203,7 @@
 
 		MouseInput.cleanup = function() {
 			for(var i in buttons){
-				MouseInput.unbindAll("MouseInput"+i);
+				MouseInput.unbindAll(Number(i));
 			}
 			document.documentElement.removeEventListener('mousemove', mouseMove, false);
 			document.documentElement.removeEventListener('mousedown', mouseDown, false);
