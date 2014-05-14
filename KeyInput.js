@@ -115,7 +115,7 @@
 		KeyInput.cleanup = function(){
 			for(var i in keys){
 				console.log("keys["+i+"]:"+keys[i]);
-				KeyInput.unbindAll(i);
+				KeyInput.unbindAll(Number(i));
 			}
 			document.documentElement.removeEventListener("keyup", keyUp, false);
 			document.documentElement.removeEventListener("keydown", keyDown, false);
