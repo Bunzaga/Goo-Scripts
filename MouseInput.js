@@ -187,8 +187,8 @@
 			var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 				(document.body.scrollTop - document.documentElement.scrollTop);
 
-			newX -= (offsetLeft + ctx.domElement.offsetLeft);
-			newY -= (offsetTop + ctx.domElement.offsetTop);
+			newX -= (ctx.offsetLeft + ctx.domElement.offsetLeft);
+			newY -= (ctx.offsetTop + ctx.domElement.offsetTop);
 			MouseInput.movement.x = e.movementX;
 			MouseInput.movement.y = e.movementY;
 			MouseInput.delta.x = newX - MouseInput.position.x;
