@@ -82,6 +82,7 @@
 					node.next = null;
 				}
 				eventList["Key"+key].last = null;
+				delete eventList["Key"+key];
 			}
 			return KeyInput;
 		};
