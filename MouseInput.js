@@ -84,6 +84,7 @@
 					node.next = null;
 				}
 				eventList["MouseInput"+btn].last = null;
+				delete eventList["MouseInput"+btn];
 			}
 			return MouseInput;
 		};
