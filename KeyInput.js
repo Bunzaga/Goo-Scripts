@@ -17,7 +17,13 @@
 			}
 			if(bool === ctx.keys[key]){return;}
 			ctx.keys[key] = bool;
-			//goo.SystemBus.emit("Key"+key, bool);
+			if(ctx.eventList["Key"+keyCode]){
+				var node = ctx.eventList["Key"+keyCode].first;
+				while(node !== null){
+					node.callback(bool);
+					node = node.next;
+				}
+			}
 			return KeyInput;
 		};
 		KeyInput.bind = function(keyCode, callback){
