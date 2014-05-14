@@ -22,7 +22,7 @@
 			buttons[btn] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					if(undefined === eventList["MouseInput"+btn]){
+					if(!eventList["MouseInput"+btn]){
 						eventList["MouseInput"+btn] = {first:null, last:null};
 					}
 					var node = {previous:null, next:null, callback:callback};
