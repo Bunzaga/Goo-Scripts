@@ -60,7 +60,7 @@
 						if(ctx.eventList["MouseInput"+btn].first === node){
 							ctx.eventList["MouseInput"+btn].first = ctx.eventList["MouseInput"+btn].first.next;
 						}
-						if(eventList["MouseInput"+btn].last === node){
+						if(ctx.eventList["MouseInput"+btn].last === node){
 							ctx.eventList["MouseInput"+btn].last = ctx.eventList["MouseInput"+btn].last.previous;
 						}
 						if(node.previous !== null){
