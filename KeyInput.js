@@ -25,7 +25,7 @@
 			keys[key] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					if(undefined === eventList["Key"+key]){
+					if(!eventList["Key"+key]){
 						eventList["Key"+key] = {first:null, last:null};
 					}
 					var node = {previous:null, next:null, callback:callback};
