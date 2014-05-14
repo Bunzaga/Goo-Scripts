@@ -182,7 +182,7 @@
 		
 		TouchInput.cleanup = function(){
 			for(var i in touchTypes){
-				TouchInput.unbindAll(i);
+				TouchInput.unbindAll(""+i);
 			}
 			ctx.domElement.removeEventListener("touchstart", touchStart, false);
 			ctx.domElement.removeEventListener("touchmove", touchMove, false);
