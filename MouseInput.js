@@ -231,4 +231,4 @@
 	};
 	var global = global || window;
 	global.MouseInput = MouseInput;
-})(window, document);
+}(window, document));
