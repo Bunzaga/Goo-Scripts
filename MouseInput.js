@@ -91,7 +91,7 @@
 			}
 			return MouseInput;
 		};
-		function mouseWheel(e){
+		ctx.mouseWheel = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -105,7 +105,7 @@
 				}
 			}
 		}
-		function mouseDown(e){
+		ctx.mouseDown = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -136,7 +136,7 @@
 				}
 			}
 		}
-		function mouseUp(e){
+		ctx.mouseUp = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -167,7 +167,7 @@
 				}
 			}
 		}
-		function mouseMove(e){
+		ctx.mouseMove = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -180,7 +180,7 @@
 				}
 			}
 		}
-		function updateMousePos(e){
+		ctx.updateMousePos = function(e){
 			var newX = e.pageX ? e.pageX : e.clientX + (document.documentElement.scrollLeft) ||
 				(document.body.scrollLeft - document.documentElement.clientLeft);
 
