@@ -206,7 +206,7 @@
 		document.documentElement.addEventListener("DOMMouseScroll", ctx.mouseWheel, false); // Firefox
 
 		MouseInput.cleanup = function() {
-			for(var i in buttons){
+			for(var i in ctx.buttons){
 				MouseInput.unbindAll(Number(i));
 			}
 			document.documentElement.removeEventListener('mousemove', ctx.mouseMove, false);
