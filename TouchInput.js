@@ -92,6 +92,7 @@
 						node.next = null;
 					}
 					eventList[touchEvent].last = null;
+					delete eventList[touchEvent];
 				}
 			}
 			return TouchInput;
