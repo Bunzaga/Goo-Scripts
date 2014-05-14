@@ -22,7 +22,6 @@
 			buttons[btn] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					//goo.SystemBus.addListener("MouseInput"+btn, callback);
 					if(undefined === eventList["MouseInput"+btn]){
 						eventList["MouseInput"+btn] = {first:null, last:null};
 					}
@@ -50,7 +49,6 @@
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 			if(undefined !== buttons[btn]){
 				if(typeof callback === 'function'){
-					//goo.SystemBus.removeListener("MouseInput"+btn, callback);
 					var node = eventList["MouseInput"+btn].first;
 					while(node != null){
 						if(node.callback === callback){
@@ -78,7 +76,6 @@
 		};
 		MouseInput.unbindAll = function(btnCode){
 			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
-			//goo.SystemBus.removeAllOnChannel("MouseInput"+btn);
 			if(eventList["MouseInput"+btn]){
 				while(null !== eventList["MouseInput"+btn].first){
 					var node = eventList["MouseInput"+btn].first;
@@ -96,7 +93,6 @@
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 			MouseInput.wheelDelta = wheelDelta;
-			//goo.SystemBus.emit("MouseInput8", wheelDelta);
 			if(eventList["MouseInput8"]){
 				var node = eventList["MouseInput8"].first;
 				while(node !== null){
@@ -128,7 +124,6 @@
 			}
 			if(true === buttons[btn]){return;}
 			buttons[btn] = true;
-			//goo.SystemBus.emit("MouseInput"+btn, true);
 			if(eventList["MouseInput"+btn]){
 				var node = eventList["MouseInput"+btn].first;
 				while(node !== null){
@@ -160,7 +155,6 @@
 			}
 			if(false === buttons[btn]){return;}
 			buttons[btn] = false;
-			//goo.SystemBus.emit("MouseInput"+btn, false);
 			if(eventList["MouseInput"+btn]){
 				var node = eventList["MouseInput"+btn].first;
 				while(node !== null){
@@ -174,7 +168,6 @@
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			updateMousePos(e);
-			//goo.SystemBus.emit("MouseInput16", false);
 			if(eventList["MouseInput16"]){
 				var node = eventList["MouseInput16"].first;
 				while(node !== null){
