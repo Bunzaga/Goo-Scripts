@@ -192,10 +192,10 @@
 			for(var i in ctx.touchTypes){
 				TouchInput.unbindAll(""+i);
 			}
-			ctx.domElement.removeEventListener("touchstart", ctx.touchStart, false);
-			ctx.domElement.removeEventListener("touchmove", ctx.touchMove, false);
-			ctx.domElement.removeEventListener("touchend", ctx.touchEnd, false);
-			ctx.domElement.removeEventListener("touchcancel", ctx.touchCancel, false);
+			document.documentElement.removeEventListener("touchstart", ctx.touchStart, false);
+			document.documentElement.removeEventListener("touchmove", ctx.touchMove, false);
+			document.documentElementdocument.documentElement.removeEventListener("touchend", ctx.touchEnd, false);
+			document.documentElement.removeEventListener("touchcancel", ctx.touchCancel, false);
 			delete TouchInput.bind;
 			delete TouchInput.unbind;
 			delete TouchInput.unbindAll;
@@ -206,10 +206,10 @@
 		document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
 		document.body.addEventListener('touchend', function(e) {e.preventDefault();}, false);
 		document.body.addEventListener("touchcancel", function(e) {e.preventDefault();}, false);
-		ctx.domElement.addEventListener("touchstart", ctx.touchStart, false);
-		ctx.domElement.addEventListener("touchmove", ctx.touchMove, false);
-		ctx.domElement.addEventListener("touchend", ctx.touchEnd, false);
-		ctx.domElement.addEventListener("touchcancel", ctx.touchCancel, false);
+		document.documentElement.addEventListener("touchstart", ctx.touchStart, false);
+		document.documentElement.addEventListener("touchmove", ctx.touchMove, false);
+		document.documentElement.addEventListener("touchend", ctx.touchEnd, false);
+		document.documentElement.addEventListener("touchcancel", ctx.touchCancel, false);
 	}
 	var global = global || window;
 	global.TouchInput = TouchInput;
