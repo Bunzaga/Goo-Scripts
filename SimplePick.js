@@ -153,4 +153,6 @@
 			delete SimplePick.ray;
 		};
 	}
+	var global = global || window;
+	global.SimplePick = SimplePick;
 }(window, document));
