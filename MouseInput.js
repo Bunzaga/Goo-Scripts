@@ -18,6 +18,7 @@
 		
 		offsetLeft = domElement.getBoundingClientRect().left;
 		offsetTop = domElement.getBoundingClientRect().top;
+		document.addEventListener("contextmenu", contextMenu, false);
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
@@ -28,6 +29,7 @@
 		for(var i in buttons){
 			MouseInput.unbindAll(Number(i));
 		}
+		document.removeEventListener("contextmenu", contextMenu, false);
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
 		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
@@ -126,6 +128,12 @@
 			}
 		}
 	};
+	var contextMenu = function(e){
+		e = e || window.event;
+		if (e && e.preventDefault) {e.preventDefault();}
+		if (e && e.stopPropagation) {e.stopPropagation();}
+		return false;
+	}
 	var mouseDown = function(e){
 		e = e || window.event;
 		if (e && e.preventDefault) {e.preventDefault();}
