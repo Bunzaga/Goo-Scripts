@@ -122,7 +122,7 @@
 			}
 		}
 		KeyInput.cleanup = function(){
-			for(var i in ctx.keys){
+			for(var i in keys){
 				KeyInput.unbindAll(Number(i));
 			}
 			document.documentElement.removeEventListener("keyup", keyUp, false);
