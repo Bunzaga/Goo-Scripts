@@ -136,7 +136,7 @@
 				}
 			}
 		}
-		ctx.mouseUp = function(e){
+		var mouseUp = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -167,7 +167,7 @@
 				}
 			}
 		}
-		ctx.mouseMove = function(e){
+		var mouseMove = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -180,7 +180,7 @@
 				}
 			}
 		}
-		ctx.updateMousePos = function(e){
+		var updateMousePos = function(e){
 			var newX = e.pageX ? e.pageX : e.clientX + (document.documentElement.scrollLeft) ||
 				(document.body.scrollLeft - document.documentElement.clientLeft);
 
