@@ -2,11 +2,11 @@
 (function(window, document, undefined){
 	var MouseInput = {};
 	MouseInput.setup = function(args, ctx, goo){
-		ctx.buttons = {};
-		ctx.stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
-		ctx.offsetLeft = ctx.domElement.getBoundingClientRect().left;
-		ctx.offsetTop = ctx.domElement.getBoundingClientRect().top;
-		ctx.eventList = {};
+		var buttons = {};
+		var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
+		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
+		var offsetTop = ctx.domElement.getBoundingClientRect().top;
+		var eventList = {};
 
 		MouseInput.movement = new goo.Vector2();
 		MouseInput.delta = new goo.Vector2();
@@ -14,26 +14,26 @@
 		MouseInput.position = new goo.Vector2();
 		MouseInput.wheelDelta = 0;
 		MouseInput.getButton = function(btnCode){
-			var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
-			return ctx.buttons[btn];
+			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
+			return buttons[btn];
 		}
 		MouseInput.bind = function(btnCode, callback){
-			var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
-			ctx.buttons[btn] = false;
+			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
+			buttons[btn] = false;
 			if(callback){
 				if(typeof callback === 'function'){
-					if(!ctx.eventList["MouseInput"+btn]){
-						ctx.eventList["MouseInput"+btn] = {first:null, last:null};
+					if(!eventList["MouseInput"+btn]){
+						eventList["MouseInput"+btn] = {first:null, last:null};
 					}
 					var node = {previous:null, next:null, callback:callback};
-					if(null === ctx.eventList["MouseInput"+btn].first){
-						ctx.eventList["MouseInput"+btn].first = node;
-						ctx.eventList["MouseInput"+btn].last = node;
+					if(null === eventList["MouseInput"+btn].first){
+						eventList["MouseInput"+btn].first = node;
+						eventList["MouseInput"+btn].last = node;
 					}
 					else{
 						node.next = ctx.eventList["MouseInput"+btn].first;
-						ctx.eventList["MouseInput"+btn].first.previous = node;
-						ctx.eventList["MouseInput"+btn].first = node;
+						eventList["MouseInput"+btn].first.previous = node;
+						eventList["MouseInput"+btn].first = node;
 					}
 					
 				}
@@ -46,10 +46,10 @@
 				MouseInput.unbindAll(btnCode);
 				return MouseInput;
 			}
-			var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
-			if(undefined !== ctx.buttons[btn]){
+			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
+			if(undefined !== buttons[btn]){
 				if(typeof callback === 'function'){
-					var node = ctx.eventList["MouseInput"+btn].first;
+					var node = eventList["MouseInput"+btn].first;
 					while(node != null){
 						if(node.callback === callback){
 							break;
@@ -57,11 +57,11 @@
 						node = node.next;
 					}
 					if(node !== null){
-						if(ctx.eventList["MouseInput"+btn].first === node){
-							ctx.eventList["MouseInput"+btn].first = ctx.eventList["MouseInput"+btn].first.next;
+						if(eventList["MouseInput"+btn].first === node){
+							eventList["MouseInput"+btn].first = eventList["MouseInput"+btn].first.next;
 						}
-						if(ctx.eventList["MouseInput"+btn].last === node){
-							ctx.eventList["MouseInput"+btn].last = ctx.eventList["MouseInput"+btn].last.previous;
+						if(eventList["MouseInput"+btn].last === node){
+							eventList["MouseInput"+btn].last = eventList["MouseInput"+btn].last.previous;
 						}
 						if(node.previous !== null){
 							node.previous.next = node.next;
@@ -70,42 +70,42 @@
 							node.next.previous = node.previous;
 						}
 					}
-					if(null === ctx.eventList["MouseInput"+btn].first){
-						delete ctx.eventList["MouseInput"];
+					if(null === eventList["MouseInput"+btn].first){
+						delete eventList["MouseInput"];
 					}
 				}
 			}
 			return MouseInput;
 		};
 		MouseInput.unbindAll = function(btnCode){
-			var btn = typeof btnCode === 'number' ? btnCode : ctx.stringToCode[btnCode];
-			if(ctx.eventList["MouseInput"+btn]){
-				while(null !== ctx.eventList["MouseInput"+btn].first){
-					var node = ctx.eventList["MouseInput"+btn].first;
-					ctx.eventList["MouseInput"+btn].first = node.next;
+			var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
+			if(eventList["MouseInput"+btn]){
+				while(null !== eventList["MouseInput"+btn].first){
+					var node = eventList["MouseInput"+btn].first;
+					eventList["MouseInput"+btn].first = node.next;
 					node.previous = null;
 					node.next = null;
 				}
-				ctx.eventList["MouseInput"+btn].last = null;
-				delete ctx.eventList["MouseInput"+btn];
+				eventList["MouseInput"+btn].last = null;
+				delete eventList["MouseInput"+btn];
 			}
 			return MouseInput;
 		};
-		ctx.mouseWheel = function(e){
+		var mouseWheel = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 			MouseInput.wheelDelta = wheelDelta;
-			if(ctx.eventList["MouseInput8"]){
-				var node = ctx.eventList["MouseInput8"].first;
+			if(eventList["MouseInput8"]){
+				var node = eventList["MouseInput8"].first;
 				while(node !== null){
 					node.callback(wheelDelta);
 					node = node.next;
 				}
 			}
 		}
-		ctx.mouseDown = function(e){
+		var mouseDown = function(e){
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
@@ -126,10 +126,10 @@
 						break;
 				}
 			}
-			if(true === ctx.buttons[btn]){return;}
-			ctx.buttons[btn] = true;
-			if(ctx.eventList["MouseInput"+btn]){
-				var node = ctx.eventList["MouseInput"+btn].first;
+			if(true === buttons[btn]){return;}
+			buttons[btn] = true;
+			if(eventList["MouseInput"+btn]){
+				var node = eventList["MouseInput"+btn].first;
 				while(node !== null){
 					node.callback(true);
 					node = node.next;
@@ -157,10 +157,10 @@
 						break;
 				}
 			}
-			if(false === ctx.buttons[btn]){return;}
-			ctx.buttons[btn] = false;
-			if(ctx.eventList["MouseInput"+btn]){
-				var node = ctx.eventList["MouseInput"+btn].first;
+			if(false === buttons[btn]){return;}
+			buttons[btn] = false;
+			if(eventList["MouseInput"+btn]){
+				var node = eventList["MouseInput"+btn].first;
 				while(node !== null){
 					node.callback(false);
 					node = node.next;
@@ -171,9 +171,9 @@
 			e = e || window.event;
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
-			ctx.updateMousePos(e);
-			if(ctx.eventList["MouseInput16"]){
-				var node = ctx.eventList["MouseInput16"].first;
+			updateMousePos(e);
+			if(eventList["MouseInput16"]){
+				var node = eventList["MouseInput16"].first;
 				while(node !== null){
 					node.callback();
 					node = node.next;
@@ -187,8 +187,8 @@
 			var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 				(document.body.scrollTop - document.documentElement.scrollTop);
 
-			newX -= (ctx.offsetLeft + ctx.domElement.offsetLeft);
-			newY -= (ctx.offsetTop + ctx.domElement.offsetTop);
+			newX -= (offsetLeft + ctx.domElement.offsetLeft);
+			newY -= (offsetTop + ctx.domElement.offsetTop);
 			MouseInput.movement.x = e.movementX;
 			MouseInput.movement.y = e.movementY;
 			MouseInput.delta.x = newX - MouseInput.position.x;
@@ -199,21 +199,21 @@
 			MouseInput.position.y = newY;
 		}
 
-		document.documentElement.addEventListener('mousedown', ctx.mouseDown, false);
-		document.documentElement.addEventListener('mouseup', ctx.mouseUp, false);
-		document.documentElement.addEventListener('mousemove', ctx.mouseMove, false);
-		document.documentElement.addEventListener("mousewheel", ctx.mouseWheel, false);
-		document.documentElement.addEventListener("DOMMouseScroll", ctx.mouseWheel, false); // Firefox
+		document.documentElement.addEventListener('mousedown', mouseDown, false);
+		document.documentElement.addEventListener('mouseup', mouseUp, false);
+		document.documentElement.addEventListener('mousemove', mouseMove, false);
+		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
+		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 
 		MouseInput.cleanup = function() {
-			for(var i in ctx.buttons){
+			for(var i in buttons){
 				MouseInput.unbindAll(Number(i));
 			}
-			document.documentElement.removeEventListener('mousemove', ctx.mouseMove, false);
-			document.documentElement.removeEventListener('mousedown', ctx.mouseDown, false);
-			document.documentElement.removeEventListener('mouseup', ctx.mouseUp, false);
-			document.documentElement.removeEventListener("mousewheel", ctx.mouseWheel, false);
-			document.documentElement.removeEventListener("DOMMouseScroll", ctx.mouseWheel, false); // Firefox
+			document.documentElement.removeEventListener('mousemove', mouseMove, false);
+			document.documentElement.removeEventListener('mousedown', mouseDown, false);
+			document.documentElement.removeEventListener('mouseup', mouseUp, false);
+			document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+			document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 			delete MouseInput.getButton;
 			delete MouseInput.bind;
 			delete MouseInput.unbind;
