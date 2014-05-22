@@ -1,3 +1,4 @@
+"use strict";
 (function(window, document){
   function AmmoSystem(args, ctx, goo){
     this.args = args;
