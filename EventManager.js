@@ -108,7 +108,16 @@
 	return EventManager;
     };
     EventManager.emit = function(){
-      return EventManager;
+	var e = [].shift.apply(arguments);
+	if(undefined === e){console.error("EventManager: You just pass in an event as the first parameter."); return;}
+	if(undefined !== eventList[e]){
+		var n = eventList[e].first;
+		while(n !== null){
+			n.callback(arguments);
+			n = n.next;
+		}
+	}
+	return EventManager;
     };
     EventManager.cleanup = function(){
       delete EventManager.bind;
@@ -116,13 +125,6 @@
       delete EventManager.unbindAll;
       delete EventManager.emit;
       delete EventManager.cleanup;
-    };
-    
-    var addFirst = function(list, node){
-      
-    };
-    var addSorted = function(list, node){
-      
     };
   };
   var global = global || window;
