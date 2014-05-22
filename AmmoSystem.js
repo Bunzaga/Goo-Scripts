@@ -2,7 +2,7 @@
 (function(window, document){
   function AmmoSystem(args, ctx, goo){
     this.args = args;
-    this.ctx. = ctx;
+    this.ctx = ctx;
     this.goo = goo;
   }
   AmmoSystem.parameters = [
