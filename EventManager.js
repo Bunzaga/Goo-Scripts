@@ -1,17 +1,17 @@
 (function(window, document){
   var EventManager = {};
   var eventList = {};
-  EventManager.setup = function(){
-    EventManager.bind = function(){
+  EventManager.setup = function(args, ctx, goo){
+    EventManager.bind = function(event, callback, priority){
       
     };
-    EventManager.unbind = function(){
+    EventManager.unbind = function(event, callback){
       
     };
-    EventManger.unbindAll = function(){
+    EventManger.unbindAll = function(event){
       
     };
-    EventManager.emit = function(){
+    EventManager.emit = function(event){
       
     };
     EventManager.cleanup = function(){
