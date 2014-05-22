@@ -6,22 +6,33 @@
 	var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 	var offsetLeft = 0.0;
 	var offsetTop = 0.0;
+	var domElement = undefined;
 	MouseInput.setup = function(args, ctx, goo){
+		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector2();
 		MouseInput.delta = new goo.Vector2();
 		MouseInput.old = new goo.Vector2();
 		MouseInput.position = new goo.Vector2();
 		MouseInput.wheelDelta = 0;
 		
-		offsetLeft = ctx.domElement.getBoundingClientRect().left;
-		offsetTop = ctx.domElement.getBoundingClientRect().top;
+		offsetLeft = domElement.getBoundingClientRect().left;
+		offsetTop = domElement.getBoundingClientRect().top;
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
 		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
 		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
-	}
-
+	};
+	MouseInput.cleanup = function() {
+		for(var i in buttons){
+			MouseInput.unbindAll(Number(i));
+		}
+		document.documentElement.removeEventListener('mousemove', mouseMove, false);
+		document.documentElement.removeEventListener('mousedown', mouseDown, false);
+		document.documentElement.removeEventListener('mouseup', mouseUp, false);
+		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+	};
 	MouseInput.getButton = function(btnCode){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		return buttons[btn];
@@ -40,7 +51,7 @@
 					eventList["MouseInput"+btn].last = node;
 				}
 				else{
-					node.next = ctx.eventList["MouseInput"+btn].first;
+					node.next = eventList["MouseInput"+btn].first;
 					eventList["MouseInput"+btn].first.previous = node;
 					eventList["MouseInput"+btn].first = node;
 				}
@@ -196,8 +207,8 @@
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
 
-		newX -= (offsetLeft + ctx.domElement.offsetLeft);
-		newY -= (offsetTop + ctx.domElement.offsetTop);
+		newX -= (offsetLeft + domElement.offsetLeft);
+		newY -= (offsetTop + domElement.offsetTop);
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
 		MouseInput.delta.x = newX - MouseInput.position.x;
@@ -206,16 +217,6 @@
 		MouseInput.old.y = MouseInput.position.y;
 		MouseInput.position.x = newX;
 		MouseInput.position.y = newY;
-	};
-	MouseInput.cleanup = function() {
-		for(var i in buttons){
-			MouseInput.unbindAll(Number(i));
-		}
-		document.documentElement.removeEventListener('mousemove', mouseMove, false);
-		document.documentElement.removeEventListener('mousedown', mouseDown, false);
-		document.documentElement.removeEventListener('mouseup', mouseUp, false);
-		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
-		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 	};
 	
 	var global = global || window;
