@@ -147,7 +147,7 @@
 			if (e && e.preventDefault) {e.preventDefault();}
 			if (e && e.stopPropagation) {e.stopPropagation();}
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
-				ctx.updateTouchPos(e.changedTouches[i]);
+				updateTouchPos(e.changedTouches[i]);
 				var node = eventList["TouchEnd"].first;
 				while(node !== null){
 					node.callback(touches[e.changedTouches[i].identifier]);
