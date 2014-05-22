@@ -93,7 +93,7 @@
 		}
 		return EventManager;
 	};
-    EventManger.unbindAll = function(e){
+    EventManager.unbindAll = function(e){
     	if(undefined !== eventList[e]){
 			while(null !== eventList[e].first){
 				var n = eventList[e].first;
