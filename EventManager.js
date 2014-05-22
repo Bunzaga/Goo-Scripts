@@ -95,17 +95,17 @@
       return EventManager;
     };
     EventManger.unbindAll = function(e){
-      if(undefined !== eventList[e]){
-				while(null !== eventList[e].first){
-					var n = eventList[e].first;
-					eventList[e].first = n.next;
-					n.previous = null;
-					n.next = null;
-				}
-				eventList[e].last = null;
-				delete eventList[e];
-			}
-      return EventManager;
+    	if(undefined !== eventList[e]){
+		while(null !== eventList[e].first){
+			var n = eventList[e].first;
+			eventList[e].first = n.next;
+			n.previous = null;
+			n.next = null;
+		}
+		eventList[e].last = null;
+		delete eventList[e];
+	}
+	return EventManager;
     };
     EventManager.emit = function(){
       return EventManager;
