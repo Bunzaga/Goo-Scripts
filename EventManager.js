@@ -9,11 +9,54 @@
       }
       var node = {previous:null, next:null, callback:callback};
       if(undefined === priority){
-        //addFirst(eventList[e], node);
+        if(null === eventList[e].first){
+    			eventList[e].first = node;
+    			eventList[e].last = node;
+    			node.next = null;
+    			node.previous = null;
+    		}
+    		else{
+    			node.next = eventList[e].first;
+    			eventList[e].first.previous = node;
+    			eventList[e].first = node;
+    		}
       }
       else{
         node.priority = priority;
-        //addSorted(eventList[e], node);
+        if(null == eventList[e].first){
+    			eventList[e].first = node;
+    			eventList[e].last = node;
+    			node.next = null;
+    			node.previous = null;
+    		}
+    		else{
+    			var n = eventList[e].last;
+    			while(n != null){
+    				if(n.priority <= node.priority){
+    					break;
+    				}
+    				n = n.previous;
+    			}
+    
+    			if(n == eventList[e].last){
+    				eventList[e].last.next = node;
+    				node.previous = eventList[e].last;
+    				node.next = null;
+    				eventList[e].last = node;
+    			}
+    			else if(null == n){
+    				node.next = eventList[e].first;
+    				node.previous = null;
+    				eventList[e].first.previous = node;
+    				eventList[e].first = node;
+    			}
+    			else{
+    				node.next = n.next;
+    				node.previous = n;
+    				n.next.previous = node;
+    				n.next = node;
+    			}
+    		}
       }
       return EventManager;
     };
