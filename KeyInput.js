@@ -111,7 +111,7 @@
 		var keyUp = function(e){
 			e = e || window.event;
 			var keyCode = (typeof e.which === "undefined") ? e.keyCode : e.which;
-			if(false === ctx.keys[keyCode]){return;}
+			if(false === keys[keyCode]){return;}
 			keys[keyCode] = false;
 			if(eventList["Key"+keyCode]){
 				var node = eventList["Key"+keyCode].first;
