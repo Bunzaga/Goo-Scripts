@@ -61,34 +61,50 @@
       return EventManager;
     };
     EventManager.unbind = function(e, callback){
-      if(undefined === eventList[e]){return;}
-      var node = eventList[e].first;
-      while(node != null){
-      	if(node.callback === callback){
-      		break;
-      	}
-      	node = node.next;
+      if(null === callback){
+        console.warn("EventManager.unbind: You should pass in the callback to remove as the second parameter, calling EventManger.unbindAll instead.");
+        EventManager.unbindAll(e);
+        return EventManager;
       }
-      if(node !== null){
-      	if(eventList[e].first === node){
-      		eventList[e].first = eventList[e].first.next;
-      	}
-      	if(eventList[e].last === node){
-      		eventList[e].last = eventList[e].last.previous;
-      	}
-      	if(node.previous !== null){
-      		node.previous.next = node.next;
-      	}
-      	if(node.next !== null ){
-      		node.next.previous = node.previous;
-      	}
-      }
-      if(null === eventList[e].first){
-      	delete eventList[e];
+      if(undefined !== eventList[e]){
+        var node = eventList[e].first;
+        while(node != null){
+        	if(node.callback === callback){
+        		break;
+        	}
+        	node = node.next;
+        }
+        if(node !== null){
+        	if(eventList[e].first === node){
+        		eventList[e].first = eventList[e].first.next;
+        	}
+        	if(eventList[e].last === node){
+        		eventList[e].last = eventList[e].last.previous;
+        	}
+        	if(node.previous !== null){
+        		node.previous.next = node.next;
+        	}
+        	if(node.next !== null ){
+        		node.next.previous = node.previous;
+        	}
+        }
+        if(null === eventList[e].first){
+        	delete eventList[e];
+        }
       }
       return EventManager;
     };
     EventManger.unbindAll = function(e){
+      if(undefined !== eventList[e]){
+				while(null !== eventList[e].first){
+					var n = eventList[e].first;
+					eventList[e].first = n.next;
+					n.previous = null;
+					n.next = null;
+				}
+				eventList[e].last = null;
+				delete eventList[e];
+			}
       return EventManager;
     };
     EventManager.emit = function(){
