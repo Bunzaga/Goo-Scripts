@@ -19,7 +19,7 @@
 	pquat.setValue(quat.x, quat.y, quat.z, quat.w);
 	ptrans.setRotation(pquat);
 	body.setCenterOfMassTransform(ptrans);
-  }
+  };
   var global = global || window;
   global.AmmoUtil = AmmoUtil;
 }(window, document, undefined));
