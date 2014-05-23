@@ -14,11 +14,11 @@
  	ptrans = ptrans || new Ammo.btTransform();
  	pquat = pquat || new Ammo.btQuaternion();
  	
-	body.getMotionState().getWorldTransform(ptrans);
+	ptrans = body.getCenterOfMassTransform();
 	pquat = ptrans.getRotation();
 	pquat.setValue(quat.x, quat.y, quat.z, quat.w);
 	ptrans.setRotation(pquat);
-	body.getMotionState().setWorldTransform(ptrans);
+	body.setCenterOfMassTransform(ptrans);
   }
   var global = global || window;
   global.AmmoUtil = AmmoUtil;
