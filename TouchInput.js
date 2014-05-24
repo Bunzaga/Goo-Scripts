@@ -1,6 +1,7 @@
 "use strict";
 (function(window, document, undefined){
 	var TouchInput = {};
+	TouchInput.ready = false;
 	TouchInput.setup = function(args, ctx, goo){
 		var offsetLeft = ctx.domElement.getBoundingClientRect().left;
 		var offsetTop = ctx.domElement.getBoundingClientRect().top;
@@ -201,6 +202,7 @@
 			delete TouchInput.unbindAll;
 			delete TouchInput.touches;
 			delete TouchInput.cleanup;
+			TouchInput.ready = false;
 		}
 		document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false);
 		document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
@@ -210,6 +212,7 @@
 		document.documentElement.addEventListener("touchmove", touchMove, false);
 		document.documentElement.addEventListener("touchend", touchEnd, false);
 		document.documentElement.addEventListener("touchcancel", touchCancel, false);
+		TouchInput.ready = true;
 	}
 	var global = global || window;
 	global.TouchInput = TouchInput;
