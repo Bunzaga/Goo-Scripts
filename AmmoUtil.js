@@ -92,7 +92,7 @@
 		console.log("3");
 		quat.fromRotationMatrix(gooRot);
 		console.log("4");
-		ammoTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		console.log("5");
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		console.log("6");
