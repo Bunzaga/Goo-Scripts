@@ -95,4 +95,4 @@
 	};
 	var global = global || window;
 	global.NodeList = NodeList;
-});
+}(window, document));
