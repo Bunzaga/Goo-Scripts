@@ -28,15 +28,12 @@
 	}
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
-		console.log("AmmoSystem processing...");
 		this.ammoWorld.stepSimulation( tpf, this.maxSubSteps, this.fixedTime);
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
 			var e = entities[i];
-			console.log(e.ammoRigidBody);
 			if(e.ammoRigidBody.mass > 0) {
-				console.log(e.name);
-				//e.ammoComponent.copyPhysicalTransformToVisual( e, tpf);
+				e.ammoRigidBody.updateVisuals(e, tpf);
 			}
 		}
 	};
@@ -89,6 +86,24 @@
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
   
+  	AmmoRigidBody.prototype.updateVisuals = function(e, tpf){
+  		var tc = e.transformComponent;
+  		var pos = tc.transform.translation;
+  		var rot = tc.transform.rotation;
+  		
+  		ptrans = ptrans || new Ammo.btTransform();
+	 	pquat = pquat || new Ammo.btQuaternion();
+	 	pvec = pvec || new Ammo.btVector3();
+
+  		//this.body.getMotionState().getWorldTransform(this.ammoTransform);
+  		ptrans = this.body.getCenterOfMassTransform();
+		pquat = ptrans.getRotation();
+		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		rot.copyQuaternion(quat);
+		pvec = ptrans.getOrigin();
+		pos.setd(pvec.x(), pvec.y(), pvec.z());
+		tc.setUpdated();
+  	}
   	
   	var ammoRigidBody = new AmmoRigidBody;
   	return ammoRigidBody;
