@@ -8,6 +8,7 @@
 	var domElement = undefined;
 	
 	var MouseInput = {};
+	MouseInput.ready = false;
 	MouseInput.setup = function(args, ctx, goo){
 		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector2();
@@ -24,6 +25,7 @@
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
 		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
 		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		MouseInput.ready = true;
 	};
 	MouseInput.cleanup = function() {
 		for(var i in buttons){
@@ -35,6 +37,7 @@
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
 		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
 		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		MouseInput.ready = false;
 	};
 	MouseInput.getButton = function(btnCode){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
