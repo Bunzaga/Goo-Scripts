@@ -76,7 +76,7 @@
 		
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if (isDynamic){
-			colShape.calculateLocalInertia(this.mass, localInertia);
+			this.colShape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		
