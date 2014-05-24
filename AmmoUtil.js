@@ -1,10 +1,10 @@
 (function(window, document){
   var AmmoUtil = {};
-  var pvec;
-  var ptrans;
-  var pquat;
-  var quat;
-  AmmoUtil.createAmmoSystem = function(goo, args){
+  var pvec,ptrans,pquat;
+  var quat,goo;
+  
+  AmmoUtil.createAmmoSystem = function(args, ctx, goo){
+  	goo = goo;
 	function AmmoSystem(){
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['AmmoRigidBody', 'TransformComponent']);
@@ -42,6 +42,18 @@
 	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
+  }
+  AmmoUtil.destroyAmmoSystem = function(ctx, ammoSystem){
+  	delete ammoSystem.ammoWorld;
+  	delete ammoSystem.solver;
+  	delete ammoSystem.overlappingPairCache;
+  	delete ammoSystem.dispatcher;
+  	delete ammoSystem.collisionConfiguration;
+  	
+  	var index = ctx.world._systems.indexOf(ammoSystem);
+  	if(index !== -1){
+  		ctx.world._systems.splice(index, 1);
+  	}
   }
   
   AmmoUtil.createAmmoRigidBody = function(goo, ctx, args){
