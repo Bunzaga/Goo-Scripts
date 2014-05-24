@@ -5,60 +5,14 @@
 	EventManager.bind = function(e, callback, priority){
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
-			//eventList[e] = {first:null, last:null};
 		}
 		var node = {previous:null, next:null, callback:callback};
 		if(undefined === priority){
 			eventList[e].addFirst(node);
-			/*if(null === eventList[e].first){
-    				eventList[e].first = node;
-    				eventList[e].last = node;
-    				node.next = null;
-    				node.previous = null;
-    			}
-    			else{
-    				node.next = eventList[e].first;
-    				eventList[e].first.previous = node;
-    				eventList[e].first = node;
-    			}*/
 		}
 		else{
 			node.priority = priority;
 			eventList[e].addSorted(node);
-			/*if(null == eventList[e].first){
-				eventList[e].first = node;
-				eventList[e].last = node;
-				node.next = null;
-				node.previous = null;
-			}
-			else{
-				var n = eventList[e].last;
-	    			while(n != null){
-	    				if(n.priority <= node.priority){
-	    					break;
-	    				}
-	    				n = n.previous;
-	    			}
-	    
-	    			if(n == eventList[e].last){
-	    				eventList[e].last.next = node;
-	    				node.previous = eventList[e].last;
-	    				node.next = null;
-	    				eventList[e].last = node;
-	    			}
-	    			else if(null == n){
-	    				node.next = eventList[e].first;
-	    				node.previous = null;
-	    				eventList[e].first.previous = node;
-	    				eventList[e].first = node;
-	    			}
-	    			else{
-	    				node.next = n.next;
-	    				node.previous = n;
-	    				n.next.previous = node;
-	    				n.next = node;
-	    			}
-	    		}*/
 	      }
 	      return EventManager;
 	};
@@ -79,18 +33,6 @@
 		        }
 		        if(node !== null){
 		        	eventList[e].remove(node);
-		        	/*if(eventList[e].first === node){
-		        		eventList[e].first = eventList[e].first.next;
-		        	}
-		        	if(eventList[e].last === node){
-		        		eventList[e].last = eventList[e].last.previous;
-		        	}
-		        	if(node.previous !== null){
-		        		node.previous.next = node.next;
-		        	}
-		        	if(node.next !== null ){
-		        		node.next.previous = node.previous;
-		        	}*/
 		        }
 		        if(null === eventList[e].first){
 		        	delete eventList[e];
@@ -101,13 +43,6 @@
     EventManager.unbindAll = function(e){
     	if(undefined !== eventList[e]){
     		eventList[e].clear();
-		/*while(null !== eventList[e].first){
-			var n = eventList[e].first;
-			eventList[e].first = n.next;
-			n.previous = null;
-			n.next = null;
-		}
-		eventList[e].last = null;*/
 		delete eventList[e];
 	}
 	return EventManager;
