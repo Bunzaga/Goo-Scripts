@@ -4,7 +4,7 @@
   var ptrans;
   var pquat;
   var quat;
-  AmmoUtils.createAmmoSystem = function(goo, args){
+  AmmoUtil.createAmmoSystem = function(goo, args){
   	args = args || {};
 	function AmmoSystem(){
 		goo.System.call(this, 'AmmoSystem', ['AmmoRigidBody', 'TransformComponent']);
@@ -29,7 +29,7 @@
 	return ammoSystem;
   }
   
-  AmmoUtils.createAmmoRigidBody = function(goo, ctx, args){
+  AmmoUtil.createAmmoRigidBody = function(goo, ctx, args){
 	function AmmoRigidbody(){
 		args = args || {};
   		this.type = 'AmmoRigidBody';
@@ -65,7 +65,7 @@
   	return ammoRigidBody;
   	
   }
-  AmmoUtils.createAmmoBoxComponent = function(goo, ent, args){
+  AmmoUtil.createAmmoBoxComponent = function(goo, ent, args){
   	function AmmoBoxComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
@@ -78,16 +78,16 @@
   	var ammoShape = new AmmoBoxComponent();
   	return ammoShape;
   }
-  AmmoUtils.createAmmoCapsuleComponent = function(args, ctx, goo){
+  AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
   	
   }
-  AmmoUtils.createAmmoSphereComponent = function(args, ctx, goo){
+  AmmoUtil.createAmmoSphereComponent = function(args, ctx, goo){
   	
   }
-  AmmoUtils.createAmmoMeshComponent = function(args, ctx, goo){
+  AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
   	
   }
-  AmmoUtils.createAmmoPlaneComponent = function(args, ctx, goo){
+  AmmoUtil.createAmmoPlaneComponent = function(args, ctx, goo){
   	
   }
   
