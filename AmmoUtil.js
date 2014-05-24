@@ -61,7 +61,7 @@
   
   AmmoUtil.createAmmoRigidBody = function(args, ctx, _goo){
   	goo = goo || _goo;
-	function AmmoRigidbody(){
+	function AmmoRigidBody(){
 		args = args || {};
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 1.0;
