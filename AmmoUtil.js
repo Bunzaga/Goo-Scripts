@@ -5,9 +5,11 @@
   var pquat;
   var quat;
   AmmoUtil.createAmmoSystem = function(goo, args){
-  	args = args || {};
 	function AmmoSystem(){
+		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['AmmoRigidBody', 'TransformComponent']);
+		this.fixedTime = 1/(args.stepFrequency || 60);
+		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(); // every single |new| currently leaks...
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
@@ -24,6 +26,18 @@
 	AmmoSystem.prototype.inserted = function(gooEnt){
 		this.ammoWorld.addRigidBody( ooEnt.ammoRigidBody.body);
 	}
+	
+	AmmoSystem.prototype.process = function(entities, tpf) {
+		this.ammoWorld.stepSimulation( tpf, this.maxSubSteps, this.fixedTime);
+
+		for (var i = 0, ilen = entities.length; i < ilen; i++) {
+			var e = entities[i];
+			if(e.ammoRigidBody.mass > 0) {
+				console.log(e.name);
+				//e.ammoComponent.copyPhysicalTransformToVisual( e, tpf);
+			}
+		}
+	};
 	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
