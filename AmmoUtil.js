@@ -95,8 +95,8 @@
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	pvec = pvec || new Ammo.btVector3();
 
-  		//this.body.getMotionState().getWorldTransform(this.ammoTransform);
-  		ptrans = this.body.getCenterOfMassTransform();
+  		this.body.getMotionState().getWorldTransform(ptrans);
+  		//ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		rot.copyQuaternion(quat);
