@@ -59,7 +59,8 @@
   	}
   }
   
-  AmmoUtil.createAmmoRigidBody = function(goo, ctx, args){
+  AmmoUtil.createAmmoRigidBody = function(args, ctx, _goo){
+  	goo = goo || _goo;
 	function AmmoRigidbody(){
 		args = args || {};
   		this.type = 'AmmoRigidBody';
