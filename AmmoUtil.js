@@ -71,23 +71,29 @@
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
 		
-		var isDynamic = (this.mass != 0);
+		var isDynamic = (this.mass !== 0);
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		
 		var localInertia = new Ammo.btVector3(0, 0, 0);
-		if (isDynamic){
+		if(isDynamic){
 			this.colShape.calculateLocalInertia(this.mass, localInertia);
 		}
+		console.log("1");
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
-		
+		console.log("2");
 		quat = quat || new goo.Quaternion();
+		console.log("3");
 		quat.fromRotationMatrix(gooRot);
+		console.log("4");
 		ammoTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
-		  
+		console.log("5");
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
+		console.log("6");
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.colShape, localInertia);
+		console.log("7");
 		this.body = new Ammo.btRigidBody(rbInfo);
+		console.log("8");
   	}
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
