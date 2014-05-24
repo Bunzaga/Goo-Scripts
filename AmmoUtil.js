@@ -66,7 +66,7 @@
 		args = args || {};
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 1.0;
-  		this.colShape = args.colShape || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
+  		this.ammoShape = args.colShape || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
   		
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
@@ -81,7 +81,8 @@
 		console.log("-2");
 		if(isDynamic){
 			console.log("-1");
-			this.colShape.calculateLocalInertia(this.mass, localInertia);
+			console.log(this.ammoShape);
+			this.ammoShape.shape.calculateLocalInertia(this.mass, localInertia);
 			console.log("0");
 		}
 		console.log("1");
@@ -95,7 +96,7 @@
 		console.log("5");
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		console.log("6");
-		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.colShape, localInertia);
+		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoShape, localInertia);
 		console.log("7");
 		this.body = new Ammo.btRigidBody(rbInfo);
 		console.log("8");
@@ -113,13 +114,13 @@
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'AmmoShapeComponent';
-  		this.ammoShape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
   	AmmoBoxComponent.prototype = Object.create(goo.Component.prototype);
   	AmmoBoxComponent.constructor = AmmoBoxComponent;
   	
-  	var ammoShape = new AmmoBoxComponent();
-  	return ammoShape;
+  	var shape = new AmmoBoxComponent();
+  	return shape;
   }
   AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
   	
