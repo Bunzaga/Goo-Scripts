@@ -87,7 +87,7 @@
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
   
-  	AmmoRigidBody.prototype.updateVisuals = function(e, tpf){
+  	AmmoRigidBody.prototype.updateVisuals = function(e){
   		var tc = e.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
@@ -97,26 +97,12 @@
 	 	pvec = pvec || new Ammo.btVector3();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
-  		console.log("this.body");
-  		console.log(this.body);
-  		console.log("ptrans");
-  		console.log(ptrans);
   		//ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
-		console.log("pquat");
-		console.log(pquat);
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		console.log("quat");
-		console.log(quat);
 		rot.copyQuaternion(quat);
-		console.log("rot");
-		console.log(rot);
 		pvec = ptrans.getOrigin();
-		console.log("pvec");
-		console.log(pvec);
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		console.log("pos");
-		console.log(pos);
 		tc.setUpdated();
   	}
   	
