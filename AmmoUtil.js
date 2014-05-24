@@ -15,11 +15,11 @@
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-		var pgrav = this.ammoWorld.getGravity();
+		//var pgrav = this.ammoWorld.getGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
-		console.log(args.gravity);
-		pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
-		this.ammoWorld.setGravity(pgrav);
+		//console.log(args.gravity);
+		//pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
+		this.ammoWorld.setGravity(new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2]));
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
