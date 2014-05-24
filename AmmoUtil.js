@@ -71,8 +71,8 @@
 		startTransform.setIdentity();
 		
 		var isDynamic = (this.mass != 0);
-		var gooPos = ent.transformComponent.transform.translation;
-		var gooRot = ent.transformComponent.transform.rotation;
+		var gooPos = ctx.entity.transformComponent.transform.translation;
+		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if (isDynamic){
