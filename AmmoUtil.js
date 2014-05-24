@@ -13,12 +13,17 @@
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.dynamicsWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-		var pgrav = dynamicsWorld.setGravity();
+		var pgrav = ammoWorld.setGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
 		pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.dynamicsWorld.setGravity(pgrav);
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
+	AmmoSystem.constructor = AmmoSystem;
+	
+	AmmoSystem.prototype.inserted = function(gooEnt){
+		this.ammoWorld.addRigidBody( ooEnt.ammoRigidBody.body);
+	}
 	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
