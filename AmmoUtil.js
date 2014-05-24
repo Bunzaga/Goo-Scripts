@@ -3,8 +3,8 @@
   var pvec,ptrans,pquat;
   var quat,goo;
   
-  AmmoUtil.createAmmoSystem = function(args, ctx, goo){
-  	goo = goo;
+  AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
+  	goo = goo || _goo;
 	function AmmoSystem(){
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['AmmoRigidBody', 'TransformComponent']);
@@ -43,16 +43,19 @@
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
   }
-  AmmoUtil.destroyAmmoSystem = function(ctx, ammoSystem){
-  	delete ammoSystem.ammoWorld;
-  	delete ammoSystem.solver;
-  	delete ammoSystem.overlappingPairCache;
-  	delete ammoSystem.dispatcher;
-  	delete ammoSystem.collisionConfiguration;
+  AmmoUtil.destroyAmmoSystem = function(args, ctx, goo){
+  	var ammoSystem = ctx.world.getSystem("AmmoSystem");
+  	if(ammoSystem){
+  		delete ammoSystem.ammoWorld;
+  		delete ammoSystem.solver;
+  		delete ammoSystem.overlappingPairCache;
+  		delete ammoSystem.dispatcher;
+  		delete ammoSystem.collisionConfiguration;
   	
-  	var index = ctx.world._systems.indexOf(ammoSystem);
-  	if(index !== -1){
-  		ctx.world._systems.splice(index, 1);
+  		var index = ctx.world._systems.indexOf(ammoSystem);
+  		if(index !== -1){
+  			ctx.world._systems.splice(index, 1);
+  		}
   	}
   }
   
