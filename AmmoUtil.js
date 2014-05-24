@@ -33,6 +33,7 @@
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
 			var e = entities[i];
+			console.log(e.ammoRigidBody);
 			if(e.ammoRigidBody.mass > 0) {
 				console.log(e.name);
 				//e.ammoComponent.copyPhysicalTransformToVisual( e, tpf);
