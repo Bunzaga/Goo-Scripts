@@ -28,6 +28,7 @@
 	}
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
+		console.log("AmmoSystem processing...");
 		this.ammoWorld.stepSimulation( tpf, this.maxSubSteps, this.fixedTime);
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
