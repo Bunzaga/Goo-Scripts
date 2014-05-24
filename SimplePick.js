@@ -44,9 +44,9 @@
 											// use the cross product of the face edges to get the 'normal'
 											goo.Vector3.cross(v1, v2, cross);
 											//cross.normalize();
-												
+											
 											var dot = goo.Vector3.dot(cross, rayDir);
-											if(dot < 0){
+											if(dot < 0 || true === picking.pickRay.backfaces){
 												if(null === hit){
 													hit = [];
 												}
@@ -92,7 +92,7 @@
 											dot = goo.Vector3.dot(cross, rayDir);
 											// dot the normal with the ray.dir to see if it is backfacing or not
 											// if not backfacing
-											if(dot < 0){
+											if(dot < 0 || true === picking.pickRay.backfaces){
 												distance = result[i].intersection.distances[j];
 												if(null === hit){
 													hit = {
