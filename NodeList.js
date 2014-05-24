@@ -46,7 +46,7 @@
 				if(n.priority >= node.priority){
 					break;
 				}
-				n = n.previous;
+				n = n.next;
 			}
 			if(n === this.last){
 				this.last.next = node;
