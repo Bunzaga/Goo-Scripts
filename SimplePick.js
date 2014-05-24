@@ -1,10 +1,15 @@
 (function(window, document, undefined){
 	var SimplePick = {};
-	SimplePick.setup = function(args, ctx, goo){
-		var picking = new goo.PickingSystem({pickLogic: new goo.PrimitivePickLogic()});
-		var v1 = new goo.Vector3();
-		var v2 = new goo.Vector3();
-		var cross = new goo.Vector3();
+	SimplePick.ready = false;
+	var picking, v1, v2, cross, args, ctx, goo;
+	SimplePick.setup = function(_args, _ctx, _goo){
+		args = _args;
+		ctx = _ctx;
+		goo = _goo;
+		picking = new goo.PickingSystem({pickLogic: new goo.PrimitivePickLogic()});
+		v1 = new goo.Vector3();
+		v2 = new goo.Vector3();
+		cross = new goo.Vector3();
 
 		// use when picking so you don't need to create a 'new' ray
 		SimplePick.ray = new goo.Ray();
@@ -124,35 +129,37 @@
 			}
 			picking.hit = hit;
 		};
-
-		SimplePick.added = function(ent){picking.added(ent);};
-	
-		SimplePick.castRay = function(ray, mask, all){
-			picking.pickRay = ray;
-			picking.mask = mask;
-			picking.all = all;
-			picking._process();
-			return picking.hit;
-		};
-    
 		if(undefined === ctx.world.getSystem("PickingSystem")){
 			ctx.world.setSystem(picking);
 		}
 		else{
 			console.warn("PickingSystem already exists in the world!");
 		}
-
-		SimplePick.cleanup = function(){
-			var index = ctx.world._systems.indexOf(picking);
-			if(index !== -1){
-				ctx.world._systems.splice(index, 1);
-			}
-			delete SimplePick.added;
-			delete SimplePick.castRay;
-			delete SimplePick.cleanup;
-			delete SimplePick.ray;
-		};
+		SimplePick.ready = true;
 	}
+
+	SimplePick.added = function(ent){picking.added(ent);};
+	
+	SimplePick.castRay = function(ray, mask, all){
+		picking.pickRay = ray;
+		picking.mask = mask;
+		picking.all = all;
+		picking._process();
+		return picking.hit;
+	};
+    
+	SimplePick.cleanup = function(){
+		var index = ctx.world._systems.indexOf(picking);
+		if(index !== -1){
+			ctx.world._systems.splice(index, 1);
+		}
+		delete SimplePick.ray;
+		args = undefined;
+		ctx = undefined;
+		goo = undefined;
+		SimplePick.ready = false;
+	};
+
 	var global = global || window;
 	global.SimplePick = SimplePick;
 }(window, document));
