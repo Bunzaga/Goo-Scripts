@@ -65,7 +65,7 @@
 		args = args || {};
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 1.0;
-  		this.colShape = args.colShape || AmmoUtil.createAmmoBoxComponent(goo, ent);
+  		this.colShape = args.colShape || AmmoUtil.createAmmoBoxComponent(goo, ctx.entity);
   		
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
