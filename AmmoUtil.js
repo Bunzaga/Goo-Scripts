@@ -24,7 +24,7 @@
 	AmmoSystem.constructor = AmmoSystem;
 	
 	AmmoSystem.prototype.inserted = function(gooEnt){
-		this.ammoWorld.addRigidBody( ooEnt.ammoRigidBody.body);
+		this.ammoWorld.addRigidBody(gooEnt.ammoRigidBody.body);
 	}
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
