@@ -43,10 +43,10 @@
 		else{
 			var n = this.last;
 			while(n !== null){
-				if(n.priority >= node.priority){
+				if(n.priority <= node.priority){
 					break;
 				}
-				n = n.next;
+				n = n.previous;
 			}
 			if(n === this.last){
 				this.last.next = node;
