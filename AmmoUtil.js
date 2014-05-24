@@ -95,6 +95,7 @@
   		ptrans = ptrans || new Ammo.btTransform();
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	pvec = pvec || new Ammo.btVector3();
+	 	quat = quat || new goo.Quaternion();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
   		//ptrans = this.body.getCenterOfMassTransform();
