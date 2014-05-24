@@ -70,14 +70,19 @@
   		
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
-		
+		console.log("-6");
 		var isDynamic = (this.mass !== 0);
+		console.log("-5");
 		var gooPos = ctx.entity.transformComponent.transform.translation;
+		console.log("-4");
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
-		
+		console.log("-3");
 		var localInertia = new Ammo.btVector3(0, 0, 0);
+		console.log("-2");
 		if(isDynamic){
+			console.log("-1");
 			this.colShape.calculateLocalInertia(this.mass, localInertia);
+			console.log("0");
 		}
 		console.log("1");
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
