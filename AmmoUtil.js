@@ -65,7 +65,7 @@
 		args = args || {};
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 1.0;
-  		this.colShape = args.colShape || AmmoUtil.createAmmoBoxComponent(goo, ctx.entity);
+  		this.colShape = args.colShape || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
   		
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
@@ -96,12 +96,12 @@
   	return ammoRigidBody;
   	
   }
-  AmmoUtil.createAmmoBoxComponent = function(goo, ent, args){
+  AmmoUtil.createAmmoBoxComponent = function(args, ctx, goo){
   	function AmmoBoxComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'AmmoShapeComponent';
-  		this.ammoShape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtentsargs[1], args.halfExtentsargs[2]));
+  		this.ammoShape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
   	AmmoBoxComponent.prototype = Object.create(goo.Component.prototype);
   	AmmoBoxComponent.constructor = AmmoBoxComponent;
