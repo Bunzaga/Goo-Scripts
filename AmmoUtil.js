@@ -96,12 +96,19 @@
 	 	pvec = pvec || new Ammo.btVector3();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
+  		console.log(this.body);
+  		console.log(ptrans);
   		//ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
+		console.log(pquat);
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		consoel.log(quat);
 		rot.copyQuaternion(quat);
+		console.log(rot);
 		pvec = ptrans.getOrigin();
+		console.log(pvec);
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
+		console.log(pos);
 		tc.setUpdated();
   	}
   	
