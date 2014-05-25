@@ -113,22 +113,24 @@
   	RigidBodyComponent.constructor = RigidBodyComponent;
 
   	RigidBodyComponent.prototype.updateVisuals = function(ent){
-  		var tc = ent.transformComponent;
-  		var pos = tc.transform.translation;
-  		var rot = tc.transform.rotation;
+	 	if(this.body.getMotionState()){
+	 		var tc = ent.transformComponent;
+  			var pos = tc.transform.translation;
+  			var rot = tc.transform.rotation;
   		
-  		ptrans = ptrans || new Ammo.btTransform();
-	 	pquat = pquat || new Ammo.btQuaternion();
-	 	pvec = pvec || new Ammo.btVector3();
-	 	quat = quat || new goo.Quaternion();
-
-  		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans.getBasis().getRotation(pquat);
-		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		quat.toRotationMatrix(rot);
-		pvec = ptrans.getOrigin();
-		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		tc.setUpdated();
+  			ptrans = ptrans || new Ammo.btTransform();
+	 		pquat = pquat || new Ammo.btQuaternion();
+	 		pvec = pvec || new Ammo.btVector3();
+	 		quat = quat || new goo.Quaternion();
+	 		
+  			this.body.getMotionState().getWorldTransform(ptrans);
+  			ptrans.getBasis().getRotation(pquat);
+			quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+			quat.toRotationMatrix(rot);
+			pvec = ptrans.getOrigin();
+			pos.setd(pvec.x(), pvec.y(), pvec.z());
+			tc.setUpdated();
+	 	}
   	}
   	
   	var rigidBody = new RigidBodyComponent;
