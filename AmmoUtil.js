@@ -85,7 +85,7 @@
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoShape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
-		console.log(this.ammoRigidBody);
+		console.log(this.body);
 		console.log(this.ammoShape);
   	}
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
