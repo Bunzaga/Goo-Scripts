@@ -115,9 +115,16 @@
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	pvec = pvec || new Ammo.btVector3();
 	 	quat = quat || new goo.Quaternion();
+	 	
+	 	pquat2 = pquat2 || new Ammo.btQuaternion();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
+  		
+  		pquat2 = ptrans.getRotation();
+  		
+  		console.log(pquat.x()+":"+pquat2.x()+", "+pquat.y()+":"+pquat2.y()+", "+pquat.z()+":"+pquat2.z()+", "+pquat.w()+":"+pquat2.w();
+  		
 		//pquat = ptrans.getRotation();
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		rot.copyQuaternion(quat);
