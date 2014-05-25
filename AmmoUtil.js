@@ -33,11 +33,11 @@
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-
-		for (var i = 0, ilen = entities.length; i < ilen; i++) {
-			var ent = entities[i];
-			if(ent.rigidBodyComponent.mass > 0) {
-				ent.rigidBodyComponent.updateVisuals(ent);
+		
+		var i = entities.length;
+		while(i--){
+			if(entities[i].rigidBodyComponent.mass > 0){
+				entities[i].rigidBodyComponent.updateVisuals(ent);
 			}
 		}
 	};
