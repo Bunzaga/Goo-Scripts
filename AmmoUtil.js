@@ -120,8 +120,8 @@
 	 	pvec = pvec || new Ammo.btVector3();
 	 	quat = quat || new goo.Quaternion();
 
-  		this.body.getMotionState().getWorldTransform(ptrans);
-  		//ptrans = this.body.getCenterOfMassTransform();
+  		//this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
 		//console.log(pquat.x()+","+pquat.y()+","+pquat.z()+","+pquat.w());
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
