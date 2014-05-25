@@ -94,7 +94,7 @@
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoCollider, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
 		console.log(this.body);
-		console.log(this.ammoShape);
+		console.log(this.ammoCollider);
   	}
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
