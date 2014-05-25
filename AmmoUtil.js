@@ -18,12 +18,8 @@
 		pvec = pvec || new Ammo.btVector3(0,0,0);
 		pvec = this.ammoWorld.getGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
-		//console.log(args.gravity);
 		pvec.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(pvec/*new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2])*/);
-		
-		//console.log(this.fixedTime);
-		//console.log(this.maxSubSteps);
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
