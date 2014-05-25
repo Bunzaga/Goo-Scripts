@@ -164,17 +164,43 @@
   	var shape = new SphereColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderColliderComponent = function(args, ctx, goo){
-  	function CylinderColliderComponent(){
+  AmmoUtil.createCylinderZColliderComponent = function(args, ctx, goo){
+  	function CylinderZColliderComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
-  	CylinderColliderComponent.prototype = Object.create(goo.Component.prototype);
-  	CylinderColliderComponent.constructor = CylinderColliderComponent;
+  	CylinderZColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
   	
-  	var shape = new CylinderColliderComponent();
+  	var shape = new CylinderZColliderComponent();
+  	return shape;
+  }
+  AmmoUtil.createCylinderXColliderComponent = function(args, ctx, goo){
+  	function CylinderXColliderComponent(){
+  		args = args || {};
+  		args.halfExtents = args.halfExtents || [1,1,1];
+  		this.type = 'ColliderComponent';
+  		this.shape = new Ammo.btCylinderShapeX(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  	}
+  	CylinderXColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
+  	
+  	var shape = new CylinderXColliderComponent();
+  	return shape;
+  }
+  AmmoUtil.createCylinderYColliderComponent = function(args, ctx, goo){
+  	function CylinderYColliderComponent(){
+  		args = args || {};
+  		args.halfExtents = args.halfExtents || [1,1,1];
+  		this.type = 'ColliderComponent';
+  		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  	}
+  	CylinderYColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
+  	
+  	var shape = new CylinderYColliderComponent();
   	return shape;
   }
   AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
