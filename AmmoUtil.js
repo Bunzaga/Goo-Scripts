@@ -24,17 +24,20 @@
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
 	
-	AmmoSystem.prototype.inserted = function(gooEnt){
-		this.ammoWorld.addRigidBody(gooEnt.ammoRigidBody.body);
+	AmmoSystem.prototype.inserted = function(ent){
+		if(ent.ammoRigidBody){
+			console.log(ent);
+			this.ammoWorld.addRigidBody(ent.ammoRigidBody.body);
+		}
 	}
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation( tpf, this.maxSubSteps, this.fixedTime);
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
-			var e = entities[i];
-			if(e.ammoRigidBody.mass > 0) {
-				e.ammoRigidBody.updateVisuals(e, tpf);
+			var ent = entities[i];
+			if(ent.ammoRigidBody.mass > 0) {
+				ent.ammoRigidBody.updateVisuals(ent, tpf);
 			}
 		}
 	};
