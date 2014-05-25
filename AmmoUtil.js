@@ -121,7 +121,7 @@
 	 	ptrans2 = ptrans2 || new Ammo.btTransform();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans2 = this.body.getCenterOfWorldTransform();
+  		ptrans2 = this.body.getCenterOfMassTransform();
   		
   		ptrans.getBasis().getRotation(pquat);
   		
