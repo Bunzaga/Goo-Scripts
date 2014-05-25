@@ -154,7 +154,7 @@
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btSphereShape(args.radius);
   	}
-  	SphereColliderComponent.prototyp = Object.create(goo.Component.prototype);
+  	SphereColliderComponent.prototype = Object.create(goo.Component.prototype);
   	SPhereColliderComponent.constructor = SphereColliderComponent;
   	var shape = new SphereColliderComponent();
   	return shape;
