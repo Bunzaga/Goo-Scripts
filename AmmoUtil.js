@@ -20,6 +20,9 @@
 		//console.log(args.gravity);
 		//pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2]));
+		
+		console.log(this.fixedTime);
+		console.log(this.maxSubSteps);
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
@@ -29,16 +32,21 @@
 			console.log(ent);
 			this.ammoWorld.addRigidBody(ent.ammoRigidBody.body);
 		}
-	}
+	};
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
-		this.ammoWorld.stepSimulation( tpf, this.maxSubSteps, this.fixedTime);
+		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
 			var ent = entities[i];
 			if(ent.ammoRigidBody.mass > 0) {
-				ent.ammoRigidBody.updateVisuals(ent, tpf);
+				ent.ammoRigidBody.updateVisuals(ent);
 			}
+		}
+	};
+	AmmoSystem.prototype.deleted = function(ent) {
+		if (ent.ammoComponent) {
+			this.ammoWorld.removeRigidBody(ent.ammoRigidBody.body);
 		}
 	};
 	
@@ -91,8 +99,8 @@
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
   
-  	AmmoRigidBody.prototype.updateVisuals = function(e){
-  		var tc = e.transformComponent;
+  	AmmoRigidBody.prototype.updateVisuals = function(ent){
+  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
   		
@@ -104,9 +112,11 @@
   		this.body.getMotionState().getWorldTransform(ptrans);
   		//ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
+		console.log(pquat.x()+","+pquat.y()+","+pquat.z()+","+pquat.w());
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		rot.copyQuaternion(quat);
 		pvec = ptrans.getOrigin();
+		console.log(pvec.x()+","+pvec.y()+","+pvec.z());
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		tc.setUpdated();
   	}
