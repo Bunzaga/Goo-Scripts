@@ -37,7 +37,7 @@
 		var i = entities.length;
 		while(i--){
 			if(entities[i].rigidBodyComponent.mass > 0){
-				entities[i].rigidBodyComponent.updateVisuals(ent);
+				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
 			}
 		}
 	};
