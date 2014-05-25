@@ -105,8 +105,7 @@
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
-  	var pquat2;
-  	var ptrans2;
+
   	RigidBodyComponent.prototype.updateVisuals = function(ent){
   		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
@@ -116,22 +115,12 @@
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	pvec = pvec || new Ammo.btVector3();
 	 	quat = quat || new goo.Quaternion();
-	 	
-	 	pquat2 = pquat2 || new Ammo.btQuaternion();
-	 	ptrans2 = ptrans2 || new Ammo.btTransform();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans2 = this.body.getCenterOfMassTransform();
-  		
   		ptrans.getBasis().getRotation(pquat);
-  		
-  		pquat2 = ptrans2.getRotation();
-  		
-  		console.log((pquat.x()==pquat2.x())+", "+(pquat.y()==pquat2.y())+", "+(pquat.z()==pquat2.z())+", "+(pquat.w()==pquat2.w()));
-  		
-		//pquat = ptrans.getRotation();
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		rot.copyQuaternion(quat);
+		//rot.copyQuaternion(quat);
+		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		tc.setUpdated();
