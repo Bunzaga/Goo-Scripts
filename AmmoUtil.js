@@ -81,9 +81,9 @@
   	goo = goo || _goo;
 	function AmmoRigidBody(){
 		args = args || {};
+		console.log(args.mass);
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 0.0;
-  		console.log(this.mass);
   		this.ammoCollider = args.ammoCollider || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
   		
   		var startTransform = new Ammo.btTransform();
@@ -135,7 +135,7 @@
   AmmoUtil.createAmmoBoxComponent = function(args, ctx, goo){
   	function AmmoBoxComponent(){
   		args = args || {};
-  		console.log(args.halfExtends);
+  		console.log(args.halfExtents);
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'AmmoCollider';
   		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
