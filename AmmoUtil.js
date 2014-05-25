@@ -59,7 +59,7 @@
   		
   		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].ammoRigidBody){
-  				console.log("destroyAmmoSystem"+mmoSystem._activeEntities[i]+name);
+  				console.log("destroyAmmoSystem"+ammoSystem._activeEntities[i]+name);
 	  			ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].ammoRigidBody.body);
   			}
   		}
