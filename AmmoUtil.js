@@ -56,6 +56,13 @@
   AmmoUtil.destroyAmmoSystem = function(args, ctx, goo){
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
+  		
+  		for(var i = 0, ilen = ammoSystem._entities.length; i < ilen; i++){
+  			if(ammoSystem._entities[i].ammoRigidBody){
+	  			ammoSystem.ammoWorld.removeRigidBody(ammoSystem._entities[i].ammoRigidBody.body);
+  			}
+  		}
+  		
   		delete ammoSystem.ammoWorld;
   		delete ammoSystem.solver;
   		delete ammoSystem.overlappingPairCache;
