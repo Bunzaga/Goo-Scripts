@@ -28,9 +28,9 @@
 	AmmoSystem.constructor = AmmoSystem;
 	
 	AmmoSystem.prototype.inserted = function(ent){
-		if(ent.ammoRigidBody){
+		if(ent.rigidBodyComponent){
 			console.log(ent);
-			this.ammoWorld.addRigidBody(ent.ammoRigidBody.body);
+			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
 	
@@ -39,14 +39,14 @@
 
 		for (var i = 0, ilen = entities.length; i < ilen; i++) {
 			var ent = entities[i];
-			if(ent.ammoRigidBody.mass > 0) {
-				ent.ammoRigidBody.updateVisuals(ent);
+			if(ent.rigidBodyComponent.mass > 0) {
+				ent.rigidBodyComponent.updateVisuals(ent);
 			}
 		}
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.ammoComponent) {
-			this.ammoWorld.removeRigidBody(ent.ammoRigidBody.body);
+			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
 	
@@ -58,9 +58,9 @@
   	if(ammoSystem){
   		var i = ammoSystem._activeEntities.length;
   		while(i--){
-  			if(ammoSystem._activeEntities[i].ammoRigidBody){
-  				console.log("destroyAmmoSystem"+ammoSystem._activeEntities[i]+name);
-  				ammoSystem._activeEntities[i].clearComponent("AmmoRigidBody");
+  			if(ammoSystem._activeEntities[i].rigidBodyComponent){
+  				console.log("destroyAmmoSystem: "+ammoSystem._activeEntities[i]+name);
+  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
 	  			//ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].ammoRigidBody.body);
   			}	
   		}
@@ -82,18 +82,21 @@
   	goo = goo || _goo;
 	function RigidBodyComponent(){
 		args = args || {};
-		console.log(args.mass);
+		console.log("Mass: "+args.mass);
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
-  		var collider = args.collider || AmmoUtil.createBoxColliderComponent(args, ctx, goo);
-  		ctx.entity.setComponent(collider);
+  		var collider = ctx.entity.getComponent("ColliderComponent");
+  		if(undefined === collider){
+  			// generate collider here...
+  			collider = AmmoUtil.createBoxColliderComponent(args, ctx, goo);
+  			ctx.entity.setComponent(collider);
+  		}
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
-		var isDynamic = (this.mass !== 0);
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
-		if(isDynamic){
+		if(this.mass !== 0){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
@@ -141,8 +144,8 @@
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
-  	AmmoBoxComponent.prototype = Object.create(goo.Component.prototype);
-  	AmmoBoxComponent.constructor = AmmoBoxComponent;
+  	BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	BoxColliderComponent.constructor = BoxColliderComponent;
   	
   	var shape = new BoxColliderComponent();
   	return shape;
