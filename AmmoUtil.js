@@ -16,6 +16,19 @@
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
+		this.ammoWorld.getDispatchInfo().m_allowedCcdPenetration = 0.001f;
+		/*
+		m_dynamicsWorld->getDispatchInfo().m_allowedCcdPenetration=0.0001f;
+		    m_dynamicsWorld->getSolverInfo().m_splitImpulse=true;//
+		    m_dynamicsWorld->getSolverInfo().m_numIterations = 20;
+		    m_dynamicsWorld->getDispatchInfo().m_useContinuous=true;
+		    m_dynamicsWorld->getSolverInfo().m_erp2= 0.9;
+		
+		*/
+		
+		
+		
+		
 		pvec = pvec || new Ammo.btVector3(0,0,0);
 		pvec = this.ammoWorld.getGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
