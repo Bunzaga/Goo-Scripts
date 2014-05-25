@@ -88,7 +88,6 @@
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
-	//	startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
@@ -119,9 +118,9 @@
   		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		//rot.copyQuaternion(quat);
 		quat.toRotationMatrix(rot);
-		pvec = ptrans.getOrigin();
+		//pvec = ptrans.getOrigin();
+		ptrans.getOrigin(pvec);
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		tc.setUpdated();
   	}
