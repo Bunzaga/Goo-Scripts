@@ -17,6 +17,9 @@
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
 		this.ammoWorld.getDispatchInfo().m_allowedCcdPenetration = 0.001;
+		this.ammoWorld.getSolverInfo().m_splitImpulse = true;
+		this.ammoWorld.getSolverInfo().m_numIterations = 20;
+		
 		/*
 		m_dynamicsWorld->getDispatchInfo().m_allowedCcdPenetration=0.0001f;
 		    m_dynamicsWorld->getSolverInfo().m_splitImpulse=true;//
