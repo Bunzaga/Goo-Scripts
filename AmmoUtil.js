@@ -21,8 +21,8 @@
 		//pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2]));
 		
-		console.log(this.fixedTime);
-		console.log(this.maxSubSteps);
+		//console.log(this.fixedTime);
+		//console.log(this.maxSubSteps);
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
@@ -84,14 +84,14 @@
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(isDynamic){
-			this.ammoShape.shape.calculateLocalInertia(this.mass, localInertia);
+			this.ammoCollider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
-		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoShape, localInertia);
+		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoCollider, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
 		console.log(this.body);
 		console.log(this.ammoShape);
@@ -112,11 +112,11 @@
   		this.body.getMotionState().getWorldTransform(ptrans);
   		//ptrans = this.body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
-		console.log(pquat.x()+","+pquat.y()+","+pquat.z()+","+pquat.w());
+		//console.log(pquat.x()+","+pquat.y()+","+pquat.z()+","+pquat.w());
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		rot.copyQuaternion(quat);
 		pvec = ptrans.getOrigin();
-		console.log(pvec.x()+","+pvec.y()+","+pvec.z());
+		//console.log(pvec.x()+","+pvec.y()+","+pvec.z());
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		tc.setUpdated();
   	}
@@ -129,7 +129,7 @@
   	function AmmoBoxComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
-  		this.type = 'AmmoShape';
+  		this.type = 'AmmoCollider';
   		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
   	AmmoBoxComponent.prototype = Object.create(goo.Component.prototype);
