@@ -85,13 +85,12 @@
   	goo = goo || _goo;
 	function RigidBodyComponent(){
 		args = args || {};
-		console.log("Mass: "+args.mass);
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
   			// generate collider here...
-  			collider = AmmoUtil.createBoxColliderComponent(args, ctx, goo);
+  			collider = args.collider || AmmoUtil.createBoxColliderComponent(args, ctx, goo);
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
