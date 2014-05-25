@@ -19,7 +19,7 @@
 		pvec = this.ammoWorld.getGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
 		pvec.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
-		this.ammoWorld.setGravity(pvec/*new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2])*/);
+		this.ammoWorld.setGravity(pvec);
 	}
 	AmmoSystem.prototype = Object.create(goo.System.prototype);
 	AmmoSystem.constructor = AmmoSystem;
@@ -58,7 +58,6 @@
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
   				console.log("destroyAmmoSystem: "+ammoSystem._activeEntities[i]+name);
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
-	  			//ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].ammoRigidBody.body);
   			}	
   		}
   		
@@ -89,7 +88,7 @@
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
-		startTransform.setIdentity();
+	//	startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
