@@ -11,7 +11,7 @@
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
 		this.maxSubSteps = args.maxSubSteps || 10;
-		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(); // every single |new| currently leaks...
+		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
