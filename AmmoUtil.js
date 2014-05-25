@@ -73,7 +73,6 @@
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(isDynamic){
-			console.log(this.ammoShape);
 			this.ammoShape.shape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
@@ -83,6 +82,8 @@
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoShape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
+		console.log(this.ammoRigidBody);
+		console.log(this.ammoShape);
   	}
   	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
   	AmmoRigidBody.constructor = AmmoRigidBody;
