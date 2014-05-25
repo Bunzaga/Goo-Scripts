@@ -64,7 +64,6 @@
   		var i = ammoSystem._activeEntities.length;
   		while(i--){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
-  				console.log("destroyAmmoSystem: "+ammoSystem._activeEntities[i]+name);
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
   			}	
@@ -91,8 +90,12 @@
   		this.mass = args.mass || 0.0;
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			// generate collider here...
-  			collider = args.collider || AmmoUtil.createBoxColliderComponent(args, ctx, goo);
+  			collider = args.collider || null;
+  			if(null === collider){
+  				// auto generate collider here based on shape...
+  				console.error("No ColliderComponent found!");
+  				return;
+  			}
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
