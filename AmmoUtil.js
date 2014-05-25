@@ -7,7 +7,7 @@
   	goo = goo || _goo;
 	function AmmoSystem(){
 		args = args || {};
-		goo.System.call(this, 'AmmoSystem', ['AmmoRigidBody', 'TransformComponent']);
+		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(); // every single |new| currently leaks...
@@ -80,13 +80,13 @@
   
   AmmoUtil.createAmmoRigidBody = function(args, ctx, _goo){
   	goo = goo || _goo;
-	function AmmoRigidBody(){
+	function RigidBodyComponent(){
 		args = args || {};
 		console.log(args.mass);
-  		this.type = 'AmmoRigidBody';
+  		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
-  		this.ammoCollider = args.ammoCollider || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
-  		
+  		var collider = args.collider || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
+  		ctx.entity.setComponent(collider);
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
 		var isDynamic = (this.mass !== 0);
@@ -94,20 +94,20 @@
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(isDynamic){
-			this.ammoCollider.shape.calculateLocalInertia(this.mass, localInertia);
+			collider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
-		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, this.ammoCollider.shape, localInertia);
+		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
   	}
-  	AmmoRigidBody.prototype = Object.create(goo.Component.prototype);
-  	AmmoRigidBody.constructor = AmmoRigidBody;
+  	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
+  	RigidBodyComponent.constructor = AmmoRigidBody;
   
-  	AmmoRigidBody.prototype.updateVisuals = function(ent){
+  	RigidBodyComponent.prototype.updateVisuals = function(ent){
   		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
@@ -129,23 +129,23 @@
 		tc.setUpdated();
   	}
   	
-  	var ammoRigidBody = new AmmoRigidBody;
-  	return ammoRigidBody;
+  	var rigidBody = new RigidBodyComponent;
+  	return rigidBody;
   	
   }
-  AmmoUtil.createAmmoBoxComponent = function(args, ctx, goo){
-  	function AmmoBoxComponent(){
+  AmmoUtil.createBoxColliderComponent = function(args, ctx, goo){
+  	function BoxColliderComponent(){
   		args = args || {};
   		console.log(args.halfExtents);
   		args.halfExtents = args.halfExtents || [1,1,1];
-  		this.type = 'AmmoCollider';
+  		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
   	AmmoBoxComponent.prototype = Object.create(goo.Component.prototype);
   	AmmoBoxComponent.constructor = AmmoBoxComponent;
   	
-  	this.ammoCollider = new AmmoBoxComponent();
-  	return this.ammoCollider;
+  	var shape = new BoxColliderComponent();
+  	return shape;
   }
   AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
   	
