@@ -137,7 +137,6 @@
   AmmoUtil.createBoxColliderComponent = function(args, ctx, goo){
   	function BoxColliderComponent(){
   		args = args || {};
-  		console.log(args.halfExtents);
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
@@ -148,10 +147,19 @@
   	var shape = new BoxColliderComponent();
   	return shape;
   }
-  AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
-  	
+  AmmoUtil.createSphereColliderComponent = function(args, ctx, goo){
+  	function SphereColliderComponent(){
+  		args = args || {};
+  		args.radius = args.radius || 1;
+  		this.type = 'ColliderComponent';
+  		this.shape = new Ammo.btSphereShape(args.radius);
+  	}
+  	SphereColliderComponent.prototyp = Object.create(goo.Component.prototype);
+  	SPhereColliderComponent.constructor = SphereColliderComponent;
+  	var shape = new SphereColliderComponent();
+  	return shape;
   }
-  AmmoUtil.createAmmoSphereComponent = function(args, ctx, goo){
+  AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
   	
   }
   AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
