@@ -15,11 +15,12 @@
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-		//var pgrav = this.ammoWorld.getGravity();
+		pvec = pvec || new Ammo.btVector3(0,0,0);
+		pvec = this.ammoWorld.getGravity();
 		args.gravity = args.gravity || [0, -9.8, 0];
 		//console.log(args.gravity);
-		//pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
-		this.ammoWorld.setGravity(new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2]));
+		pgrav.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
+		this.ammoWorld.setGravity(pvec/*new Ammo.btVector3(args.gravity[0], args.gravity[1], args.gravity[2])*/);
 		
 		//console.log(this.fixedTime);
 		//console.log(this.maxSubSteps);
@@ -176,6 +177,7 @@
 	ptrans.setRotation(pquat);
 	body.setCenterOfMassTransform(ptrans);
   };
+  
   var global = global || window;
   global.AmmoUtil = AmmoUtil;
 }(window, document, undefined));
