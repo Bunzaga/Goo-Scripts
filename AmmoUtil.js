@@ -56,13 +56,13 @@
   AmmoUtil.destroyAmmoSystem = function(args, ctx, goo){
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
-  		
-  		for(var ilen = ammoSystem._activeEntities.length; i > -1; i--){
+  		var i = ammoSystem._activeEntities.length;
+  		while(i--){
   			if(ammoSystem._activeEntities[i].ammoRigidBody){
   				console.log("destroyAmmoSystem"+ammoSystem._activeEntities[i]+name);
   				ammoSystem._activeEntities[i].clearComponent("AmmoRigidBody");
 	  			//ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].ammoRigidBody.body);
-  			}
+  			}	
   		}
   		
   		delete ammoSystem.ammoWorld;
