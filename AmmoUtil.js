@@ -57,9 +57,9 @@
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
   		
-  		for(var i = 0, ilen = ammoSystem._entities.length; i < ilen; i++){
-  			if(ammoSystem._entities[i].ammoRigidBody){
-	  			ammoSystem.ammoWorld.removeRigidBody(ammoSystem._entities[i].ammoRigidBody.body);
+  		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
+  			if(ammoSystem._activeEntities[i].ammoRigidBody){
+	  			ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].ammoRigidBody.body);
   			}
   		}
   		
