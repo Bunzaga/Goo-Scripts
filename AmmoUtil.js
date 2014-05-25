@@ -105,7 +105,7 @@
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
-  
+  	var pquat2;
   	RigidBodyComponent.prototype.updateVisuals = function(ent){
   		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
