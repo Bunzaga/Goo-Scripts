@@ -33,14 +33,13 @@
 	};
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
-		
+		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		var i = entities.length;
 		while(i--){
 			if(entities[i].rigidBodyComponent.mass > 0){
 				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
 			}
 		}
-		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.ammoComponent) {
