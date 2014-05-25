@@ -119,8 +119,7 @@
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		quat.toRotationMatrix(rot);
-		//pvec = ptrans.getOrigin();
-		ptrans.getOrigin(pvec);
+		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		tc.setUpdated();
   	}
