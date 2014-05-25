@@ -9,8 +9,8 @@
 		this.priority = -1000;
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'TransformComponent']);
-		this.fixedTime = 1/(args.stepFrequency || 100);
-		this.maxSubSteps = args.maxSubSteps || 10;
+		this.fixedTime = 1/(args.stepFrequency || 60);
+		this.maxSubSteps = args.maxSubSteps || 7;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(); // every single |new| currently leaks...
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
