@@ -66,6 +66,7 @@
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
   				console.log("destroyAmmoSystem: "+ammoSystem._activeEntities[i]+name);
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
+  				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
   			}	
   		}
   		
