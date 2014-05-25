@@ -114,13 +114,10 @@
   		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
-  		if(!ptrans){console.log("Had to make ptrans.");}
+  		
   		ptrans = ptrans || new Ammo.btTransform();
-  		if(!pquat){console.log("Had to make pquat.");}
 	 	pquat = pquat || new Ammo.btQuaternion();
-	 	if(!pvec){console.log("Had to make pvec.");}
 	 	pvec = pvec || new Ammo.btVector3();
-	 	if(!quat){console.log("Had to make quat.");}
 	 	quat = quat || new goo.Quaternion();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
@@ -129,9 +126,7 @@
 		rot.copyQuaternion(quat);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		//tc.setUpdated();
-		tc.transform.update();
-		tc.worldTransform.update();
+		tc.setUpdated();
   	}
   	
   	var rigidBody = new RigidBodyComponent;
