@@ -78,14 +78,14 @@
   	}
   }
   
-  AmmoUtil.createAmmoRigidBody = function(args, ctx, _goo){
+  AmmoUtil.createRigidBodyComponent = function(args, ctx, _goo){
   	goo = goo || _goo;
 	function RigidBodyComponent(){
 		args = args || {};
 		console.log(args.mass);
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
-  		var collider = args.collider || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
+  		var collider = args.collider || AmmoUtil.createBoxColliderComponent(args, ctx, goo);
   		ctx.entity.setComponent(collider);
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
