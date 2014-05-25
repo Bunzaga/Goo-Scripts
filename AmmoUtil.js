@@ -47,6 +47,13 @@
 		}
 	};
 	
+	AmmoSystem.prototype.setGravity = function(x, y, z){
+		var gravity = this.ammoWorld.getGravity();
+		(typeof(x) === 'number') ? gravity.setValue(x, y, z) : gravity.setValue(x[0], x[1], x[2]);
+		this.ammoWorld.setGravity(gravity);
+		delete gravity;
+	}
+	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
   }
