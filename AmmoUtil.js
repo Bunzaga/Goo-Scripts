@@ -164,8 +164,18 @@
   	var shape = new SphereColliderComponent();
   	return shape;
   }
-  AmmoUtil.createAmmoCapsuleComponent = function(args, ctx, goo){
+  AmmoUtil.createCylinderColliderComponent = function(args, ctx, goo){
+  	function CylinderColliderComponent(){
+  		args = args || {};
+  		args.halfExtents = args.halfExtents || [1,1,1];
+  		this.type = 'ColliderComponent';
+  		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  	}
+  	CylinderColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	CylinderColliderComponent.constructor = CylinderColliderComponent;
   	
+  	var shape = new CylinderColliderComponent();
+  	return shape;
   }
   AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
   	
