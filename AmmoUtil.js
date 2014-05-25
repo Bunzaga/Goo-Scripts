@@ -106,6 +106,7 @@
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
   	var pquat2;
+  	var ptrans2;
   	RigidBodyComponent.prototype.updateVisuals = function(ent){
   		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
@@ -117,11 +118,14 @@
 	 	quat = quat || new goo.Quaternion();
 	 	
 	 	pquat2 = pquat2 || new Ammo.btQuaternion();
+	 	ptrans2 = ptrans2 || new Ammo.btTransform();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans2 = this.body.getCenterOfWorldTransform();
+  		
   		ptrans.getBasis().getRotation(pquat);
   		
-  		pquat2 = ptrans.getRotation();
+  		pquat2 = ptrans2.getRotation();
   		
   		console.log((pquat.x()==pquat2.x())+", "+(pquat.y()==pquat2.y())+", "+(pquat.z()==pquat2.z())+", "+(pquat.w()==pquat2.w()));
   		
