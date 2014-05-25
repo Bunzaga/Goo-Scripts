@@ -117,7 +117,8 @@
 	 	quat = quat || new goo.Quaternion();
 
   		this.body.getMotionState().getWorldTransform(ptrans);
-		pquat = ptrans.getRotation();
+  		ptrans.getBasis().getRotation(pquat);
+		//pquat = ptrans.getRotation();
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		rot.copyQuaternion(quat);
 		pvec = ptrans.getOrigin();
