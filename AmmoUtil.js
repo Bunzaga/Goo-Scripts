@@ -57,7 +57,7 @@
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
   		
-  		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
+  		for(var ilen = ammoSystem._activeEntities.length; i > -1; i--){
   			if(ammoSystem._activeEntities[i].ammoRigidBody){
   				console.log("destroyAmmoSystem"+ammoSystem._activeEntities[i]+name);
   				ammoSystem._activeEntities[i].clearComponent("AmmoRigidBody");
