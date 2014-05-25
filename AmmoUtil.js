@@ -108,7 +108,7 @@
 		this.body = new Ammo.btRigidBody(rbInfo);
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
-  	RigidBodyComponent.constructor = AmmoRigidBody;
+  	RigidBodyComponent.constructor = RigidBodyComponent;
   
   	RigidBodyComponent.prototype.updateVisuals = function(ent){
   		var tc = ent.transformComponent;
