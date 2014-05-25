@@ -75,7 +75,7 @@
 		args = args || {};
   		this.type = 'AmmoRigidBody';
   		this.mass = args.mass || 1.0;
-  		this.ammoShape = args.ammoShape || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
+  		this.ammoCollider = args.ammoCollider || AmmoUtil.createAmmoBoxComponent(args, ctx, goo);
   		
   		var startTransform = new Ammo.btTransform();
 		startTransform.setIdentity();
