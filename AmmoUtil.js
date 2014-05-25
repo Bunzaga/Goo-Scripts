@@ -169,7 +169,7 @@
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
   	}
   	CylinderColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderColliderComponent.constructor = CylinderColliderComponent;
