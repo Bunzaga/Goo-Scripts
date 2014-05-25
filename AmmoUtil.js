@@ -28,7 +28,6 @@
 	
 	AmmoSystem.prototype.inserted = function(ent){
 		if(ent.rigidBodyComponent){
-			console.log(ent);
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
