@@ -123,7 +123,7 @@
   		
   		pquat2 = ptrans.getRotation();
   		
-  		console.log(pquat.x()+":"+pquat2.x()+", "+pquat.y()+":"+pquat2.y()+", "+pquat.z()+":"+pquat2.z()+", "+pquat.w()+":"+pquat2.w());
+  		console.log(pquat.x()===pquat2.x()+", "+pquat.y()===pquat2.y()+", "+pquat.z()===pquat2.z()+", "+pquat.w()===pquat2.w());
   		
 		//pquat = ptrans.getRotation();
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
