@@ -228,6 +228,7 @@
   	goo = goo || _goo;
   	console.log(0.2);
   	function PlaneColliderComponent(){
+  		this.type = 'ColliderComponent';
   		console.log(0.8);
   		// bullet normalizes the normal for us
   		args.normal = args.normal || [0, 1, 0];
