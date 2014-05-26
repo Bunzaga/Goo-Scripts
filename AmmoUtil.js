@@ -238,7 +238,7 @@
   		console.log(0.92);
   		pvec.setValue(args.normal[0], args.normal[1], args.normal[2]);
   		console.log(0.93);
-  		this.shape = new Ammo.btPlaneShape(pvec, args.distance);
+  		this.shape = new Ammo.btStaticPlaneShape(pvec, args.distance);
   		console.log(0.94);
   	}
   	console.log(0.3);
