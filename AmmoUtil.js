@@ -200,7 +200,7 @@
   		this.type = 'ColliderComponent';
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(args.radius, args.halfHeight, args.radius);
-  		this.shape = new Ammo.btCylinderShape(pvec));
+  		this.shape = new Ammo.btCylinderShape(pvec);
   	}
   	CylinderYColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
