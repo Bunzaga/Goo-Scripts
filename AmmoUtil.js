@@ -143,7 +143,9 @@
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btBoxShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		pvec = pvec || new Ammo.btVector3();
+  		pvec.setValue(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]);
+  		this.shape = new Ammo.btBoxShape(pvec);
   	}
   	BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
   	BoxColliderComponent.constructor = BoxColliderComponent;
@@ -170,7 +172,9 @@
   		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.radius, args.radius, args.halfHeight));
+  		pvec = pvec || new Ammo.btVector3();
+  		pvec.setValue(args.radius, args.radius, args.halfHeight);
+  		this.shape = new Ammo.btCylinderShapeZ(pvec);
   	}
   	CylinderZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
@@ -184,7 +188,9 @@
   		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShapeX(new Ammo.btVector3(args.halfHeight, args.radius, args.radius));
+  		pvec = pvec || new Ammo.btVector3();
+  		pvec.setValue(args.halfHeight, args.radius, args.radius);
+  		this.shape = new Ammo.btCylinderShapeX(pvec);
   	}
   	CylinderXColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
