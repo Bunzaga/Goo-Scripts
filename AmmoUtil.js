@@ -219,18 +219,18 @@
   	var shape = new CylinderYColliderComponent();
   	return shape;
   }
-  AmmoUtil.createMeshColliderComponent = function(args, ctx, _goo){
+  AmmoUtil.createMeshColliderComponent = function(args, ent, _goo){
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
-  		args.scale = args.scale || ctx.entity.scale;
+  		args.scale = args.scale || ent.scale;
 		//scale = scale || [1,1,1];
 		var floatByteSize = 4;
 		var use32bitIndices = true;
 		var intByteSize = use32bitIndices ? 4 : 2;
 		var intType = use32bitIndices ? "i32" : "i16";
 
-		var meshData = ctx.entity.meshDataComponent.meshData;
+		var meshData = ent.meshDataComponent.meshData;
 
 		var vertices = meshData.dataViews.POSITION;
 		var vertexBuffer = Ammo.allocate( floatByteSize * vertices.length, "float", Ammo.ALLOC_NORMAL );
