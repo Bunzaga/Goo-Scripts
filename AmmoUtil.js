@@ -3,11 +3,10 @@
   var pvec,ptrans,pquat;
   var quat, goo;
   
-  //console.log(goo);
   console.log(window.goo);
   
   AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
-  	console.log(goo);
+  
   	console.log(window.goo);
   	goo = goo || _goo;
 	function AmmoSystem(){
