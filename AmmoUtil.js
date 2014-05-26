@@ -230,7 +230,7 @@
   		args.distance = args.distance || 0;
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(args.normal[0], args.normal[1], args.normal[2]);
-  		this.shape = new AmmobtPlaneShape(pvec, args.distance);
+  		this.shape = new Ammo.btPlaneShape(pvec, args.distance);
   	}
   	PlaneColliderComponent.prototype = Object.create(goo.Component.prototype);
   	PlaneColliderComponent.constructor = PlaneColliderComponent;
