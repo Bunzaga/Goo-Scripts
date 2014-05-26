@@ -260,6 +260,8 @@
 		// bvh = Bounding Volume Hierarchy
 		this.shape = new Ammo.btBvhTriangleMeshShape( triangleIndexVertexArray, true, true );
 	};
+	MeshColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
 	return shape;
   }
