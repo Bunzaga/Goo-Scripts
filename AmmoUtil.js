@@ -224,19 +224,32 @@
   	
   }
   AmmoUtil.createPlaneColliderComponent = function(args, ctx, _goo){
+  	console.log(0.1);
   	goo = goo || _goo;
+  	console.log(0.2);
   	function PlaneColliderComponent(){
+  		console.log(0.8);
   		// bullet normalizes the normal for us
   		args.normal = args.normal || [0, 1, 0];
+  		console.log(0.9);
   		args.distance = args.distance || 0;
+  		console.log(0.91);
   		pvec = pvec || new Ammo.btVector3();
+  		console.log(0.92);
   		pvec.setValue(args.normal[0], args.normal[1], args.normal[2]);
+  		console.log(0.93);
   		this.shape = new Ammo.btPlaneShape(pvec, args.distance);
+  		console.log(0.94);
   	}
+  	console.log(0.3);
   	PlaneColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	console.log(0.4);
   	PlaneColliderComponent.constructor = PlaneColliderComponent;
+  	console.log(0.5);
   	var shape = new PlaneColliderComponent();
+  	console.log(0.6);
   	return shape;
+  	console.log(0.7);
   }
   
   AmmoUtil.setLinearVelocity = function(body, vec3){
