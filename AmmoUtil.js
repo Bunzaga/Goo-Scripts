@@ -27,7 +27,7 @@
 	AmmoSystem.constructor = AmmoSystem;
 	
 	AmmoSystem.prototype.inserted = function(ent){
-		if(ent.rigidBodyComponent){
+		if(ent.rigidBodyComponent && ent.colliderComponent){
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
