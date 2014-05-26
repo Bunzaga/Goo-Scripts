@@ -167,7 +167,7 @@
   AmmoUtil.createCylinderZColliderComponent = function(args, ctx, goo){
   	function CylinderZColliderComponent(){
   		args = args || {};
-  		args.radius = args.halfExtents || 1.0;
+  		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.radius, args.radius, args.halfHeight));
@@ -181,7 +181,7 @@
   AmmoUtil.createCylinderXColliderComponent = function(args, ctx, goo){
   	function CylinderXColliderComponent(){
   		args = args || {};
-  		args.radius = args.halfExtents || 1.0;
+  		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btCylinderShapeX(new Ammo.btVector3(args.halfHeight, args.radius, args.radius));
@@ -195,7 +195,7 @@
   AmmoUtil.createCylinderYColliderComponent = function(args, ctx, goo){
   	function CylinderYColliderComponent(){
   		args = args || {};
-  		args.radius = args.halfExtents || 1.0;
+  		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.radius, args.halfHeight, args.radius));
