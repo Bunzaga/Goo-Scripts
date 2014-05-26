@@ -159,7 +159,6 @@
   	goo = goo || _goo;
   	function SphereColliderComponent(){
   		args = args || {};
-  		console.log(args.radius);
   		args.radius = args.radius || 1;
   		this.type = 'ColliderComponent';
   		this.shape = new Ammo.btSphereShape(args.radius);
