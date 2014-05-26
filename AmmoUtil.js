@@ -235,7 +235,7 @@
 		var vertices = meshData.dataViews.POSITION;
 		var vertexBuffer = Ammo.allocate( floatByteSize * vertices.length, "float", Ammo.ALLOC_NORMAL );
 		for ( var i = 0, il = vertices.length; i < il; i ++ ) {
-			Ammo.setValue( vertexBuffer + i * floatByteSize, scale[i%3] * vertices[ i ], 'float' );
+			Ammo.setValue( vertexBuffer + i * floatByteSize, args.scale[i%3] * vertices[ i ], 'float' );
 		}
 
 		var indices = meshData.indexData.data;
