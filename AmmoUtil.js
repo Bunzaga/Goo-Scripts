@@ -223,7 +223,8 @@
   AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
   	
   }
-  AmmoUtil.createPlaneColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createPlaneColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function PlaneColliderComponent(){
   		// bullet normalizes the normal for us
   		args.normal = args.normal || [0, 1, 0];
