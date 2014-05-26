@@ -8,7 +8,7 @@
 	function AmmoSystem(){
 		this.priority = -1000;
 		args = args || {};
-		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'TransformComponent']);
+		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
