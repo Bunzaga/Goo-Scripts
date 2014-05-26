@@ -11,10 +11,10 @@
 	MouseInput.ready = false;
 	MouseInput.setup = function(args, ctx, goo){
 		domElement = ctx.domElement;
-		MouseInput.movement = new goo.Vector2();
-		MouseInput.delta = new goo.Vector2();
-		MouseInput.old = new goo.Vector2();
-		MouseInput.position = new goo.Vector2();
+		MouseInput.movement = new goo.Vector3();
+		MouseInput.delta = new goo.Vector3();
+		MouseInput.old = new goo.Vector3();
+		MouseInput.position = new goo.Vector3();
 		MouseInput.wheelDelta = 0;
 		
 		offsetLeft = domElement.getBoundingClientRect().left;
