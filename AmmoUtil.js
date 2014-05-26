@@ -223,6 +223,7 @@
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
+  		this.type = 'ColliderComponent';
   		args.scale = args.scale || ent.scale;
 		//scale = scale || [1,1,1];
 		var floatByteSize = 4;
