@@ -6,7 +6,7 @@
   AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
   	goo = goo || _goo;
 	function AmmoSystem(){
-		this.priority = 1000;
+		this.priority = Infinity;
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
