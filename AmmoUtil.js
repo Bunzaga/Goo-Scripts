@@ -167,9 +167,10 @@
   AmmoUtil.createCylinderZColliderComponent = function(args, ctx, goo){
   	function CylinderZColliderComponent(){
   		args = args || {};
-  		args.halfExtents = args.halfExtents || [1,1,1];
+  		args.radius = args.halfExtents || 1.0;
+  		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		this.shape = new Ammo.btCylinderShapeZ(new Ammo.btVector3(args.radius, args.radius, args.halfHeight));
   	}
   	CylinderZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
@@ -180,9 +181,10 @@
   AmmoUtil.createCylinderXColliderComponent = function(args, ctx, goo){
   	function CylinderXColliderComponent(){
   		args = args || {};
-  		args.halfExtents = args.halfExtents || [1,1,1];
+  		args.radius = args.halfExtents || 1.0;
+  		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShapeX(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		this.shape = new Ammo.btCylinderShapeX(new Ammo.btVector3(args.halfHeight, args.radius, args.radius));
   	}
   	CylinderXColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
@@ -193,9 +195,10 @@
   AmmoUtil.createCylinderYColliderComponent = function(args, ctx, goo){
   	function CylinderYColliderComponent(){
   		args = args || {};
-  		args.halfExtents = args.halfExtents || [1,1,1];
+  		args.radius = args.halfExtents || 1.0;
+  		args.halfHeight = args.halfHeight || 1.0;
   		this.type = 'ColliderComponent';
-  		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]));
+  		this.shape = new Ammo.btCylinderShape(new Ammo.btVector3(args.radius, args.halfHeight, args.radius));
   	}
   	CylinderYColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
