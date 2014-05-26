@@ -57,7 +57,8 @@
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
   }
-  AmmoUtil.destroyAmmoSystem = function(args, ctx, goo){
+  AmmoUtil.destroyAmmoSystem = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
   		var i = ammoSystem._activeEntities.length;
@@ -138,7 +139,8 @@
   	return rigidBody;
   	
   }
-  AmmoUtil.createBoxColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createBoxColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function BoxColliderComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
@@ -153,7 +155,8 @@
   	var shape = new BoxColliderComponent();
   	return shape;
   }
-  AmmoUtil.createSphereColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createSphereColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function SphereColliderComponent(){
   		args = args || {};
   		console.log(args.radius);
@@ -166,7 +169,8 @@
   	var shape = new SphereColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderZColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createCylinderZColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function CylinderZColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -182,7 +186,8 @@
   	var shape = new CylinderZColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderXColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createCylinderXColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function CylinderXColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -198,7 +203,8 @@
   	var shape = new CylinderXColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderYColliderComponent = function(args, ctx, goo){
+  AmmoUtil.createCylinderYColliderComponent = function(args, ctx, _goo){
+  	goo = goo || _goo;
   	function CylinderYColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -217,8 +223,19 @@
   AmmoUtil.createAmmoMeshComponent = function(args, ctx, goo){
   	
   }
-  AmmoUtil.createAmmoPlaneComponent = function(args, ctx, goo){
-  	
+  AmmoUtil.createPlaneColliderComponent = function(args, ctx, goo){
+  	function PlaneColliderComponent(){
+  		// bullet normalizes the normal for us
+  		args.normal = args.normal || [0, 1, 0];
+  		args.distance = args.distance || 0;
+  		pvec = pvec || new Ammo.btVector3();
+  		pvec.setValue(normal[0], normal[1], normal[2]);
+  		this.shape = new AmmobtPlaneShape(pvec, args.distance);
+  	}
+  	PlaneColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	PlaneColliderComponent.constructor = PlaneColliderComponent;
+  	var shape = new PlaneColliderComponent();
+  	return shape;
   }
   
   AmmoUtil.setLinearVelocity = function(body, vec3){
