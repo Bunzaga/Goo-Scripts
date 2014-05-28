@@ -34,8 +34,7 @@
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-		var i = entities.length;
-		while(i--){
+		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
 				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
 			}
