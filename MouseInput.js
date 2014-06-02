@@ -20,11 +20,11 @@
 		offsetLeft = domElement.getBoundingClientRect().left;
 		offsetTop = domElement.getBoundingClientRect().top;
 		document.addEventListener("contextmenu", contextMenu, false);
-		document.documentElement.addEventListener('mousedown', mouseDown, false);
+		ctx.domElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
-		document.documentElement.addEventListener('mousemove', mouseMove, false);
-		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
-		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		ctx.domElement.addEventListener('mousemove', mouseMove, false);
+		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
+		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
 	MouseInput.cleanup = function() {
@@ -32,11 +32,11 @@
 			MouseInput.unbindAll(Number(i));
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
-		document.documentElement.removeEventListener('mousemove', mouseMove, false);
-		document.documentElement.removeEventListener('mousedown', mouseDown, false);
+		ctx.domElement.removeEventListener('mousemove', mouseMove, false);
+		ctx.domElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
-		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
-		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
+		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
 	};
 	MouseInput.getButton = function(btnCode){
