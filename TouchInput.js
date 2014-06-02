@@ -105,8 +105,6 @@
 		var touchStart = function(e){
 			if(!eventList["TouchStart"]){return;}
 			e = e || window.event;
-			if (e && e.preventDefault) {e.preventDefault();}
-			if (e && e.stopPropagation) {e.stopPropagation();}
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				if(undefined === touches[e.changedTouches[i].identifier]){
 					touches[e.changedTouches[i].identifier] = {
@@ -131,8 +129,6 @@
 		var touchMove = function(e){
 			if(!eventList["TouchMove"]){return;}
 			e = e || window.event;
-			if (e && e.preventDefault) {e.preventDefault();}
-			if (e && e.stopPropagation) {e.stopPropagation();}
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				updateTouchPos(e.changedTouches[i]);
 				var node = eventList["TouchMove"].first;
@@ -145,8 +141,6 @@
 		var touchEnd = function(e){
 			if(!eventList["TouchEnd"]){return;}
 			e = e || window.event;
-			if (e && e.preventDefault) {e.preventDefault();}
-			if (e && e.stopPropagation) {e.stopPropagation();}
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				updateTouchPos(e.changedTouches[i]);
 				var node = eventList["TouchEnd"].first;
@@ -159,8 +153,6 @@
 		var touchCancel = function(e){
 			if(!eventList["TouchCancel"]){return;}
 			e = e || window.event;
-			if (e && e.preventDefault) {e.preventDefault();}
-			if (e && e.stopPropagation) {e.stopPropagation();}
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				updateTouchPos(e.changedTouches[i]);
 				var node = eventList["TouchCancel"].first;
