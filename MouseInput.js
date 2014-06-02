@@ -139,8 +139,8 @@
 	}
 	var mouseDown = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
+	//	if (e && e.preventDefault) {e.preventDefault();}
+	//	if (e && e.stopPropagation) {e.stopPropagation();}
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
@@ -170,8 +170,8 @@
 	};
 	var mouseUp = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
+	//	if (e && e.preventDefault) {e.preventDefault();}
+	//	if (e && e.stopPropagation) {e.stopPropagation();}
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
