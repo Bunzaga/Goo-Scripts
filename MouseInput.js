@@ -20,11 +20,11 @@
 		offsetLeft = domElement.getBoundingClientRect().left;
 		offsetTop = domElement.getBoundingClientRect().top;
 		document.addEventListener("contextmenu", contextMenu, false);
-		ctx.domElement.addEventListener('mousedown', mouseDown, false);
+		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
-		ctx.domElement.addEventListener('mousemove', mouseMove, false);
-		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
-		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		document.documentElement.addEventListener('mousemove', mouseMove, false);
+		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
+		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
 	MouseInput.cleanup = function(args, ctx, goo) {
@@ -32,11 +32,11 @@
 			MouseInput.unbindAll(Number(i));
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
-		ctx.domElement.removeEventListener('mousemove', mouseMove, false);
-		ctx.domElement.removeEventListener('mousedown', mouseDown, false);
+		document.documentElement.removeEventListener('mousemove', mouseMove, false);
+		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
-		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
-		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
 	};
 	MouseInput.getButton = function(btnCode){
@@ -139,8 +139,6 @@
 	}
 	var mouseDown = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
@@ -170,8 +168,6 @@
 	};
 	var mouseUp = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
@@ -201,8 +197,6 @@
 	};
 	var mouseMove = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
 		updateMousePos(e);
 		if(eventList["MouseInput16"]){
 			var node = eventList["MouseInput16"].first;
