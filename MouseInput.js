@@ -27,7 +27,7 @@
 		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
-	MouseInput.cleanup = function() {
+	MouseInput.cleanup = function(args, ctx, goo) {
 		for(var i in buttons){
 			MouseInput.unbindAll(Number(i));
 		}
