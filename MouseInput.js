@@ -119,8 +119,6 @@
 	};
 	var mouseWheel = function(e){
 		e = e || window.event;
-		if (e && e.preventDefault) {e.preventDefault();}
-		if (e && e.stopPropagation) {e.stopPropagation();}
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 		MouseInput.wheelDelta = wheelDelta;
 		if(eventList["MouseInput8"]){
