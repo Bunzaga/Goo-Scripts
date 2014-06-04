@@ -21,7 +21,7 @@
         args.attachee.transformComponent.setScale(1,1,1);
 
         if(args.offsetScl){
-            a.transformComponent.setScale(scl);
+            a.transformComponent.setScale(args.offsetScl);
         }
         a.addToWorld();
         ctx.entity.transformComponent.attachChild(a.transformComponent);
@@ -38,7 +38,7 @@
         }
  
         if(args.offsetRot){
-            attachee.transformComponent.transform.rotation.fromAngles(rot.x, rot.y, rot.z);
+            attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot.x, args.offsetRot.y, args.offsetRot.z);
         }
         attachee.transformComponent.setUpdated();
 
