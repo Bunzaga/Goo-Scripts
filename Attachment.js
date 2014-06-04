@@ -68,7 +68,7 @@
     {key:'bone', type:'string', default:"undefined"},
     {key:'offsetPos', type:'vec3', default:[]},
     {key:'offsetRot', type:'vec3', default:[]},
-    {key:'offsetScl', type:'vec3', default:[]}
+    {key:'offsetScl', type:'vec3', default:[1, 1, 1]}
     ];
 
   var global = global || window;
