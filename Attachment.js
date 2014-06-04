@@ -4,21 +4,18 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
-    //if(null === ctx.entity.meshDataComponent){console.error("ctx.entity requires a MeshDataComponent(Perhaps use a child entity?).");return;}
-     //   if(null == ctx.entity.meshDataComponent.currentPose){console.error("ctx.entity requires a skeleton");return;}
-        //var meshData = ctx.entity.meshDataComponent,
-        //joints = meshData.currentPose._skeleton._joints,
         ctx.parent = ctx.entity.transformComponent.parent;
         ctx.parent = ctx.parent.entity;
         console.log("ctx.parent");
         console.log(ctx.parent);
-        var pose = ctx.parent.animationComponent._skeletonPose;
-
+        
+        
         var a = ctx.world.createEntity(ctx.attachee.name+"_Attachment");
         
         a.oldScale = new goo.Vector3().copy(ctx.attachee.transformComponent.transform.scale);
         ctx.attachee.transformComponent.setScale(1,1,1);
-
+	ctx.attachee.transformComponent.setUpdated();
+	
         if(ctx.offsetScl){
             a.transformComponent.setScale(ctx.offsetScl);
             console.log("ctx.offsetScl");
@@ -45,9 +42,10 @@
             console.log("ctx.offsetRot");
             console.log(ctx.offsetRot);
         }
-        ctx.attachee.transformComponent.setUpdated();
-    
-        ctx.jointTransform = pose._globalTransforms[this.jointIndex];
+        
+        var pose = ctx.parent.animationComponent._skeletonPose;
+        
+        ctx.jointTransform = pose._globalTransforms[args.jointIndex];
         
         ctx.entity.attachment = a;
         console.log("ctx.entity.attachment");
