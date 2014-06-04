@@ -4,10 +4,12 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
-    if(null === ctx.entity.meshDataComponent){console.error("ctx.entity requires a MeshDataComponent(Perhaps use a child entity?).");return;}
-        if(null == ctx.entity.meshDataComponent.currentPose){console.error("ctx.entity requires a skeleton");return;}
-        var meshData = ctx.entity.meshDataComponent,
-        joints = meshData.currentPose._skeleton._joints,
+    //if(null === ctx.entity.meshDataComponent){console.error("ctx.entity requires a MeshDataComponent(Perhaps use a child entity?).");return;}
+     //   if(null == ctx.entity.meshDataComponent.currentPose){console.error("ctx.entity requires a skeleton");return;}
+        //var meshData = ctx.entity.meshDataComponent,
+        //joints = meshData.currentPose._skeleton._joints,
+        var pose = ctx.entity.animationComponent._skeletonPose;
+        //var joints = 
         jointID = -1;
         var joint = null;
         
@@ -78,6 +80,13 @@
     ctx.entity.attachment.transformComponent.setUpdated();
   }
   Attachment.parameters = [
+    {
+			name: 'Joint',
+			key: 'jointIndex',
+			type: 'int',
+			control: 'jointSelector',
+			'default': null
+		},
     {key:'bone', type:'string', default:"undefined"},
     {key:'offsetPos', type:'vec3', default:[0.0, 0.0, 0.0]},
     {key:'offsetRot', type:'vec3', default:[0.0, 0.0, 0.0]},
