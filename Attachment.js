@@ -16,37 +16,37 @@
         }
         if(-1 == jointID){console.error("Could not find bone '"+args.bone+"' on ctx.entity.");return;}
 
-        var a = ctx.world.createEntity(args.attachee.name+"_Attachment");
+        var a = ctx.world.createEntity(ctx.attachee.name+"_Attachment");
         a.oldScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
-        args.attachee.transformComponent.setScale(1,1,1);
+        ctx.attachee.transformComponent.setScale(1,1,1);
 
-        if(args.offsetScl){
-            a.transformComponent.setScale(args.offsetScl);
-            console.log("args.offsetScl");
-            console.log(args.offsetScl);
+        if(ctx.offsetScl){
+            a.transformComponent.setScale(ctx.offsetScl);
+            console.log("ctx.offsetScl");
+            console.log(ctx.offsetScl);
         }
         a.addToWorld();
         ctx.entity.transformComponent.attachChild(a.transformComponent);
         ctx.entity.transformComponent.setUpdated();
 
-        a.transformComponent.attachChild(args.attachee.transformComponent);
+        a.transformComponent.attachChild(ctx.attachee.transformComponent);
         a.transformComponent.setUpdated();
 
-        if(args.offsetPos){
-            args.attachee.transformComponent.setTranslation(
-                args.offsetPos[0]*(1/ctx.entity.transformComponent.transform.scale[0]),
-                args.offsetPos[1]*(1/ctx.entity.transformComponent.transform.scale[1]),
-                args.offsetPos[2]*(1/ctx.entity.transformComponent.transform.scale[2]));
-            console.log("args.offsetPos");
-            console.log(args.offsetPos);
+        if(ctx.offsetPos){
+            ctx.attachee.transformComponent.setTranslation(
+                ctx.offsetPos[0]*(1/ctx.entity.transformComponent.transform.scale[0]),
+                ctx.offsetPos[1]*(1/ctx.entity.transformComponent.transform.scale[1]),
+                ctx.offsetPos[2]*(1/ctx.entity.transformComponent.transform.scale[2]));
+            console.log("ctx.offsetPos");
+            console.log(ctx.offsetPos);
         }
  
-        if(args.offsetRot){
-            args.attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot[0], args.offsetRot[1], args.offsetRot[2]);
-            console.log("args.offsetRot");
-            console.log(args.offsetRot);
+        if(ctx.offsetRot){
+            ctx.attachee.transformComponent.transform.rotation.fromAngles(ctx.offsetRot[0], ctx.offsetRot[1], ctx.offsetRot[2]);
+            console.log("ctx.offsetRot");
+            console.log(ctx.offsetRot);
         }
-        args.attachee.transformComponent.setUpdated();
+        ctx.attachee.transformComponent.setUpdated();
 
         a.parentMeshData = meshData;
         a.parentJointID = jointID;
