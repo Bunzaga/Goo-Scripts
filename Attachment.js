@@ -10,6 +10,7 @@
         //joints = meshData.currentPose._skeleton._joints,
         ctx.parent = ctx.entity.transformComponent.parent;
         ctx.parent = ctx.parent.entity;
+        console.log(ctx.parent);
         var pose = ctx.parent.animationComponent._skeletonPose;
 	var jointTransform = pose._globalTransforms[args.jointIndex];
 
