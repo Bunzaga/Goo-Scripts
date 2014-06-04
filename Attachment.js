@@ -10,6 +10,7 @@
         //joints = meshData.currentPose._skeleton._joints,
         ctx.parent = ctx.entity.transformComponent.parent;
         ctx.parent = ctx.parent.entity;
+        console.log("ctx.parent");
         console.log(ctx.parent);
         var pose = ctx.parent.animationComponent._skeletonPose;
 	var jointTransform = pose._globalTransforms[args.jointIndex];
@@ -47,8 +48,8 @@
         }
         ctx.attachee.transformComponent.setUpdated();
 
-        a.parentMeshData = meshData;
-        a.parentJointID = jointID;
+        a.parentMeshData = ctx.entity.meshDataComponent;
+        a.parentJointID = args.jointIndex;
         
         ctx.entity.attachment = a;
         console.log("ctx.entity.attachment");
