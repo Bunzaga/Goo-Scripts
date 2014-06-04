@@ -27,27 +27,27 @@
     ctx.entity.attachment.removeFromWorld();
         delete ctx.entity.attachment;
   }
-  Attachment.prototype.update = function(args, ctx, goo){
+	Attachment.prototype.update = function(args, ctx, goo){
 		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.entity.attachment.transformComponent._dirty = true;
-  }
-  Attachment.updateWorldTransform(transformComponent){
-	transformComponent.updateWorldTransform();
-	var entity = transformComponent.entity;
-	if (entity && entity.meshDataComponent && entity.meshRendererComponent) {
-		entity.meshRendererComponent.updateBounds(
-		entity.meshDataComponent.modelBound,
-		transformComponent.worldTransform);
 	}
-	
-	for (var i = 0; i < transformComponent.children.length; i++) {
-		updateWorldTransform(transformComponent.children[i]);
+	Attachment.updateWorldTransform(transformComponent){
+		transformComponent.updateWorldTransform();
+		var entity = transformComponent.entity;
+		if (entity && entity.meshDataComponent && entity.meshRendererComponent){
+			entity.meshRendererComponent.updateBounds(
+			entity.meshDataComponent.modelBound,
+			transformComponent.worldTransform);
+		}
+		
+		for (var i = 0; i < transformComponent.children.length; i++) {
+			updateWorldTransform(transformComponent.children[i]);
+		}
 	}
-}
   
   
   Attachment.parameters = [
@@ -57,8 +57,7 @@
 	type: 'int',
 	control: 'jointSelector',
 	default: null
-	}
-    ];
+	}];
 
   var global = global || window;
   global.Attachment = Attachment;
