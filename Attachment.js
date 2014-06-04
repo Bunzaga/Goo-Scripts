@@ -57,7 +57,14 @@
         console.log("ctx.entity.attachment");
         console.log(ctx.entity.attachment);
   }
-  Attachment.prototype.remove = function(){
+  Attachment.prototype.remove = function(args, ctx, goo){
+    ctx.attachee.transformComponent.transform.translation.copy(ctx.attachee.transformComponent.worldTransform.translation);
+    ctx.attachee.transformComponent.transform.rotation.copy(ctx.attachee.transformComponent.worldTransform.rotation);
+    ctx.entity.transformComponent.detachChild(ctx.entity.attachment.transformComponent);
+    ctx.entity.attachment.transformComponent.detachChild(ctx.attachee.transformComponent);
+    ctx.attachee.transformComponent.setScale(ctx.entity.attachment.oldScale.x,ctx.entity.attachment.oldScale.y,ctx.entity.attachment.oldScale.z);
+    ctx.entity.attachment.removeFromWorld();
+        delete ctx.entity.attachment;
   }
   Attachment.prototype.update = function(args, ctx, goo){
     var m = ctx.entity.attachment.parentMeshData.currentPose._globalTransforms[ctx.entity.attachment.parentJointID].matrix;
