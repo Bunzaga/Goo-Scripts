@@ -69,6 +69,7 @@
     );
     ctx.entity.attachment.transformComponent.updateTransform();
     ctx.entity.attachment.transformComponent.updateWorldTransform();
+    ctx.entity.attachment.transformComponent.setUpdated();
   }
   Attachment.parameters = [
     {key:'bone', type:'string', default:"undefined"},
