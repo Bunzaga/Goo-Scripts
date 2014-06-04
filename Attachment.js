@@ -16,13 +16,7 @@
         ctx.jointTransform = pose._globalTransforms[args.jointIndex];
   }
   Attachment.prototype.remove = function(args, ctx, goo){
-    ctx.attachee.transformComponent.transform.translation.copy(ctx.attachee.transformComponent.worldTransform.translation);
-    ctx.attachee.transformComponent.transform.rotation.copy(ctx.attachee.transformComponent.worldTransform.rotation);
-    ctx.entity.transformComponent.detachChild(ctx.entity.attachment.transformComponent);
-    ctx.entity.attachment.transformComponent.detachChild(ctx.attachee.transformComponent);
-    ctx.attachee.transformComponent.setScale(ctx.entity.attachment.oldScale.x,ctx.entity.attachment.oldScale.y,ctx.entity.attachment.oldScale.z);
-    ctx.entity.attachment.removeFromWorld();
-        delete ctx.entity.attachment;
+    ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
   }
 	Attachment.prototype.update = function(args, ctx, goo){
 		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
