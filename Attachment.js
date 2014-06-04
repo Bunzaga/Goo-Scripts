@@ -44,18 +44,19 @@
 
         a.parentMeshData = meshData;
         a.parentJointID = jointID;
-        a.scale = 1.0;
-        a.calcVec = new goo.Vector3();
+        //a.scale = 1.0;
+        //a.calcVec = new goo.Vector3();
         
         ctx.entity.attachment = a;
         
-        console.log(ctx.entity);
   }
   Attachment.prototype.remove = function(){
   }
   Attachment.prototype.update = function(args, ctx, goo){
     var m = ctx.entity.attachment.parentMeshData.currentPose._globalTransforms[ctx.entity.attachment.parentJointID].matrix;
     var t = ctx.entity.attachment.transformComponent.transform;
+    console.log(m);
+    console.log(t);
     m.getTranslation(t.translation);           
     t.rotation.set(
         m.e00, m.e10, m.e20,
@@ -68,9 +69,9 @@
   }
   Attachment.parameters = [
     {key:'bone', type:'string', default:"undefined"},
-    {key:'offsetPos', type:'vec3', default:[]},
-    {key:'offsetRot', type:'vec3', default:[]},
-    {key:'offsetScl', type:'vec3', default:[1, 1, 1]}
+    {key:'offsetPos', type:'vec3', default:[0.0, 0.0, 0.0]},
+    {key:'offsetRot', type:'vec3', default:[0.0, 0.0, 0.0]},
+    {key:'offsetScl', type:'vec3', default:[1.0, 1.0, 1.0]}
     ];
 
   var global = global || window;
