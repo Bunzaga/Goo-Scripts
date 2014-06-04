@@ -8,17 +8,13 @@
      //   if(null == ctx.entity.meshDataComponent.currentPose){console.error("ctx.entity requires a skeleton");return;}
         //var meshData = ctx.entity.meshDataComponent,
         //joints = meshData.currentPose._skeleton._joints,
-        var pose = ctx.entity.animationComponent._skeletonPose;
-        //var joints = 
-        jointID = -1;
-        var joint = null;
-        
-        for(var i = 0, ilen = joints.length; i < ilen; i++){
-            if(joints[i]._name === args.bone){jointID = i;break;}
-        }
-        if(-1 == jointID){console.error("Could not find bone '"+args.bone+"' on ctx.entity.");return;}
+        ctx.parent = ctx.entity.transformComponent.parent;
+        ctx.parent = ctx.parent.entity;
+        var pose = ctx.parent.animationComponent._skeletonPose;
+	var jointTransform = pose._globalTransforms[args.jointIndex];
 
         var a = ctx.world.createEntity(ctx.attachee.name+"_Attachment");
+        
         a.oldScale = new goo.Vector3().copy(ctx.attachee.transformComponent.transform.scale);
         ctx.attachee.transformComponent.setScale(1,1,1);
 
@@ -28,8 +24,8 @@
             console.log(ctx.offsetScl);
         }
         a.addToWorld();
-        ctx.entity.transformComponent.attachChild(a.transformComponent);
-        ctx.entity.transformComponent.setUpdated();
+        ctx.parent.transformComponent.attachChild(a.transformComponent);
+        ctx.parent.transformComponent.setUpdated();
 
         a.transformComponent.attachChild(ctx.attachee.transformComponent);
         a.transformComponent.setUpdated();
