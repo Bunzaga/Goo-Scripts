@@ -38,9 +38,9 @@
         }
  
         if(args.offsetRot){
-            attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot.x, args.offsetRot.y, args.offsetRot.z);
+            args.attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot.x, args.offsetRot.y, args.offsetRot.z);
         }
-        attachee.transformComponent.setUpdated();
+        args.attachee.transformComponent.setUpdated();
 
         a.parentMeshData = meshData;
         a.parentJointID = jointID;
