@@ -48,6 +48,8 @@
         a.calcVec = new goo.Vector3();
         
         ctx.entity.attachment = a;
+        
+        console.log(ctx.entity);
   }
   Attachment.prototype.remove = function(){
   }
