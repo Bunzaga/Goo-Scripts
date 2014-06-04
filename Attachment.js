@@ -32,23 +32,22 @@
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
-		updateWorldTransform(ctx.attachee.transformComponent);
+		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.entity.attachment.transformComponent._dirty = true;
   }
-	function updateWorldTransform(transformComponent) {
-		transformComponent.updateWorldTransform();
-		var entity = transformComponent.entity;
-		if (entity && entity.meshDataComponent && entity.meshRendererComponent) {
-			entity.meshRendererComponent.updateBounds(
-				entity.meshDataComponent.modelBound,
-				transformComponent.worldTransform
-			);
-		}
-	
-		for (var i = 0; i < transformComponent.children.length; i++) {
-			updateWorldTransform(transformComponent.children[i]);
-		}
+  Attachment.updateWorldTransform(transformComponent){
+	transformComponent.updateWorldTransform();
+	var entity = transformComponent.entity;
+	if (entity && entity.meshDataComponent && entity.meshRendererComponent) {
+		entity.meshRendererComponent.updateBounds(
+		entity.meshDataComponent.modelBound,
+		transformComponent.worldTransform);
 	}
+	
+	for (var i = 0; i < transformComponent.children.length; i++) {
+		updateWorldTransform(transformComponent.children[i]);
+	}
+}
   
   
   Attachment.parameters = [
