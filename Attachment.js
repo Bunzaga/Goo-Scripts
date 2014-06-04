@@ -64,7 +64,13 @@
     ctx.attachment.transformComponent.updateTransform();
     ctx.attachment.transformComponent.updateWorldTransform();
   }
+  Attachment.parameters = [
+    {key:'bone', type:'string', default:"undefined"},
+    {key:'offsetPos', type:'vec3', default:[]},
+    {key:'offsetRot', type:'vec3', default:[]},
+    {key:'offsetScl', type:'vec3', default:[]}
+    ];
 
   var global = global || window;
-  global.AttachUtil = AttachUtil;
+  global.Attachment = Attachment;
 }(window, document, undefined));
