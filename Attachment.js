@@ -26,8 +26,8 @@
             console.log(ctx.offsetScl);
         }
         a.addToWorld();
-        ctx.entity.transformComponent.attachChild(a.transformComponent);
-        ctx.entity.transformComponent.setUpdated();
+        //ctx.entity.transformComponent.attachChild(a.transformComponent);
+        //ctx.entity.transformComponent.setUpdated();
 
         a.transformComponent.attachChild(ctx.attachee.transformComponent);
         a.transformComponent.setUpdated();
