@@ -45,15 +45,15 @@
         a.parentMeshData = meshData;
         a.parentJointID = jointID;
         a.scale = 1.0;
-       // a.calcVec = new goo.Vector3();
+        a.calcVec = new goo.Vector3();
         
-        ctx.attachment = a;
+        ctx.entity.attachment = a;
   }
   Attachment.prototype.remove = function(){
   }
   Attachment.prototype.update = function(args, ctx, goo){
-    var m = ctx.attachment.parentMeshData.currentPose._globalTransforms[ctx.attachment.parentJointID].matrix;
-    var t = ctx.attachment.transformComponent.transform;
+    var m = ctx.entity.attachment.parentMeshData.currentPose._globalTransforms[ctx.entity.attachment.parentJointID].matrix;
+    var t = ctx.entity.attachment.transformComponent.transform;
     m.getTranslation(t.translation);           
     t.rotation.set(
         m.e00, m.e10, m.e20,
@@ -61,8 +61,8 @@
         m.e02, m.e12, m.e22
     );
 
-    ctx.attachment.transformComponent.updateTransform();
-    ctx.attachment.transformComponent.updateWorldTransform();
+    ctx.entity.attachment.transformComponent.updateTransform();
+    ctx.entity.attachment.transformComponent.updateWorldTransform();
   }
   Attachment.parameters = [
     {key:'bone', type:'string', default:"undefined"},
