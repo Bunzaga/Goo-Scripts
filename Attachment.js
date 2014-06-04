@@ -12,9 +12,9 @@
         var joint = null;
         
         for(var i = 0, ilen = joints.length; i < ilen; i++){
-            if(joints[i]._name === bone){jointID = i;break;}
+            if(joints[i]._name === args.bone){jointID = i;break;}
         }
-        if(-1 == jointID){console.error("Could not find bone '"+bone+"' on ctx.entity.");return;}
+        if(-1 == jointID){console.error("Could not find bone '"+args.bone+"' on ctx.entity.");return;}
 
         var a = ctx.world.createEntity(args.attachee.name+"_Attachment");
         a.oldScale = new goo.Vector3().copy(attachee.transformComponent.transform.scale);
