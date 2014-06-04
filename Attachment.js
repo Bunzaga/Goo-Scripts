@@ -31,7 +31,7 @@
         a.transformComponent.setUpdated();
 
         if(args.offsetPos){
-            attachee.transformComponent.setTranslation(
+            args.attachee.transformComponent.setTranslation(
                 args.offsetPos.x*(1/ctx.entity.transformComponent.transform.scale.x),
                 args.offsetPos.y*(1/ctx.entity.transformComponent.transform.scale.y),
                 args.offsetPos.z*(1/ctx.entity.transformComponent.transform.scale.z));
