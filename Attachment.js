@@ -38,7 +38,7 @@
                 args.offsetPos[1]*(1/ctx.entity.transformComponent.transform.scale[1]),
                 args.offsetPos[2]*(1/ctx.entity.transformComponent.transform.scale[2]));
             console.log("args.offsetPos");
-            console.log(args.offstPos);
+            console.log(args.offsetPos);
         }
  
         if(args.offsetRot){
