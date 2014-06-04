@@ -22,6 +22,8 @@
 
         if(args.offsetScl){
             a.transformComponent.setScale(args.offsetScl);
+            console.log("args.offsetScl");
+            console.log(args.offsetScl);
         }
         a.addToWorld();
         ctx.entity.transformComponent.attachChild(a.transformComponent);
@@ -35,10 +37,14 @@
                 args.offsetPos[0]*(1/ctx.entity.transformComponent.transform.scale[0]),
                 args.offsetPos[1]*(1/ctx.entity.transformComponent.transform.scale[1]),
                 args.offsetPos[2]*(1/ctx.entity.transformComponent.transform.scale[2]));
+            console.log("args.offsetPos");
+            console.log(args.offstPos);
         }
  
         if(args.offsetRot){
             args.attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot[0], args.offsetRot[1], args.offsetRot[2]);
+            console.log("args.offsetRot");
+            console.log(args.offsetRot);
         }
         args.attachee.transformComponent.setUpdated();
 
@@ -48,7 +54,7 @@
         //a.calcVec = new goo.Vector3();
         
         ctx.entity.attachment = a;
-        
+        console.log(ctx.entity.attachment);
   }
   Attachment.prototype.remove = function(){
   }
@@ -61,7 +67,6 @@
         m.e01, m.e11, m.e21,
         m.e02, m.e12, m.e22
     );
-    console.log(t.translation.x+","+t.translation.y+","+t.translation.z);
     ctx.entity.attachment.transformComponent.updateTransform();
     ctx.entity.attachment.transformComponent.updateWorldTransform();
   }
