@@ -30,7 +30,7 @@
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
-		ctx.entity.attachment.transformComponent._dirty = true;
+		ctx.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
@@ -42,7 +42,7 @@
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
-			updateWorldTransform(transformComponent.children[i]);
+			Attachment.updateWorldTransform(transformComponent.children[i]);
 		}
 	}
   
