@@ -54,6 +54,7 @@
         //a.calcVec = new goo.Vector3();
         
         ctx.entity.attachment = a;
+        console.log("ctx.entity.attachment");
         console.log(ctx.entity.attachment);
   }
   Attachment.prototype.remove = function(){
