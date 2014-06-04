@@ -45,7 +45,7 @@
         a.parentMeshData = meshData;
         a.parentJointID = jointID;
         a.scale = 1.0;
-        a.calcVec = new Vector3();
+       // a.calcVec = new goo.Vector3();
         
         ctx.attachment = a;
   }
