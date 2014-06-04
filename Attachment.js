@@ -14,9 +14,6 @@
 
         var pose = ctx.parent.animationComponent._skeletonPose;
         ctx.jointTransform = pose._globalTransforms[args.jointIndex];
-        
-        console.log("ctx.entity.attachment");
-        console.log(ctx.entity.attachment);
   }
   Attachment.prototype.remove = function(args, ctx, goo){
     ctx.attachee.transformComponent.transform.translation.copy(ctx.attachee.transformComponent.worldTransform.translation);
