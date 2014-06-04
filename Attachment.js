@@ -32,13 +32,13 @@
 
         if(args.offsetPos){
             args.attachee.transformComponent.setTranslation(
-                args.offsetPos.x*(1/ctx.entity.transformComponent.transform.scale.x),
-                args.offsetPos.y*(1/ctx.entity.transformComponent.transform.scale.y),
-                args.offsetPos.z*(1/ctx.entity.transformComponent.transform.scale.z));
+                args.offsetPos[0]*(1/ctx.entity.transformComponent.transform.scale[0]),
+                args.offsetPos[1]*(1/ctx.entity.transformComponent.transform.scale[1]),
+                args.offsetPos[2]*(1/ctx.entity.transformComponent.transform.scale[2]));
         }
  
         if(args.offsetRot){
-            args.attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot.x, args.offsetRot.y, args.offsetRot.z);
+            args.attachee.transformComponent.transform.rotation.fromAngles(args.offsetRot[0], args.offsetRot[1], args.offsetRot[2]);
         }
         args.attachee.transformComponent.setUpdated();
 
@@ -55,15 +55,13 @@
   Attachment.prototype.update = function(args, ctx, goo){
     var m = ctx.entity.attachment.parentMeshData.currentPose._globalTransforms[ctx.entity.attachment.parentJointID].matrix;
     var t = ctx.entity.attachment.transformComponent.transform;
-    console.log(m);
-    console.log(t);
     m.getTranslation(t.translation);           
     t.rotation.set(
         m.e00, m.e10, m.e20,
         m.e01, m.e11, m.e21,
         m.e02, m.e12, m.e22
     );
-
+    console.log(t.translation.x+","+t.translation.y+","+t.translation.z);
     ctx.entity.attachment.transformComponent.updateTransform();
     ctx.entity.attachment.transformComponent.updateWorldTransform();
   }
