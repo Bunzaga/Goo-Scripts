@@ -77,13 +77,12 @@
   }
   Attachment.parameters = [
     {
-			name: 'Joint',
-			key: 'jointIndex',
-			type: 'int',
-			control: 'jointSelector',
-			'default': null
-		},
-    {key:'bone', type:'string', default:"undefined"},
+	name: 'Joint',
+	key: 'jointIndex',
+	type: 'int',
+	control: 'jointSelector',
+	default: null
+	},
     {key:'offsetPos', type:'vec3', default:[0.0, 0.0, 0.0]},
     {key:'offsetRot', type:'vec3', default:[0.0, 0.0, 0.0]},
     {key:'offsetScl', type:'vec3', default:[1.0, 1.0, 1.0]}
