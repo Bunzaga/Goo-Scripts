@@ -13,7 +13,6 @@
         console.log("ctx.parent");
         console.log(ctx.parent);
         var pose = ctx.parent.animationComponent._skeletonPose;
-	var jointTransform = pose._globalTransforms[args.jointIndex];
 
         var a = ctx.world.createEntity(ctx.attachee.name+"_Attachment");
         
@@ -47,9 +46,8 @@
             console.log(ctx.offsetRot);
         }
         ctx.attachee.transformComponent.setUpdated();
-
-        a.parentMeshData = ctx.entity.meshDataComponent;
-        a.parentJointID = args.jointIndex;
+    
+        ctx.jointTransform = pose._globalTransforms[this.jointIndex];
         
         ctx.entity.attachment = a;
         console.log("ctx.entity.attachment");
@@ -65,18 +63,30 @@
         delete ctx.entity.attachment;
   }
   Attachment.prototype.update = function(args, ctx, goo){
-    var m = ctx.entity.attachment.parentMeshData.currentPose._globalTransforms[ctx.entity.attachment.parentJointID].matrix;
-    var t = ctx.entity.attachment.transformComponent.transform;
-    m.getTranslation(t.translation);           
-    t.rotation.set(
-        m.e00, m.e10, m.e20,
-        m.e01, m.e11, m.e21,
-        m.e02, m.e12, m.e22
-    );
-    ctx.entity.attachment.transformComponent.updateTransform();
-    ctx.entity.attachment.transformComponent.updateWorldTransform();
-    ctx.entity.attachment.transformComponent.setUpdated();
+
+		ctx.entity.attachment.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+		ctx.jointTransform.matrix.getTranslation(ctx.entity.attachment.transformComponent.transform.translation);
+		ctx.jointTransform.matrix.getScale(ctx.entity.attachment.transformComponent.transform.scale);
+		ctx.jointTransform.matrix.getRotation(ctx.entity.attachment.transformComponent.transform.rotation);
+		updateWorldTransform(ctx.entity.attachment.transformComponent);
+		ctx.entity.attachment.transformComponent._dirty = true;
   }
+	function updateWorldTransform(transformComponent) {
+		transformComponent.updateWorldTransform();
+		var entity = transformComponent.entity;
+		if (entity && entity.meshDataComponent && entity.meshRendererComponent) {
+			entity.meshRendererComponent.updateBounds(
+				entity.meshDataComponent.modelBound,
+				transformComponent.worldTransform
+			);
+		}
+	
+		for (var i = 0; i < transformComponent.children.length; i++) {
+			updateWorldTransform(transformComponent.children[i]);
+		}
+	}
+  
+  
   Attachment.parameters = [
     {
 	name: 'Joint',
