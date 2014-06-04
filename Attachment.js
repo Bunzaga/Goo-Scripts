@@ -58,10 +58,7 @@
 	type: 'int',
 	control: 'jointSelector',
 	default: null
-	},
-    {key:'offsetPos', type:'vec3', default:[0.0, 0.0, 0.0]},
-    {key:'offsetRot', type:'vec3', default:[0.0, 0.0, 0.0]},
-    {key:'offsetScl', type:'vec3', default:[1.0, 1.0, 1.0]}
+	}
     ];
 
   var global = global || window;
