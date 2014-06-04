@@ -35,7 +35,7 @@
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.entity.attachment.transformComponent._dirty = true;
 	}
-	Attachment.updateWorldTransform(transformComponent){
+	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
 		var entity = transformComponent.entity;
 		if (entity && entity.meshDataComponent && entity.meshRendererComponent){
