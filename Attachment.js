@@ -17,7 +17,7 @@
         if(-1 == jointID){console.error("Could not find bone '"+args.bone+"' on ctx.entity.");return;}
 
         var a = ctx.world.createEntity(args.attachee.name+"_Attachment");
-        a.oldScale = new goo.Vector3().copy(attachee.transformComponent.transform.scale);
+        a.oldScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
         args.attachee.transformComponent.setScale(1,1,1);
 
         if(args.offsetScl){
@@ -27,7 +27,7 @@
         ctx.entity.transformComponent.attachChild(a.transformComponent);
         ctx.entity.transformComponent.setUpdated();
 
-        a.transformComponent.attachChild(attachee.transformComponent);
+        a.transformComponent.attachChild(args.attachee.transformComponent);
         a.transformComponent.setUpdated();
 
         if(args.offsetPos){
