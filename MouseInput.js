@@ -115,8 +115,7 @@
 	};
 	var mouseWheel = function(e){
 		e = e || window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation){e.stopPropagation();}
+		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 		MouseInput.wheelDelta = wheelDelta;
 		if(eventList["MouseInput8"]){
@@ -129,15 +128,13 @@
 	};
 	var contextMenu = function(e){
 		e = e || window.event;
-		e.cancelBubble = true;
-		if(e.stopPropagation){e.stopPropagation();}
 		if(e.preventDefault){e.preventDefault();}
+		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		return false;
 	}
 	var mouseDown = function(e){
 		e = e || window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation){e.stopPropagation();}
+		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
@@ -167,8 +164,7 @@
 	};
 	var mouseUp = function(e){
 		e = e || window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation){e.stopPropagation();}
+		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		var btn = 0;
 		if(null === e.which){
 			btn = e.button;
@@ -198,8 +194,7 @@
 	};
 	var mouseMove = function(e){
 		e = e || window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation){e.stopPropagation();}
+		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		updateMousePos(e);
 		if(eventList["MouseInput16"]){
 			var node = eventList["MouseInput16"].first;
