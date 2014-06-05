@@ -47,7 +47,7 @@
 	key: 'jointIndex',
 	type: 'int',
 	control: 'jointSelector',
-	default: null
+	default: -1
 	}];
 
   var global = global || window;
