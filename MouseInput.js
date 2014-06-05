@@ -134,7 +134,8 @@
 	var contextMenu = function(e){
 		e = e || window.event;
 		e.cancelBubble = true;
-		if (e.stopPropagation){e.stopPropagation();}
+		if(e.stopPropagation){e.stopPropagation();}
+		if(e.preventDefault){e.preventDefault();}
 		return false;
 	}
 	var mouseDown = function(e){
