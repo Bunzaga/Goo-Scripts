@@ -3,8 +3,6 @@
 	var eventList = {};
 	var buttons = {};
 	var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
-	//var offsetLeft = 0.0;
-	//var offsetTop = 0.0;
 	var domElement = undefined;
 	
 	var MouseInput = {};
@@ -17,8 +15,6 @@
 		MouseInput.position = new goo.Vector3();
 		MouseInput.wheelDelta = 0;
 		
-		//offsetLeft = domElement.getBoundingClientRect().left;
-		//offsetTop = domElement.getBoundingClientRect().top;
 		document.addEventListener("contextmenu", contextMenu, false);
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
@@ -220,8 +216,6 @@
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
 
-		console.log("newX"+newX+", left:"+domElement.getBoundingClientRect().left+", offsetLeft:"+domElement.offsetLeft);
-		console.log("newY"+newX+", top:"+domElement.getBoundingClientRect().top+", offsetTop:"+domElement.offsetTop);
 		newX -= (domElement.getBoundingClientRect().left + domElement.offsetLeft);
 		newY -= (domElement.getBoundingClientRect().top + domElement.offsetTop);
 		
