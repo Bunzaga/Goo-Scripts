@@ -201,10 +201,11 @@
 		//document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
 		//document.body.addEventListener('touchend', function(e) {e.preventDefault();}, false);
 		//document.body.addEventListener("touchcancel", function(e) {e.preventDefault();}, false);
-		document.documentElement.addEventListener("touchstart", touchStart, false);
-		document.documentElement.addEventListener("touchmove", touchMove, false);
-		document.documentElement.addEventListener("touchend", touchEnd, false);
-		document.documentElement.addEventListener("touchcancel", touchCancel, false);
+		ctx.domElement.addEventListener("touchstart", touchStart, false);
+		//document.documentElement.addEventListener("touchstart", touchStart, false);
+		//document.documentElement.addEventListener("touchmove", touchMove, false);
+		//document.documentElement.addEventListener("touchend", touchEnd, false);
+		//document.documentElement.addEventListener("touchcancel", touchCancel, false);
 		TouchInput.ready = true;
 	}
 	var global = global || window;
