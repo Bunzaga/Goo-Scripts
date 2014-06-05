@@ -20,7 +20,6 @@
 						if(!eventList[touchEvent]){
 							eventList[touchEvent] = {first:null, last:null};
 						}
-						console.log('adding callback');
 						var node = {previous:null, next:null, callback:callback};
 						if(null === eventList[touchEvent].first){
 							eventList[touchEvent].first = node;
@@ -106,6 +105,7 @@
 		var touchStart = function(e){
 			if(!eventList["TouchStart"]){return;}
 			e = e || window.event;
+			console.log(e);
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				if(undefined === touches[e.changedTouches[i].identifier]){
 					touches[e.changedTouches[i].identifier] = {
