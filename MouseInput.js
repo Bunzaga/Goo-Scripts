@@ -19,7 +19,7 @@
 		
 		offsetLeft = domElement.getBoundingClientRect().left;
 		offsetTop = domElement.getBoundingClientRect().top;
-		document.body.addEventListener("contextmenu", contextMenu, false);
+		document.addEventListener("contextmenu", contextMenu, false);
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
@@ -31,7 +31,7 @@
 		for(var i in buttons){
 			MouseInput.unbindAll(Number(i));
 		}
-		document.body.removeEventListener("contextmenu", contextMenu, false);
+		document.removeEventListener("contextmenu", contextMenu, false);
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
 		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
