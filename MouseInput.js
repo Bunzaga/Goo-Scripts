@@ -220,8 +220,11 @@
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
 
-		newX -= (/*domElement.getBoundingClientRect().left +*/ domElement.offsetLeft);
-		newY -= (/*domElement.getBoundingClientRect().top +*/ domElement.offsetTop);
+		console.log("newX"+newX+", left:"+domElement.getBoundingClientRect().left+", offsetLeft:"+domElement.offsetLeft);
+		console.log("newY"+newX+", top:"+domElement.getBoundingClientRect().top+", offsetTop:"+domElement.offsetTop);
+		newX -= (domElement.getBoundingClientRect().left + domElement.offsetLeft);
+		newY -= (domElement.getBoundingClientRect().top + domElement.offsetTop);
+		
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
 		MouseInput.delta.x = newX - MouseInput.position.x;
