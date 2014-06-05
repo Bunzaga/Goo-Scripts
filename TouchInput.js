@@ -197,10 +197,10 @@
 			delete TouchInput.cleanup;
 			TouchInput.ready = false;
 		}
-		//document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false);
-		//document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
-		//document.body.addEventListener('touchend', function(e) {e.preventDefault();}, false);
-		//document.body.addEventListener("touchcancel", function(e) {e.preventDefault();}, false);
+		document.body.addEventListener('touchstart', function(e) {e.preventDefault();}, false);
+		document.body.addEventListener('touchmove', function(e) {e.preventDefault();}, false);
+		document.body.addEventListener('touchend', function(e) {e.preventDefault();}, false);
+		document.body.addEventListener("touchcancel", function(e) {e.preventDefault();}, false);
 		document.documentElement.addEventListener("touchstart", touchStart, false);
 		document.documentElement.addEventListener("touchmove", touchMove, false);
 		document.documentElement.addEventListener("touchend", touchEnd, false);
