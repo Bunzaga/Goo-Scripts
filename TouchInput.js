@@ -18,6 +18,7 @@
 				if(callback){
 					if(typeof callback === 'function'){
 						if(!eventList[touchEvent]){
+							console.log('adding callback');
 							eventList[touchEvent] = {first:null, last:null};
 						}
 						var node = {previous:null, next:null, callback:callback};
