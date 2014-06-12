@@ -1,6 +1,4 @@
 (function(window, document){
-// args.bone(String), args.attachee(Entity), args.offsetPos(Vector3), args.offsetRot(Vector3), args.offsetScl(Vector3)
-
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
