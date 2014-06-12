@@ -4,8 +4,8 @@
   Attachment.prototype.attach = function(args, ctx, goo){
         ctx.parent = ctx.entity.transformComponent.parent;
         ctx.parent = ctx.parent.entity;
-        console.log("ctx.parent");
-        console.log(ctx.parent);
+        //console.log("ctx.parent");
+        //console.log(ctx.parent);
 
         ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
         ctx.parent.transformComponent.setUpdated();
