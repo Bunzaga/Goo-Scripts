@@ -68,15 +68,14 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
-    console.log(this.vehicle);
-   // var vs = this.vehicle.m_steering.GetValue();
+    var vs = this.vehicle.getSteeringValue();
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
 
-        dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
+        dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, vs);
   		  
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
