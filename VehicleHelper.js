@@ -75,8 +75,8 @@
   		if(dt) {
   		  
   		  this.vehicle.getWheelInfo(i).get_m_worldTransform().getRotation(this.pquat);
-        //this.quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-        //this.quat.toRotationMatrix(dt.transformComponent.transform.rotation);
+        this.quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+        this.quat.toRotationMatrix(dt.transformComponent.transform.rotation);
   		  
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
