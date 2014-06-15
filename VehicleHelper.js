@@ -10,7 +10,7 @@
   	body.forceActivationState(4);
   	this.tuning = new Ammo.btVehicleTuning();
   	var vehicleRaycaster = new Ammo.btDefaultVehicleRaycaster(ammoSystem.ammoWorld);
-  	this.vehicle = new Ammo.btRaycastVehicle(this.tuning, chassis.ammoComponent.body, vehicleRaycaster);
+  	this.vehicle = new Ammo.btRaycastVehicle(this.tuning, body, vehicleRaycaster);
   	ammoSystem.ammoWorld.addVehicle(this.vehicle);
   	this.vehicle.setCoordinateSystem(0,1,2); // choose coordinate system
   	this.wheelDir = new Ammo.btVector3(0,-1,0);
