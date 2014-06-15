@@ -72,7 +72,9 @@
   		this.vehicle.updateWheelTransform(i,true);
   		var origin = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		var dt = this.debugTires[i];
+  		console.log(dt);
   		if(dt) {
+  		  console.log(dt.name);
   			dt.transformComponent.setTranslation(origin.x(),origin.y(),origin.z());
   			dt.transformComponent.setUpdated();
   		}
