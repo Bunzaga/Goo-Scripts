@@ -71,6 +71,7 @@
     var vs = this.vehicle.getSteeringValue();
     //getCurrentSpeedKmHour
     var ef = this.vehicle.getCurrentSpeedKmHour();
+    console.log(ef);
    console.log(this.vehicle);
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
