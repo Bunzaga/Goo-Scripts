@@ -86,8 +86,8 @@
           }
   		  }
   		  else{
-  		    if(ef < 0){
-  		      if(vs < 0){
+  		    if(vs < 0){
+  		      if(ef < 0){
               dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
             else{
@@ -95,7 +95,7 @@
             }
   		    }
   		    else{
-  		      if(vs < 0){
+  		      if(ef < 0){
               dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
             else{
