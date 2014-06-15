@@ -88,18 +88,18 @@
   		  else{
   		    if(ef < 0){
   		      if(vs < 0){
-              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
             else{
-              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
   		    }
   		    else{
   		      if(vs < 0){
-              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
             else{
-              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
             }
   		    }
   		  }
