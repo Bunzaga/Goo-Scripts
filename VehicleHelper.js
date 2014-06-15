@@ -87,4 +87,4 @@
   };
   var global = global || window;
   global.VehicleHelper = VehicleHelper;
-}());
+}(window, document));
