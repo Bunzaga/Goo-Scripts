@@ -69,13 +69,28 @@
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
     var vs = this.vehicle.getSteeringValue();
+    var ef = this.vehicle.getEngineForce();
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
-
-        dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+  		  if(i < 2){
+          if(vs < 0){
+            dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+          }
+          else{
+            dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+          }
+  		  }
+  		  else{
+  		    if(vs < 0){
+            dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+          }
+          else{
+            dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+          }
+  		  }
   		  
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
