@@ -69,7 +69,8 @@
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
     var vs = this.vehicle.getSteeringValue();
-    var ef = this.vehicle.getEngineForce();
+   // var ef = this.vehicle.getEngineForce();
+   console.log(this.vehicle);
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
   		this.vehicle.updateWheelTransform(i, true);
