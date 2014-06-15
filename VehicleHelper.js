@@ -77,7 +77,7 @@
   		  //this.vehicle.getWheelInfo(i).get_m_worldTransform().getRotation(this.pquat);
         //this.quat.setd(this.pquat.x(), this.pquat.y(), this.pquat.z(), this.pquat.w());
         //this.quat.toRotationMatrix(dt.transformComponent.transform.rotation);
-      console.log(this.vehicle.getWheelInfo(i).m_rotation;
+      console.log(this.vehicle.getWheelInfo(i).m_rotation);
        // dt.transformComponent.transform.rotation.fromAngles(0, 0, this.vehicle.getWheelInfo(i).m_rotation());
   		  
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
