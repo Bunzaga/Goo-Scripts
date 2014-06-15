@@ -69,11 +69,16 @@
   VehicleHelper.prototype.updateWheelTransform = function(){
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
-  		this.vehicle.updateWheelTransform(i,true);
-  		var origin = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
+  		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
-  		  dt.transformComponent.transform.translation.setd(origin.x(), origin.y(), origin.z());
+  		  
+  		  this.vehicle.getWheelInfo(i).get_m_worldTransform().getRotation(this.pquat);
+        //this.quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+        //this.quat.toRotationMatrix(dt.transformComponent.transform.rotation);
+  		  
+  		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
+  		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
   			dt.transformComponent.setUpdated();
   		}
   	}
