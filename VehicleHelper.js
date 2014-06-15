@@ -1,5 +1,6 @@
 (function(window, document, undefined){
-  var VehicleHelper = function(ammoSystem, body, wheelRadius, suspensionLength){
+  var VehicleHelper = function(ammoSystem, body, wheelRadius, suspensionLength, goo){
+    this.quat = new goo.Quaternion();
     this.pvec = new Ammo.btVector3();
     this.pquat = new Ammo.btQuaternion();
   	this.body = body;
