@@ -58,7 +58,7 @@
   	this.addWheel(pos[0], pos[1], pos[2], false);
   };
   VehicleHelper.prototype.addWheel = function(x,y,z, isFrontWheel){
-    this.pvec.setValue(x, y, a);
+    this.pvec.setValue(x, y, z);
   	var wheel = this.vehicle.addWheel(this.pvec,this.wheelDir,this.wheelAxle,this.suspension,this.wheelRadius,this.tuning,isFrontWheel);
   	wheel.set_m_suspensionStiffness(20);
   	wheel.set_m_wheelsDampingRelaxation(2.3);
