@@ -75,7 +75,7 @@
   		var dt = this.debugTires[i];
   		if(dt) {
 
-        dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, vs);
+        dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
   		  
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
