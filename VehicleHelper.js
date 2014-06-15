@@ -74,6 +74,7 @@
   		var dt = this.debugTires[i];
   		if(dt) {
   			dt.transformComponent.setTranslation(origin.x(),origin.y(),origin.z());
+  			dt.transformComponent.setUpdated();
   		}
   	}
   };
