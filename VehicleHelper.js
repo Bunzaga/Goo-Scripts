@@ -83,20 +83,20 @@
   		if(dt) {
   		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
         if(i < 2){
-          if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-r, vs + this.vec.y, 0);
-          }
-          else{
+          //if(vs < 0){
             dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
-          }
+          //}
+          //else{
+          //  dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
+          //}
         }
         else{
-          if(vs < 0){
+          //if(vs < 0){
             dt.transformComponent.transform.rotation.fromAngles(-r, this.vec.y, 0);
-          }
-          else{
-            dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
-          }
+          //}
+          //else{
+          //  dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
+          //}
         }
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
