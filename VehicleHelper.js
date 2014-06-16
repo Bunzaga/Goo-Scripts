@@ -92,7 +92,7 @@
         }
         else{
           //if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-r, this.vec.y, 0);
+            dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
           //}
           //else{
           //  dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
