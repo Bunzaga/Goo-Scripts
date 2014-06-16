@@ -68,45 +68,45 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
-    var vs = this.vehicle.getSteeringValue();
+    var vs = this.vehicle.get_m_steeringValue();
     this.vehicle.setSteeringValue(vs, 0);
     this.vehicle.setSteeringValue(vs, 1);
     //getCurrentSpeedKmHour
     var ef = this.vehicle.getCurrentSpeedKmHour();
     console.log(ef);
-   console.log(this.vehicle);
+    console.log(this.vehicle);
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
   		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
-  		  if(i < 2){
+        if(i < 2){
           if(vs < 0){
             dt.transformComponent.transform.rotation.fromAngles(-r, vs, 0);
           }
           else{
             dt.transformComponent.transform.rotation.fromAngles(r, vs, 0);
           }
-  		  }
-  		  else{
-  		    if(vs < 0){
-  		      if(ef < 0){
+        }
+        else{
+          if(vs < 0){
+            if(ef < 0){
               dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
             else{
               dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
             }
-  		    }
-  		    else{
-  		      if(ef < 0){
+          }
+          else{
+            if(ef < 0){
               dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
+            }
             else{
               dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
-  		    }
-  		  }
-  		  
+          }
+        }
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
   			dt.transformComponent.setUpdated();
