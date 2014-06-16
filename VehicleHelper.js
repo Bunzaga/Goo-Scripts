@@ -1,9 +1,11 @@
 (function(window, document, undefined){
-  var VehicleHelper = function(ammoSystem, body, wheelRadius, suspensionLength, goo){
+  var VehicleHelper = function(ammoSystem, entity, wheelRadius, suspensionLength, goo){
+    this.entity = entity;
     this.quat = new goo.Quaternion();
+    this.vec = new goo.Vector3();
     this.pvec = new Ammo.btVector3();
     this.pquat = new Ammo.btQuaternion();
-  	this.body = body;
+  	this.body = entity.rigidBodyComponent.body;
   	this.wheelRadius = wheelRadius;
   	this.suspension = suspensionLength;
   	this.debugTires = [];
@@ -70,9 +72,8 @@
   VehicleHelper.prototype.updateWheelTransform = function(){
     console.log(this.vehicle);
     var vs = this.vehicle.getSteeringValue();
-    this.vehicle.setSteeringValue(vs, 0);
-    this.vehicle.setSteeringValue(vs, 1);
-    
+    this.entity.transformComponent.transform.rotation.toAngles(this.vec);
+    vs += this.vec.y;
     var ef = this.vehicle.getCurrentSpeedKmHour();
     console.log(ef);
     
