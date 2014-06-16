@@ -69,7 +69,7 @@
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
     console.log(this.vehicle);
-    var vs = this.vehicle.getSteeringValue();
+    var vs = this.vehicle.getSteeringValue()*(Math.PI/180);
     this.vehicle.setSteeringValue(vs, 0);
     this.vehicle.setSteeringValue(vs, 1);
     
