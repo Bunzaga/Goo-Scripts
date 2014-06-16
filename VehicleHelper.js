@@ -69,7 +69,7 @@
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
     console.log(this.vehicle);
-    var vs = this.vehicle.getSteeringValue()*(Math.PI/180);
+    var vs = this.vehicle.getSteeringValue();
     this.vehicle.setSteeringValue(vs, 0);
     this.vehicle.setSteeringValue(vs, 1);
     
@@ -84,27 +84,27 @@
   		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
         if(i < 2){
           if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-r, vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(-r, vs*(Math.PI/180), 0);
           }
           else{
-            dt.transformComponent.transform.rotation.fromAngles(r, vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(r, vs*(Math.PI/180), 0);
           }
         }
         else{
           if(vs < 0){
             if(ef < 0){
-              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
             }
             else{
-              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
           }
           else{
             if(ef < 0){
-              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
             else{
-              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
             }
           }
         }
