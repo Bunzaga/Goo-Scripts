@@ -70,12 +70,10 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
-    console.log(this.vehicle);
     var vs = this.vehicle.getSteeringValue();
     this.entity.transformComponent.transform.rotation.toAngles(this.vec);
     var ef = this.vehicle.getCurrentSpeedKmHour();
-    console.log(ef);
-    
+
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
   		this.vehicle.updateWheelTransform(i, true);
