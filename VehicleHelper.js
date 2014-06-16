@@ -68,6 +68,7 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
+    console.log(this.vehicle);
     var vs = this.vehicle.get_m_steeringValue();
     this.vehicle.setSteeringValue(vs, 0);
     this.vehicle.setSteeringValue(vs, 1);
