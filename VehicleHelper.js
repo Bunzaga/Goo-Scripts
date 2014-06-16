@@ -69,6 +69,8 @@
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
     var vs = this.vehicle.getSteeringValue();
+    this.vehicle.setSteeringValue(vs, 0);
+    this.vehicle.setSteeringValue(vs, 1);
     //getCurrentSpeedKmHour
     var ef = this.vehicle.getCurrentSpeedKmHour();
     console.log(ef);
@@ -78,29 +80,29 @@
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
+  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
   		  if(i < 2){
           if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(-r, vs, 0);
           }
           else{
-            dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(r, vs, 0);
           }
   		  }
   		  else{
   		    if(vs < 0){
   		      if(ef < 0){
-              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
             else{
-              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
             }
   		    }
   		    else{
   		      if(ef < 0){
-              dt.transformComponent.transform.rotation.fromAngles(-this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
-            }
+              dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
             else{
-              dt.transformComponent.transform.rotation.fromAngles(this.vehicle.getWheelInfo(i).get_m_rotation(), 0, 0);
+              dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
             }
   		    }
   		  }
