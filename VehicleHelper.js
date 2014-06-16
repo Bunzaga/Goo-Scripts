@@ -73,7 +73,6 @@
     console.log(this.vehicle);
     var vs = this.vehicle.getSteeringValue();
     this.entity.transformComponent.transform.rotation.toAngles(this.vec);
-    vs += this.vec.y;
     var ef = this.vehicle.getCurrentSpeedKmHour();
     console.log(ef);
     
@@ -85,18 +84,18 @@
   		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
         if(i < 2){
           if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-r, vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(-r, vs + this.vec.y, 0);
           }
           else{
-            dt.transformComponent.transform.rotation.fromAngles(r, vs, 0);
+            dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
           }
         }
         else{
           if(vs < 0){
-            dt.transformComponent.transform.rotation.fromAngles(-r, 0, 0);
+            dt.transformComponent.transform.rotation.fromAngles(-r, this.vec.y, 0);
           }
           else{
-            dt.transformComponent.transform.rotation.fromAngles(r, 0, 0);
+            dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
           }
         }
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
