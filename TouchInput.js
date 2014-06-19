@@ -105,7 +105,6 @@
 		var touchStart = function(e){
 			if(!eventList["TouchStart"]){return;}
 			e = e || window.event;
-			console.log(e);
 			for(var i = 0, ilen = e.changedTouches.length; i < ilen; i++){
 				if(undefined === touches[e.changedTouches[i].identifier]){
 					touches[e.changedTouches[i].identifier] = {
