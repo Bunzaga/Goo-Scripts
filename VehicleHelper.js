@@ -70,9 +70,10 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(){
+    // get the steering value of the vehicle
     var vs = this.vehicle.getSteeringValue();
+    // get the current rotation of the vehicle entity
     this.entity.transformComponent.transform.rotation.toAngles(this.vec);
-    var ef = this.vehicle.getCurrentSpeedKmHour();
 
   	for(var i = 0, ilen = this.vehicle.getNumWheels(); i < ilen; i++){
   		// synchronize the wheels with the (interpolated) chassis worldtransform
@@ -80,12 +81,15 @@
   		var dt = this.debugTires[i];
   		if(dt) {
   		  var r = this.vehicle.getWheelInfo(i).get_m_rotation() * 0.3;
+  		  // if front wheels
         if(i < 2){
+          // add the vehicle rotation to the vehicle steering
             dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
         }
-        else{
+        else{ // if back
             dt.transformComponent.transform.rotation.fromAngles(r, this.vec.y, 0);
         }
+        // update the position of the tires
   		  this.pvec = this.vehicle.getWheelInfo(i).get_m_worldTransform().getOrigin();
   		  dt.transformComponent.transform.translation.setd(this.pvec.x(), this.pvec.y(), this.pvec.z());
   			dt.transformComponent.setUpdated();
