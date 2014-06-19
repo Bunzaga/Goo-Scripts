@@ -79,8 +79,9 @@
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
-  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation();
-  		  r*=dt;
+  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation()*dt;
+  		  console.log(r);
+  		  
         if(i < 2){
             dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
         }
