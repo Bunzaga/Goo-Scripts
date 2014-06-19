@@ -208,4 +208,4 @@
 	}
 	var global = global || window;
 	global.TouchInput = TouchInput;
-}(window, document));
+})(window, document);
