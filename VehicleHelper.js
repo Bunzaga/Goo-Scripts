@@ -80,7 +80,7 @@
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
-  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation() * dt;
+  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation() * dt * 10;
         if(i < 2){
             dt.transformComponent.transform.rotation.fromAngles(r, vs + this.vec.y, 0);
         }
