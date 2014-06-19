@@ -70,6 +70,7 @@
   	wheel.set_m_rollInfluence(0); // this value controls how easily a vehicle can tipp over. Lower values tipp less :)
   };
   VehicleHelper.prototype.updateWheelTransform = function(dt){
+    var dt = Number(dt);
     var vs = this.vehicle.getSteeringValue();
     this.entity.transformComponent.transform.rotation.toAngles(this.vec);
     var ef = this.vehicle.getCurrentSpeedKmHour();
@@ -79,7 +80,7 @@
   		this.vehicle.updateWheelTransform(i, true);
   		var dt = this.debugTires[i];
   		if(dt) {
-  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation()*dt;
+  		  var r = this.vehicle.getWheelInfo(i).get_m_rotation() * dt;
   		  console.log(r);
   		  
         if(i < 2){
