@@ -24,6 +24,7 @@
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
+		console.log(ctx.attachee.transformComponent.transform.scale.x+","+ctx.attachee.transformComponent.transform.scale.y+","+ctx.attachee.transformComponent.transform.scale.z);
 	}
 	
 	Attachment.fixScale = function(e1){
