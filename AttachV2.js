@@ -29,11 +29,15 @@
 	Attachment.fixScale = function(e1){
 		function setScale(e2){
 			if(e1 !== e2){
+				console.log(e1.transformComponent.transform.scale.x+","+e1.transformComponent.transform.scale.y+","+e1.transformComponent.transform.scale.z);
+				console.log(e1);
+				console.log(e2);
 				e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
 			}
 		}
 		e1.traverseUp(setScale);
-		console.log(e1.transformComponent.transform.scale);
+		console.log("done");
+		console.log(e1.transformComponent.transform.scale.x+","+e1.transformComponent.transform.scale.y+","+e1.transformComponent.transform.scale.z);
 	}
 	
 	Attachment.updateWorldTransform = function(transformComponent){
