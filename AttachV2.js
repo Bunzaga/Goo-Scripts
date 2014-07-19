@@ -23,16 +23,7 @@
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
 	}
-	
-	Attachment.fixScale = function(e1){
-		function setScale(e2){
-			if(e1 !== e2){
-				e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
-			}
-		}
-		e1.traverseUp(setScale);
-	}
-	
+
 	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
 		var entity = transformComponent.entity;
