@@ -5,8 +5,10 @@
 		ctx.parent = ctx.entity.transformComponent.parent;
 		ctx.parent = ctx.parent.entity;
 	      
-		ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
-		ctx.parent.transformComponent.setUpdated();
+		//ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
+		//ctx.parent.transformComponent.setUpdated();
+		ctx.transformComponent.attachChild(ctx.attachee.transformComponent);
+		ctx.transformComponent.setUpdated();
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
 		ctx.jointTransform = pose._globalTransforms[args.jointIndex];
@@ -14,14 +16,9 @@
 	Attachment.prototype.remove = function(args, ctx, goo){
 		ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
 	}
-  	//Attachment.fixScale = function(e1){
-  	//	function setScale(e2){
-	 // 		e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
-  	//	}
-  	//	e1.traverseUp(setScale);
-  	//}
+
 	Attachment.prototype.update = function(args, ctx, goo){
-		//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
