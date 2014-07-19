@@ -7,8 +7,8 @@
 	      
 		//ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
 		//ctx.parent.transformComponent.setUpdated();
-		ctx.transformComponent.attachChild(ctx.attachee.transformComponent);
-		ctx.transformComponent.setUpdated();
+		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent);
+		ctx.entity.transformComponent.setUpdated();
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
 		ctx.jointTransform = pose._globalTransforms[args.jointIndex];
