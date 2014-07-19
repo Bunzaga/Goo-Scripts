@@ -15,10 +15,13 @@
 		ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
 	}
   	Attachment.fixScale = function(e1){
-  		e1.traverseUp(setScale);
-  		var setScale = function(e2){
+  		function setScale(e2){
+  			console.log(e1.name+":"+e2.name);
+  			console.log(e1);
+  			console.log(e2);
 	  		e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
   		}
+  		e1.traverseUp(setScale);
   	}
 	Attachment.prototype.update = function(args, ctx, goo){
 		//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
