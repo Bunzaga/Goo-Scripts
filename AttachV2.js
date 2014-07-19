@@ -5,7 +5,7 @@
 		ctx.parent = ctx.entity.transformComponent.parent;
 		ctx.parent = ctx.parent.entity;
 	      
-		ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent, false);
+		ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent, true);
 		ctx.parent.transformComponent.setUpdated();
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
