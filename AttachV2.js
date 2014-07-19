@@ -5,11 +5,9 @@
 		ctx.parent = ctx.entity.transformComponent.parent;
 		ctx.parent = ctx.parent.entity;
 	      
-		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent);
+		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent, true);
 		ctx.entity.transformComponent.setUpdated();
-		
-		//Attachment.fixScale(ctx.attachee);
-	
+
 		var pose = ctx.parent.animationComponent._skeletonPose;
 		ctx.jointTransform = pose._globalTransforms[args.jointIndex];
 	}
@@ -23,6 +21,7 @@
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.fixScale(ctx.attachee)
+		console.log(ctx.attachee.transformComponent.transform.scale);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
 	}
@@ -30,15 +29,10 @@
 	Attachment.fixScale = function(e1){
 		function setScale(e2){
 			if(e1 !== e2){
-				console.log(e1.transformComponent.transform.scale.x+","+e1.transformComponent.transform.scale.y+","+e1.transformComponent.transform.scale.z);
-				console.log(e1);
-				console.log(e2);
 				e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
 			}
 		}
 		e1.traverseUp(setScale);
-		console.log("done");
-		console.log(e1.transformComponent.transform.scale.x+","+e1.transformComponent.transform.scale.y+","+e1.transformComponent.transform.scale.z);
 	}
 	
 	Attachment.updateWorldTransform = function(transformComponent){
