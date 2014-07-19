@@ -7,7 +7,7 @@
 	      
 		//ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
 		//ctx.parent.transformComponent.setUpdated();
-		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent);
+		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent, true);
 		ctx.entity.transformComponent.setUpdated();
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
