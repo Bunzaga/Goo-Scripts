@@ -16,10 +16,10 @@
 	}
   
 	Attachment.prototype.update = function(args, ctx, goo){
-		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
-		//ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
-		//ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
-		//ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
+		//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
+		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
+		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
 	}
