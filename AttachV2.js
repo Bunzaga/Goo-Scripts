@@ -20,8 +20,6 @@
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
-		Attachment.fixScale(ctx.attachee)
-		console.log(ctx.attachee.transformComponent.transform.scale);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
 	}
