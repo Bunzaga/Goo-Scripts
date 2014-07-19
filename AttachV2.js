@@ -16,7 +16,7 @@
 	}
   
 	Attachment.prototype.update = function(args, ctx, goo){
-		//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
 		//ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		//ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		//ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
