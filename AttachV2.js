@@ -14,12 +14,20 @@
 	Attachment.prototype.remove = function(args, ctx, goo){
 		ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
 	}
-  
+  	Attachment.fixScale = function(e1){
+  		e1.traverseUp(fixScale);
+  		var setScale(e2){
+	  		e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
+  		}
+  	}
 	Attachment.prototype.update = function(args, ctx, goo){
 		//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
+		
+		Attachment.fixScale(ctx.attachee);
+		
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
 	}
