@@ -8,7 +8,7 @@
 		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent);
 		ctx.entity.transformComponent.setUpdated();
 		
-		Attachment.fixScale(ctx.attachee);
+		//Attachment.fixScale(ctx.attachee);
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
 		ctx.jointTransform = pose._globalTransforms[args.jointIndex];
@@ -22,9 +22,9 @@
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
 		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
+		Attachment.fixScale(ctx.attachee)
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
-		console.log(ctx.attachee.transformComponent.transform.scale.x+","+ctx.attachee.transformComponent.transform.scale.y+","+ctx.attachee.transformComponent.transform.scale.z);
 	}
 	
 	Attachment.fixScale = function(e1){
