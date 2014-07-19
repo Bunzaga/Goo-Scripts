@@ -5,10 +5,10 @@
 		ctx.parent = ctx.entity.transformComponent.parent;
 		ctx.parent = ctx.parent.entity;
 	      
-		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent, true);
+		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent);
 		ctx.entity.transformComponent.setUpdated();
 		
-		
+		Attachment.fixScale(ctx.attachee);
 	
 		var pose = ctx.parent.animationComponent._skeletonPose;
 		ctx.jointTransform = pose._globalTransforms[args.jointIndex];
