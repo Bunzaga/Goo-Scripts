@@ -15,8 +15,8 @@
 		ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
 	}
   	Attachment.fixScale = function(e1){
-  		e1.traverseUp(fixScale);
-  		var setScale(e2){
+  		e1.traverseUp(setScale);
+  		var setScale = function(e2){
 	  		e1.transformComponent.transform.scale.div(e2.transformComponent.transform.scale);
   		}
   	}
