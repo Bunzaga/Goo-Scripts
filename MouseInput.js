@@ -115,7 +115,6 @@
 	};
 	var mouseWheel = function(e){
 		e = e || window.event;
-		console.log(e);
 		e.stopPropagation ? e.stopPropagation : e.cancelBubble = true;
 		var wheelDelta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 		MouseInput.wheelDelta = wheelDelta;
