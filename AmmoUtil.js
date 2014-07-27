@@ -86,13 +86,15 @@
   }
   
   AmmoUtil.getColliderFromGooShape = function(ent, pTrans, _goo){
-  	var goo = goo || _goo;
+  	goo = goo || _goo;
   	var col = null;
   	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
   		if(md instanceof goo.Box){
-			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, _goo);
+			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
+  		}else if(md instanceof goo.Sphere){
+  			col = AmmoUtil.createSPhereColliderComponent({radius:md.radius * scl[0]}, goo);
   		}
   	}
   	else{
@@ -174,7 +176,7 @@
   	var shape = new BoxColliderComponent();
   	return shape;
   }
-  AmmoUtil.createSphereColliderComponent = function(args, ctx, _goo){
+  AmmoUtil.createSphereColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function SphereColliderComponent(){
   		args = args || {};
