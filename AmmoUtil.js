@@ -115,7 +115,7 @@
   		this.mass = args.mass || 0.0;
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, _goo);
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, goo);
   			if(null === collider){
   				console.error("Could not identify collider info!");
   				return;
@@ -192,7 +192,7 @@
   	var shape = new SphereColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderZColliderComponent = function(args, ctx, _goo){
+  AmmoUtil.createCylinderZColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderZColliderComponent(){
   		args = args || {};
@@ -209,7 +209,7 @@
   	var shape = new CylinderZColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderXColliderComponent = function(args, ctx, _goo){
+  AmmoUtil.createCylinderXColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderXColliderComponent(){
   		args = args || {};
@@ -226,7 +226,7 @@
   	var shape = new CylinderXColliderComponent();
   	return shape;
   }
-  AmmoUtil.createCylinderYColliderComponent = function(args, ctx, _goo){
+  AmmoUtil.createCylinderYColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderYColliderComponent(){
   		args = args || {};
