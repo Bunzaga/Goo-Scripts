@@ -90,7 +90,7 @@
   	var col = null;
   	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
-  		var md = entity.meshDataComponent.meshData;
+  		var md = ent.meshDataComponent.meshData;
   		if(md instanceof Box){
 			col = createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, _goo);
   		}
