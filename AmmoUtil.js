@@ -60,8 +60,7 @@
   	goo = goo || _goo;
   	var ammoSystem = ctx.world.getSystem("AmmoSystem");
   	if(ammoSystem){
-  		var i = ammoSystem._activeEntities.length;
-  		while(i--){
+  		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
