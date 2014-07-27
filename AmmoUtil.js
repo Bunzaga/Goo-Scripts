@@ -115,9 +115,10 @@
   		this.mass = args.mass || 0.0;
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || null;
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, _goo);
   			if(null === collider){
-  				collider = AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, _goo);
+  				console.error("Could not identify collider info!");
+  				return;
   			}
   			ctx.entity.setComponent(collider);
   		}
