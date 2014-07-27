@@ -97,7 +97,7 @@
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
   		}else if(md instanceof goo.Quad){
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
-  		}else if(md.instanceof goo.Cylinder){
+  		}else if(md instanceof goo.Cylinder){
   			console.log(md);
   		}
   	}
