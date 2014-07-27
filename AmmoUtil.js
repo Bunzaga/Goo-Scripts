@@ -97,6 +97,8 @@
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
   		}else if(md instanceof goo.Quad){
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
+  		}else if(md.instanceof goo.Cylinder){
+  			console.log(md);
   		}
   	}
   	else{
@@ -115,8 +117,6 @@
   		if(undefined === collider){
   			collider = args.collider || null;
   			if(null === collider){
-  				// auto generate collider here based on shape...
-  				console.error("No ColliderComponent found!");
   				collider = AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, _goo);
   			}
   			ctx.entity.setComponent(collider);
