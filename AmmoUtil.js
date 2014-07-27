@@ -95,6 +95,8 @@
 			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
   		}else if(md instanceof goo.Sphere){
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
+  		}else if(md instanceof goo.Quad){
+  			col = Ammotil.createBoxColliderComponent({halfExtents:[md.xExtent, md.yExtent, 0.01]}, goo);
   		}
   	}
   	else{
