@@ -98,7 +98,7 @@
   		}else if(md instanceof goo.Quad){
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
-  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], height:scl[2] * 2}, goo);
+  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2]}, goo);
   		}
   	}
   	else{
