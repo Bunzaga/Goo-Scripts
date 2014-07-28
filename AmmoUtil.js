@@ -101,6 +101,7 @@
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
   		}else if(md instanceof goo.Cone){
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:scl[2]}, goo);
+  			console.log(md);
   		}else{
   			
   		}
