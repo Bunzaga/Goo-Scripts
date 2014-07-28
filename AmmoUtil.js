@@ -91,8 +91,28 @@
   	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
-  		console.log(md.yExtent);
-  		if(md instanceof goo.Box){
+  		
+  		switch(md.constructor){
+  			case goo.Box:
+  				col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
+  				break;
+  			case goo.Sphere:
+  				col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
+  				break;
+  			case goo.Quad:
+  				col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
+  				break;
+  			case goo.Cylinder:
+  				col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
+  				break;
+  			case goo.Cone:
+  				console.log("It's a cone!");
+  				break;
+  			default:
+  				
+  				break;
+  		}
+  		/*if(md instanceof goo.Box){
 			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
   		}else if(md instanceof goo.Sphere){
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
@@ -100,10 +120,22 @@
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  		}
+  		}else{
+  			
+  		}*/
   	}
   	else{
-  		
+  		var shape = new Ammo.btCompoundShape();
+		var c = entity.transformComponent.children;
+		for (var i = 0; i < c.length; i++) {
+			var childAmmoShape = this.getAmmoShapefromGooShape(c[i].entity, gooTransform);
+			var localTrans = new Ammo.btTransform();
+			localTrans.setIdentity();
+			var gooPos = c[i].transform.translation;
+			localTrans.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
+			// TODO: also setRotation ?
+			shape.addChildShape(localTrans, childAmmoShape);
+		}
   	}
   	return col;
   };
