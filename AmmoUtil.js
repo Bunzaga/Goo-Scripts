@@ -142,7 +142,7 @@
   		var startTransform = new Ammo.btTransform();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		if(collider.offset){
-			gooPos.addv(collider.offset);
+			gooPos.subv(collider.offset);
 		}
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
