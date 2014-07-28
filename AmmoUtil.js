@@ -91,6 +91,7 @@
   	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
+  		console.log(md.yExtent);
   		if(md instanceof goo.Box){
 			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
   		}else if(md instanceof goo.Sphere){
@@ -99,7 +100,6 @@
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  			console.log(md.yExtent);
   		}
   	}
   	else{
