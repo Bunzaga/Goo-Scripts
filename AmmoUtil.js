@@ -121,7 +121,6 @@
   				console.error("Could not identify collider info!");
   				return;
   			}
-  			console.log(collider);
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
