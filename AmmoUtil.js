@@ -99,10 +99,9 @@
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  		}else if(md instanceof goo.Cone{
+  		}else if(md instanceof goo.Cone){
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  		}
-  		else{
+  		}else{
   			
   		}
   	}
