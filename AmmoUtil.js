@@ -98,8 +98,7 @@
   		}else if(md instanceof goo.Quad){
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
-  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], height:md.yExtent * scl[1] * 2}, goo);
-  			console.log(md.yExtent);
+  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], height:scl[2] * 2}, goo);
   		}
   	}
   	else{
