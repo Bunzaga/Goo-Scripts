@@ -1,7 +1,7 @@
 (function(window, document){
   var AmmoUtil = {};
   var pvec,ptrans,pquat;
-  var quat, goo;
+  var quat, goo, gooVec;
 
   AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
   	goo = goo || _goo;
@@ -101,7 +101,6 @@
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
   		}else if(md instanceof goo.Cone){
   			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
-  			ent.transformComponent.transform.rotation.applyPost(offset);
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]}, goo);
   			col.offset = offset;
   		}else{
@@ -167,6 +166,7 @@
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
+ 		gooVec = gooVec || new goo.Vector3();
  		
   		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
@@ -175,7 +175,9 @@
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
-			pos.addv(col.offset);
+			gooVec.copy(col.offset);
+			rot.applyPost(gooVec);
+			pos.addv(gooVec);
 		}
 		tc.setUpdated();
   	};
