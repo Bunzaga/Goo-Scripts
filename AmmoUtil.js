@@ -100,8 +100,10 @@
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
   		}else if(md instanceof goo.Cone){
+  			var bounds = goo.EntityUtils.getTotalBoundingBox(ent)
+  			var offset = bounds.center.clone().sub(pTrans.translation).invert();
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]}, goo);
-  			console.log(md);
+  			col.offset = offset;
   		}else{
   			
   		}
@@ -139,6 +141,9 @@
   		}
   		var startTransform = new Ammo.btTransform();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
+		if(collider.offset){
+			gooPos.addv(collider.offset);
+		}
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
