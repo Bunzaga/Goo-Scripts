@@ -140,9 +140,9 @@
   		}
   		var startTransform = new Ammo.btTransform();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
-		if(col.offset){
+		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
-			gooVec.copy(col.offset);
+			gooVec.copy(collider.offset);
 			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
 			gooPos.addv(gooVec);
 		}
