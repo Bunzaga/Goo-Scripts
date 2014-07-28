@@ -91,28 +91,7 @@
   	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
-  		console.log(md.constructor);
-  		switch(md.constructor){
-  			case goo.Box:
-  				col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
-  				break;
-  			case goo.Sphere:
-  				col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
-  				break;
-  			case goo.Quad:
-  				col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
-  				break;
-  			case goo.Cylinder:
-  				col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  				break;
-  			case goo.Cone:
-  				console.log("It's a cone!");
-  				break;
-  			default:
-  				
-  				break;
-  		}
-  		/*if(md instanceof goo.Box){
+  		if(md instanceof goo.Box){
 			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
   		}else if(md instanceof goo.Sphere){
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
@@ -120,9 +99,12 @@
   			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
-  		}else{
+  		}else if(md instanceof goo.Cone{
+  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
+  		}
+  		else{
   			
-  		}*/
+  		}
   	}
   	else{
   		var shape = new Ammo.btCompoundShape();
@@ -224,7 +206,22 @@
   	SphereColliderComponent.constructor = SphereColliderComponent;
   	var shape = new SphereColliderComponent();
   	return shape;
-  }
+  };
+  AmmoUtil.createConeZColliderComponent = function(args, _goo){
+  	goo = goo || _goo;
+  	function ConeZColliderComponent(){
+  		args = args || {};
+  		args.radius = args.radius || 1.0;
+  		args.height = args.height || 1.0;
+  		this.type = 'ColliderComponent';
+  		this.shape = new Ammo.btConeShapeZ(args.radius, args.height);
+  	}
+  	ConeZColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	ConeZColliderComponent.constructor = ConeZColliderComponent;
+  	
+  	var shape = new ConeZColliderComponent();
+  	return shape;
+  };
   AmmoUtil.createCylinderZColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderZColliderComponent(){
@@ -241,7 +238,7 @@
   	
   	var shape = new CylinderZColliderComponent();
   	return shape;
-  }
+  };
   AmmoUtil.createCylinderXColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderXColliderComponent(){
@@ -258,7 +255,7 @@
   	
   	var shape = new CylinderXColliderComponent();
   	return shape;
-  }
+  };
   AmmoUtil.createCylinderYColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	function CylinderYColliderComponent(){
@@ -275,7 +272,7 @@
   	
   	var shape = new CylinderYColliderComponent();
   	return shape;
-  }
+  };
   AmmoUtil.createMeshColliderComponent = function(args, ent, _goo){
   	goo = goo || _goo;
   	
@@ -321,8 +318,7 @@
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
 	return shape;
-  }
-  
+  };
   AmmoUtil.setLinearVelocity = function(body, vec3){
   	pvec = pvec || new Ammo.btVector3();
   	
