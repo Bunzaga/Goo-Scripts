@@ -19,8 +19,10 @@
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
-		document.documentElement.addEventListener("mousewheel", mouseWheel, false);
-		document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		//document.documentElement.addEventListener("mousewheel", mouseWheel, false);
+		//document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
+		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
 	MouseInput.cleanup = function(args, ctx, goo) {
@@ -31,8 +33,10 @@
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
 		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
-		document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
-		document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		//document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+		//document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
+		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
+		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
 	};
 	MouseInput.getButton = function(btnCode){
