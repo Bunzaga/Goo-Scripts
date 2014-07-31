@@ -2,8 +2,7 @@
 	function Attachment(){}
   
 	Attachment.prototype.attach = function(args, ctx, goo){
-		ctx.parent = ctx.entity.transformComponent.parent;
-		ctx.parent = ctx.parent.entity;
+		ctx.parent = ctx.entity.transformComponent.parent.entity;
 	      
 		ctx.entity.transformComponent.attachChild(ctx.attachee.transformComponent, true);
 		ctx.entity.transformComponent.setUpdated();
@@ -18,7 +17,7 @@
 	Attachment.prototype.update = function(args, ctx, goo){
 		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
 		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
-		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
+		//ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
 		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
 		ctx.attachee.transformComponent._dirty = true;
