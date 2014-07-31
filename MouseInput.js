@@ -10,7 +10,7 @@
 	MouseInput.setup = function(args, ctx, goo){
 		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector3();
-		MouseInput.delta = new goo.Vector3();
+		//MouseInput.delta = new goo.Vector3();
 		MouseInput.old = new goo.Vector3();
 		MouseInput.position = new goo.Vector3();
 		MouseInput.wheelDelta = 0;
@@ -220,8 +220,8 @@
 		
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
-		MouseInput.delta.x = newX - MouseInput.position.x;
-		MouseInput.delta.y = newY - MouseInput.position.y;
+		//MouseInput.delta.x = newX - MouseInput.position.x;
+		//MouseInput.delta.y = newY - MouseInput.position.y;
 		MouseInput.old.x = MouseInput.position.x;
 		MouseInput.old.y = MouseInput.position.y;
 		MouseInput.position.x = newX;
