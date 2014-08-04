@@ -7,7 +7,7 @@
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
 		}
-		var node = {previous:null, next:null, callback:callback, obj:arguments.callee.caller};
+		var node = {previous:null, next:null, callback:callback};
 		if(undefined === priority){
 			eventList[e].addFirst(node);
 		}
@@ -54,7 +54,7 @@
 		if(undefined !== eventList[e]){
 			var n = eventList[e].first;
 			while(n !== null){
-				n.callback.apply(n.obj, arguments);
+				n.callback.apply(null, arguments);
 				n = n.next;
 			}
 		}
