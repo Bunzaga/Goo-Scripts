@@ -48,7 +48,7 @@
 	return EventManager;
     };
 	EventManager.emit = function(){
-		var e = [].shift.apply(arguments);
+		var e = Array.shift.apply(arguments);
 		if(undefined === e){console.error("EventManager: You just pass in an event as the first parameter."); return;}
 		if(undefined !== eventList[e]){
 			var n = eventList[e].first;
