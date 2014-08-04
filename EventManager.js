@@ -3,6 +3,9 @@
 	var eventList = {};
 
 	EventManager.bind = function(e, callback, priority){
+		console.log(arguments.callee);
+		console.log(arguments.caller);
+		console.log(arguments.callee.caller);
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
 		}
