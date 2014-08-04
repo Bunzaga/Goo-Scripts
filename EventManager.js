@@ -1,3 +1,4 @@
+"use strict";
 (function(window, document){
 	var EventManager = {};
 	var eventList = {};
