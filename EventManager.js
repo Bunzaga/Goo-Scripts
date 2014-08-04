@@ -3,12 +3,10 @@
 	var eventList = {};
 
 	EventManager.bind = function(e, callback, priority){
-		console.log(arguments);
-		console.log(this);
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
 		}
-		var node = {previous:null, next:null, callback:callback, obj:this};
+		var node = {previous:null, next:null, callback:callback};
 		if(undefined === priority){
 			eventList[e].addFirst(node);
 		}
@@ -56,7 +54,7 @@
 			var n = eventList[e].first;
 			while(n !== null){
 				n.callback(arguments);
-				console.log(n.obj);
+				console.log(this);
 				n = n.next;
 			}
 		}
