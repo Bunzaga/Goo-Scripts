@@ -54,7 +54,7 @@
 		if(undefined !== eventList[e]){
 			var n = eventList[e].first;
 			while(n !== null){
-				n.callback.apply(arguments.getCaller(), arguments);
+				n.callback.apply(n.obj, arguments);
 				n = n.next;
 			}
 		}
