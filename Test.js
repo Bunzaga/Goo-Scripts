@@ -1,6 +1,6 @@
 require.config({
       paths: {
-          'goo.js': 'http://code.gooengine.com/0.10.8/lib/goo.js'
+          'goo.js': 'https://code.gooengine.com/0.10.8/lib/goo.js'
       }
   });
 
