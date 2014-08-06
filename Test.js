@@ -1,6 +1,6 @@
 require(['goo'], function(goo){
   console.log(goo);
-  var Test = function(){
+  function Test(){
     this.a = new goo.Vector3();
   };
   Test.prototype.printStuff = function(){
