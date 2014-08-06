@@ -1,6 +1,6 @@
 define(['goo'], function(goo){
   console.log(goo);
-  function Test(){
+  var Test = function(){
     this.a = new goo.Vector3();
   };
   Test.prototype.printStuff = function(){
