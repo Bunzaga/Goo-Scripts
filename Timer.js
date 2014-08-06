@@ -20,7 +20,7 @@
 	Timer.accumulated = 0.0;
 	Timer.ltpf = new Date().getTime() * 0.001;
 
-	Timer.prototype.update = function(){
+	Timer.process = function(){
 	  	var now = new Date().getTime() *0.001;
 	  	tpf = (now - Timer.ltpf);
 	  	Timer.ltpf = now;
