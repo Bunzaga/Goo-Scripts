@@ -1,7 +1,10 @@
 require('goo', function(goo){
-  var Test = {};
-  Test.printStuff = function(abc){
-    console.log(abc);
+  console.log(goo);
+  var Test = function(){
+    this.a = new goo.Vector3();
+  };
+  Test.prototype.printStuff = function(){
+    console.log(a);
   }
   return Test;
 });
