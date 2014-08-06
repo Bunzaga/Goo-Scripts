@@ -1,4 +1,4 @@
-require('goo', function(goo){
+require(['goo'], function(goo){
   console.log(goo);
   var Test = function(){
     this.a = new goo.Vector3();
