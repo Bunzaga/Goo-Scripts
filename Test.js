@@ -1,4 +1,4 @@
-define(['goo/math/Vector3'], function(Vector3){
+define('Test', ['goo/math/Vector3'], function(Vector3){
   console.log(goo);
   var Test = function(){
     this.a = new Vector3();
