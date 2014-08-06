@@ -1,14 +1,4 @@
 (function(window, document, undefined){
-	var Timer = {};
-	var ft = (1.0 / Timer.fps); // forecasted dt
-	var pFt = (1.0 / Timer.fps); // previous forecasted dt
-	
-	var tr = 0.0; // trend
-	var pTr = 0.0; // previous trend
-	
-	var avg = (2/(1 + Timer.fps)); // dt average
-	var maxFrame = this.ft * 10;
-
 	Timer.fps = 60;
 	Timer.dt = 1.0 / Timer.fps; // smoothed dt
 	Timer.fixedFPS = 60;
@@ -19,6 +9,16 @@
 	Timer.negAlpha = 0.0;
 	Timer.accumulated = 0.0;
 	Timer.ltpf = new Date().getTime() * 0.001;
+	
+	var Timer = {};
+	var ft = (1.0 / Timer.fps); // forecasted dt
+	var pFt = (1.0 / Timer.fps); // previous forecasted dt
+	
+	var tr = 0.0; // trend
+	var pTr = 0.0; // previous trend
+	
+	var avg = (2/(1 + Timer.fps)); // dt average
+	var maxFrame = this.ft * 10;
 
 	Timer.process = function(){
 	  	var now = new Date().getTime() *0.001;
