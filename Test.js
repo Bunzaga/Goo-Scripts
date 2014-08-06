@@ -4,7 +4,7 @@ define(['goo'], function(goo){
     this.a = new goo.Vector3();
   };
   Test.prototype.printStuff = function(){
-    console.log(a);
+    console.log(this.a);
   }
   return Test;
 });
