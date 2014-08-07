@@ -65,6 +65,7 @@
 			}
 		};
 		var global = global || window;
-		global.EventManager = EventManager;	
+		global.EventManager = EventManager;
+		return EventManager;
 	}]);
 }(window, document, undefined));
