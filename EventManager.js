@@ -57,8 +57,8 @@ define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], fu
 			EventManager.off(i);
 		}
 	};
-	//var global = global || window;
-	//global.EventManager = EventManager;
+	var global = global || window;
+	global.EventManager = EventManager;
 	return EventManager;
 });
 }(window, document));
