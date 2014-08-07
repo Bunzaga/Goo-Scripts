@@ -4,10 +4,11 @@ require.config({
 		'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
 	},
 	shim: {
-        'EventManager': {
-            deps: ['NodeList'],
-            exports: 'Backbone'
-        }
+	        'EventManager': {
+	            deps: ['NodeList'],
+	            exports: 'Backbone'
+	        }
+	}
 });
 define('EventManager', ['NodeList'], function(NodeList){
 	var EventManager = {};
