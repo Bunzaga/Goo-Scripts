@@ -2,7 +2,7 @@
 (function(window, document){
 	require.config({
 		paths: {
-			'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList.js'
+			'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
 		}
 		
 	});
