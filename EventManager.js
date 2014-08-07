@@ -1,11 +1,12 @@
 "use strict";
-(function(window, document, undefined){
-
 require.config({
         paths: {
             'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
         }
     });
+(function(window, document, undefined){
+
+
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
