@@ -1,11 +1,11 @@
 "use strict";
 
 (function(window, document, undefined){
-require.config({
+/*require.config({
         paths: {
             'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList.js'
         }
-    });
+    });*/
 
 	var EventManager = {};
 	var eventList = {};
