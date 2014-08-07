@@ -1,5 +1,5 @@
+// requires the NodeList object: https://bunzaga.github.io/Goo-Scripts/NodeList.js
 "use strict";
-
 (function(window, document, undefined){
 	var EventManager = {};
 	var eventList = {};
