@@ -1,5 +1,5 @@
 "use strict";
-define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList'], function(NodeList){
+define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], function(NodeList){
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
