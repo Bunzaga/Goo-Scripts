@@ -1,16 +1,5 @@
 "use strict";
-require.config({
-	paths: {
-		'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
-	},
-	shim: {
-	        'EventManager': {
-	            deps: ['NodeList'],
-	            exports: 'Backbone'
-	        }
-	}
-});
-define('EventManager', ['NodeList'], function(NodeList){
+define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList'], function(NodeList){
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
