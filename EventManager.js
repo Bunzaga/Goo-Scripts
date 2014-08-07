@@ -1,15 +1,13 @@
 "use strict";
 (function(window, document){
+	var EventManager = {};
+	var eventList = {};
 	require.config({
 		paths: {
 			'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
 		}
-		
 	});
 	require(["NodeList", function(NodeList){
-		var EventManager = {};
-		var eventList = {};
-	
 		EventManager.on = function(e, callback, priority){
 			if(undefined === eventList[e]){
 				eventList[e] = new NodeList();
@@ -64,8 +62,8 @@
 				EventManager.off(i);
 			}
 		};
-		var global = global || window;
-		global.EventManager = EventManager;
 		return EventManager;
 	}]);
+	var global = global || window;
+	global.EventManager = EventManager;
 }(window, document, undefined));
