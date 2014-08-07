@@ -57,8 +57,7 @@ require(['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], function(NodeList
 			EventManager.off(i);
 		}
 	};
+});
 	var global = global || window;
 	global.EventManager = EventManager;
-});
-	
 }(window, document));
