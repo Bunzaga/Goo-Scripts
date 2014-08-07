@@ -3,7 +3,7 @@
 	var EventManager = {};
 	var eventList = {};
 
-	EventManager.bind = function(e, callback, priority){
+	EventManager.on = function(e, callback, priority){
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
 		}
@@ -17,14 +17,13 @@
 	      }
 	      return EventManager;
 	};
-	EventManager.unbind = function(e, callback){
-		if(null === callback){
-			console.warn("EventManager.unbind: You should pass in the callback to remove as the second parameter, calling EventManger.unbindAll instead.");
-			EventManager.unbindAll(e);
-			return EventManager;
-		}
+	EventManager.off = function(e, callback){
 		if(undefined !== eventList[e]){
-			
+			if(null === callback){
+		    		eventList[e].clear();
+				delete eventList[e];
+				return EventManager;
+			}
 		        var node = eventList[e].first;
 		        while(node != null){
 		        	if(node.callback === callback){
@@ -41,13 +40,6 @@
 		}
 		return EventManager;
 	};
-    EventManager.unbindAll = function(e){
-    	if(undefined !== eventList[e]){
-    		eventList[e].clear();
-		delete eventList[e];
-	}
-	return EventManager;
-    };
 	EventManager.emit = function(){
 		var e = Array.prototype.shift.apply(arguments);
 		if(undefined === e){console.error("EventManager: You just pass in an event as the first parameter."); return;}
@@ -62,7 +54,7 @@
 	};
 	EventManager.cleanup = function(){
 		for(var i in eventList){
-			EventManager.unbindAll(i);
+			EventManager.off(i);
 		}
 	};
 	var global = global || window;
