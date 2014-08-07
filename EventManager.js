@@ -1,12 +1,12 @@
 "use strict";
 
 (function(window, document, undefined){
-/*require.config({
+require.config({
         paths: {
             'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList.js'
         }
-    });*/
-
+    });
+require('NodeList', function(NodeList){
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
@@ -65,5 +65,5 @@
 	};
 	var global = global || window;
 	global.EventManager = EventManager;
-
+});
 }(window, document));
