@@ -1,9 +1,9 @@
 "use strict";
 (function(window, document, undefined){
 	var EventManager = {};
-	var eventList = {};
-require(['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], function(NodeList){
 	
+require(['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], function(NodeList){
+	var eventList = {};
 	EventManager.on = function(e, callback, priority){
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
