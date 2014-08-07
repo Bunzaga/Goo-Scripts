@@ -67,6 +67,6 @@ require(['NodeList'], function(NodeList){
 	};
 	var global = global || window;
 	global.EventManager = EventManager;
-}
+});
 
 }(window, document));
