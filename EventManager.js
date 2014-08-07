@@ -6,7 +6,7 @@ require.config({
             'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
         }
     });
-
+require(['NodeList'], function(NodeList){
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
@@ -67,5 +67,6 @@ require.config({
 	};
 	var global = global || window;
 	global.EventManager = EventManager;
+}
 
 }(window, document));
