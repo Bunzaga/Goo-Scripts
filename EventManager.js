@@ -46,7 +46,7 @@
 		if(undefined !== eventList[e]){
 			var n = eventList[e].first;
 			while(n !== null){
-				n.callback.apply(null, arguments);
+				n.callback(arguments);
 				n = n.next;
 			}
 		}
