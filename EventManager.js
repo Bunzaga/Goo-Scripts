@@ -19,7 +19,7 @@
 	};
 	EventManager.off = function(e, callback){
 		if(undefined !== eventList[e]){
-			if(null === callback){
+			if(undefined === callback){
 		    		eventList[e].clear();
 				delete eventList[e];
 				return EventManager;
