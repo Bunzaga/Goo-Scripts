@@ -11,7 +11,9 @@ require.config({
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
 		if(undefined === eventList[e]){
+			require(['NodeList'], function(){
 			eventList[e] = new NodeList();
+			});
 		}
 		var node = {previous:null, next:null, callback:callback};
 		if(undefined === priority){
