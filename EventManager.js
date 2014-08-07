@@ -61,8 +61,7 @@ define('EventManager', ['NodeList'], function(NodeList){
 				EventManager.off(i);
 			}
 		};
-		return EventManager;
-	var global = global || window;
+		var global = global || window;
 	global.EventManager = EventManager;
 	return EventManager;
 });
