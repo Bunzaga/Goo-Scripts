@@ -4,7 +4,7 @@ require.config({
 		'NodeList': 'https://bunzaga.github.io/Goo-Scripts/NodeList'
 	}
 });
-define('EventManager', ["NodeList", function(NodeList){
+define('EventManager', ['NodeList'], function(NodeList){
 	var EventManager = {};
 	var eventList = {};
 		EventManager.on = function(e, callback, priority){
