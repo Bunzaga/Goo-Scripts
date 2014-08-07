@@ -1,5 +1,6 @@
 "use strict";
 (function(window, document, undefined){
+	
 define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], function(NodeList){
 	var EventManager = {};
 	var eventList = {};
@@ -57,8 +58,8 @@ define('EventManager', ['https://bunzaga.github.io/Goo-Scripts/NodeList.js'], fu
 			EventManager.off(i);
 		}
 	};
-	var global = global || window;
-	global.EventManager = EventManager;
 	return EventManager;
 });
+	var global = global || window;
+	global.EventManager = EventManager;
 }(window, document));
