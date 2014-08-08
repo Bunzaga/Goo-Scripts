@@ -100,8 +100,6 @@
   			col.offset = offset;
   		}else{
   			// mesh
-  			if(args.mass !== 0){console.warn('Mesh Colliders can only be static(mass:0).');}
-  			args.mass = 0;
 	  		col = AmmuUtil.createMeshColliderComponent({scale:scl, entity:ent}, goo);
   		}
   	}
