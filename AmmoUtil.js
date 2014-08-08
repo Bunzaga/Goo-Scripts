@@ -109,6 +109,7 @@
 		for (var i = 0, child; child = children[i++];) {
 			var childCol = AmmoUtil.getColliderFromGooShape(child.entity, pTrans);
 			var localTrans = new Ammo.btTransform();
+			localTrans.setIdentity();
 			var gooPos = child.entity.transformComponent.transform.translation;
 			if(childCol.offset){
 				gooVec = gooVec || new goo.Vector3();
