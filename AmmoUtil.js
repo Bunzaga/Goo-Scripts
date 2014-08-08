@@ -89,10 +89,12 @@
   		ent.transformComponent.transform.scale[2]];
   		
   	function setScale(e1){
+  		console.log(ent.id+":"+e1.id);
+  		console.log(ent === e1);
 		if(e1 !== ent){
-			scl[0] /= e1.transformComponent.transform.scale[0];
-			scl[1] /= e1.transformComponent.transform.scale[1];
-			scl[2] /= e1.transformComponent.transform.scale[2];
+			scl[0] *= e1.transformComponent.transform.scale[0];
+			scl[1] *= e1.transformComponent.transform.scale[1];
+			scl[2] *= e1.transformComponent.transform.scale[2];
 		}
 	}
 	//fix scaleing issues for all parents
