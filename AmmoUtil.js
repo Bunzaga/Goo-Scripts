@@ -345,7 +345,7 @@
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
 				localTrans.setIdentity();
-				var gooPos = child.transformComponent.transform.translation;
+				var gooPos = child.transformComponent.worldTransform.translation;
 				if(childCol.offset){
 					gooVec = gooVec || new goo.Vector3();
 					gooVec.copy(childCol.offset);
