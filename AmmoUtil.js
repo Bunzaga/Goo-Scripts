@@ -107,7 +107,7 @@
   	}
   	else{
   		col = new Ammo.btCompoundShape();
-		for (var i = 0, child, children = entity.transformComponent.children; child = chidren[i++];) {
+		for (var i = 0, child, children = ent.transformComponent.children; child = chidren[i++];) {
 			var childCol = AmmoUtil.getColliderFromGooShape(child.entity, pTrans);
 			var localTrans = new Ammo.btTransform();
 			var gooPos = child.entity.transformComponent.transform.translation;
