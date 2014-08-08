@@ -324,7 +324,7 @@
 	console.log("done ammo collider thing.");
 	return shape;
   };
-  AmmoUtil.createComoundColliderComponent = function(args, _goo){
+  AmmoUtil.createCompoundColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
