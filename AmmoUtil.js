@@ -99,20 +99,30 @@
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]}, goo);
   			col.offset = offset;
   		}else{
-  			
+  			// mesh
+  			if(args.mass !== 0){console.warn('Mesh Colliders can only be static(mass:0).');}
+  			args.mass = 0;
+	  		col = AmmuUtil.createMeshColliderComponent({scale:scl}, ent, goo);
   		}
   	}
   	else{
-  		var shape = new Ammo.btCompoundShape();
-		var c = entity.transformComponent.children;
-		for (var i = 0; i < c.length; i++) {
-			var childAmmoShape = this.getAmmoShapefromGooShape(c[i].entity, gooTransform);
+  		col = new Ammo.btCompoundShape();
+		for (var i = 0, child, children = entity.transformComponent.children; child = chidren[i++];) {
+			var childCol = AmmoUtil.getColliderFromGooShape(child.entity, pTrans);
 			var localTrans = new Ammo.btTransform();
-			localTrans.setIdentity();
-			var gooPos = c[i].transform.translation;
-			localTrans.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
-			// TODO: also setRotation ?
-			shape.addChildShape(localTrans, childAmmoShape);
+			var gooPos = child.entity.transformComponent.transform.translation;
+			if(childCol.offset){
+				gooVec = gooVec || new goo.Vector3();
+				gooVec.copy(collider.offset);
+				child.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
+				gooPos.subv(gooVec);
+			}
+			var gooRot = child.entity.transformComponent.transform.rotation;
+			localTrans.setOrigin(new Ammo.btVector3(gooPos[0], gooPos[1], gooPos[2]));
+			quat = quat || new goo.Quaternion();
+			quat.fromRotationMatrix(gooRot);
+			localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+			childCol.addChildShape(localTrans, childCol);
 		}
   	}
   	return col;
@@ -138,7 +148,7 @@
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
-			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
+			ctx.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
 			gooPos.subv(gooVec);
 		}
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
@@ -282,12 +292,12 @@
   	var shape = new CylinderYColliderComponent();
   	return shape;
   };
-  AmmoUtil.createMeshColliderComponent = function(args, ent, _goo){
+  AmmoUtil.createMeshColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
   		this.type = 'ColliderComponent';
-  		args.scale = args.scale || ent.scale;
+  		args.scale = args.scale || gooVec || gooVec = new goo.Vector3(1,1,1);
 		//scale = scale || [1,1,1];
 		var floatByteSize = 4;
 		var use32bitIndices = true;
