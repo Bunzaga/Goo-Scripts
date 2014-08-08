@@ -305,6 +305,7 @@
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
+  		console.log("ammo creating mesh collider");
   		this.type = 'ColliderComponent';
   		args.scale = args.scale || args.entity.transformComponent.transform.scale;
 		//scale = scale || [1,1,1];
@@ -312,7 +313,7 @@
 		var use32bitIndices = true;
 		var intByteSize = use32bitIndices ? 4 : 2;
 		var intType = use32bitIndices ? "i32" : "i16";
-
+		console.log("test 1");
 		var meshData = args.entity.meshDataComponent.meshData;
 
 		var vertices = meshData.dataViews.POSITION;
@@ -320,7 +321,7 @@
 		for ( var i = 0, il = vertices.length; i < il; i ++ ) {
 			Ammo.setValue( vertexBuffer + i * floatByteSize, args.scale[i%3] * vertices[ i ], 'float' );
 		}
-
+		console.log("test 2");
 		var indices = meshData.indexData.data;
 		var indexBuffer = Ammo.allocate( intByteSize * indices.length, intType, Ammo.ALLOC_NORMAL );
 		for ( var i = 0, il = indices.length; i < il; i ++ ) {
@@ -331,20 +332,21 @@
 		iMesh.set_m_numTriangles( meshData.indexCount / 3 );
 		iMesh.set_m_triangleIndexBase( indexBuffer );
 		iMesh.set_m_triangleIndexStride( intByteSize * 3 );
-
+		console.log("test 3");
 		iMesh.set_m_numVertices( meshData.vertexCount );
 		iMesh.set_m_vertexBase( vertexBuffer );
 		iMesh.set_m_vertexStride( floatByteSize * 3 );
 
 		var triangleIndexVertexArray = new Ammo.btTriangleIndexVertexArray();
 		triangleIndexVertexArray.addIndexedMesh( iMesh, 2);
-
+		console.log("test 4");
 		// bvh = Bounding Volume Hierarchy
 		this.shape = new Ammo.btBvhTriangleMeshShape( triangleIndexVertexArray, true, true );
 	};
 	MeshColliderComponent.prototype = Object.create(goo.Component.prototype);
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
+	console.log("done ammo collider thing.");
 	return shape;
   };
   AmmoUtil.setLinearVelocity = function(body, vec3){
