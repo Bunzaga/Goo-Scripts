@@ -347,7 +347,8 @@
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.worldTransform.translation);
-				gooPos.subv(args.entity.transformComponent.worldTransform.translation);
+				//gooPos.subv(args.entity.transformComponent.worldTransform.translation);
+				gooPos.mulv(args.entity.transformComponent.scale);
 				if(childCol.offset){
 					gooVec = gooVec || new goo.Vector3();
 					gooVec.copy(childCol.offset);
