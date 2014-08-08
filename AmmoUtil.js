@@ -106,7 +106,7 @@
   	}
   	else{
   		console.log("No meshdata, checking children");
-  		var col = new Ammo.btCompoundShape(true);
+  		col = new Ammo.btCompoundShape(true);
   		var children = ent.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
@@ -114,7 +114,7 @@
 			var childCol = AmmoUtil.getColliderFromGooShape(child, pTrans);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
-				//localTrans.setIdentity();
+				localTrans.setIdentity();
 				var gooPos = child.transformComponent.transform.translation;
 				if(childCol.offset){
 					gooVec = gooVec || new goo.Vector3();
@@ -128,7 +128,9 @@
 				quat.fromRotationMatrix(gooRot);
 				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 				console.log("adding child");
-				col.addChildShape(localTrans, childCol);
+				console.log(localTrans);
+				console.log(childCol);
+				col.addChildShape(localTrans, childCol.shape);
 				console.log("done adding child");
 			}
 		}
@@ -153,6 +155,7 @@
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
+  		startTranform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
