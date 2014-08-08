@@ -297,7 +297,7 @@
   	
   	function MeshColliderComponent() {
   		this.type = 'ColliderComponent';
-  		args.scale = args.scale || gooVec || gooVec = new goo.Vector3(1,1,1);
+  		args.scale = args.scale || ((gooVec) ? gooVec : gooVec = new goo.Vector3(1,1,1));
 		//scale = scale || [1,1,1];
 		var floatByteSize = 4;
 		var use32bitIndices = true;
