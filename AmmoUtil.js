@@ -89,8 +89,6 @@
   		ent.transformComponent.transform.scale[2]];
   		
   	function setScale(e1){
-  		console.log(ent.id+":"+e1.id);
-  		console.log(ent === e1);
 		if(e1 !== ent){
 			scl[0] *= e1.transformComponent.transform.scale[0];
 			scl[1] *= e1.transformComponent.transform.scale[1];
@@ -347,7 +345,6 @@
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.transform.translation);
-				//gooPos.subv(args.entity.transformComponent.worldTransform.translation);
 				gooPos.mulv(args.entity.transformComponent.transform.scale);
 				if(childCol.offset){
 					gooVec = gooVec || new goo.Vector3();
