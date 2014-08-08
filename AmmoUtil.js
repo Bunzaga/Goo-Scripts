@@ -100,12 +100,13 @@
   			col.offset = offset;
   		}else{
   			// mesh
+  			console.log("creating new Mesh collider...");
 	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent}, goo);
   		}
   	}
   	else{
   		console.log("No meshdata, checking children");
-  		col = new Ammo.btCompoundShape();
+  		var col = new Ammo.btCompoundShape();
   		var children = ent.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
