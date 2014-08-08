@@ -325,7 +325,7 @@
 	  	var children = args.entity.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
-			var childCol = AmmoUtil.getColliderFromGooShape(child, args.transform, goo);
+			var childCol = AmmoUtil.getColliderFromGooShape(child, args.entity.transformComponent.transform, goo);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
 				localTrans.setIdentity();
