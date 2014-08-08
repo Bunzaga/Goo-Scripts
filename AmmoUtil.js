@@ -106,35 +106,7 @@
   	}
   	else{
   		console.log("No meshdata, checking children");
-  		col = new Ammo.btCompoundShape(true);
-  		var children = ent.transformComponent.children;
-		for (var i = 0, ilen = children.length; i < ilen; i++) {
-			var child = children[i].entity;
-			console.log("checking child: "+(i)+" "+child.name);
-			var childCol = AmmoUtil.getColliderFromGooShape(child, pTrans);
-			if(childCol !== null){
-				var localTrans = new Ammo.btTransform();
-				localTrans.setIdentity();
-				var gooPos = child.transformComponent.transform.translation;
-				if(childCol.offset){
-					gooVec = gooVec || new goo.Vector3();
-					gooVec.copy(childCol.offset);
-					child.transformComponent.transform.applyForwardVector(childCol.offset, gooVec);
-					gooPos.subv(gooVec);
-				}
-				localTrans.setOrigin(new Ammo.btVector3(gooPos[0], gooPos[1], gooPos[2]));
-				var gooRot = child.transformComponent.transform.rotation;
-				quat = quat || new goo.Quaternion();
-				quat.fromRotationMatrix(gooRot);
-				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
-				console.log("adding child");
-				console.log(localTrans);
-				console.log(childCol);
-				col.addChildShape(localTrans, childCol.shape);
-				console.log("done adding child");
-			}
-		}
-		console.log("done creating compound shape");
+  		col = AmmoUtil.createCompoundColliderComponent({entity:ent}, goo);
   	}
   	return col;
   };
@@ -352,6 +324,47 @@
 	console.log("done ammo collider thing.");
 	return shape;
   };
+  AmmoUtil.createComoundColliderComponent = function(args, _goo){
+  	goo = goo || _goo;
+  	
+  	function MeshColliderComponent() {
+	  	this.shape = new Ammo.btCompoundShape(true);
+	  	this.type = 'ColliderComponent';
+	  	var children = args.entity.transformComponent.children;
+		for (var i = 0, ilen = children.length; i < ilen; i++) {
+			var child = children[i].entity;
+			console.log("checking child: "+(i)+" "+child.name);
+			var childCol = AmmoUtil.getColliderFromGooShape(child, args.entity.transformComponent.transform);
+			if(childCol !== null){
+				var localTrans = new Ammo.btTransform();
+				localTrans.setIdentity();
+				var gooPos = child.transformComponent.transform.translation;
+				if(childCol.offset){
+					gooVec = gooVec || new goo.Vector3();
+					gooVec.copy(childCol.offset);
+					child.transformComponent.transform.applyForwardVector(childCol.offset, gooVec);
+					gooPos.subv(gooVec);
+				}
+				localTrans.setOrigin(new Ammo.btVector3(gooPos[0], gooPos[1], gooPos[2]));
+				var gooRot = child.transformComponent.transform.rotation;
+				quat = quat || new goo.Quaternion();
+				quat.fromRotationMatrix(gooRot);
+				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+				console.log("adding child");
+				console.log(localTrans);
+				console.log(childCol);
+				this.shape.addChildShape(localTrans, childCol.shape);
+				console.log("done adding child");
+			}
+		}
+		console.log("done creating compound shape");
+  	}
+	CompoundColliderComponent.prototype = Object.create(goo.Component.prototype);
+  	CompoundColliderComponent.constructor = CompoundColliderComponent;
+	var shape = new CompoundColliderComponent();
+	console.log("done ammo collider thing.");
+	return shape;
+  }
   AmmoUtil.setLinearVelocity = function(body, vec3){
   	pvec = pvec || new Ammo.btVector3();
   	
