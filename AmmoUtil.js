@@ -100,7 +100,7 @@
   			col.offset = offset;
   		}else{
   			// mesh
-	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent, parentTransform:pTrans}, goo);
+	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent, transform:pTrans}, goo);
   		}
   	}
   	else{
@@ -325,7 +325,7 @@
 	  	var children = args.entity.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
-			var childCol = AmmoUtil.getColliderFromGooShape(child, args.parentTransform);
+			var childCol = AmmoUtil.getColliderFromGooShape(child, args.transform, goo);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
 				localTrans.setIdentity();
