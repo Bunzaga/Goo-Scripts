@@ -155,7 +155,7 @@
   			ctx.entity.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
-  		startTranform.setIdentity();
+  		startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
