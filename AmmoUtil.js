@@ -80,7 +80,7 @@
   	}
   }
   
-  AmmoUtil.getColliderFromGooShape = function(ent, pTrans, _goo){
+  AmmoUtil.getColliderFromGooShape = function(ent, _goo){
   	goo = goo || _goo;
   	var col = null;
   	var scl = [
@@ -118,7 +118,7 @@
   		}
   	}
   	else{
-  		col = AmmoUtil.createCompoundColliderComponent({entity:ent, transform:pTrans}, goo);
+  		col = AmmoUtil.createCompoundColliderComponent({entity:ent}, goo);
   	}
   	return col;
   };
@@ -131,7 +131,7 @@
   		this.mass = args.mass || 0.0;
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, ctx.entity.transformComponent.transform, goo);
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, goo);
   			if(null === collider){
   				console.error("Could not identify collider info!");
   				return;
@@ -339,7 +339,7 @@
 	  	var children = args.entity.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
-			var childCol = AmmoUtil.getColliderFromGooShape(child, args.entity.transformComponent.transform, goo);
+			var childCol = AmmoUtil.getColliderFromGooShape(child, goo);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
 				localTrans.setIdentity();
