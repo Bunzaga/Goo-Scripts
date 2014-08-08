@@ -107,21 +107,22 @@
   		console.log("No meshdata, checking children");
   		col = new Ammo.btCompoundShape();
   		var children = ent.transformComponent.children;
-		for (var i = 0, child; child = children[i++];) {
-			console.log("checking child: "+(i-1)+" "+child.name);
-			var childCol = AmmoUtil.getColliderFromGooShape(child.entity, pTrans);
+		for (var i = 0, ilen = children.length; i < ilen; i++) {
+			var child = children[i].entity;
+			console.log("checking child: "+(i)+" "+child.name);
+			var childCol = AmmoUtil.getColliderFromGooShape(child, pTrans);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
-				localTrans.setIdentity();
-				var gooPos = child.entity.transformComponent.transform.translation;
+				//localTrans.setIdentity();
+				var gooPos = child.transformComponent.transform.translation;
 				if(childCol.offset){
 					gooVec = gooVec || new goo.Vector3();
-					gooVec.copy(collider.offset);
-					child.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
+					gooVec.copy(childCol.offset);
+					child.transformComponent.transform.applyForwardVector(childCol.offset, gooVec);
 					gooPos.subv(gooVec);
 				}
-				var gooRot = child.entity.transformComponent.transform.rotation;
 				localTrans.setOrigin(new Ammo.btVector3(gooPos[0], gooPos[1], gooPos[2]));
+				var gooRot = child.transformComponent.transform.rotation;
 				quat = quat || new goo.Quaternion();
 				quat.fromRotationMatrix(gooRot);
 				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
@@ -130,6 +131,7 @@
 				console.log("done adding child");
 			}
 		}
+		console.log("done creating compound shape");
   	}
   	return col;
   };
