@@ -68,16 +68,11 @@
   		}
   		
   		Ammo.destroy(ammoSystem.ammoWorld);
-  		//delete ammoSystem.ammoWorld;
   		Ammo.destroy(ammoSystem.solver);
-  		//delete ammoSystem.solver;
   		Ammo.destroy(ammoSystem.overlappingPairCache);
-  		//delete ammoSystem.overlappingPairCache;
   		Ammo.destroy(ammoSystem.dispatcher);
-  		//delete ammoSystem.dispatcher;
   		Ammo.destroy(ammoSystem.collisionConfiguration);
-  		//delete ammoSystem.collisionConfiguration;
-  	
+
   		var index = ctx.world._systems.indexOf(ammoSystem);
   		if(index !== -1){
   			ctx.world._systems.splice(index, 1);
