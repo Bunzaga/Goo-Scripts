@@ -108,7 +108,7 @@
   		col = new Ammo.btCompoundShape();
   		var children = ent.transformComponent.children;
 		for (var i = 0, child; child = children[i++];) {
-			console.log("checking child: "+(i-1)i+" "+child.name);
+			console.log("checking child: "+(i-1)+" "+child.name);
 			var childCol = AmmoUtil.getColliderFromGooShape(child.entity, pTrans);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
