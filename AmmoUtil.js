@@ -121,7 +121,7 @@
 			quat = quat || new goo.Quaternion();
 			quat.fromRotationMatrix(gooRot);
 			localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
-			childCol.addChildShape(localTrans, childCol);
+			col.addChildShape(localTrans, childCol);
 		}
   	}
   	return col;
