@@ -106,7 +106,7 @@
   	}
   	else{
   		console.log("No meshdata, checking children");
-  		var col = new Ammo.btCompoundShape();
+  		var col = new Ammo.btCompoundShape(true);
   		var children = ent.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
