@@ -100,11 +100,11 @@
   			col.offset = offset;
   		}else{
   			// mesh
-	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent, transform:pTrans}, goo);
+	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent}, goo);
   		}
   	}
   	else{
-  		col = AmmoUtil.createCompoundColliderComponent({entity:ent}, goo);
+  		col = AmmoUtil.createCompoundColliderComponent({entity:ent, transform:pTrans}, goo);
   	}
   	return col;
   };
