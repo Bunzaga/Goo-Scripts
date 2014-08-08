@@ -297,14 +297,14 @@
   	
   	function MeshColliderComponent() {
   		this.type = 'ColliderComponent';
-  		args.scale = args.scale || ((gooVec) ? gooVec : gooVec = new goo.Vector3(1,1,1));
+  		args.scale = args.scale || args.entity.transformComponent.transform.scale;
 		//scale = scale || [1,1,1];
 		var floatByteSize = 4;
 		var use32bitIndices = true;
 		var intByteSize = use32bitIndices ? 4 : 2;
 		var intType = use32bitIndices ? "i32" : "i16";
 
-		var meshData = ent.meshDataComponent.meshData;
+		var meshData = args.entity.meshDataComponent.meshData;
 
 		var vertices = meshData.dataViews.POSITION;
 		var vertexBuffer = Ammo.allocate( floatByteSize * vertices.length, "float", Ammo.ALLOC_NORMAL );
