@@ -27,7 +27,7 @@
 	AmmoSystem.constructor = AmmoSystem;
 	
 	AmmoSystem.prototype.inserted = function(ent){
-		if(ent.rigidBodyComponent && ent.colliderComponent){
+		if (ent.rigidBodyComponent && ent.colliderComponent) {
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
@@ -41,7 +41,7 @@
 		}
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
-		if (ent.ammoComponent) {
+		if (ent.rigidbodyComponent) {
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
