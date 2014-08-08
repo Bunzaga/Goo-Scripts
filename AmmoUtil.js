@@ -100,12 +100,10 @@
   			col.offset = offset;
   		}else{
   			// mesh
-  			console.log("creating new Mesh collider...");
 	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent}, goo);
   		}
   	}
   	else{
-  		console.log("No meshdata, checking children");
   		col = AmmoUtil.createCompoundColliderComponent({entity:ent}, goo);
   	}
   	return col;
@@ -280,7 +278,6 @@
   	goo = goo || _goo;
   	
   	function MeshColliderComponent() {
-  		console.log("ammo creating mesh collider");
   		this.type = 'ColliderComponent';
   		args.scale = args.scale || args.entity.transformComponent.transform.scale;
 		//scale = scale || [1,1,1];
@@ -288,7 +285,6 @@
 		var use32bitIndices = true;
 		var intByteSize = use32bitIndices ? 4 : 2;
 		var intType = use32bitIndices ? "i32" : "i16";
-		console.log("test 1");
 		var meshData = args.entity.meshDataComponent.meshData;
 
 		var vertices = meshData.dataViews.POSITION;
@@ -296,7 +292,6 @@
 		for ( var i = 0, il = vertices.length; i < il; i ++ ) {
 			Ammo.setValue( vertexBuffer + i * floatByteSize, args.scale[i%3] * vertices[ i ], 'float' );
 		}
-		console.log("test 2");
 		var indices = meshData.indexData.data;
 		var indexBuffer = Ammo.allocate( intByteSize * indices.length, intType, Ammo.ALLOC_NORMAL );
 		for ( var i = 0, il = indices.length; i < il; i ++ ) {
@@ -307,21 +302,18 @@
 		iMesh.set_m_numTriangles( meshData.indexCount / 3 );
 		iMesh.set_m_triangleIndexBase( indexBuffer );
 		iMesh.set_m_triangleIndexStride( intByteSize * 3 );
-		console.log("test 3");
 		iMesh.set_m_numVertices( meshData.vertexCount );
 		iMesh.set_m_vertexBase( vertexBuffer );
 		iMesh.set_m_vertexStride( floatByteSize * 3 );
 
 		var triangleIndexVertexArray = new Ammo.btTriangleIndexVertexArray();
 		triangleIndexVertexArray.addIndexedMesh( iMesh, 2);
-		console.log("test 4");
 		// bvh = Bounding Volume Hierarchy
 		this.shape = new Ammo.btBvhTriangleMeshShape( triangleIndexVertexArray, true, true );
 	};
 	MeshColliderComponent.prototype = Object.create(goo.Component.prototype);
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
-	console.log("done ammo collider thing.");
 	return shape;
   };
   AmmoUtil.createCompoundColliderComponent = function(args, _goo){
@@ -333,7 +325,6 @@
 	  	var children = args.entity.transformComponent.children;
 		for (var i = 0, ilen = children.length; i < ilen; i++) {
 			var child = children[i].entity;
-			console.log("checking child: "+(i)+" "+child.name);
 			var childCol = AmmoUtil.getColliderFromGooShape(child, args.entity.transformComponent.transform);
 			if(childCol !== null){
 				var localTrans = new Ammo.btTransform();
@@ -350,19 +341,13 @@
 				quat = quat || new goo.Quaternion();
 				quat.fromRotationMatrix(gooRot);
 				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
-				console.log("adding child");
-				console.log(localTrans);
-				console.log(childCol);
 				this.shape.addChildShape(localTrans, childCol.shape);
-				console.log("done adding child");
 			}
 		}
-		console.log("done creating compound shape");
   	}
 	CompoundColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CompoundColliderComponent.constructor = CompoundColliderComponent;
 	var shape = new CompoundColliderComponent();
-	console.log("done ammo collider thing.");
 	return shape;
   }
   AmmoUtil.setLinearVelocity = function(body, vec3){
