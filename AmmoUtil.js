@@ -83,7 +83,8 @@
   AmmoUtil.getColliderFromGooShape = function(ent, pTrans, _goo){
   	goo = goo || _goo;
   	var col = null;
-  	var scl = [Math.abs(pTrans.scale[0]), Math.abs(pTrans.scale[1]), Math.abs(pTrans.scale[2])];
+  	var entScl = ent.transformComponent.transform.scale;
+  	var scl = [Math.abs(entScl[0]/pTrans.scale[0]), Math.abs(entScl[1]/pTrans.scale[1]), Math.abs(entScl[2]/pTrans.scale[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
   		if(md instanceof goo.Box){
