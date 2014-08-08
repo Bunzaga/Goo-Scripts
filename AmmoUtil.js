@@ -327,7 +327,7 @@
   AmmoUtil.createCompoundColliderComponent = function(args, _goo){
   	goo = goo || _goo;
   	
-  	function MeshColliderComponent() {
+  	function CompoundColliderComponent() {
 	  	this.shape = new Ammo.btCompoundShape(true);
 	  	this.type = 'ColliderComponent';
 	  	var children = args.entity.transformComponent.children;
