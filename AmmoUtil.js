@@ -171,7 +171,7 @@
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
 
-  	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, nedAlpha){
+  	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
