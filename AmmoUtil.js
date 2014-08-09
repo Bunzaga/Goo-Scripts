@@ -186,11 +186,13 @@
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
+ 		gooVec = gooVec || new goo.Vector3();
  		
  		ptrans = this.body.getCenterOfMassTransform();
  		//this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		
 		pvec = ptrans.getOrigin();
 		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
 	};
@@ -200,15 +202,14 @@
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
   		var col = ent.colliderComponent;
-  		
   		ptrans = ptrans || new Ammo.btTransform();
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
-  		this.body.getMotionState().getWorldTransform(ptrans);
-  		//ptrans = this.body.getCenterOfMassTransform();
+ 		ptrans = this.body.getCenterOfMassTransform();
+  		//this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
 			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
@@ -217,14 +218,15 @@
 			(this.oldQuat.w * negAlpha) + (pquat.w() * alpha));
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
-		pos.setd(
-			(this.oldPos[0] * negAlpha) + (pvec.x() * alpha),
-			(this.oldPos[1] * negAlpha) + (pvec.y() * alpha),
-			(this.oldPos[2] * negAlpha) + (pvec.z() * alpha));
+		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
+			this.oldPos.addv(gooVec);
 			pos.addv(gooVec);
 		}
+		pos.mul(alpha);
+		this.oldPos.mul(negAlpha);
+		pos.addv(this.oldPos);
 		tc.setUpdated();
   	};
   	
