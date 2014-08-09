@@ -40,7 +40,7 @@
 			this.ammoWorld.stepSimulation(this.fixedTime, 0);
 			this.accumulated -= this.fixedTime;
 		}
-		var alpha = this.accumulated / this.fixedDT;
+		var alpha = this.accumulated / this.fixedTime;
 	  	var negAlpha = 1 - alpha;
 		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
