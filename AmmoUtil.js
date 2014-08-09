@@ -39,11 +39,11 @@
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
 			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.resolution);
-			/*for(var i = 0, ilen = entities.length; i < ilen; i++){
+			for(var i = 0, ilen = entities.length; i < ilen; i++){
 				if(entities[i].rigidBodyComponent.body.getMotionState()){
 					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
 				}
-			}*/
+			}
 			this.accumulated -= this.fixedTime;
 		}
 		var alpha = this.accumulated / this.fixedTime;
@@ -211,23 +211,23 @@
  		gooVec = gooVec || new goo.Vector3();
  		
  		
- 		this.oldPos.copy(pos);
+ 		/*this.oldPos.copy(pos);
  		quat.fromRotationMatrix(rot);
- 		this.oldQuat.copy(quat);
+ 		this.oldQuat.copy(quat);*/
  		
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
   		this.body.getWorldTransform(ptrans);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
+		pos.mul(alpha);
+		this.oldPos.mul(negAlpha);
+		pos.addv(this.oldPos);
 		if(col.offset){
 			gooVec.copy(col.offset);
 			rot.applyPost(gooVec);
 			pos.addv(gooVec);
 		}
-		pos.mul(alpha);
-		this.oldPos.mul(negAlpha);
-		pos.addv(this.oldPos);
 		
 		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
