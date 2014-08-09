@@ -218,13 +218,6 @@
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
   		this.body.getWorldTransform(ptrans);
-  		ptrans.getBasis().getRotation(pquat);
-		quat.setd(
-			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
-			(this.oldQuat.y * negAlpha) + (pquat.y() * alpha), 
-			(this.oldQuat.z * negAlpha) + (pquat.z() * alpha),
-			(this.oldQuat.w * negAlpha) + (pquat.w() * alpha));
-		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
@@ -235,6 +228,15 @@
 		pos.mul(alpha);
 		this.oldPos.mul(negAlpha);
 		pos.addv(this.oldPos);
+		
+		ptrans.getBasis().getRotation(pquat);
+		quat.setd(
+			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
+			(this.oldQuat.y * negAlpha) + (pquat.y() * alpha), 
+			(this.oldQuat.z * negAlpha) + (pquat.z() * alpha),
+			(this.oldQuat.w * negAlpha) + (pquat.w() * alpha));
+		quat.toRotationMatrix(rot);
+		
 		tc.setUpdated();
   	};
   	
