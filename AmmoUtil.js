@@ -145,6 +145,7 @@
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
   		this.oldPos = new goo.Vector3();
+  		this.oldQuat = new goo.Quaternion();
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
   			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, goo);
@@ -172,6 +173,7 @@
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
+		this.oldQuat.copy(quat);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
@@ -187,8 +189,8 @@
  		quat = quat || new goo.Quaternion();
  		
  		ptrans = this.body.getCenterOfMassTransform();
-  		//ptrans.getBasis().getRotation(pquat);
-		//quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+  		ptrans.getBasis().getRotation(pquat);
+		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		pvec = ptrans.getOrigin();
 		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
 	};
@@ -208,7 +210,11 @@
   		//this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans = this.body.getCenterOfMassTransform();
   		ptrans.getBasis().getRotation(pquat);
-		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		quat.setd(
+			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
+			(this.oldQuat.y * negAlpha) + (pquat.y() * alpha), 
+			(this.oldQuat.z * negAlpha) + (pquat.z() * alpha),
+			(this.oldQuat.w * negAlpha) + (pquat.w() * alpha));
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(
