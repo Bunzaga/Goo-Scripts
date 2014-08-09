@@ -215,7 +215,7 @@
  		
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
-  		this.body.getWorldTransform(ptrans);
+  		//this.body.getWorldTransform(ptrans);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		pos.mul(alpha);
