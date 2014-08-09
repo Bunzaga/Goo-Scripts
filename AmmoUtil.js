@@ -34,10 +34,17 @@
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-		this.ammoWorld.stepSimulation(tpf, 0, this.fixedTime);
+		this.accumulated += tpf;
+		while(this.fixedTime < this.accumulated){
+			this.ammoWorld.stepSimulation(this.fixedTime, 0);
+			this.accumulated -= this.fixedTime;
+		}
+		var alpha = this.accumulated / this.fixedDT;
+	  	var negAlpha = 1 - alpha;
+		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
+				entities[i].rigidBodyComponent.updateVisuals(entities[i], alpha, negAlpha);
 			}
 		}
 	};
@@ -164,12 +171,12 @@
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
 
-  	RigidBodyComponent.prototype.updateVisuals = function(ent){
+  	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, nedAlpha){
  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
   		var col = ent.colliderComponent;
-  	
+  		
   		ptrans = ptrans || new Ammo.btTransform();
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
@@ -181,7 +188,10 @@
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
-		pos.setd(pvec.x(), pvec.y(), pvec.z());
+		pos.setd(
+			(pos[0] * negAlpha) + (pvec.x() * alpha),
+			(pos[1] * negAlpha) + (pvec.y() * alpha),
+			(pos[2] * negAlpha) + (pvec.z() * alpha));
 		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
