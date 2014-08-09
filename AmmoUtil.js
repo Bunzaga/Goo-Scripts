@@ -223,8 +223,8 @@
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
-			this.oldPos.addv(gooVec);
-			pos.addv(gooVec);
+			this.oldPos.subv(gooVec);
+			pos.subv(gooVec);
 		}
 		pos.mul(alpha);
 		this.oldPos.mul(negAlpha);
