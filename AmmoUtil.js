@@ -171,7 +171,32 @@
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
-
+	
+	RigidBodyComponent.prototype.updatePhysics = function(ent){
+		var tc = ent.transformComponent;
+  		var pos = tc.transform.translation;
+  		var rot = tc.transform.rotation;
+  		var col = ent.colliderComponent;
+  		
+  		ptrans = ptrans || new Ammo.btTransform();
+ 		pquat = pquat || new Ammo.btQuaternion();
+ 		pvec = pvec || new Ammo.btVector3();
+ 		quat = quat || new goo.Quaternion();
+ 		gooVec = gooVec || new goo.Vector3();
+ 		
+  		this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans.getBasis().getRotation(pquat);
+		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		quat.toRotationMatrix(rot);
+		pvec = ptrans.getOrigin();
+		pos.setd(pvec.x(),pvec.y(),pvec.z());
+		if(col.offset){
+			tc.transform.applyForwardVector(col.offset, gooVec);
+			pos.addv(gooVec);
+		}
+		tc.setUpdated();
+	}
+	
   	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
