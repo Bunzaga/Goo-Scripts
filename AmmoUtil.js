@@ -38,12 +38,7 @@
 		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
-			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.resolution);
-			/*for(var i = 0, ilen = entities.length; i < ilen; i++){
-				if(entities[i].rigidBodyComponent.body.getMotionState()){
-					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
-				}
-			}*/
+			this.ammoWorld.stepSimulation(this.fixedTime, 1);
 			this.accumulated -= this.fixedTime;
 		}
 		var alpha = this.accumulated / this.fixedTime;
@@ -178,31 +173,6 @@
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
 	
-	RigidBodyComponent.prototype.updatePhysics = function(ent){
-		var tc = ent.transformComponent;
-  		var pos = tc.transform.translation;
-  		var rot = tc.transform.rotation;
-  		var col = ent.colliderComponent;
-  		
-  		ptrans = ptrans || new Ammo.btTransform();
- 		pquat = pquat || new Ammo.btQuaternion();
- 		pvec = pvec || new Ammo.btVector3();
- 		quat = quat || new goo.Quaternion();
- 		gooVec = gooVec || new goo.Vector3();
- 		
-  		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans.getBasis().getRotation(pquat);
-		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		quat.toRotationMatrix(rot);
-		pvec = ptrans.getOrigin();
-		pos.setd(pvec.x(),pvec.y(),pvec.z());
-		if(col.offset){
-			tc.transform.applyForwardVector(col.offset, gooVec);
-			pos.addv(gooVec);
-		}
-		tc.setUpdated();
-	}
-	
   	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
@@ -215,7 +185,8 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
-  		this.body.getMotionState().getWorldTransform(ptrans);
+  		//this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans = this.body.getCenterOfMassTransform();
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		quat.toRotationMatrix(rot);
@@ -224,10 +195,10 @@
 			(pos[0] * negAlpha) + (pvec.x() * alpha),
 			(pos[1] * negAlpha) + (pvec.y() * alpha),
 			(pos[2] * negAlpha) + (pvec.z() * alpha));
-		/*if(col.offset){
+		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
-		}*/
+		}
 		tc.setUpdated();
   	};
   	
