@@ -6,6 +6,8 @@
     Test.printStuff = function(){
       console.log(aVec);
     }
+    var global = global || window;
+    global.Test = Test;
     return Test;
   });
 }(window, document));
