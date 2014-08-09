@@ -33,7 +33,8 @@
 	};
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
-		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
+		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
+		this.ammoWorld.stepSimulation(tpf, 0, this.fixedTime);
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
 				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
@@ -182,8 +183,7 @@
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
-			gooVec.copy(col.offset);
-			rot.applyPost(gooVec);
+			tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
 		}
 		tc.setUpdated();
@@ -366,21 +366,26 @@
 	var shape = new CompoundColliderComponent();
 	return shape;
   }
-  AmmoUtil.setLinearVelocity = function(body, vec3){
-  	pvec = pvec || new Ammo.btVector3();
-  	
-  	pvec.setValue(vec3.x, vec3.y, vec3.z);
-	body.setLinearVelocity(pvec);
+  AmmoUtil.setLinearVelocity = function(ent, vec3){
+  	var body = ent.getComponent("RigidBodyComponent");
+  	if(body !== null){
+  		pvec = pvec || new Ammo.btVector3();
+  		pvec.setValue(vec3.x, vec3.y, vec3.z);
+		body.setLinearVelocity(pvec);
+  	}
   };
-  AmmoUtil.setRotation = function(body, quat){
- 	ptrans = ptrans || new Ammo.btTransform();
- 	pquat = pquat || new Ammo.btQuaternion();
- 	
-	ptrans = body.getCenterOfMassTransform();
-	pquat = ptrans.getRotation();
-	pquat.setValue(quat.x, quat.y, quat.z, quat.w);
-	ptrans.setRotation(pquat);
-	body.setCenterOfMassTransform(ptrans);
+  AmmoUtil.setRotation = function(ent, quat){
+  	var body = ent.getComponent("RigidBodyComponent");
+  	if(body !== null){
+	 	ptrans = ptrans || new Ammo.btTransform();
+	 	pquat = pquat || new Ammo.btQuaternion();
+	 	
+		ptrans = body.getCenterOfMassTransform();
+		pquat = ptrans.getRotation();
+		pquat.setValue(quat.x, quat.y, quat.z, quat.w);
+		ptrans.setRotation(pquat);
+		body.setCenterOfMassTransform(ptrans);
+  	}
   };
   
   var global = global || window;
