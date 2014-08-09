@@ -39,11 +39,11 @@
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
 			this.ammoWorld.stepSimulation(this.fixedTime, 0, this.resolution);
-			for(var i = 0, ilen = entities.length; i < ilen; i++){
+			/*for(var i = 0, ilen = entities.length; i < ilen; i++){
 				if(entities[i].rigidBodyComponent.body.getMotionState()){
 					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
 				}
-			}
+			}*/
 			this.accumulated -= this.fixedTime;
 		}
 		var alpha = this.accumulated / this.fixedTime;
@@ -184,7 +184,7 @@
   	RigidBodyComponent.constructor = RigidBodyComponent;
 	
 	RigidBodyComponent.prototype.updatePhysics = function(ent){
-		/*ptrans = ptrans || new Ammo.btTransform();
+		ptrans = ptrans || new Ammo.btTransform();
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
@@ -196,7 +196,7 @@
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		
 		pvec = ptrans.getOrigin();
-		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());*/
+		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
 	};
 	
   	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
@@ -209,15 +209,6 @@
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
- 		
- 		this.oldPos.copy(pos);
- 		if(col.offset){
- 			gooVec.copy(col.offset);
-			rot.applyPost(gooVec);
-			pos.subv(gooVec);
- 		}
- 		quat.fromRotationMatrix(rot);
- 		this.oldQuat.copy(quat);
  		
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
@@ -241,6 +232,9 @@
 		}
 		tc.setUpdated();
 		
+		this.oldPos.copy(pos);
+ 		quat.fromRotationMatrix(rot);
+ 		this.oldQuat.copy(quat);
   	};
   	
   	var rigidBody = new RigidBodyComponent;
