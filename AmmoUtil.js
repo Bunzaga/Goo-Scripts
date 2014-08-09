@@ -222,14 +222,14 @@
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		pos.mul(alpha);
-		this.oldPos.mul(negAlpha);
-		pos.addv(this.oldPos);
 		if(col.offset){
 			gooVec.copy(col.offset);
 			rot.applyPost(gooVec);
 			pos.addv(gooVec);
 		}
+		pos.mul(alpha);
+		this.oldPos.mul(negAlpha);
+		pos.addv(this.oldPos);
 		tc.setUpdated();
 		
 		this.oldPos.copy(pos);
