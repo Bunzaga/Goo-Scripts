@@ -184,7 +184,7 @@
   	RigidBodyComponent.constructor = RigidBodyComponent;
 	
 	RigidBodyComponent.prototype.updatePhysics = function(ent){
-		/*ptrans = ptrans || new Ammo.btTransform();
+		ptrans = ptrans || new Ammo.btTransform();
  		pquat = pquat || new Ammo.btQuaternion();
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
@@ -196,7 +196,7 @@
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		
 		pvec = ptrans.getOrigin();
-		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());*/
+		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
 	};
 	
   	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
@@ -222,18 +222,15 @@
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
+		pos.mul(alpha);
+		this.oldPos.mul(negAlpha);
+		pos.addv(this.oldPos);
 		if(col.offset){
 			gooVec.copy(col.offset);
 			rot.applyPost(gooVec);
 			pos.addv(gooVec);
 		}
-		pos.mul(alpha);
-		this.oldPos.mul(negAlpha);
-		pos.addv(this.oldPos);
-		
 		tc.setUpdated();
-		this.oldPos.copy(pos);
- 		this.oldQuat.copy(quat);
   	};
   	
   	var rigidBody = new RigidBodyComponent;
