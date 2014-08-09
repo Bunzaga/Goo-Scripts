@@ -367,16 +367,18 @@
 	return shape;
   }
   AmmoUtil.setLinearVelocity = function(ent, vec3){
-  	var body = ent.getComponent("RigidBodyComponent");
-  	if(body !== null){
+  	var rbc = ent.getComponent("RigidBodyComponent");
+  	if(rbc !== null){
+  		var body = rbc.body;
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
 		body.setLinearVelocity(pvec);
   	}
   };
   AmmoUtil.setRotation = function(ent, quat){
-  	var body = ent.getComponent("RigidBodyComponent");
-  	if(body !== null){
+  	var rbc = ent.getComponent("RigidBodyComponent");
+  	if(rbc !== null){
+  		var body = rbc.body;
 	 	ptrans = ptrans || new Ammo.btTransform();
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	
