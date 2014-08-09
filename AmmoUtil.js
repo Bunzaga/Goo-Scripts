@@ -157,6 +157,7 @@
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
+		this.oldPos.copy(gooPos);
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
@@ -168,7 +169,6 @@
 		if(this.mass !== 0){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
-		this.oldPos.copy(gooPos);
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
