@@ -158,14 +158,12 @@
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
-		this.oldPos.copy(gooPos);
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
 			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
-			gooPos.addv(gooVec);
 		}
-		
+		this.oldPos.copy(gooPos);
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
