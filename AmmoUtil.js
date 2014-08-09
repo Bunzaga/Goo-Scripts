@@ -38,6 +38,11 @@
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
 			this.ammoWorld.stepSimulation(this.fixedTime, 0);
+			for(var i = 0, ilen = entities.length; i < ilen; i++){
+				if(entities[i].rigidBodyComponent.body.getMotionState()){
+					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
+				}
+			}
 			this.accumulated -= this.fixedTime;
 		}
 		var alpha = this.accumulated / this.fixedTime;
