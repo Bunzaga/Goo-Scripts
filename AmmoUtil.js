@@ -210,10 +210,6 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
- 		quat.fromRotationMatrix(rot);
- 		this.oldPos.copy(pos);
- 		this.oldQuat.copy(quat);
- 		
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
   		this.body.getWorldTransform(ptrans);
@@ -226,16 +222,18 @@
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		pos.mul(alpha);
-		this.oldPos.mul(negAlpha);
-		pos.addv(this.oldPos);
 		if(col.offset){
 			gooVec.copy(col.offset);
 			rot.applyPost(gooVec);
-			//tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
 		}
+		pos.mul(alpha);
+		this.oldPos.mul(negAlpha);
+		pos.addv(this.oldPos);
+		
 		tc.setUpdated();
+		this.oldPos.copy(pos);
+ 		this.oldQuat.copy(quat);
   	};
   	
   	var rigidBody = new RigidBodyComponent;
