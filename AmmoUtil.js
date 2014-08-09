@@ -163,7 +163,7 @@
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
 			ctx.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
-			gooPos.subv(gooVec);
+			gooPos.addv(gooVec);
 		}
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
@@ -223,8 +223,8 @@
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
-			this.oldPos.subv(gooVec);
-			pos.subv(gooVec);
+			this.oldPos.addv(gooVec);
+			pos.addv(gooVec);
 		}
 		pos.mul(alpha);
 		this.oldPos.mul(negAlpha);
