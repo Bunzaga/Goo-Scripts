@@ -10,7 +10,6 @@
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
-		this.resolution = 1/30;
 		this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
@@ -38,7 +37,7 @@
 		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
-			this.ammoWorld.stepSimulation(this.fixedTime, 1);
+			this.ammoWorld.stepSimulation(tpf, 1, this.fixedTime);
 			for(var i = 0, ilen = entities.length; i < ilen; i++){
 				if(entities[i].rigidBodyComponent.body.getMotionState()){
 					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
@@ -173,7 +172,7 @@
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
-		this.oldQuat.copy(quat);
+		this.oldQuat.set(quat.x, quat.y, quat.z, quat.z);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
