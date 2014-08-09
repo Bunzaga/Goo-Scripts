@@ -10,7 +10,7 @@
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
-		this.resolution = this.fixedTime * 0.5;
+		this.resolution = 1/70;
 		this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
