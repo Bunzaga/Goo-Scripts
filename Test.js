@@ -1,10 +1,9 @@
 define('Test', ['goo/math/Vector3'], function(Vector3){
-  console.log(goo);
-  var Test = function(){
-    this.a = new Vector3();
-  };
-  Test.prototype.printStuff = function(){
-    console.log(this.a);
+  var Test = {};
+  var aVec = new Vector3(1,2,3);
+
+  Test.printStuff = function(){
+    console.log(aVec);
   }
   return Test;
 });
