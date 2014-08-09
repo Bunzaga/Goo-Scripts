@@ -10,6 +10,7 @@
 		args = args || {};
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
+		this.resolution = 1/100;
 		this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
@@ -37,7 +38,7 @@
 		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
-			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.fixedTime);
+			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.resolution);
 			for(var i = 0, ilen = entities.length; i < ilen; i++){
 				if(entities[i].rigidBodyComponent.body.getMotionState()){
 					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
