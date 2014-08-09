@@ -39,6 +39,11 @@
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
 			this.ammoWorld.stepSimulation(this.fixedTime, 1);
+			for(var i = 0, ilen = entities.length; i < ilen; i++){
+				if(entities[i].rigidBodyComponent.body.getMotionState()){
+					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
+				}
+			}
 			this.accumulated -= this.fixedTime;
 		}
 		var alpha = this.accumulated / this.fixedTime;
@@ -139,6 +144,7 @@
 		args = args || {};
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
+  		this.oldPos = new goo.Vector3();
   		var collider = ctx.entity.getComponent("ColliderComponent");
   		if(undefined === collider){
   			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, goo);
@@ -162,6 +168,7 @@
 		if(this.mass !== 0){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
+		this.oldPos.copy(gooPos);
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
@@ -172,6 +179,19 @@
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
+	
+	RigidBodyComponent.prototype.updatePhysics = function(ent){
+		ptrans = ptrans || new Ammo.btTransform();
+ 		pquat = pquat || new Ammo.btQuaternion();
+ 		pvec = pvec || new Ammo.btVector3();
+ 		quat = quat || new goo.Quaternion();
+ 		
+ 		ptrans = this.body.getCenterOfMassTransform();
+  		//ptrans.getBasis().getRotation(pquat);
+		//quat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
+		pvec = ptrans.getOrigin();
+		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
+	};
 	
   	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
  		var tc = ent.transformComponent;
@@ -192,9 +212,9 @@
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(
-			(pos[0] * negAlpha) + (pvec.x() * alpha),
-			(pos[1] * negAlpha) + (pvec.y() * alpha),
-			(pos[2] * negAlpha) + (pvec.z() * alpha));
+			(this.oldPos[0] * negAlpha) + (pvec.x() * alpha),
+			(this.oldPos[1] * negAlpha) + (pvec.y() * alpha),
+			(this.oldPos[2] * negAlpha) + (pvec.z() * alpha));
 		if(col.offset){
 			tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
