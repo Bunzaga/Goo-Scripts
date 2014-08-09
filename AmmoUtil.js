@@ -38,7 +38,7 @@
 		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		this.accumulated += tpf;
 		while(this.fixedTime < this.accumulated){
-			this.ammoWorld.stepSimulation(this.fixedTime, 0, this.resolution);
+			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.resolution);
 			/*for(var i = 0, ilen = entities.length; i < ilen; i++){
 				if(entities[i].rigidBodyComponent.body.getMotionState()){
 					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
