@@ -210,7 +210,7 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
- 		quat.fromRotaionMatrix(rot);
+ 		quat.fromRotationMatrix(rot);
  		this.oldPos.copy(pos);
  		this.oldQuat.copy(quat);
  		
