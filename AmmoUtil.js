@@ -125,7 +125,7 @@
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
   		}else if(md instanceof goo.Cone){
   			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
-  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * 0.5}, goo);
+  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2] * 0.5}, goo);
   			col.offset = offset;
   		}else{
   			// mesh
