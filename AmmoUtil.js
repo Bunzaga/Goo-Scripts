@@ -209,6 +209,11 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
+ 		
+ 		this.oldPos.copy(pos);
+ 		quat.fromRotationMatrix(rot);
+ 		this.oldQuat.copy(quat);
+ 		
  		//ptrans = this.body.getCenterOfMassTransform();
   		this.body.getMotionState().getWorldTransform(ptrans);
   		this.body.getWorldTransform(ptrans);
@@ -230,10 +235,6 @@
 		this.oldPos.mul(negAlpha);
 		pos.addv(this.oldPos);
 		tc.setUpdated();
-		
-		this.oldPos.copy(pos);
- 		quat.fromRotationMatrix(rot);
- 		this.oldQuat.copy(quat);
   	};
   	
   	var rigidBody = new RigidBodyComponent;
