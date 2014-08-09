@@ -189,9 +189,8 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
- 		//ptrans = this.body.getCenterOfMassTransform();
+ 		ptrans = this.body.getCenterOfMassTransform();
  		//this.body.getMotionState().getWorldTransform(ptrans);
- 		this.body.getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		
@@ -211,7 +210,7 @@
  		gooVec = gooVec || new goo.Vector3();
  		
  		//ptrans = this.body.getCenterOfMassTransform();
-  		//this.body.getMotionState().getWorldTransform(ptrans);
+  		this.body.getMotionState().getWorldTransform(ptrans);
   		this.body.getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
