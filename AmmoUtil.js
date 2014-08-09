@@ -208,7 +208,7 @@
  		gooVec = gooVec || new goo.Vector3();
  		
   		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans = this.body.getCenterOfMassTransform();
+  		//ptrans = this.body.getCenterOfMassTransform();
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
 			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
