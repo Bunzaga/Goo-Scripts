@@ -158,13 +158,13 @@
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
-		this.oldPos.copy(gooPos);
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
 			ctx.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
-			gooPos.addv(gooVec);
+			gooPos.subv(gooVec);
 		}
+		this.oldPos.copy(gooPos);
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
@@ -189,8 +189,8 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
- 		ptrans = this.body.getCenterOfMassTransform();
- 		//this.body.getMotionState().getWorldTransform(ptrans);
+ 		//ptrans = this.body.getCenterOfMassTransform();
+ 		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		
@@ -221,14 +221,13 @@
 		quat.toRotationMatrix(rot);
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		if(col.offset){
-			tc.transform.applyForwardVector(col.offset, gooVec);
-			this.oldPos.addv(gooVec);
-			pos.addv(gooVec);
-		}
 		pos.mul(alpha);
 		this.oldPos.mul(negAlpha);
 		pos.addv(this.oldPos);
+		if(col.offset){
+			tc.transform.applyForwardVector(col.offset, gooVec);
+			pos.addv(gooVec);
+		}
 		tc.setUpdated();
   	};
   	
