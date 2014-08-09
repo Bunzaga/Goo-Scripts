@@ -187,7 +187,8 @@
  		pvec = pvec || new Ammo.btVector3();
  		quat = quat || new goo.Quaternion();
  		
- 		ptrans = this.body.getCenterOfMassTransform();
+ 		//ptrans = this.body.getCenterOfMassTransform();
+ 		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.getBasis().getRotation(pquat);
 		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
 		pvec = ptrans.getOrigin();
@@ -206,7 +207,7 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
-  		//this.body.getMotionState().getWorldTransform(ptrans);
+  		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans = this.body.getCenterOfMassTransform();
   		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
