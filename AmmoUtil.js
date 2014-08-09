@@ -124,8 +124,6 @@
   		}else if(md instanceof goo.Cylinder){
   			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
   		}else if(md instanceof goo.Cone){
-  			console.log(md.height);
-  			console.log(md.radius);
   			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
   			console.log(md.height * scl[2] * 0.5);
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0] * 0.5, height:md.height * scl[2]}, goo);
@@ -161,13 +159,14 @@
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
 		var gooPos = ctx.entity.transformComponent.transform.translation;
+		this.oldPos.copy(gooPos);
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
-			ctx.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
+			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
+			//ctx.entity.transformComponent.transform.applyForwardVector(collider.offset, gooVec);
 			gooPos.subv(gooVec);
 		}
-		this.oldPos.copy(gooPos);
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
@@ -228,7 +227,9 @@
 		this.oldPos.mul(negAlpha);
 		pos.addv(this.oldPos);
 		if(col.offset){
-			tc.transform.applyForwardVector(col.offset, gooVec);
+			gooVec.copy(col.offset);
+			rot.applyPost(gooVec);
+			//tc.transform.applyForwardVector(col.offset, gooVec);
 			pos.addv(gooVec);
 		}
 		tc.setUpdated();
