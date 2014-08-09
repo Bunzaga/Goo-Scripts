@@ -126,7 +126,7 @@
   		}else if(md instanceof goo.Cone){
   			console.log(md.height);
   			console.log(md.radius);
-  			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
+  			var offset = new goo.Vector3(0, 0, md.height * scl[2] * 0.5);
   			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0] * 0.5, height:md.height * scl[2]}, goo);
   			col.offset = offset;
   		}else{
