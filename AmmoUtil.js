@@ -163,9 +163,9 @@
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
 			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
-			gooPos.subv(gooVec);
-			this.oldPos.addv(gooVec);
+			gooPos.addv(gooVec);
 		}
+		
 		var gooRot = ctx.entity.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
