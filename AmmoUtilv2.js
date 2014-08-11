@@ -44,8 +44,9 @@
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.rigidBodyComponent) {
-			console.log("Removed entity "+ent.name);
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
+			Ammo.destroy(ent.rigidBodyComponent.body);
+			ent.clearComponent("ColliderComponent");
 		}
 	};
 	
