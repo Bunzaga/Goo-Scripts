@@ -51,7 +51,7 @@
 		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i], alpha, negAlpha);
+				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
 			}
 		}
 	};
