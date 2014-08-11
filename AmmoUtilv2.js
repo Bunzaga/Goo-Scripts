@@ -138,7 +138,7 @@
   	return col;
   };
   
-  AmmoUtil.createRigidBodyComponent = function(args, ctx, _goo){
+  AmmoUtil.createRigidBodyComponent = function(args, ent, _goo){
   	goo = goo || _goo;
 	function RigidBodyComponent(){
 		args = args || {};
@@ -146,14 +146,14 @@
   		this.mass = args.mass || 0.0;
   		this.oldPos = new goo.Vector3();
   		this.oldQuat = new goo.Quaternion();
-  		var collider = ctx.entity.getComponent("ColliderComponent");
+  		var collider = ent.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, goo);
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent, goo);
   			if(null === collider){
   				console.error("Could not identify collider info!");
   				return;
   			}
-  			ctx.entity.setComponent(collider);
+  			ent.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
@@ -161,11 +161,11 @@
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
-			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
+			ent.transformComponent.transform.rotation.applyPost(gooVec);
 			gooPos.subv(gooVec);
 		}
 		this.oldPos.copy(gooPos);
-		var gooRot = ctx.entity.transformComponent.transform.rotation;
+		var gooRot = ent.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
