@@ -395,7 +395,7 @@
   		ptrans.setOrigin(pvec);
   		body.setCenterOfMassTransform(ptrans);
   	}
-  }
+  };
   AmmoUtil.setLinearVelocity = function(ent, vec3){
   	var rbc = ent.getComponent("RigidBodyComponent");
   	if(undefined !== rbc){
