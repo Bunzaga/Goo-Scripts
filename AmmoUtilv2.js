@@ -157,7 +157,7 @@
   		}
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
-		var gooPos = ctx.entity.transformComponent.transform.translation;
+		var gooPos = ent.transformComponent.transform.translation;
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
