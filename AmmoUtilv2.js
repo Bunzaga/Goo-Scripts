@@ -43,7 +43,7 @@
 		}
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
-		if (ent.rigidbodyComponent) {
+		if (ent.rigidBodyComponent) {
 			console.log("Removed entity "+ent.name);
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 		}
