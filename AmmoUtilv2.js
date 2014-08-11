@@ -36,19 +36,6 @@
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-		//this.accumulated += tpf;
-		//while(this.fixedTime < this.accumulated){
-		//	this.ammoWorld.stepSimulation(this.fixedTime, 1, this.fixedTime);
-		//	for(var i = 0, ilen = entities.length; i < ilen; i++){
-		//		if(entities[i].rigidBodyComponent.body.getMotionState()){
-		//			entities[i].rigidBodyComponent.updatePhysics(entities[i]);
-		//		}
-		//	}
-		//	this.accumulated -= this.fixedTime;
-		//}
-		//var alpha = this.accumulated / this.fixedTime;
-	  //	var negAlpha = 1 - alpha;
-		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
 				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
@@ -57,6 +44,7 @@
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.rigidbodyComponent) {
+			console.log("Removed entity "+ent.name);
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
