@@ -405,14 +405,14 @@
 		body.setLinearVelocity(pvec);
   	}
   };
-  AmmoUtil.setRotation = function(ent, vec3){
+  AmmoUtil.setRotation = function(ent, mat3x3){
   	var rbc = ent.getComponent("RigidBodyComponent");
   	if(undefined !== rbc){
   		var body = rbc.body;
 	 	ptrans = ptrans || new Ammo.btTransform();
 	 	pquat = pquat || new Ammo.btQuaternion();
 	 	quat = quat || new goo.Quaternion();
-	 	quat.fromRotationMatrix(vec3);
+	 	quat.fromRotationMatrix(mat3x3);
 	 	
 		ptrans = body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
