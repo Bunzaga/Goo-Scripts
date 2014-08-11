@@ -383,21 +383,36 @@
 	var shape = new CompoundColliderComponent();
 	return shape;
   }
+  AmmoUtil.setPosition = function(ent, vec3){
+  	var rbc = ent.getComponent("RigidBodyComponent");
+  	if(undefined !== rbc){
+  		var body = rbc.body;
+  		ptrans = ptrans || new Ammo.btTransform();
+  		pvec = pvec || new Ammo.btVector3();
+  		
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
+  		ptrans = body.getCenterOfMassTransform();
+  		ptrans.setOrigin(pvec);
+  		body.setCenterOfMassTransform(ptrans);
+  	}
+  }
   AmmoUtil.setLinearVelocity = function(ent, vec3){
   	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(rbc !== null){
+  	if(undefined !== rbc){
   		var body = rbc.body;
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
 		body.setLinearVelocity(pvec);
   	}
   };
-  AmmoUtil.setRotation = function(ent, quat){
+  AmmoUtil.setRotation = function(ent, vec3){
   	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(rbc !== null){
+  	if(undefined !== rbc){
   		var body = rbc.body;
 	 	ptrans = ptrans || new Ammo.btTransform();
 	 	pquat = pquat || new Ammo.btQuaternion();
+	 	quat = quat || new goo.Quaternion();
+	 	quat.fromRotationMatrix(vec3);
 	 	
 		ptrans = body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
