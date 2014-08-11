@@ -46,6 +46,7 @@
 		if (ent.rigidBodyComponent) {
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 			Ammo.destroy(ent.rigidBodyComponent.body);
+			Ammo.destroy(ent.colliderComponent.shape);
 			ent.clearComponent("ColliderComponent");
 		}
 	};
@@ -66,6 +67,8 @@
   	if(ammoSystem){
   		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
+  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
   			}	
