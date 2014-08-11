@@ -1,5 +1,4 @@
-(function(window, goo){
-  console.log(goo);
+(function(window){
   Test = {};
   var v = new goo.Vector3();
   Test.printStuff = function(){
@@ -8,4 +7,4 @@
   }
   var global = global || window;
   global.Test = Test;
-}(window, goo, undefined));
+}(window, undefined));
