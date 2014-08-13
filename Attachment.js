@@ -49,6 +49,7 @@
 			entity.meshRendererComponent.updateBounds(
 			entity.meshDataComponent.modelBound,
 			transformComponent.worldTransform);
+			transformComponent.transform.scale.mulv(this.offsetScale);
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
