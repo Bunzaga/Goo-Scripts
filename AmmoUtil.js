@@ -218,7 +218,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	};
   	RigidBodyComponent.prototype.setTranslation = function(vec3){
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
-  		this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans = this.body.getMotionState().getCenterOfMassTransform();
   		ptrans.setOrigin(pvec);
   		this.body.setWorldTransform(ptrans);
   		this.body.setCenterOfMassTransform(ptrans);
