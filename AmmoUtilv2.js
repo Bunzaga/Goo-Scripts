@@ -55,12 +55,12 @@ AmmoUtil.createAmmoSystem = function(args){
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.rigidBodyComponent) {
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
-			Ammo.destroy(ent.rigidBodyComponent.body);
 			Ammo.destroy(ent.colliderComponent.shape);
-			ent.clearComponent("RigidBodyComponent");
-			ent.clearComponent("ColliderComponent");
-			delete ent.rigidBodyComponent.body;
+			Ammo.destroy(ent.rigidBodyComponent.body);
 			delete ent.colliderComponent.shape;
+			delete ent.rigidBodyComponent.body;
+			ent.clearComponent("ColliderComponent");
+			ent.clearComponent("RigidBodyComponent");
 		}
 	};
 	
@@ -79,12 +79,12 @@ AmmoUtil.createAmmoSystem = function(args){
   		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
   				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
-  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
-  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
-  				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
-  				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
+  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				delete ammoSystem._activeEntities[i].colliderComponent.shape;
+  				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
+  				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
+  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   			}	
   		}
   		
