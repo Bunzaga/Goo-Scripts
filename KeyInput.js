@@ -11,7 +11,9 @@
 	}
 	KeyInput.cleanup = function(){
 		for(var i in keys){
-			KeyInput.off(Number(i));
+			if(keys.hasOwnProperty(i)){
+				KeyInput.off(Number(i));
+			}
 		}
 		document.documentElement.removeEventListener("keyup", keyUp, false);
 		document.documentElement.removeEventListener("keydown", keyDown, false);
