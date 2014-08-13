@@ -24,7 +24,9 @@
 	};
 	MouseInput.cleanup = function(ctx, goo) {
 		for(var i in buttons){
-			MouseInput.off(Number(i));
+			if(buttons.hasOwnProperty(i)){
+				MouseInput.off(Number(i));
+			}
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
@@ -63,7 +65,7 @@
 	};
 	MouseInput.off = function(btnCode, callback){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
-		if(null === callback){
+		if(undefined === callback){
 			if(eventList["MouseInput"+btn]){
 				while(null !== eventList["MouseInput"+btn].first){
 					var node = eventList["MouseInput"+btn].first;
