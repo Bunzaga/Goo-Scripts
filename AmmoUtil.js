@@ -105,10 +105,9 @@ AmmoUtil.createAmmoSystem = function(args){
   			world._systems.splice(index, 1);
   		}
   	}
-  }
+  };
   
-  AmmoUtil.getColliderFromGooShape = function(ent, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.getColliderFromGooShape = function(ent){
   	var col = null;
   	var scl = [
   		Math.abs(ent.transformComponent.transform.scale[0]),
@@ -128,30 +127,29 @@ AmmoUtil.createAmmoSystem = function(args){
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
   		if(md instanceof goo.Box){
-			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]}, goo);
+			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]});
   		}else if(md instanceof goo.Sphere){
-  			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]}, goo);
+  			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]});
   		}else if(md instanceof goo.Quad){
-  			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]}, goo);
+  			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]});
   		}else if(md instanceof goo.Cylinder){
-  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5}, goo);
+  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5});
   		}else if(md instanceof goo.Cone){
   			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
-  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]}, goo);
+  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]});
   			col.offset = offset;
   		}else{
   			// mesh
-	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent}, goo);
+	  		col = AmmoUtil.createMeshColliderComponent({scale:scl, entity:ent});
   		}
   	}
   	else{
-  		col = AmmoUtil.createCompoundColliderComponent({entity:ent}, goo);
+  		col = AmmoUtil.createCompoundColliderComponent({entity:ent});
   	}
   	return col;
   };
   
-  AmmoUtil.createRigidBodyComponent = function(args, ent, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createRigidBodyComponent = function(args, ent){
 	function RigidBodyComponent(){
 		args = args || {};
   		this.type = 'RigidBodyComponent';
@@ -171,9 +169,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		startTransform.setIdentity();
 		var gooPos = ent.transformComponent.transform.translation;
 		if(collider.offset){
-			gooVec = gooVec || new goo.Vector3();
-			gooVec.copy(collider.offset);
-			ent.transformComponent.transform.rotation.applyPost(gooVec);
+			vec.copy(collider.offset);
+			ent.transformComponent.transform.rotation.applyPost(vec);
 			gooPos.subv(gooVec);
 		}
 		this.oldPos.copy(gooPos);
@@ -183,7 +180,6 @@ AmmoUtil.createAmmoSystem = function(args){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
-		quat = quat || new goo.Quaternion();
 		quat.fromRotationMatrix(gooRot);
 		this.oldQuat.setd(quat.x, quat.y, quat.z, quat.z);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
@@ -199,20 +195,15 @@ AmmoUtil.createAmmoSystem = function(args){
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
   		var col = ent.colliderComponent;
-  		ptrans = ptrans || new Ammo.btTransform();
- 		pquat = pquat || new Ammo.btQuaternion();
- 		pvec = pvec || new Ammo.btVector3();
- 		quat = quat || new goo.Quaternion();
- 		gooVec = gooVec || new goo.Vector3();
  		
-  	this.body.getMotionState().getWorldTransform(ptrans);
+  		this.body.getMotionState().getWorldTransform(ptrans);
   		
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
 		if(col.offset){
-			gooVec.copy(col.offset);
-			rot.applyPost(gooVec);
-			pos.addv(gooVec);
+			vec.copy(col.offset);
+			rot.applyPost(vec);
+			pos.addv(vec);
 		}
 		
 		ptrans.getBasis().getRotation(pquat);
@@ -225,13 +216,31 @@ AmmoUtil.createAmmoSystem = function(args){
 		
 		tc.setUpdated();
   	};
+  	RigidBodyComponent.prototype.setTranslation = function(vec3){
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
+  		ptrans = this.body.getCenterOfMassTransform();
+  		ptrans.setOrigin(pvec);
+  		this.body.setCenterOfMassTransform(ptrans);
+  	};
+  	RigidBodyComponent.prototype.setRotation = function(mat3x3){
+  		quat.fromRotationMatrix(mat3x3);
+  		ptrans = this.body.getCenterOfMassTransform();
+		pquat = ptrans.getRotation();
+		pquat.setValue(quat.x, quat.y, quat.z, quat.w);
+		ptrans.setRotation(pquat);
+		this.body.setCenterOfMassTransform(ptrans);
+  	};
+  	RigidBodyComponent.setLinearVelocity = function(vec3){
+  		pvec.setValue(vec3.x, vec3.y, vec3.z);
+		this.body.setLinearVelocity(pvec);	
+  	};
+  };
   	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
   	
-  }
-  AmmoUtil.createBoxColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  };
+  AmmoUtil.createBoxColliderComponent = function(args){
   	function BoxColliderComponent(){
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
@@ -246,8 +255,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new BoxColliderComponent();
   	return shape;
   }
-  AmmoUtil.createSphereColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createSphereColliderComponent = function(args){
   	function SphereColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1;
@@ -259,8 +267,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new SphereColliderComponent();
   	return shape;
   };
-  AmmoUtil.createConeZColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createConeZColliderComponent = function(args){
   	function ConeZColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -274,8 +281,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new ConeZColliderComponent();
   	return shape;
   };
-  AmmoUtil.createCylinderZColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createCylinderZColliderComponent = function(args){
   	function CylinderZColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -291,8 +297,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new CylinderZColliderComponent();
   	return shape;
   };
-  AmmoUtil.createCylinderXColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createCylinderXColliderComponent = function(args){
   	function CylinderXColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -308,8 +313,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new CylinderXColliderComponent();
   	return shape;
   };
-  AmmoUtil.createCylinderYColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
+  AmmoUtil.createCylinderYColliderComponent = function(args){
   	function CylinderYColliderComponent(){
   		args = args || {};
   		args.radius = args.radius || 1.0;
@@ -325,9 +329,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	var shape = new CylinderYColliderComponent();
   	return shape;
   };
-  AmmoUtil.createMeshColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
-  	
+  AmmoUtil.createMeshColliderComponent = function(args){
   	function MeshColliderComponent() {
   		this.type = 'ColliderComponent';
   		args.scale = args.scale || args.entity.transformComponent.transform.scale;
@@ -367,9 +369,7 @@ AmmoUtil.createAmmoSystem = function(args){
 	var shape = new MeshColliderComponent();
 	return shape;
   };
-  AmmoUtil.createCompoundColliderComponent = function(args, _goo){
-  	goo = goo || _goo;
-  	
+  AmmoUtil.createCompoundColliderComponent = function(args){
   	function CompoundColliderComponent() {
 	  	this.shape = new Ammo.btCompoundShape(true);
 	  	this.type = 'ColliderComponent';
@@ -384,14 +384,12 @@ AmmoUtil.createAmmoSystem = function(args){
 				gooPos.copy(child.transformComponent.transform.translation);
 				gooPos.mulv(args.entity.transformComponent.transform.scale);
 				if(childCol.offset){
-					gooVec = gooVec || new goo.Vector3();
-					gooVec.copy(childCol.offset);
-					child.transformComponent.transform.applyForwardVector(childCol.offset, gooVec);
-					gooPos.subv(gooVec);
+					vec.copy(childCol.offset);
+					child.transformComponent.transform.applyForwardVector(childCol.offset, vec);
+					gooPos.subv(vec);
 				}
 				localTrans.setOrigin(new Ammo.btVector3(gooPos[0], gooPos[1], gooPos[2]));
 				var gooRot = child.transformComponent.transform.rotation;
-				quat = quat || new goo.Quaternion();
 				quat.fromRotationMatrix(gooRot);
 				localTrans.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 				this.shape.addChildShape(localTrans, childCol.shape);
@@ -402,46 +400,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	CompoundColliderComponent.constructor = CompoundColliderComponent;
 	var shape = new CompoundColliderComponent();
 	return shape;
-  }
-  AmmoUtil.setPosition = function(ent, vec3){
-  	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(undefined !== rbc){
-  		var body = rbc.body;
-  		ptrans = ptrans || new Ammo.btTransform();
-  		pvec = pvec || new Ammo.btVector3();
-  		
-  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
-  		ptrans = body.getCenterOfMassTransform();
-  		ptrans.setOrigin(pvec);
-  		body.setCenterOfMassTransform(ptrans);
-  	}
   };
-  AmmoUtil.setLinearVelocity = function(ent, vec3){
-  	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(undefined !== rbc){
-  		var body = rbc.body;
-  		pvec = pvec || new Ammo.btVector3();
-  		pvec.setValue(vec3.x, vec3.y, vec3.z);
-		body.setLinearVelocity(pvec);
-  	}
-  };
-  AmmoUtil.setRotation = function(ent, mat3x3){
-  	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(undefined !== rbc){
-  		var body = rbc.body;
-	 	ptrans = ptrans || new Ammo.btTransform();
-	 	pquat = pquat || new Ammo.btQuaternion();
-	 	quat = quat || new goo.Quaternion();
-	 	quat.fromRotationMatrix(mat3x3);
-	 	
-		ptrans = body.getCenterOfMassTransform();
-		pquat = ptrans.getRotation();
-		pquat.setValue(quat.x, quat.y, quat.z, quat.w);
-		ptrans.setRotation(pquat);
-		body.setCenterOfMassTransform(ptrans);
-  	}
-  };
-  
   var global = global || window;
   global.AmmoUtil = AmmoUtil;
 }(window, document, undefined));
