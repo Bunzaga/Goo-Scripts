@@ -149,6 +149,13 @@ AmmoUtil.createAmmoSystem = function(args){
   	return col;
   };
   
+  AmmoUtil.ActivationState = {
+  	ACTIVE_TAG:1,
+  	ISLAND_SLEEPING:2,
+  	WANTS_DEACTIVATION:3,
+  	DISABLE_DEACTIVATION:4,
+  	DISABLE_SIMULATION:5};
+  	
   AmmoUtil.createRigidBodyComponent = function(args, ent){
 	function RigidBodyComponent(){
 		args = args || {};
@@ -240,6 +247,15 @@ AmmoUtil.createAmmoSystem = function(args){
 		this.body.setAngularVelocity(pvec);
   	};
   	
+  	RigidBodyComponent.prototype.forceActivationState = function(state){
+  		this.body.forceActivationState((typeof(state) === 'number') ? state : AmmoUtil.ActivationState[state]);
+  	};
+  	RigidBodyComponent.prototype.setActivationState = function(state){
+  		this.body.setActivationState((typeof(state) === 'number') ? state : AmmoUtil.ActivationState[state]);
+  	};
+  	RigidBodyComponent.prototype.getActivationState = function(state){
+  		return this.body.getActivationState();
+  	};
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
   	
