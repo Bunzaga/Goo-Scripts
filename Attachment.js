@@ -20,6 +20,7 @@
         this.offsetScale = offsetScale;
         var pose = this.parent.animationComponent._skeletonPose;
         this.jointTransform = pose._globalTransforms[args.jointIndex];
+        console.log(this.offsetScale);
   }
   Attachment.prototype.remove = function(args, ctx, goo){
     this.parent.transformComponent.detachChild(args.attachee.transformComponent);
