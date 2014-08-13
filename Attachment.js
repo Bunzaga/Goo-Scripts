@@ -15,6 +15,7 @@
         this.parent.traverseUp(function(ent){
         	console.log(ent.name);
         	this.offsetScale.mulv(ent.transformComponent.transform.scale);
+        	console.log("test");
         });
         
         console.log(this.offsetScale);
@@ -39,7 +40,6 @@
 			entity.meshRendererComponent.updateBounds(
 			entity.meshDataComponent.modelBound,
 			transformComponent.worldTransform);
-			transformComponent.transform.scale.mulv(this.offsetScale);
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
