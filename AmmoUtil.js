@@ -1,27 +1,37 @@
-(function(window, document){
-  var AmmoUtil = {};
-  var pvec,ptrans,pquat;
-  var quat, goo, gooVec;
+// need to import https://kripken.github.io/ammo.js/builds/ammo.small.js
 
-  AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
-  	goo = goo || _goo;
+(function(window, document){
+var 	AmmoUtil = {};
+var 	pvec, ptrans, pquat,
+	quat, goo, gooVec;
+
+AmmoUtil.setup = function(_goo){
+	goo = _goo;
+	pvec = new Ammo.btVector3();
+	ptrans = new Ammo.btTransform();
+	pquat = new Ammo.btQuaternion();
+	quat = new goo.Quaternion();
+	vec = new goo.Vector3();
+	AmmoUtil.ready = true;
+};
+AmmoUtil.ready = false;
+
+AmmoUtil.createAmmoSystem = function(args){
 	function AmmoSystem(){
 		this.priority = Infinity;
 		args = args || {};
-		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
+		args.gravity = args.gravity || [0, -9.8, 0];
+		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
-		this.resolution = 1/60;
-		this.accumulated = 0.0;
+		//this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-		
-		pvec = pvec || new Ammo.btVector3(0,0,0);
+
 		pvec = this.ammoWorld.getGravity();
-		args.gravity = args.gravity || [0, -9.8, 0];
 		pvec.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(pvec);
 	}
@@ -35,50 +45,46 @@
 	};
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
-		//this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-		this.accumulated += tpf;
-		while(this.fixedTime < this.accumulated){
-			this.ammoWorld.stepSimulation(this.fixedTime, 1, this.resolution);
-			for(var i = 0, ilen = entities.length; i < ilen; i++){
-				if(entities[i].rigidBodyComponent.body.getMotionState()){
-					entities[i].rigidBodyComponent.updatePhysics(entities[i]);
-				}
-			}
-			this.accumulated -= this.fixedTime;
-		}
-		var alpha = this.accumulated / this.fixedTime;
-	  	var negAlpha = 1 - alpha;
-		
+		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i], alpha, negAlpha);
+				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
 			}
 		}
 	};
 	AmmoSystem.prototype.deleted = function(ent) {
-		if (ent.rigidbodyComponent) {
+		if (ent.rigidBodyComponent) {
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
+			Ammo.destroy(ent.colliderComponent.shape);
+			Ammo.destroy(ent.rigidBodyComponent.body);
+			delete ent.colliderComponent.shape;
+			delete ent.rigidBodyComponent.body;
+			ent.clearComponent("ColliderComponent");
+			ent.clearComponent("RigidBodyComponent");
 		}
 	};
 	
 	AmmoSystem.prototype.setGravity = function(x, y, z){
-		var gravity = this.ammoWorld.getGravity();
-		(typeof(x) === 'number') ? gravity.setValue(x, y, z) : gravity.setValue(x[0], x[1], x[2]);
-		this.ammoWorld.setGravity(gravity);
-		delete gravity;
+		pvec = this.ammoWorld.getGravity();
+		(typeof(x) === 'number') ? pvec.setValue(x, y, z) : gravity.setValue(x[0], x[1], x[2]);
+		this.ammoWorld.setGravity(pvec);
 	}
 	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
   }
-  AmmoUtil.destroyAmmoSystem = function(args, ctx, _goo){
-  	goo = goo || _goo;
-  	var ammoSystem = ctx.world.getSystem("AmmoSystem");
+  AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
+  	AmmoUtil.ready = false;
   	if(ammoSystem){
   		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
-  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
+  				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
+  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				delete ammoSystem._activeEntities[i].colliderComponent.shape;
+  				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
+  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   			}	
   		}
   		
@@ -87,10 +93,16 @@
   		Ammo.destroy(ammoSystem.overlappingPairCache);
   		Ammo.destroy(ammoSystem.dispatcher);
   		Ammo.destroy(ammoSystem.collisionConfiguration);
+  		
+  		delete ammoSystem.ammoWorld;
+  		delete ammoSystem.solver;
+  		delete ammoSystem.overlappingPairCache;
+  		delete ammoSystem.dispatcher;
+  		delete ammoSystem.collisionConfiguration;
 
-  		var index = ctx.world._systems.indexOf(ammoSystem);
+  		var index = world._systems.indexOf(ammoSystem);
   		if(index !== -1){
-  			ctx.world._systems.splice(index, 1);
+  			world._systems.splice(index, 1);
   		}
   	}
   }
@@ -138,7 +150,7 @@
   	return col;
   };
   
-  AmmoUtil.createRigidBodyComponent = function(args, ctx, _goo){
+  AmmoUtil.createRigidBodyComponent = function(args, ent, _goo){
   	goo = goo || _goo;
 	function RigidBodyComponent(){
 		args = args || {};
@@ -146,26 +158,26 @@
   		this.mass = args.mass || 0.0;
   		this.oldPos = new goo.Vector3();
   		this.oldQuat = new goo.Quaternion();
-  		var collider = ctx.entity.getComponent("ColliderComponent");
+  		var collider = ent.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ctx.entity, goo);
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent, goo);
   			if(null === collider){
   				console.error("Could not identify collider info!");
   				return;
   			}
-  			ctx.entity.setComponent(collider);
+  			ent.setComponent(collider);
   		}
   		var startTransform = new Ammo.btTransform();
   		startTransform.setIdentity();
-		var gooPos = ctx.entity.transformComponent.transform.translation;
+		var gooPos = ent.transformComponent.transform.translation;
 		if(collider.offset){
 			gooVec = gooVec || new goo.Vector3();
 			gooVec.copy(collider.offset);
-			ctx.entity.transformComponent.transform.rotation.applyPost(gooVec);
+			ent.transformComponent.transform.rotation.applyPost(gooVec);
 			gooPos.subv(gooVec);
 		}
 		this.oldPos.copy(gooPos);
-		var gooRot = ctx.entity.transformComponent.transform.rotation;
+		var gooRot = ent.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
 			collider.shape.calculateLocalInertia(this.mass, localInertia);
@@ -182,23 +194,7 @@
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
   	RigidBodyComponent.constructor = RigidBodyComponent;
 	
-	RigidBodyComponent.prototype.updatePhysics = function(ent){
-		ptrans = ptrans || new Ammo.btTransform();
- 		pquat = pquat || new Ammo.btQuaternion();
- 		pvec = pvec || new Ammo.btVector3();
- 		quat = quat || new goo.Quaternion();
- 		gooVec = gooVec || new goo.Vector3();
- 		
- 		//ptrans = this.body.getCenterOfMassTransform();
- 		this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans.getBasis().getRotation(pquat);
-		this.oldQuat.setd(pquat.x(), pquat.y(), pquat.z(), pquat.w());
-		
-		pvec = ptrans.getOrigin();
-		this.oldPos.setd(pvec.x(), pvec.y(), pvec.z());
-	};
-	
-  	RigidBodyComponent.prototype.updateVisuals = function(ent, alpha, negAlpha){
+  	RigidBodyComponent.prototype.updateVisuals = function(ent){
  		var tc = ent.transformComponent;
   		var pos = tc.transform.translation;
   		var rot = tc.transform.rotation;
@@ -209,19 +205,10 @@
  		quat = quat || new goo.Quaternion();
  		gooVec = gooVec || new goo.Vector3();
  		
- 		
- 		/*this.oldPos.copy(pos);
- 		quat.fromRotationMatrix(rot);
- 		this.oldQuat.copy(quat);*/
- 		
- 		//ptrans = this.body.getCenterOfMassTransform();
-  		this.body.getMotionState().getWorldTransform(ptrans);
-  		//this.body.getWorldTransform(ptrans);
+  	this.body.getMotionState().getWorldTransform(ptrans);
+  		
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
-		pos.mul(alpha);
-		this.oldPos.mul(negAlpha);
-		pos.addv(this.oldPos);
 		if(col.offset){
 			gooVec.copy(col.offset);
 			rot.applyPost(gooVec);
@@ -230,10 +217,10 @@
 		
 		ptrans.getBasis().getRotation(pquat);
 		quat.setd(
-			(this.oldQuat.x * negAlpha) + (pquat.x() * alpha),
-			(this.oldQuat.y * negAlpha) + (pquat.y() * alpha), 
-			(this.oldQuat.z * negAlpha) + (pquat.z() * alpha),
-			(this.oldQuat.w * negAlpha) + (pquat.w() * alpha));
+			pquat.x(),
+			pquat.y(), 
+			pquat.z(),
+			pquat.w());
 		quat.toRotationMatrix(rot);
 		
 		tc.setUpdated();
@@ -416,21 +403,36 @@
 	var shape = new CompoundColliderComponent();
 	return shape;
   }
+  AmmoUtil.setPosition = function(ent, vec3){
+  	var rbc = ent.getComponent("RigidBodyComponent");
+  	if(undefined !== rbc){
+  		var body = rbc.body;
+  		ptrans = ptrans || new Ammo.btTransform();
+  		pvec = pvec || new Ammo.btVector3();
+  		
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
+  		ptrans = body.getCenterOfMassTransform();
+  		ptrans.setOrigin(pvec);
+  		body.setCenterOfMassTransform(ptrans);
+  	}
+  };
   AmmoUtil.setLinearVelocity = function(ent, vec3){
   	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(rbc !== null){
+  	if(undefined !== rbc){
   		var body = rbc.body;
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
 		body.setLinearVelocity(pvec);
   	}
   };
-  AmmoUtil.setRotation = function(ent, quat){
+  AmmoUtil.setRotation = function(ent, mat3x3){
   	var rbc = ent.getComponent("RigidBodyComponent");
-  	if(rbc !== null){
+  	if(undefined !== rbc){
   		var body = rbc.body;
 	 	ptrans = ptrans || new Ammo.btTransform();
 	 	pquat = pquat || new Ammo.btQuaternion();
+	 	quat = quat || new goo.Quaternion();
+	 	quat.fromRotationMatrix(mat3x3);
 	 	
 		ptrans = body.getCenterOfMassTransform();
 		pquat = ptrans.getRotation();
