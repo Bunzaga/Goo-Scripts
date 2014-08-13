@@ -234,7 +234,6 @@ AmmoUtil.createAmmoSystem = function(args){
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
 		this.body.setLinearVelocity(pvec);	
   	};
-  };
   	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
