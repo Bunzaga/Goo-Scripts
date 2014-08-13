@@ -14,7 +14,7 @@
         	pose = parent.animationComponent._skeletonPose;
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
         	args.attachee.offsetScale = new goo.Vector3().copy(parent.transformComponent.transform.scale);
-        	args.attachee.offsetScale.div(args.attachee.transformComponent.transform.scale);
+        	args.attachee.offsetScale.mulv(args.attachee.transformComponent.transform.scale);
         	parent.transformComponent.attachChild(args.attachee.transformComponent, true);
         }
         console.log(args.attachee.offsetScale);
@@ -28,7 +28,7 @@
 		args.attachee.jointTransform.matrix.getScale(args.attachee.transformComponent.transform.scale);
 		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(args.attachee.transformComponent);
-		args.attachee.transformComponent.transform.scale.mulv(args.attachee.offsetScale);
+		args.attachee.transformComponent.transform.scale.div(args.attachee.offsetScale);
 		args.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
