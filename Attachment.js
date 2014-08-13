@@ -2,24 +2,19 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
-  	this.attachee = args.attachee;
-  	console.log(this.attachee);
-        this.parent = ctx.entity;
+        args.attachee.parent = ctx.entity;
         
         //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
         //this.parent.transformComponent.setUpdated();
         
-	var offsetScale = new goo.Vector3();
-	offsetScale.copy(args.attachee.transformComponent.transform.scale);
-	console.log(offsetScale);
-        this.parent.traverseUp(function(ent){
-        	console.log(ent.name);
-        	offsetScale.mulv(ent.transformComponent.transform.scale);
-        	console.log("test");
+	args.attachee.offsetScale = new goo.Vector3();
+	args.attachee.offsetScale.copy(args.attachee.transformComponent.transform.scale);
+
+        args.attachee.parent.traverseUp(function(ent){
+        	args.attachee.offsetScale.mulv(ent.transformComponent.transform.scale);
         });
-        this.offsetScale = offsetScale;
         var pose = null;
-        this.parent.traverseUp(function(ent){
+        args.attachee.parent.traverseUp(function(ent){
         	if(ent.animationComponent){
         		pose = ent.animationComponent._skeletonPose;
         		return false;
@@ -27,9 +22,9 @@
         });
         if(pose !== null){
         	//var pose = this.parent.animationComponent._skeletonPose;
-        	this.jointTransform = pose._globalTransforms[args.jointIndex];
+        	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
         }
-        console.log(this.offsetScale);
+        console.log(args.attachee.offsetScale);
   }
   Attachment.prototype.remove = function(args, ctx, goo){
     this.parent.transformComponent.detachChild(args.attachee.transformComponent);
@@ -49,7 +44,7 @@
 			entity.meshRendererComponent.updateBounds(
 			entity.meshDataComponent.modelBound,
 			transformComponent.worldTransform);
-			transformComponent.transform.scale.mulv(this.offsetScale);
+			transformComponent.transform.scale.mulv(args.attachee.offsetScale);
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
