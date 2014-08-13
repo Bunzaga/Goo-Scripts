@@ -27,7 +27,7 @@
 		args.attachee.jointTransform.matrix.getScale(args.attachee.transformComponent.transform.scale);
 		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(args.attachee.transformComponent);
-		args.attachee.transformComponent.transform.scale.mulv(args.attachee.offsetScale);
+		args.attachee.transformComponent.transform.scale.div(args.attachee.offsetScale);
 		args.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
