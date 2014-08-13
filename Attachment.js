@@ -31,12 +31,12 @@
     this.parent.transformComponent.detachChild(args.attachee.transformComponent);
   }
 	Attachment.prototype.update = function(args, ctx, goo){
-		this.attachee.transformComponent.transform.matrix.copy(this.jointTransform.matrix);
-		this.jointTransform.matrix.getTranslation(this.attachee.transformComponent.transform.translation);
-		this.jointTransform.matrix.getScale(this.attachee.transformComponent.transform.scale);
-		this.jointTransform.matrix.getRotation(this.attachee.transformComponent.transform.rotation);
-		Attachment.updateWorldTransform(this.attachee.transformComponent);
-		this.attachee.transformComponent._dirty = true;
+		args.attachee.transformComponent.transform.matrix.copy(args.attachee.jointTransform.matrix);
+		args.attachee.jointTransform.matrix.getTranslation(args.attachee.transformComponent.transform.translation);
+		args.attachee.jointTransform.matrix.getScale(args.attachee.transformComponent.transform.scale);
+		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
+		Attachment.updateWorldTransform(args.attachee.transformComponent);
+		args.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
