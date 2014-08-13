@@ -18,7 +18,14 @@
         	console.log("test");
         });
         this.offsetScale = offsetScale;
-        var pose = this.parent.animationComponent._skeletonPose;
+        var pose;
+        this.parent.traverseUp(function(ent){
+        	if(ent.animationComponent){
+        		pose = ent.animationComponent._skeletonPose;
+        		return false;
+        	}
+        }
+        //var pose = this.parent.animationComponent._skeletonPose;
         this.jointTransform = pose._globalTransforms[args.jointIndex];
         console.log(this.offsetScale);
   }
