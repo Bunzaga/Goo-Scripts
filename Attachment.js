@@ -18,15 +18,17 @@
         	console.log("test");
         });
         this.offsetScale = offsetScale;
-        var pose;
+        var pose = null;
         this.parent.traverseUp(function(ent){
         	if(ent.animationComponent){
         		pose = ent.animationComponent._skeletonPose;
         		return false;
         	}
+        });
+        if(pose !== null){
+        	//var pose = this.parent.animationComponent._skeletonPose;
+        	this.jointTransform = pose._globalTransforms[args.jointIndex];
         }
-        //var pose = this.parent.animationComponent._skeletonPose;
-        this.jointTransform = pose._globalTransforms[args.jointIndex];
         console.log(this.offsetScale);
   }
   Attachment.prototype.remove = function(args, ctx, goo){
