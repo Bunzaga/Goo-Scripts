@@ -1,27 +1,35 @@
 (function(window, document){
-  var AmmoUtil = {};
-  var pvec,ptrans,pquat;
-  var quat, goo, gooVec;
+var 	AmmoUtil = {};
+var 	pvec, ptrans, pquat,
+	quat, goo, gooVec;
 
-  AmmoUtil.createAmmoSystem = function(args, ctx, _goo){
-  	goo = goo || _goo;
+AmmoUtil.setup = function(_goo){
+	goo = _goo;
+	pvec = new Ammo.btVector3();
+	ptrans = new Ammo.btTransform();
+	pquat = new Ammo.btQuaternion();
+	quat = new goo.Quaternion();
+	vec = new goo.Vector3();
+	AmmoUtil.ready = true;
+};
+AmmoUtil.ready = false;
+
+AmmoUtil.createAmmoSystem = function(args){
 	function AmmoSystem(){
 		this.priority = Infinity;
 		args = args || {};
-		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent', 'TransformComponent']);
+		args.gravity = args.gravity || [0, -9.8, 0];
+		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
-		//this.resolution = 1/60;
-		this.accumulated = 0.0;
+		//this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-		
-		pvec = pvec || new Ammo.btVector3(0,0,0);
+
 		pvec = this.ammoWorld.getGravity();
-		args.gravity = args.gravity || [0, -9.8, 0];
 		pvec.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(pvec);
 	}
@@ -47,30 +55,34 @@
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
 			Ammo.destroy(ent.rigidBodyComponent.body);
 			Ammo.destroy(ent.colliderComponent.shape);
+			ent.clearComponent("RigidBodyComponent");
 			ent.clearComponent("ColliderComponent");
+			delete ent.rigidBodyComponent.body;
+			delete ent.colliderComponent.shape;
 		}
 	};
 	
 	AmmoSystem.prototype.setGravity = function(x, y, z){
-		var gravity = this.ammoWorld.getGravity();
-		(typeof(x) === 'number') ? gravity.setValue(x, y, z) : gravity.setValue(x[0], x[1], x[2]);
-		this.ammoWorld.setGravity(gravity);
-		delete gravity;
+		pvec = this.ammoWorld.getGravity();
+		(typeof(x) === 'number') ? pvec.setValue(x, y, z) : gravity.setValue(x[0], x[1], x[2]);
+		this.ammoWorld.setGravity(pvec);
 	}
 	
 	var ammoSystem = new AmmoSystem();
 	return ammoSystem;
   }
-  AmmoUtil.destroyAmmoSystem = function(args, ctx, _goo){
-  	goo = goo || _goo;
-  	var ammoSystem = ctx.world.getSystem("AmmoSystem");
+  AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
+  	AmmoUtil.ready = false;
   	if(ammoSystem){
   		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
+  				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
+  				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
+  				delete ammoSystem._activeEntities[i].colliderComponent.shape;
   			}	
   		}
   		
@@ -79,10 +91,16 @@
   		Ammo.destroy(ammoSystem.overlappingPairCache);
   		Ammo.destroy(ammoSystem.dispatcher);
   		Ammo.destroy(ammoSystem.collisionConfiguration);
+  		
+  		delete ammoSystem.ammoWorld;
+  		delete ammoSystem.solver;
+  		delete ammoSystem.overlappingPairCache;
+  		delete ammoSystem.dispatcher;
+  		delete ammoSystem.collisionConfiguration;
 
-  		var index = ctx.world._systems.indexOf(ammoSystem);
+  		var index = world._systems.indexOf(ammoSystem);
   		if(index !== -1){
-  			ctx.world._systems.splice(index, 1);
+  			world._systems.splice(index, 1);
   		}
   	}
   }
