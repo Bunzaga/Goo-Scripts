@@ -230,7 +230,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		ptrans.setRotation(pquat);
 		this.body.setCenterOfMassTransform(ptrans);
   	};
-  	RigidBodyComponent.setLinearVelocity = function(vec3){
+  	RigidBodyComponent.prototype.setLinearVelocity = function(vec3){
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
 		this.body.setLinearVelocity(pvec);	
   	};
