@@ -7,10 +7,9 @@
 	
 	var MouseInput = {};
 	MouseInput.ready = false;
-	MouseInput.setup = function(args, ctx, goo){
+	MouseInput.setup = function(ctx, goo){
 		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector3();
-		//MouseInput.delta = new goo.Vector3();
 		MouseInput.old = new goo.Vector3();
 		MouseInput.position = new goo.Vector3();
 		MouseInput.wheelDelta = 0;
@@ -19,22 +18,18 @@
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
-		//document.documentElement.addEventListener("mousewheel", mouseWheel, false);
-		//document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
-	MouseInput.cleanup = function(args, ctx, goo) {
+	MouseInput.cleanup = function(ctx, goo) {
 		for(var i in buttons){
-			MouseInput.unbindAll(Number(i));
+			MouseInput.off(Number(i));
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
 		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
-		//document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
-		//document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
@@ -43,7 +38,7 @@
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		return buttons[btn];
 	}
-	MouseInput.bind = function(btnCode, callback){
+	MouseInput.on = function(btnCode, callback){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		buttons[btn] = false;
 		if(callback){
@@ -66,13 +61,21 @@
 		}
 		return MouseInput;
 	};
-	MouseInput.unbind = function(btnCode, callback){
+	MouseInput.off = function(btnCode, callback){
+		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		if(null === callback){
-			console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
-			MouseInput.unbindAll(btnCode);
+			if(eventList["MouseInput"+btn]){
+				while(null !== eventList["MouseInput"+btn].first){
+					var node = eventList["MouseInput"+btn].first;
+					eventList["MouseInput"+btn].first = node.next;
+					node.previous = null;
+					node.next = null;
+				}
+				eventList["MouseInput"+btn].last = null;
+				delete eventList["MouseInput"+btn];
+			}
 			return MouseInput;
 		}
-		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		if(undefined !== buttons[btn]){
 			if(typeof callback === 'function'){
 				var node = eventList["MouseInput"+btn].first;
@@ -100,20 +103,6 @@
 					delete eventList["MouseInput"];
 				}
 			}
-		}
-		return MouseInput;
-	};
-	MouseInput.unbindAll = function(btnCode){
-		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
-		if(eventList["MouseInput"+btn]){
-			while(null !== eventList["MouseInput"+btn].first){
-				var node = eventList["MouseInput"+btn].first;
-				eventList["MouseInput"+btn].first = node.next;
-				node.previous = null;
-				node.next = null;
-			}
-			eventList["MouseInput"+btn].last = null;
-			delete eventList["MouseInput"+btn];
 		}
 		return MouseInput;
 	};
