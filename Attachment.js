@@ -3,12 +3,9 @@
   
   Attachment.prototype.attach = function(args, ctx, goo){
         ctx.parent = ctx.entity.transformComponent.parent.entity;
-        //ctx.parent = ctx.parent.entity;
-        //console.log("ctx.parent");
-        //console.log(ctx.parent);
-
-        ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent, true);
-        ctx.parent.transformComponent.setUpdated();
+        
+        //ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
+        //ctx.parent.transformComponent.setUpdated();
 
         var pose = ctx.parent.animationComponent._skeletonPose;
         ctx.jointTransform = pose._globalTransforms[args.jointIndex];
