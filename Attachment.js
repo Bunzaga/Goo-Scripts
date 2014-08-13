@@ -29,7 +29,7 @@
 		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(args.attachee.transformComponent);
 		console.log(ctx.entity.transformComponent.transform.scale);
-		//args.attachee.transformComponent.transform.scale.mulv(ctx.entity.transformComponent.transform.scale);
+		args.attachee.transformComponent.transform.scale.mulv(ctx.entity.transformComponent.transform.scale);
 		args.attachee.transformComponent.transform.scale.mulv(args.attachee.transformComponent.transform.scale);
 		args.attachee.transformComponent._dirty = true;
 	}
