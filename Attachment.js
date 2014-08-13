@@ -9,12 +9,12 @@
         //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
         //this.parent.transformComponent.setUpdated();
         
-	this.offsetScale = new goo.Vector3();
-	this.offsetScale.copy(args.attachee.transformComponent.transform.scale);
-	console.log(this.offsetScale);
+	var offsetScale = new goo.Vector3();
+	offsetScale.copy(args.attachee.transformComponent.transform.scale);
+	console.log(offsetScale);
         this.parent.traverseUp(function(ent){
         	console.log(ent.name);
-        	this.offsetScale.mulv(ent.transformComponent.transform.scale);
+        	offsetScale.mulv(ent.transformComponent.transform.scale);
         	console.log("test");
         });
         
