@@ -18,7 +18,7 @@ AmmoUtil.ready = false;
 
 AmmoUtil.createAmmoSystem = function(args){
 	function AmmoSystem(){
-		this.priority = Infinity;
+		this.priority = -Infinity;
 		args = args || {};
 		args.gravity = args.gravity || [0, -9.8, 0];
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
