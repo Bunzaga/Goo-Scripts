@@ -15,7 +15,7 @@
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
         	args.attachee.offsetScale = new goo.Vector3().copy(parent.transformComponent.transform.scale);
         	args.attachee.offsetScale.mulv(args.attachee.transformComponent.transform.scale);
-        	parent.transformComponent.attachChild(args.attachee.transformComponent);
+        	//parent.transformComponent.attachChild(args.attachee.transformComponent);
         }
         console.log(args.attachee.offsetScale);
   }
