@@ -2,28 +2,29 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
-        ctx.parent = ctx.entity.transformComponent.parent.entity;
+  	this.attachee = args.attachee;
+        this.parent = ctx.entity.transformComponent.parent.entity;
         
-        ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
-        ctx.parent.transformComponent.setUpdated();
+        this.parent.transformComponent.attachChild(this.attachee.transformComponent);
+        this.parent.transformComponent.setUpdated();
         
 	this.offsetScale = new goo.Vector3();
         ctx.entity.traverseUp(function(ent){
         	this.offsetScale.mulv(ent.transformComponent.transform.scale);
         })
-        var pose = ctx.parent.animationComponent._skeletonPose;
-        ctx.jointTransform = pose._globalTransforms[args.jointIndex];
+        var pose = this.parent.animationComponent._skeletonPose;
+        this.jointTransform = pose._globalTransforms[args.jointIndex];
   }
   Attachment.prototype.remove = function(args, ctx, goo){
-    ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
+    this.parent.transformComponent.detachChild(args.attachee.transformComponent);
   }
 	Attachment.prototype.update = function(args, ctx, goo){
-		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
-		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
-		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
-		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
-		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
-		ctx.attachee.transformComponent._dirty = true;
+		this.attachee.transformComponent.transform.matrix.copy(this.jointTransform.matrix);
+		this.jointTransform.matrix.getTranslation(this.attachee.transformComponent.transform.translation);
+		this.jointTransform.matrix.getScale(this.attachee.transformComponent.transform.scale);
+		this.jointTransform.matrix.getRotation(this.attachee.transformComponent.transform.rotation);
+		Attachment.updateWorldTransform(this.attachee.transformComponent);
+		this.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
@@ -39,17 +40,6 @@
 			Attachment.updateWorldTransform(transformComponent.children[i]);
 		}
 	}
-  
-  
-  Attachment.parameters = [
-    {
-	name: 'Joint',
-	key: 'jointIndex',
-	type: 'int',
-	control: 'jointSelector',
-	default: -1
-	}];
-
   var global = global || window;
   global.Attachment = Attachment;
 }(window, document, undefined));
