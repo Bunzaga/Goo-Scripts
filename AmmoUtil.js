@@ -256,6 +256,15 @@ AmmoUtil.createAmmoSystem = function(args){
   	RigidBodyComponent.prototype.getActivationState = function(state){
   		return this.body.getActivationState();
   	};
+  	RigidBodyComponent.prototype.setLinearFactor = function(vec3){
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
+  		this.body.setLinearFactor(pvec);
+  	};
+  	RigidBodyComponent.prototype.setAngularFactor = function(vec3){
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
+  		this.body.setAngularFactor(pvec);	
+  	};
+  	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
   	
