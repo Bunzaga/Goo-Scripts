@@ -11,7 +11,7 @@
 	offsetScale.copy(args.attachee.transformComponent.transform.scale);
 
         args.attachee.parent.traverseUp(function(ent){
-        	offsetScale.mulv(ent.transformComponent.transform.scale);
+        	offsetScale.div(ent.transformComponent.transform.scale);
         });
         var pose = null;
         args.attachee.parent.traverseUp(function(ent){
