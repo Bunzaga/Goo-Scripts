@@ -5,8 +5,8 @@
   	this.attachee = args.attachee;
         this.parent = ctx.entity.transformComponent.parent.entity;
         
-        //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
-        //this.parent.transformComponent.setUpdated();
+        this.parent.transformComponent.attachChild(this.attachee.transformComponent);
+        this.parent.transformComponent.setUpdated();
         
 	this.offsetScale = new goo.Vector3();
         ctx.entity.traverseUp(function(ent){
