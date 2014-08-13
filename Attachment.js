@@ -4,8 +4,8 @@
   Attachment.prototype.attach = function(args, ctx, goo){
         args.attachee.parent = ctx.entity;
         
-        //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
-        //this.parent.transformComponent.setUpdated();
+        ctx.entity.transformComponent.attachChild(args.attachee.transformComponent);
+       	ctx.entity.parent.transformComponent.setUpdated();
         
 	var offsetScale = new goo.Vector3();
 	offsetScale.copy(args.attachee.transformComponent.transform.scale);
