@@ -2,28 +2,19 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
-        args.attachee.parent = ctx.entity;
-        
-        ctx.entity.transformComponent.attachChild(args.attachee.transformComponent);
-       	ctx.entity.parent.transformComponent.setUpdated();
-        
-	var offsetScale = new goo.Vector3();
-	offsetScale.copy(args.attachee.transformComponent.transform.scale);
 
-        args.attachee.parent.traverseUp(function(ent){
-        	offsetScale.div(ent.transformComponent.transform.scale);
-        });
-        var pose = null;
-        args.attachee.parent.traverseUp(function(ent){
+        var parent = null;
+        ctx.entity.traverseUp(function(ent){
         	if(ent.animationComponent){
-        		pose = ent.animationComponent._skeletonPose;
+        		parent = ent;
         		return false;
         	}
         });
-        if(pose !== null){
-        	//var pose = this.parent.animationComponent._skeletonPose;
+        if(parent !== null){
+        	pose = parent.animationComponent._skeletonPose;
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
-        	args.attachee.offsetScale = offsetScale;
+        	args.attachee.offsetScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
+        	args.attachee.offsetScale.div(parent.transformComponent.transform.scale);
         }
         console.log(args.attachee.offsetScale);
   }
