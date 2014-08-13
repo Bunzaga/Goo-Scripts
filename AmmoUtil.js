@@ -221,6 +221,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		this.body.getMotionState().getWorldTransform(ptrans);
   		ptrans.setOrigin(pvec);
   		this.body.setCenterOfMassTransform(ptrans);
+  		this.body.getMotionState().setWorldTransform(ptrans);
   	};
   	RigidBodyComponent.prototype.setRotation = function(mat3x3){
   		quat.fromRotationMatrix(mat3x3);
