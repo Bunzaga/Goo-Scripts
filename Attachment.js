@@ -15,11 +15,12 @@
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
         	args.attachee.offsetScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
         	args.attachee.offsetScale.mulv(parent.transformComponent.transform.scale);
+        	parent.transformComponent.attachChild(args.attachee.transformComponent);
         }
         console.log(args.attachee.offsetScale);
   }
   Attachment.prototype.remove = function(args, ctx, goo){
-    this.parent.transformComponent.detachChild(args.attachee.transformComponent);
+    args.parent.transformComponent.detachChild(args.attachee.transformComponent);
   }
 	Attachment.prototype.update = function(args, ctx, goo){
 		args.attachee.transformComponent.transform.matrix.copy(args.attachee.jointTransform.matrix);
