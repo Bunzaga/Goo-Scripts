@@ -17,8 +17,7 @@
         	offsetScale.mulv(ent.transformComponent.transform.scale);
         	console.log("test");
         });
-        
-        console.log(this.offsetScale);
+        this.offsetScale = offsetScale;
         var pose = this.parent.animationComponent._skeletonPose;
         this.jointTransform = pose._globalTransforms[args.jointIndex];
   }
