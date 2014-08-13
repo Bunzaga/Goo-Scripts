@@ -11,8 +11,11 @@
         
 	this.offsetScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
         this.parent.traverseUp(function(ent){
+        	console.log(ent.name);
         	this.offsetScale.mulv(ent.transformComponent.transform.scale);
-        })
+        });
+        
+        console.log(this.offsetScale);
         var pose = this.parent.animationComponent._skeletonPose;
         this.jointTransform = pose._globalTransforms[args.jointIndex];
   }
