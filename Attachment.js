@@ -4,9 +4,13 @@
   Attachment.prototype.attach = function(args, ctx, goo){
         ctx.parent = ctx.entity.transformComponent.parent.entity;
         
-        //ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
-        //ctx.parent.transformComponent.setUpdated();
-
+        ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
+        ctx.parent.transformComponent.setUpdated();
+        
+	this.offsetScale = new goo.Vector3();
+        ctx.entity.traverseUp(function(ent){
+        	offsetScale.mulv(ent.transformComponent.transform.scale);
+        })
         var pose = ctx.parent.animationComponent._skeletonPose;
         ctx.jointTransform = pose._globalTransforms[args.jointIndex];
   }
@@ -28,6 +32,7 @@
 			entity.meshRendererComponent.updateBounds(
 			entity.meshDataComponent.modelBound,
 			transformComponent.worldTransform);
+			transformComponent.transform.scale.mulv(this.offsetScale);
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
