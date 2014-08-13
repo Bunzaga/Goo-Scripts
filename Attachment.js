@@ -9,7 +9,9 @@
         //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
         //this.parent.transformComponent.setUpdated();
         
-	this.offsetScale = new goo.Vector3().copy(args.attachee.transformComponent.transform.scale);
+	this.offsetScale = new goo.Vector3();
+	this.offsetScale.copy(args.attachee.transformComponent.transform.scale);
+	console.log(this.offsetScale);
         this.parent.traverseUp(function(ent){
         	console.log(ent.name);
         	this.offsetScale.mulv(ent.transformComponent.transform.scale);
