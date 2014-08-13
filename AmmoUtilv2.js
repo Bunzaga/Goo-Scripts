@@ -1,3 +1,5 @@
+// need to import https://kripken.github.io/ammo.js/builds/ammo.small.js
+
 (function(window, document){
 var 	AmmoUtil = {};
 var 	pvec, ptrans, pquat,
