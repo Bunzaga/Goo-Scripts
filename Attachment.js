@@ -14,7 +14,7 @@
         	pose = parent.animationComponent._skeletonPose;
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
         	args.attachee.offsetScale = new goo.Vector3().copy(parent.transformComponent.transform.scale);
-        	args.attachee.offsetScale.mulv(args.attachee.transformComponent.transform.scale);
+        	args.attachee.offsetScale.div(args.attachee.transformComponent.transform.scale);
         	parent.transformComponent.attachChild(args.attachee.transformComponent, true);
         }
         console.log(args.attachee.offsetScale);
