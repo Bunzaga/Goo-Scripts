@@ -7,11 +7,11 @@
         //this.parent.transformComponent.attachChild(this.attachee.transformComponent);
         //this.parent.transformComponent.setUpdated();
         
-	args.attachee.offsetScale = new goo.Vector3();
-	args.attachee.offsetScale.copy(args.attachee.transformComponent.transform.scale);
+	var offsetScale = new goo.Vector3();
+	offsetScale.copy(args.attachee.transformComponent.transform.scale);
 
         args.attachee.parent.traverseUp(function(ent){
-        	args.attachee.offsetScale.mulv(ent.transformComponent.transform.scale);
+        	offsetScale.mulv(ent.transformComponent.transform.scale);
         });
         var pose = null;
         args.attachee.parent.traverseUp(function(ent){
@@ -23,6 +23,7 @@
         if(pose !== null){
         	//var pose = this.parent.animationComponent._skeletonPose;
         	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
+        	args.attachee.offsetScale = offsetScale;
         }
         console.log(args.attachee.offsetScale);
   }
