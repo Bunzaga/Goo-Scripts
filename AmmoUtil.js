@@ -220,7 +220,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
   		ptrans = this.body.getCenterOfMassTransform();
   		ptrans.setOrigin(pvec);
-  		this.body.setCenterOfMassTransform(pvec);
+  		this.body.setCenterOfMassTransform(ptrans);
+  		//this.body.getMotionState().setWorldTransform(pvec);
   	};
   	RigidBodyComponent.prototype.setRotation = function(mat3x3){
   		quat.fromRotationMatrix(mat3x3);
