@@ -9,7 +9,7 @@
         
 	this.offsetScale = new goo.Vector3();
         ctx.entity.traverseUp(function(ent){
-        	offsetScale.mulv(ent.transformComponent.transform.scale);
+        	this.offsetScale.mulv(ent.transformComponent.transform.scale);
         })
         var pose = ctx.parent.animationComponent._skeletonPose;
         ctx.jointTransform = pose._globalTransforms[args.jointIndex];
