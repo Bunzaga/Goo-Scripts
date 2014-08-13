@@ -11,7 +11,7 @@
 	}
 	KeyInput.cleanup = function(){
 		for(var i in keys){
-			KeyInput.unbindAll(Number(i));
+			KeyInput.off(Number(i));
 		}
 		document.documentElement.removeEventListener("keyup", keyUp, false);
 		document.documentElement.removeEventListener("keydown", keyDown, false);
@@ -39,7 +39,7 @@
 		}
 		return KeyInput;
 	};
-	KeyInput.bind = function(keyCode, callback){
+	KeyInput.on = function(keyCode, callback){
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 		keys[key] = false;
 		if(callback){
@@ -61,49 +61,44 @@
 		}
 		return KeyInput;
 	};
-	KeyInput.unbind = function(keyCode, callback){
-		if(undefined === callback){
-			console.warn("KeyInput.unbind: You should pass in the callback to remove, did you mean 'KeyInput.unbindAll?");
-			KeyInput.unbindAll(keyCode);
-			return KeyInput;
-		}
+	KeyInput.off = function(keyCode, callback){
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-		var node = eventList["Key"+key].first;
-			while(node != null){
-				if(node.callback === callback){
-					break;
+		if(undefined === callback){
+			if(eventList["Key"+key]){
+				while(null !== eventList["Key"+key].first){
+					var node = eventList["Key"+key].first;
+					eventList["Key"+key].first = node.next;
+					node.previous = null;
+					node.next = null;
 				}
-				node = node.next;
-			}
-			if(node !== null){
-				if(eventList["Key"+key].first === node){
-					eventList["Key"+key].first = eventList["Key"+key].first.next;
-				}
-				if(eventList["Key"+key].last === node){
-					eventList["Key"+key].last = eventList["Key"+key].last.previous;
-				}
-				if(node.previous !== null){
-					node.previous.next = node.next;
-				}
-				if(node.next !== null ){
-					node.next.previous = node.previous;
-				}
-			}
-			if(null === eventList["Key"+key].first){
+				eventList["Key"+key].last = null;
 				delete eventList["Key"+key];
 			}
-		return KeyInput;
-	};
-	KeyInput.unbindAll = function(keyCode){
-		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
-		if(eventList["Key"+key]){
-			while(null !== eventList["Key"+key].first){
-				var node = eventList["Key"+key].first;
-				eventList["Key"+key].first = node.next;
-				node.previous = null;
-				node.next = null;
+			return KeyInput;
+		}
+		
+		var node = eventList["Key"+key].first;
+		while(node != null){
+			if(node.callback === callback){
+				break;
 			}
-			eventList["Key"+key].last = null;
+			node = node.next;
+		}
+		if(node !== null){
+			if(eventList["Key"+key].first === node){
+				eventList["Key"+key].first = eventList["Key"+key].first.next;
+			}
+			if(eventList["Key"+key].last === node){
+				eventList["Key"+key].last = eventList["Key"+key].last.previous;
+			}
+			if(node.previous !== null){
+				node.previous.next = node.next;
+			}
+			if(node.next !== null ){
+				node.next.previous = node.previous;
+			}
+		}
+		if(null === eventList["Key"+key].first){
 			delete eventList["Key"+key];
 		}
 		return KeyInput;
