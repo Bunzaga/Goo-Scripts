@@ -8,8 +8,8 @@
         this.parent.transformComponent.attachChild(this.attachee.transformComponent);
         this.parent.transformComponent.setUpdated();
         
-	this.offsetScale = new goo.Vector3();
-        ctx.entity.traverseUp(function(ent){
+	this.offsetScale = new goo.Vector3(1,1,1);
+        this.attachee.traverseUp(function(ent){
         	this.offsetScale.mulv(ent.transformComponent.transform.scale);
         })
         var pose = this.parent.animationComponent._skeletonPose;
