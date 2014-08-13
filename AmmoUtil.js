@@ -225,20 +225,18 @@ AmmoUtil.createAmmoSystem = function(args){
   	};
   	RigidBodyComponent.prototype.setTranslation = function(vec3){
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
-		this.body.getMotionState().getWorldTransform(ptrans);
-		ptrans.setIdentity();
-		ptrans.setOrigin(pvec);
-		this.body.getMotionState().setWorldTransform(ptrans);
-		this.body.setCenterOfMassTransform(ptrans);
+		var trans = this.body.getWorldTransform();
+		trans.setOrigin(pvec);
+		this.body.getMotionState().setWorldTransform(trans);
+		this.body.setCenterOfMassTransform(trans);
   	};
   	RigidBodyComponent.prototype.setRotation = function(mat3x3){
   		quat.fromRotationMatrix(mat3x3);
   		pquat.setValue(quat.x, quat.y, quat.z, quat.w);
-		this.body.getMotionState().getWorldTransform(ptrans);
-		ptrans.setIdentity();
-		ptrans.getBasis().setRotation(pquat);
-		this.body.getMotionState().setWorldTransform(ptrans);
-		this.body.setCenterOfMassTransform(ptrans);
+		var trans = this.body.getWorldTransform();
+		trans.getBasis().setRotation(pquat);
+		this.body.getMotionState().setWorldTransform(trans);
+		this.body.setCenterOfMassTransform(trans);
   	};
   	RigidBodyComponent.prototype.setLinearVelocity = function(vec3){
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
