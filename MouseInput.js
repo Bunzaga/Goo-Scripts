@@ -2,7 +2,7 @@
 (function(window, document, undefined){
 	var eventList = {};
 	var buttons = {};
-	var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
+	var stringToCode = {"Left":1, "Right":2, "Middle":4, "Wheel":8, "Move":16};
 	var domElement = undefined;
 	
 	var MouseInput = {};
