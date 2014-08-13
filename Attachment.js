@@ -36,6 +36,7 @@
 		args.attachee.jointTransform.matrix.getScale(args.attachee.transformComponent.transform.scale);
 		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
 		Attachment.updateWorldTransform(args.attachee.transformComponent);
+		args.attachee.transformComponent.transform.scale.mulv(args.attachee.offsetScale);
 		args.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
@@ -45,7 +46,6 @@
 			entity.meshRendererComponent.updateBounds(
 			entity.meshDataComponent.modelBound,
 			transformComponent.worldTransform);
-			transformComponent.transform.scale.mulv(args.attachee.offsetScale);
 		}
 		
 		for (var i = 0; i < transformComponent.children.length; i++) {
