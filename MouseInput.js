@@ -40,7 +40,7 @@
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		return buttons[btn];
 	}
-	MouseInput.on = function(btnCode, callback){
+	MouseInput.bind = function(btnCode, callback){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		buttons[btn] = false;
 		if(callback){
