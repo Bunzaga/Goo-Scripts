@@ -203,7 +203,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		var rot = tc.transform.rotation;
   		var col = ent.colliderComponent;
  		
-  		this.body.getMotionState().getWorldTransform(ptrans);
+  		//this.body.getMotionState().getWorldTransform(ptrans);
+  		ptrans = this.body.getCenterOfMassTransform();
   		
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
