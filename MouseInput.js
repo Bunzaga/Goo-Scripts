@@ -7,7 +7,7 @@
 	
 	var MouseInput = {};
 	MouseInput.ready = false;
-	MouseInput.setup = function(ctx, goo){
+	MouseInput.setup = function(args, ctx, goo){
 		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector3();
 		MouseInput.old = new goo.Vector3();
@@ -22,7 +22,7 @@
 		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
-	MouseInput.cleanup = function(ctx) {
+	MouseInput.cleanup = function(args, ctx) {
 		for(var i in buttons){
 			if(buttons.hasOwnProperty(i)){
 				MouseInput.off(Number(i));
