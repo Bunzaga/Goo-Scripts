@@ -30,7 +30,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		this.overlappingPairCache = new Ammo.btDbvtBroadphase();
 		this.solver = new Ammo.btSequentialImpulseConstraintSolver();
 		this.ammoWorld = new Ammo.btDiscreteDynamicsWorld(this.dispatcher, this.overlappingPairCache, this.solver, this.collisionConfiguration);
-
+	
 		pvec = this.ammoWorld.getGravity();
 		pvec.setValue(args.gravity[0], args.gravity[1], args.gravity[2]);
 		this.ammoWorld.setGravity(pvec);
@@ -170,8 +170,8 @@ AmmoUtil.CollisionFlags = {
 		args = args || {};
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
-  		this.oldPos = new goo.Vector3();
-  		this.oldQuat = new goo.Quaternion();
+  	//	this.oldPos = new goo.Vector3();
+  	//	this.oldQuat = new goo.Quaternion();
   		var collider = ent.getComponent("ColliderComponent");
   		if(undefined === collider){
   			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent, goo);
@@ -189,7 +189,7 @@ AmmoUtil.CollisionFlags = {
 			ent.transformComponent.transform.rotation.applyPost(vec);
 			gooPos.subv(vec);
 		}
-		this.oldPos.copy(gooPos);
+	//	this.oldPos.copy(gooPos);
 		var gooRot = ent.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
