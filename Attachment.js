@@ -2,36 +2,27 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
+        ctx.parent = ctx.entity.transformComponent.parent.entity;
+        //ctx.parent = ctx.parent.entity;
+        //console.log("ctx.parent");
+        //console.log(ctx.parent);
 
-        var parent = null;
-        ctx.entity.traverseUp(function(ent){
-        	if(ent.animationComponent){
-        		parent = ent;
-        		return false;
-        	}
-        });
-        if(parent !== null){
-        	pose = parent.animationComponent._skeletonPose;
-        	args.attachee.jointTransform = pose._globalTransforms[args.jointIndex];
-        	//args.attachee.offsetScale = new goo.Vector3().copy(parent.transformComponent.transform.scale);
-        	//args.attachee.offsetScale.mulv(args.attachee.transformComponent.transform.scale);
-        	parent.transformComponent.attachChild(args.attachee.transformComponent, true);
-        }
-        //console.log(args.attachee.offsetScale);
+        ctx.parent.transformComponent.attachChild(ctx.attachee.transformComponent);
+        ctx.parent.transformComponent.setUpdated();
+
+        var pose = ctx.parent.animationComponent._skeletonPose;
+        ctx.jointTransform = pose._globalTransforms[args.jointIndex];
   }
   Attachment.prototype.remove = function(args, ctx, goo){
-    args.parent.transformComponent.detachChild(args.attachee.transformComponent);
+    ctx.parent.transformComponent.detachChild(ctx.attachee.transformComponent);
   }
 	Attachment.prototype.update = function(args, ctx, goo){
-		args.attachee.transformComponent.transform.matrix.copy(args.attachee.jointTransform.matrix);
-		args.attachee.jointTransform.matrix.getTranslation(args.attachee.transformComponent.transform.translation);
-		args.attachee.jointTransform.matrix.getScale(args.attachee.transformComponent.transform.scale);
-		args.attachee.jointTransform.matrix.getRotation(args.attachee.transformComponent.transform.rotation);
-		Attachment.updateWorldTransform(args.attachee.transformComponent);
-		console.log(ctx.entity.transformComponent.transform.scale);
-		args.attachee.transformComponent.transform.scale.mulv(ctx.entity.transformComponent.transform.scale);
-		args.attachee.transformComponent.transform.scale.mulv(args.attachee.transformComponent.transform.scale);
-		args.attachee.transformComponent._dirty = true;
+		ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+		ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
+		ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
+		ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
+		Attachment.updateWorldTransform(ctx.attachee.transformComponent);
+		ctx.attachee.transformComponent._dirty = true;
 	}
 	Attachment.updateWorldTransform = function(transformComponent){
 		transformComponent.updateWorldTransform();
@@ -46,6 +37,17 @@
 			Attachment.updateWorldTransform(transformComponent.children[i]);
 		}
 	}
+  
+  
+  Attachment.parameters = [
+    {
+	name: 'Joint',
+	key: 'jointIndex',
+	type: 'int',
+	control: 'jointSelector',
+	default: -1
+	}];
+
   var global = global || window;
   global.Attachment = Attachment;
 }(window, document, undefined));
