@@ -227,8 +227,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
 		var trans = this.body.getWorldTransform();
 		trans.setOrigin(pvec);
-		//this.body.getMotionState().setWorldTransform(trans);
-		this.body.setCenterOfMassTransform(trans);
+		this.body.getMotionState().setWorldTransform(trans);
+		//this.body.setCenterOfMassTransform(trans);
 		
 		//this.body.getMotionState().getWorldTransform(ptrans);
 		//ptrans.setOrigin(pvec);
