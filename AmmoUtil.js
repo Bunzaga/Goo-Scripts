@@ -197,7 +197,7 @@ AmmoUtil.CollisionFlags = {
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat.fromRotationMatrix(gooRot);
-		this.oldQuat.setd(quat.x, quat.y, quat.z, quat.z);
+	//	this.oldQuat.setd(quat.x, quat.y, quat.z, quat.z);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
