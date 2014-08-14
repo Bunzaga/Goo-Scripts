@@ -2,7 +2,7 @@
 (function(window, document, undefined){
 	var eventList = {};
 	var buttons = {};
-	var stringToCode = {"Left":1, "Right":2, "middle":4, "Wheel":8, "Move":16};
+	var stringToCode = {"left":1, "right":2, "middle":4, "wheel":8, "move":16};
 	var domElement = undefined;
 	
 	var MouseInput = {};
@@ -10,6 +10,7 @@
 	MouseInput.setup = function(args, ctx, goo){
 		domElement = ctx.domElement;
 		MouseInput.movement = new goo.Vector3();
+		//MouseInput.delta = new goo.Vector3();
 		MouseInput.old = new goo.Vector3();
 		MouseInput.position = new goo.Vector3();
 		MouseInput.wheelDelta = 0;
@@ -18,20 +19,22 @@
 		document.documentElement.addEventListener('mousedown', mouseDown, false);
 		document.documentElement.addEventListener('mouseup', mouseUp, false);
 		document.documentElement.addEventListener('mousemove', mouseMove, false);
+		//document.documentElement.addEventListener("mousewheel", mouseWheel, false);
+		//document.documentElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
 	};
-	MouseInput.cleanup = function(args, ctx) {
+	MouseInput.cleanup = function(args, ctx, goo) {
 		for(var i in buttons){
-			if(buttons.hasOwnProperty(i)){
-				MouseInput.off(Number(i));
-			}
+			MouseInput.unbindAll(Number(i));
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
 		document.documentElement.removeEventListener('mousemove', mouseMove, false);
 		document.documentElement.removeEventListener('mousedown', mouseDown, false);
 		document.documentElement.removeEventListener('mouseup', mouseUp, false);
+		//document.documentElement.removeEventListener("mousewheel", mouseWheel, false);
+		//document.documentElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
@@ -63,21 +66,13 @@
 		}
 		return MouseInput;
 	};
-	MouseInput.off = function(btnCode, callback){
-		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
-		if(undefined === callback){
-			if(eventList["MouseInput"+btn]){
-				while(null !== eventList["MouseInput"+btn].first){
-					var node = eventList["MouseInput"+btn].first;
-					eventList["MouseInput"+btn].first = node.next;
-					node.previous = null;
-					node.next = null;
-				}
-				eventList["MouseInput"+btn].last = null;
-				delete eventList["MouseInput"+btn];
-			}
+	MouseInput.unbind = function(btnCode, callback){
+		if(null === callback){
+			console.warn("MouseInput.unbind: You should pass in the callback to remove, did you mean 'MouseInput.unbindAll ?");
+			MouseInput.unbindAll(btnCode);
 			return MouseInput;
 		}
+		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		if(undefined !== buttons[btn]){
 			if(typeof callback === 'function'){
 				var node = eventList["MouseInput"+btn].first;
@@ -105,6 +100,20 @@
 					delete eventList["MouseInput"];
 				}
 			}
+		}
+		return MouseInput;
+	};
+	MouseInput.unbindAll = function(btnCode){
+		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
+		if(eventList["MouseInput"+btn]){
+			while(null !== eventList["MouseInput"+btn].first){
+				var node = eventList["MouseInput"+btn].first;
+				eventList["MouseInput"+btn].first = node.next;
+				node.previous = null;
+				node.next = null;
+			}
+			eventList["MouseInput"+btn].last = null;
+			delete eventList["MouseInput"+btn];
 		}
 		return MouseInput;
 	};
