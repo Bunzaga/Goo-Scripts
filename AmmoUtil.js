@@ -149,12 +149,21 @@ AmmoUtil.createAmmoSystem = function(args){
   	return col;
   };
   
-  AmmoUtil.ActivationState = {
+AmmoUtil.ActivationState = {
   	ACTIVE_TAG:1,
   	ISLAND_SLEEPING:2,
   	WANTS_DEACTIVATION:3,
   	DISABLE_DEACTIVATION:4,
   	DISABLE_SIMULATION:5};
+  	
+AmmoUtil.CollisionFlags = {
+	CF_STATIC_OBJECT:1,
+	CF_KINEMATIC_OBJECT:2,
+	CF_NO_CONTACT_RESPONSE:4,
+	CF_CUSTOM_MATERIAL_CALLBACK:8,
+	CF_CHARACTER_OBJECT:16,
+	CF_DISABLE_VISUALIZE_OBJECT:32,
+	CF_DISABLE_SPU_COLLISION_PROCESSING:64};
   	
   AmmoUtil.createRigidBodyComponent = function(args, ent){
 	function RigidBodyComponent(){
