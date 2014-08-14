@@ -203,8 +203,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		var rot = tc.transform.rotation;
   		var col = ent.colliderComponent;
  		
-  		//this.body.getMotionState().getWorldTransform(ptrans);
-  		ptrans = this.body.getCenterOfMassTransform();
+  		this.body.getMotionState().getWorldTransform(ptrans);
+  		//ptrans = this.body.getCenterOfMassTransform();
   		
 		pvec = ptrans.getOrigin();
 		pos.setd(pvec.x(), pvec.y(), pvec.z());
@@ -229,12 +229,6 @@ AmmoUtil.createAmmoSystem = function(args){
 		var trans = this.body.getWorldTransform();
 		trans.setOrigin(pvec);
 		this.body.getMotionState().setWorldTransform(trans);
-		//this.body.setCenterOfMassTransform(trans);
-		
-		//this.body.getMotionState().getWorldTransform(ptrans);
-		//ptrans.setOrigin(pvec);
-		//this.body.getMotionState().setWorldTransform(ptrans);
-		//this.body.setCenterOfMassTransform(ptrans);
   	};
   	RigidBodyComponent.prototype.setRotation = function(mat3x3){
   		quat.fromRotationMatrix(mat3x3);
