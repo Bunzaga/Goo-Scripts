@@ -178,7 +178,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		if(collider.offset){
 			vec.copy(collider.offset);
 			ent.transformComponent.transform.rotation.applyPost(vec);
-			gooPos.subv(gooVec);
+			gooPos.subv(vec);
 		}
 		this.oldPos.copy(gooPos);
 		var gooRot = ent.transformComponent.transform.rotation;
