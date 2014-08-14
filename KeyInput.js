@@ -41,7 +41,7 @@
 		}
 		return KeyInput;
 	};
-	KeyInput.on = function(keyCode, callback){
+	KeyInput.bind = function(keyCode, callback){
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 		keys[key] = false;
 		if(callback){
