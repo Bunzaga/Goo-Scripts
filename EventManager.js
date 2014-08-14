@@ -1,9 +1,10 @@
 // requires the NodeList object: https://bunzaga.github.io/Goo-Scripts/NodeList.js
 "use strict";
-(function(window, document, undefined){
+(function(window, document){
 	var EventManager = {};
 	var eventList = {};
-	EventManager.on = function(e, callback, priority){
+
+	EventManager.bind = function(e, callback, priority){
 		if(undefined === eventList[e]){
 			eventList[e] = new NodeList();
 		}
@@ -17,13 +18,14 @@
 	      }
 	      return EventManager;
 	};
-	EventManager.off = function(e, callback){
+	EventManager.unbind = function(e, callback){
+		if(null === callback){
+			console.warn("EventManager.unbind: You should pass in the callback to remove as the second parameter, calling EventManger.unbindAll instead.");
+			EventManager.unbindAll(e);
+			return EventManager;
+		}
 		if(undefined !== eventList[e]){
-			if(undefined === callback){
-		    		eventList[e].clear();
-				delete eventList[e];
-				return EventManager;
-			}
+			
 		        var node = eventList[e].first;
 		        while(node != null){
 		        	if(node.callback === callback){
@@ -40,13 +42,20 @@
 		}
 		return EventManager;
 	};
+    EventManager.unbindAll = function(e){
+    	if(undefined !== eventList[e]){
+    		eventList[e].clear();
+		delete eventList[e];
+	}
+	return EventManager;
+    };
 	EventManager.emit = function(){
 		var e = [].shift.apply(arguments);
 		if(undefined === e){console.error("EventManager: You just pass in an event as the first parameter."); return;}
 		if(undefined !== eventList[e]){
 			var n = eventList[e].first;
 			while(n !== null){
-				n.callback.apply(null, arguments);
+				n.callback(arguments);
 				n = n.next;
 			}
 		}
@@ -54,9 +63,9 @@
 	};
 	EventManager.cleanup = function(){
 		for(var i in eventList){
-			EventManager.off(i);
+			EventManager.unbindAll(i);
 		}
 	};
 	var global = global || window;
 	global.EventManager = EventManager;
-}(window, document));
+}(window, document, undefined));
