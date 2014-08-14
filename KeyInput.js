@@ -1,6 +1,6 @@
 (function(window, document, undefined){
 	var keys = {};
-	var stringToCode = {"Backspace":8,"Tab":9,"Enter":13,"Shift":16,"Ctrl":17,"Alt":18,"Pause":19,"Caps":20,"Esc":27,"Escape":27,"space":32,"Page Up":33,"Page Down":34,"End":35,"Home":36,"Left":37,"Up":38,"Right":39,"Down":40,"Insert":45,"Delete":46,"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"A":65,"B":66,"C":67,"D":68,"E":69,"F":70,"G":71,"H":72,"I":73,"J":74,"K":75,"L":76,"M":77,"N":78,"O":79,"P":80,"Q":81,"R":82,"S":83,"T":84,"U":85,"V":86,"W":87,"X":88,"Y":89,"Z":90,"Windows":91,"Right Click":93,"Num0":96,"Num1":97,"Num2":98,"Num3":99,"Num4":100,"Num5":101,"Num6":102,"Num7":103,"Num8":104,"Num9":105,"Num*":106,"Num+":107,"Num-":109,"Num.":110,"Num/":111,"F1":112,"F2":113,"F3":114,"F4":115,"F5":116,"F6":117,"F7":118,"F8":119,"F9":120,"F10":121,"F11":122,"F12":123,"Num Lock":144,"Scroll Lock":145,"My Computer":182,"My Calculator":183,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222};
+	var stringToCode = {"backspace":8,"tab":9,"enter":13,"shift":16,"ctrl":17,"alt":18,"pause":19,"caps":20,"esc":27,"escape":27,"space":32,"page up":33,"page down":34,"end":35,"home":36,"left":37,"up":38,"right":39,"down":40,"insert":45,"delete":46,"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"a":65,"b":66,"c":67,"d":68,"e":69,"f":70,"g":71,"h":72,"i":73,"j":74,"k":75,"l":76,"m":77,"n":78,"o":79,"p":80,"q":81,"r":82,"s":83,"t":84,"u":85,"v":86,"w":87,"x":88,"y":89,"z":90,"windows":91,"right click":93,"num0":96,"num1":97,"num2":98,"num3":99,"num4":100,"num5":101,"num6":102,"num7":103,"num8":104,"num9":105,"num*":106,"num+":107,"num-":109,"num.":110,"num/":111,"f1":112,"f2":113,"f3":114,"f4":115,"f5":116,"f6":117,"f7":118,"f8":119,"f9":120,"f10":121,"f11":122,"f12":123,"num lock":144,"scroll lock":145,"my computer":182,"my calculator":183,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222};
 	var eventList = {};
 	var KeyInput = {};
 	KeyInput.ready = false;
@@ -11,9 +11,7 @@
 	}
 	KeyInput.cleanup = function(){
 		for(var i in keys){
-			if(keys.hasOwnProperty(i)){
-				KeyInput.off(Number(i));
-			}
+			KeyInput.unbindAll(Number(i));
 		}
 		document.documentElement.removeEventListener("keyup", keyUp, false);
 		document.documentElement.removeEventListener("keydown", keyDown, false);
@@ -63,44 +61,49 @@
 		}
 		return KeyInput;
 	};
-	KeyInput.off = function(keyCode, callback){
-		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
+	KeyInput.unbind = function(keyCode, callback){
 		if(undefined === callback){
-			if(eventList["Key"+key]){
-				while(null !== eventList["Key"+key].first){
-					var node = eventList["Key"+key].first;
-					eventList["Key"+key].first = node.next;
-					node.previous = null;
-					node.next = null;
-				}
-				eventList["Key"+key].last = null;
-				delete eventList["Key"+key];
-			}
+			console.warn("KeyInput.unbind: You should pass in the callback to remove, did you mean 'KeyInput.unbindAll?");
+			KeyInput.unbindAll(keyCode);
 			return KeyInput;
 		}
-		
+		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
 		var node = eventList["Key"+key].first;
-		while(node != null){
-			if(node.callback === callback){
-				break;
+			while(node != null){
+				if(node.callback === callback){
+					break;
+				}
+				node = node.next;
 			}
-			node = node.next;
-		}
-		if(node !== null){
-			if(eventList["Key"+key].first === node){
-				eventList["Key"+key].first = eventList["Key"+key].first.next;
+			if(node !== null){
+				if(eventList["Key"+key].first === node){
+					eventList["Key"+key].first = eventList["Key"+key].first.next;
+				}
+				if(eventList["Key"+key].last === node){
+					eventList["Key"+key].last = eventList["Key"+key].last.previous;
+				}
+				if(node.previous !== null){
+					node.previous.next = node.next;
+				}
+				if(node.next !== null ){
+					node.next.previous = node.previous;
+				}
 			}
-			if(eventList["Key"+key].last === node){
-				eventList["Key"+key].last = eventList["Key"+key].last.previous;
+			if(null === eventList["Key"+key].first){
+				delete eventList["Key"+key];
 			}
-			if(node.previous !== null){
-				node.previous.next = node.next;
+		return KeyInput;
+	};
+	KeyInput.unbindAll = function(keyCode){
+		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
+		if(eventList["Key"+key]){
+			while(null !== eventList["Key"+key].first){
+				var node = eventList["Key"+key].first;
+				eventList["Key"+key].first = node.next;
+				node.previous = null;
+				node.next = null;
 			}
-			if(node.next !== null ){
-				node.next.previous = node.previous;
-			}
-		}
-		if(null === eventList["Key"+key].first){
+			eventList["Key"+key].last = null;
 			delete eventList["Key"+key];
 		}
 		return KeyInput;
