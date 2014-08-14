@@ -192,6 +192,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
+		Ammo.destroy(rbinfo);
 		this.body = new Ammo.btRigidBody(rbInfo);
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
