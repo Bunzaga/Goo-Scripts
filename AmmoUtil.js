@@ -84,42 +84,29 @@ AmmoUtil.createAmmoSystem = function(args){
 	return ammoSystem;
   }
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
-  	console.log('destroyAmmoSystem called...');
   	if(ammoSystem){
-  		console.log('There is an ammoSystem');
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
-  			console.log(ent);
 	  		if(ent.rigidBodyComponent){
-	  			console.log('ent has a rigidBodyComponent');
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				console.log('body:');
-				console.log(body);
-				console.log('they are the same? '+(ent.rigidBodyComponent.body === body));
-				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(body.getMotionState()){
-					console.log('body has a motion state');
-					console.log(body.getMotionState());
-					//Ammo.destroy(body.getMotionState());
-					console.log('Removed motion state');
+				if(body){
+					delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+					if(body.getMotionState()){
+						//Ammo.destroy(body.getMotionState());
+					}
+					ammoSystem.ammoWorld.removeCollisionObject(body);
+				//	ammoSystem.ammoWorld.removeRigidBody(body);
+					Ammo.destroy(body);
 				}
-				ammoSystem.ammoWorld.removeCollisionObject(body);
-			//	ammoSystem.ammoWorld.removeRigidBody(body);
-				console.log('Removed rigidbody');
-				Ammo.destroy(body);
-				ent.clearComponent('RigidBodyComponent');
-				console.log(body);
+			//	ent.clearComponent('RigidBodyComponent');
 			}
 			if(ent.colliderComponent){
 				var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
-				console.log('collider');
-				console.log(collider);
-				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 				if(collider){
+					delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 					Ammo.destroy(collider);
 				}
-				console.log(collider);
-				ent.clearComponent('ColliderComponent');
+				//ent.clearComponent('ColliderComponent');
 			}
   		}
   		Ammo.destroy(ammoSystem.ammoWorld);
