@@ -59,8 +59,10 @@ AmmoUtil.createAmmoSystem = function(args){
 			Ammo.destroy(ent.rigidBodyComponent.body);
 			delete ent.colliderComponent.shape;
 			delete ent.rigidBodyComponent.body;
-			ent.clearComponent("ColliderComponent");
-			ent.clearComponent("RigidBodyComponent");
+			if(ent.colliderComponent){
+				ent.clearComponent('ColliderComponent');
+			}
+			ent.clearComponent('RigidBodyComponent');
 		}
 	};
 	
