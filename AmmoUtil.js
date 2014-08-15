@@ -25,7 +25,6 @@ AmmoUtil.createAmmoSystem = function(args){
 		args.gravity = args.gravity || [0, -9.8, 0];
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
 		this.fixedTime = 1/(args.stepFrequency || 60);
-		//this.accumulated = 0.0;
 		this.maxSubSteps = args.maxSubSteps || 10;
 		this.collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
 		this.dispatcher = new Ammo.btCollisionDispatcher(this.collisionConfiguration);
@@ -82,8 +81,8 @@ AmmoUtil.createAmmoSystem = function(args){
   }
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	if(ammoSystem){
-  		for(var i = this._activeEntities.length; i >= 0; i--){
-  			var ent = this._activeEntities[i];
+  		for(var i = ammoSystem._activeEntities.length; i >= 0; i--){
+  			var ent = ammoSystem._activeEntities[i];
 	  		if(ent.rigidBodyComponent){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
