@@ -81,7 +81,7 @@ AmmoUtil.createAmmoSystem = function(args){
   }
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	if(ammoSystem){
-  		for(var i = ammoSystem._activeEntities.length; i >= 0; i--){
+  		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
 	  		if(ent.rigidBodyComponent){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
