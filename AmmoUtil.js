@@ -325,7 +325,7 @@ AmmoUtil.CollisionFlags = {
   	BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
   	BoxColliderComponent.constructor = BoxColliderComponent;
   	var shape = new BoxColliderComponent();
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   }
@@ -341,7 +341,7 @@ AmmoUtil.CollisionFlags = {
   	var shape = new SphereColliderComponent();
   	console.log("sphere collider");
   	console.log(shape);
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   };
@@ -356,7 +356,7 @@ AmmoUtil.CollisionFlags = {
   	ConeZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	ConeZColliderComponent.constructor = ConeZColliderComponent;
   	var shape = new ConeZColliderComponent();
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   };
@@ -373,7 +373,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
   	var shape = new CylinderZColliderComponent();
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   };
@@ -390,7 +390,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderXColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
   	var shape = new CylinderXColliderComponent();
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   };
@@ -407,7 +407,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderYColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
   	var shape = new CylinderYColliderComponent();
-  	this.ptr = shape.a || shape.ptr;
+  	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
   	return shape;
   };
@@ -449,7 +449,7 @@ AmmoUtil.CollisionFlags = {
 	MeshColliderComponent.prototype = Object.create(goo.Component.prototype);
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
-	this.ptr = shape.a || shape.ptr;
+	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
 	return shape;
   };
@@ -483,7 +483,7 @@ AmmoUtil.CollisionFlags = {
 	CompoundColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CompoundColliderComponent.constructor = CompoundColliderComponent;
 	var shape = new CompoundColliderComponent();
-	this.ptr = shape.a || shape.ptr;
+	this.ptr = shape.shape.a || shape.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = shape.shape;
 	return shape;
   };
