@@ -82,7 +82,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	AmmoUtil.ready = false;
   	if(ammoSystem){
   		
-  		for (var i = ammoSystem.ammoWorld.getNumCollisionObjects()-1; i >= 0 ; i--){
+  		/*for (var i = ammoSystem.ammoWorld.getNumCollisionObjects()-1; i >= 0 ; i--){
 	                var obj = ammoSystem.ammoWorld.getCollisionObjectArray()[i];
 	                console.log(obj);
 	                if(obj.body){
@@ -96,13 +96,16 @@ AmmoUtil.createAmmoSystem = function(args){
 	        for (var j=0; j < Ammo.get_m_collisionShapes().size(); j++){
 	                var shape = Ammo.get_m_collisionShapes()[j];
 	                Ammo.destroy(shape);
-	        }
+	        }*/
 	        
 	        for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
-  				//ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
-  				//Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
-  				//Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				if(ammoSystem._activeEntities[i].rigidBodyComponent.body.getMotionState()){
+					Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body.getMotionState());
+				}
+  				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
+  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				delete ammoSystem._activeEntities[i].colliderComponent.shape;
   				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
@@ -111,7 +114,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		}
 	        
 	        
-  		Ammo.get_m_collisionShapes().clear();
+  	//	Ammo.get_m_collisionShapes().clear();
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
