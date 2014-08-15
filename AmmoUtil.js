@@ -98,6 +98,8 @@ AmmoUtil.createAmmoSystem = function(args){
 				console.log('they are the same? '+(ent.rigidBodyComponent.body === body));
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
+					console.log('body has a motion state');
+					console.log(body.getMotionState());
 					Ammo.destroy(body.getMotionState());
 					console.log('Removed motion state');
 				}
