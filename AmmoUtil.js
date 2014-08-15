@@ -315,6 +315,8 @@ AmmoUtil.CollisionFlags = {
   	SphereColliderComponent.prototype = Object.create(goo.Component.prototype);
   	SphereColliderComponent.constructor = SphereColliderComponent;
   	var shape = new SphereColliderComponent();
+  	console.log("sphere collider");
+  	console.log(shape);
   	this.ptr = this.shape.a || this.shape.ptr;
 	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
