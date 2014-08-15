@@ -84,6 +84,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		
   		for (var i = ammoSystem.ammoWorld.getNumCollisionObjects()-1; i >= 0 ; i--){
 	                var obj = ammoSystem.ammoWorld.getCollisionObjectArray()[i];
+	                console.log(obj);
 	                if(obj.body){
 	                	Ammo.destroy(obj.body.getMotionState());
 	                }
