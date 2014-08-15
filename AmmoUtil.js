@@ -55,6 +55,7 @@ AmmoUtil.createAmmoSystem = function(args){
 	};
 	AmmoSystem.prototype.deleted = function(ent){
 		if(ent.rigidBodyComponent){
+			console.log('removing rigidBodyComponent');
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body.getMotionState()){
@@ -83,9 +84,12 @@ AmmoUtil.createAmmoSystem = function(args){
 	return ammoSystem;
   }
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
+  	console.log('destroyAmmoSystem called...');
   	if(ammoSystem){
+  		console.log('There is an ammoSystem');
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
+  			console.log(ent);
 	  		if(ent.rigidBodyComponent){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
