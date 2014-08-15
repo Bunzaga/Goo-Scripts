@@ -12,6 +12,8 @@ AmmoUtil.setup = function(_goo){
 	pquat = new Ammo.btQuaternion();
 	quat = new goo.Quaternion();
 	vec = new goo.Vector3();
+	AmmoUtil.rigidBodies = {};
+	AmmoUtil.colliders = {};
 	AmmoUtil.ready = true;
 };
 AmmoUtil.ready = false;
@@ -19,8 +21,6 @@ AmmoUtil.ready = false;
 AmmoUtil.createAmmoSystem = function(args){
 	function AmmoSystem(){
 		this.priority = Infinity;
-		this.rigidBodies = {};
-		this.colliders = {};
 		args = args || {};
 		args.gravity = args.gravity || [0, -9.8, 0];
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
@@ -56,8 +56,8 @@ AmmoUtil.createAmmoSystem = function(args){
 	};
 	AmmoSystem.prototype.deleted = function(ent){
 		if(ent.rigidBodyComponent){
-			var body = this.rigidBodies[ent.rigidBodyComponent.ptr];
-			delete this.rigidBodies[ent.rigidBodyComponent.ptr];
+			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+			delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			this.ammoWorld.removeCollisionObject(body);
 			if(body.getMotionState()){
 				Ammo.destroy(body.getMotionState());
@@ -65,8 +65,8 @@ AmmoUtil.createAmmoSystem = function(args){
 			Ammo.destroy(body);
 		}
 		if(ent.colliderComponent){
-			var collider = this.colliders[ent.colliderComponent.ptr];
-			delete this.colliders[ent.colliderComponent.ptr];
+			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
+			delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 			Ammo.destroy(collider);
 		}
 	};
@@ -85,8 +85,8 @@ AmmoUtil.createAmmoSystem = function(args){
   		for(var i = this._activeEntities.length; i >= 0; i--){
   			var ent = this._activeEntities[i];
 	  		if(ent.rigidBodyComponent){
-				var body = this.rigidBodies[ent.rigidBodyComponent.ptr];
-				delete this.rigidBodies[ent.rigidBodyComponent.ptr];
+				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				this.ammoWorld.removeCollisionObject(body);
 				if(body.getMotionState()){
 					Ammo.destroy(body.getMotionState());
@@ -94,8 +94,8 @@ AmmoUtil.createAmmoSystem = function(args){
 				Ammo.destroy(body);
 			}
 			if(ent.colliderComponent){
-				var collider = this.colliders[ent.colliderComponent.ptr];
-				delete this.colliders[ent.colliderComponent.ptr];
+				var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
+				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 				Ammo.destroy(collider);
 			}
   		}
