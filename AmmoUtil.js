@@ -59,9 +59,11 @@ AmmoUtil.createAmmoSystem = function(args){
 			delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body.getMotionState()){
 				Ammo.destroy(body.getMotionState());
+				console.log('Removed motion state');
 			}
 			//this.ammoWorld.removeCollisionObject(body);
 			this.ammoWorld.removeRigidBody(body);
+			console.log('Removed rigidbody');
 			Ammo.destroy(body);
 		}
 		if(ent.colliderComponent){
@@ -89,16 +91,20 @@ AmmoUtil.createAmmoSystem = function(args){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
 					Ammo.destroy(body.getMotionState());
+					console.log('Removed motion state');
 				}
 				//ammoSystem.ammoWorld.removeCollisionObject(body);
 				ammoSystem.ammoWorld.removeRigidBody(body);
+				console.log('Removed rigidbody');
 				Ammo.destroy(body);
 				ent.clearComponent('RigidBodyComponent');
+				console.log(body);
 			}
 			if(ent.colliderComponent){
 				var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 				Ammo.destroy(collider);
+				console.log(collider);
 				ent.clearComponent('ColliderComponent');
 			}
   		}
