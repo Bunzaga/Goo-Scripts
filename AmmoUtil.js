@@ -55,6 +55,9 @@ AmmoUtil.createAmmoSystem = function(args){
 	AmmoSystem.prototype.deleted = function(ent) {
 		if (ent.rigidBodyComponent) {
 			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
+			if(ent.rigidBodyComponent.body.getMotionState()){
+				Ammo.destroy(ent.rigidBodyComponent.body.getMotionState());
+			}
 			Ammo.destroy(ent.colliderComponent.shape);
 			Ammo.destroy(ent.rigidBodyComponent.body);
 			delete ent.colliderComponent.shape;
@@ -78,18 +81,36 @@ AmmoUtil.createAmmoSystem = function(args){
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	AmmoUtil.ready = false;
   	if(ammoSystem){
-  		for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
+  		
+  		for (var i = ammoSystem.ammoWorld.getNumCollisionObjects()-1; i >= 0 ; i--){
+	                var obj = ammoSystem.ammoWorld.getCollisionObjectArray()[i];
+	                if(obj.body){
+	                	Ammo.destroy(obj.body.getMotionState());
+	                }
+	                ammoSystem.ammoWorld.removeCollisionObject(obj);
+	                Ammo.destroy(obj);
+	        }
+
+	        //delete collision shapes
+	        for (var j=0; j < Ammo.get_m_collisionShapes().size(); j++){
+	                var shape = Ammo.get_m_collisionShapes()[j];
+	                Ammo.destroy(shape);
+	        }
+	        
+	        for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
   			if(ammoSystem._activeEntities[i].rigidBodyComponent){
-  				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
-  				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
-  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				//ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
+  				//Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
+  				//Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
   				delete ammoSystem._activeEntities[i].colliderComponent.shape;
   				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
   				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
   				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
   			}	
   		}
-  		
+	        
+	        
+  		Ammo.get_m_collisionShapes().clear();
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
