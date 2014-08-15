@@ -91,14 +91,18 @@ AmmoUtil.createAmmoSystem = function(args){
   			var ent = ammoSystem._activeEntities[i];
   			console.log(ent);
 	  		if(ent.rigidBodyComponent){
+	  			console.log('ent has a rigidBodyComponent');
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+				console.log('body:');
+				console.log(body);
+				console.log('they are the same? '+(ent.rigidBodyComponent.body === body));
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
 					Ammo.destroy(body.getMotionState());
 					console.log('Removed motion state');
 				}
-				//ammoSystem.ammoWorld.removeCollisionObject(body);
-				ammoSystem.ammoWorld.removeRigidBody(body);
+				ammoSystem.ammoWorld.removeCollisionObject(body);
+			//	ammoSystem.ammoWorld.removeRigidBody(body);
 				console.log('Removed rigidbody');
 				Ammo.destroy(body);
 				ent.clearComponent('RigidBodyComponent');
