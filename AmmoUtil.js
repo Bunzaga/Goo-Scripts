@@ -209,7 +209,7 @@ AmmoUtil.CollisionFlags = {
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
 		this.ptr = this.body.a || this.body.ptr;
-		AmmoUtil.rigidBodies[this.ptr] = this;
+		AmmoUtil.rigidBodies[this.ptr] = this.body;
 		Ammo.destroy(rbInfo);
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
@@ -302,7 +302,7 @@ AmmoUtil.CollisionFlags = {
   	BoxColliderComponent.constructor = BoxColliderComponent;
   	var shape = new BoxColliderComponent();
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   }
   AmmoUtil.createSphereColliderComponent = function(args){
@@ -318,7 +318,7 @@ AmmoUtil.CollisionFlags = {
   	console.log("sphere collider");
   	console.log(shape);
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   };
   AmmoUtil.createConeZColliderComponent = function(args){
@@ -333,7 +333,7 @@ AmmoUtil.CollisionFlags = {
   	ConeZColliderComponent.constructor = ConeZColliderComponent;
   	var shape = new ConeZColliderComponent();
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   };
   AmmoUtil.createCylinderZColliderComponent = function(args){
@@ -350,7 +350,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
   	var shape = new CylinderZColliderComponent();
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   };
   AmmoUtil.createCylinderXColliderComponent = function(args){
@@ -367,7 +367,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
   	var shape = new CylinderXColliderComponent();
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   };
   AmmoUtil.createCylinderYColliderComponent = function(args){
@@ -384,7 +384,7 @@ AmmoUtil.CollisionFlags = {
   	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
   	var shape = new CylinderYColliderComponent();
   	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
   	return shape;
   };
   AmmoUtil.createMeshColliderComponent = function(args){
@@ -426,7 +426,7 @@ AmmoUtil.CollisionFlags = {
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
 	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
 	return shape;
   };
   AmmoUtil.createCompoundColliderComponent = function(args){
@@ -460,7 +460,7 @@ AmmoUtil.CollisionFlags = {
   	CompoundColliderComponent.constructor = CompoundColliderComponent;
 	var shape = new CompoundColliderComponent();
 	this.ptr = shape.a || shape.ptr;
-	AmmoUtil.colliders[this.ptr] = this;
+	AmmoUtil.colliders[this.ptr] = shape;
 	return shape;
   };
   var global = global || window;
