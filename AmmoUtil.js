@@ -19,6 +19,8 @@ AmmoUtil.ready = false;
 AmmoUtil.createAmmoSystem = function(args){
 	function AmmoSystem(){
 		this.priority = Infinity;
+		this.rigidBodies = {};
+		this.colliders = {};
 		args = args || {};
 		args.gravity = args.gravity || [0, -9.8, 0];
 		goo.System.call(this, 'AmmoSystem', ['RigidBodyComponent', 'ColliderComponent']);
@@ -39,7 +41,7 @@ AmmoUtil.createAmmoSystem = function(args){
 	AmmoSystem.constructor = AmmoSystem;
 	
 	AmmoSystem.prototype.inserted = function(ent){
-		if (ent.rigidBodyComponent && ent.colliderComponent) {
+		if(ent.rigidBodyComponent && ent.colliderComponent) {
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
@@ -52,20 +54,20 @@ AmmoUtil.createAmmoSystem = function(args){
 			}
 		}
 	};
-	AmmoSystem.prototype.deleted = function(ent) {
-		if (ent.rigidBodyComponent) {
-			this.ammoWorld.removeRigidBody(ent.rigidBodyComponent.body);
-			if(ent.rigidBodyComponent.body.getMotionState()){
-				Ammo.destroy(ent.rigidBodyComponent.body.getMotionState());
+	AmmoSystem.prototype.deleted = function(ent){
+		if(ent.rigidBodyComponent){
+			var body = this.rigidBodies[ent.rigidBodyComponent.ptr];
+			delete this.rigidBodies[ent.rigidBodyComponent.ptr];
+			this.ammoWorld.removeCollisionObject(body);
+			if(body.getMotionState()){
+				Ammo.destroy(body.getMotionState());
 			}
-			Ammo.destroy(ent.colliderComponent.shape);
-			Ammo.destroy(ent.rigidBodyComponent.body);
-			delete ent.colliderComponent.shape;
-			delete ent.rigidBodyComponent.body;
-			if(ent.colliderComponent){
-				ent.clearComponent('ColliderComponent');
-			}
-			ent.clearComponent('RigidBodyComponent');
+			Ammo.destroy(body);
+		}
+		if(ent.colliderComponent){
+			var collider = this.colliders[ent.colliderComponent.ptr];
+			delete this.colliders[ent.colliderComponent.ptr];
+			Ammo.destroy(collider);
 		}
 	};
 	
@@ -79,42 +81,24 @@ AmmoUtil.createAmmoSystem = function(args){
 	return ammoSystem;
   }
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
-  	AmmoUtil.ready = false;
   	if(ammoSystem){
-  		
-  		/*for (var i = ammoSystem.ammoWorld.getNumCollisionObjects()-1; i >= 0 ; i--){
-	                var obj = ammoSystem.ammoWorld.getCollisionObjectArray()[i];
-	                console.log(obj);
-	                if(obj.body){
-	                	Ammo.destroy(obj.body.getMotionState());
-	                }
-	                ammoSystem.ammoWorld.removeCollisionObject(obj);
-	                Ammo.destroy(obj);
-	        }
-
-	        //delete collision shapes
-	        for (var j=0; j < Ammo.get_m_collisionShapes().size(); j++){
-	                var shape = Ammo.get_m_collisionShapes()[j];
-	                Ammo.destroy(shape);
-	        }*/
-	        
-	        for(var i = 0, ilen = ammoSystem._activeEntities.length; i < ilen; i++){
-  			if(ammoSystem._activeEntities[i].rigidBodyComponent){
-  				ammoSystem.ammoWorld.removeRigidBody(ammoSystem._activeEntities[i].rigidBodyComponent.body);
-  				if(ammoSystem._activeEntities[i].rigidBodyComponent.body.getMotionState()){
-					Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body.getMotionState());
+  		for(var i = this._activeEntities.length; i >= 0; i--){
+  			var ent = this._activeEntities[i];
+	  		if(ent.rigidBodyComponent){
+				var body = this.rigidBodies[ent.rigidBodyComponent.ptr];
+				delete this.rigidBodies[ent.rigidBodyComponent.ptr];
+				this.ammoWorld.removeCollisionObject(body);
+				if(body.getMotionState()){
+					Ammo.destroy(body.getMotionState());
 				}
-  				Ammo.destroy(ammoSystem._activeEntities[i].colliderComponent.shape);
-  				Ammo.destroy(ammoSystem._activeEntities[i].rigidBodyComponent.body);
-  				delete ammoSystem._activeEntities[i].colliderComponent.shape;
-  				delete ammoSystem._activeEntities[i].rigidBodyComponent.body;
-  				ammoSystem._activeEntities[i].clearComponent("ColliderComponent");
-  				ammoSystem._activeEntities[i].clearComponent("RigidBodyComponent");
-  			}	
+				Ammo.destroy(body);
+			}
+			if(ent.colliderComponent){
+				var collider = this.colliders[ent.colliderComponent.ptr];
+				delete this.colliders[ent.colliderComponent.ptr];
+				Ammo.destroy(collider);
+			}
   		}
-	        
-	        
-  	//	Ammo.get_m_collisionShapes().clear();
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
@@ -197,8 +181,6 @@ AmmoUtil.CollisionFlags = {
 		args = args || {};
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
-  	//	this.oldPos = new goo.Vector3();
-  	//	this.oldQuat = new goo.Quaternion();
   		var collider = ent.getComponent("ColliderComponent");
   		if(undefined === collider){
   			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent, goo);
@@ -216,7 +198,6 @@ AmmoUtil.CollisionFlags = {
 			ent.transformComponent.transform.rotation.applyPost(vec);
 			gooPos.subv(vec);
 		}
-	//	this.oldPos.copy(gooPos);
 		var gooRot = ent.transformComponent.transform.rotation;
 		var localInertia = new Ammo.btVector3(0, 0, 0);
 		if(this.mass !== 0){
@@ -224,11 +205,12 @@ AmmoUtil.CollisionFlags = {
 		}
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat.fromRotationMatrix(gooRot);
-	//	this.oldQuat.setd(quat.x, quat.y, quat.z, quat.z);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
 		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
+		this.ptr = this.body.a || this.body.ptr;
+		AmmoUtil.rigidBodies[this.ptr] = this;
 		Ammo.destroy(rbInfo);
   	}
   	RigidBodyComponent.prototype = Object.create(goo.Component.prototype);
@@ -314,6 +296,8 @@ AmmoUtil.CollisionFlags = {
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]);
   		this.shape = new Ammo.btBoxShape(pvec);
+  		this.ptr = this.shape.a || this.shape.ptr;
+		AmmoUtil.colliders[this.ptr] = this;
   	}
   	BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
   	BoxColliderComponent.constructor = BoxColliderComponent;
@@ -331,6 +315,8 @@ AmmoUtil.CollisionFlags = {
   	SphereColliderComponent.prototype = Object.create(goo.Component.prototype);
   	SphereColliderComponent.constructor = SphereColliderComponent;
   	var shape = new SphereColliderComponent();
+  	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
   };
   AmmoUtil.createConeZColliderComponent = function(args){
@@ -343,8 +329,9 @@ AmmoUtil.CollisionFlags = {
   	}
   	ConeZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	ConeZColliderComponent.constructor = ConeZColliderComponent;
-  	
   	var shape = new ConeZColliderComponent();
+  	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
   };
   AmmoUtil.createCylinderZColliderComponent = function(args){
@@ -359,8 +346,9 @@ AmmoUtil.CollisionFlags = {
   	}
   	CylinderZColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderZColliderComponent.constructor = CylinderZColliderComponent;
-  	
   	var shape = new CylinderZColliderComponent();
+  	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
   };
   AmmoUtil.createCylinderXColliderComponent = function(args){
@@ -375,8 +363,9 @@ AmmoUtil.CollisionFlags = {
   	}
   	CylinderXColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderXColliderComponent.constructor = CylinderXColliderComponent;
-  	
   	var shape = new CylinderXColliderComponent();
+  	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
   };
   AmmoUtil.createCylinderYColliderComponent = function(args){
@@ -391,8 +380,9 @@ AmmoUtil.CollisionFlags = {
   	}
   	CylinderYColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CylinderYColliderComponent.constructor = CylinderYColliderComponent;
-  	
   	var shape = new CylinderYColliderComponent();
+  	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
   	return shape;
   };
   AmmoUtil.createMeshColliderComponent = function(args){
@@ -433,6 +423,8 @@ AmmoUtil.CollisionFlags = {
 	MeshColliderComponent.prototype = Object.create(goo.Component.prototype);
   	MeshColliderComponent.constructor = MeshColliderComponent;
 	var shape = new MeshColliderComponent();
+	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
 	return shape;
   };
   AmmoUtil.createCompoundColliderComponent = function(args){
@@ -465,6 +457,8 @@ AmmoUtil.CollisionFlags = {
 	CompoundColliderComponent.prototype = Object.create(goo.Component.prototype);
   	CompoundColliderComponent.constructor = CompoundColliderComponent;
 	var shape = new CompoundColliderComponent();
+	this.ptr = this.shape.a || this.shape.ptr;
+	AmmoUtil.colliders[this.ptr] = this;
 	return shape;
   };
   var global = global || window;
