@@ -60,7 +60,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.motionState){
-					Ammo.destroy(body.motionState;
+					Ammo.destroy(body.motionState);
 					console.log('Removed motion state');
 				}
 				this.ammoWorld.removeCollisionObject(body);
