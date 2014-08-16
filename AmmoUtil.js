@@ -298,6 +298,12 @@ AmmoUtil.CollisionFlags = {
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
   		this.body.setAngularFactor(pvec);	
   	};
+  	RigidBodyComponent.prototype.setCollisionFlags = function(flags){
+  		this.body.setCollisionFlags((typeof(flags) === 'number') ? flags : AmmoUtil.CollisionFlags[flags]);
+  	}
+  	RigidBodyComponent.prototype.getCollisionFlags = function(){
+  		return this.body.getCollisionFlags();	
+  	};
   	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
