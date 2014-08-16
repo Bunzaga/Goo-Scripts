@@ -225,6 +225,7 @@ AmmoUtil.CollisionFlags = {
 		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, this.motionState, collider.shape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
 		this.ptr = this.body.a || this.body.ptr;
+		this.body.entity = ent;
 		AmmoUtil.rigidBodies[this.ptr] = this.body;
 		Ammo.destroy(rbInfo);
   	}
