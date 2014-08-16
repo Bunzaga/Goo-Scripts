@@ -60,7 +60,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
-					Ammo.destroy(body.getMotionState());
+					//Ammo.destroy(body.getMotionState());
 					console.log('Removed motion state');
 				}
 				this.ammoWorld.removeCollisionObject(body);
@@ -97,7 +97,7 @@ AmmoUtil.createAmmoSystem = function(args){
 				if(body){
 					delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 					if(body.getMotionState()){
-						Ammo.destroy(body.getMotionState());
+						//Ammo.destroy(body.getMotionState());
 					}
 					ammoSystem.ammoWorld.removeCollisionObject(body);
 				//	ammoSystem.ammoWorld.removeRigidBody(body);
