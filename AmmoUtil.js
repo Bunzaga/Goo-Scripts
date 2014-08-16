@@ -59,8 +59,8 @@ AmmoUtil.createAmmoSystem = function(args){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(body.getMotionState()){
-					//Ammo.destroy(body.getMotionState());
+				if(body.motionState){
+					Ammo.destroy(body.motionState;
 					console.log('Removed motion state');
 				}
 				this.ammoWorld.removeCollisionObject(body);
@@ -96,8 +96,8 @@ AmmoUtil.createAmmoSystem = function(args){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body){
 					delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-					if(body.getMotionState()){
-						//Ammo.destroy(body.getMotionState());
+					if(body.motionState){
+						Ammo.destroy(body.motionState);
 					}
 					ammoSystem.ammoWorld.removeCollisionObject(body);
 				//	ammoSystem.ammoWorld.removeRigidBody(body);
@@ -221,8 +221,8 @@ AmmoUtil.CollisionFlags = {
 		startTransform.setOrigin(new Ammo.btVector3(gooPos.x, gooPos.y, gooPos.z));
 		quat.fromRotationMatrix(gooRot);
 		startTransform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
-		var myMotionState = new Ammo.btDefaultMotionState(startTransform);
-		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, myMotionState, collider.shape, localInertia);
+		this.motionState = new Ammo.btDefaultMotionState(startTransform);
+		var rbInfo = new Ammo.btRigidBodyConstructionInfo(this.mass, this.motionState, collider.shape, localInertia);
 		this.body = new Ammo.btRigidBody(rbInfo);
 		this.ptr = this.body.a || this.body.ptr;
 		AmmoUtil.rigidBodies[this.ptr] = this.body;
