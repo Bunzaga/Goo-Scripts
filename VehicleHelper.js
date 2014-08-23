@@ -23,16 +23,15 @@
   }
   VehicleHelper.prototype.resetAtPos = function(vec3){
   	var b = this.body;
-  	//var t = b.getCenterOfMassTransform();
-  	//t.setIdentity();
-    //this.pvec.setValue(pos.data[0], pos.data[1], pos.data[2]);
-  	//t.setOrigin(this.pvec);
-  	//b.setCenterOfMassTransform(t);
-  	
   	this.pvec.setValue(vec3[0], vec3[1], vec3[2]);
 	var trans = this.body.getWorldTransform();
 	trans.setOrigin(this.pvec);
-	b.getMotionState().setWorldTransform(trans);
+	
+	this.quat.fromRotationMatrix(_goo.Matrix3x3.IDENTITY);
+	this.pquat.setValue(this.quat.x, this.quat.y, this.quat.z, this.quat.w);
+	trans.getBasis().setRotation(this.pquat);
+	b.setCenterOfMassTransform(trans);
+  	b.getMotionState().setWorldTransform(trans);
   	
   	this.pvec.setValue(0, 0, 0)
   	b.setAngularVelocity(this.pvec);
