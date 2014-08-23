@@ -30,9 +30,9 @@
   	//b.setCenterOfMassTransform(t);
   	
   	this.pvec.setValue(vec3[0], vec3[1], vec3[2]);
-		var trans = this.body.getWorldTransform();
-		trans.setOrigin(this.pvec);
-		b.getMotionState().setWorldTransform(trans);
+	var trans = this.body.getWorldTransform();
+	trans.setOrigin(this.pvec);
+	b.getMotionState().setWorldTransform(trans);
   	
   	this.pvec.setValue(0, 0, 0)
   	b.setAngularVelocity(this.pvec);
