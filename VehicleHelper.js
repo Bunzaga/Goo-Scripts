@@ -1,5 +1,7 @@
 (function(window, document, undefined){
+	var _goo;
   var VehicleHelper = function(ammoSystem, entity, wheelRadius, suspensionLength, goo){
+  	_goo = goo;
     this.entity = entity;
     this.quat = new goo.Quaternion();
     this.vec = new goo.Vector3();
