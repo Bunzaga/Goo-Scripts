@@ -8,6 +8,7 @@ var 	pvec, ptrans, pquat,
 AmmoUtil.setup = function(_goo){
 	goo = _goo;
 	pvec = new Ammo.btVector3();
+	pvec2 = new Ammo.btVector3();
 	ptrans = new Ammo.btTransform();
 	pquat = new Ammo.btQuaternion();
 	quat = new goo.Quaternion();
@@ -304,6 +305,15 @@ AmmoUtil.CollisionFlags = {
   	}
   	RigidBodyComponent.prototype.getCollisionFlags = function(){
   		return this.body.getCollisionFlags();	
+  	};
+  	RigidBodyComponent.prototype.applyImpulse = function(vec3a, vec3b){
+  		pvec.setValues(vec3a[0], vec3a[1], vec3a[2]);
+  		pvec2.setValues(vec3b[0], vec3b[1], vec3b[2]);
+  		this.body.applyImpulse(pvec, pvec2);
+  	};
+  	RigidBodyComponent.prototype.applyTorque = function(vec3){
+  		pvec.setValues(vec3[0], vec3[1], vec3[2]);
+  		this.body.applyTorque(pvec);
   	};
   	
   	var rigidBody = new RigidBodyComponent;
