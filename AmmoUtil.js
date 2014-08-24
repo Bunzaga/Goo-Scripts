@@ -307,12 +307,12 @@ AmmoUtil.CollisionFlags = {
   		return this.body.getCollisionFlags();	
   	};
   	RigidBodyComponent.prototype.applyImpulse = function(vec3a, vec3b){
-  		pvec.setValues(vec3a[0], vec3a[1], vec3a[2]);
-  		pvec2.setValues(vec3b[0], vec3b[1], vec3b[2]);
+  		pvec.setValue(vec3a[0], vec3a[1], vec3a[2]);
+  		pvec2.setValue(vec3b[0], vec3b[1], vec3b[2]);
   		this.body.applyImpulse(pvec, pvec2);
   	};
   	RigidBodyComponent.prototype.applyTorque = function(vec3){
-  		pvec.setValues(vec3[0], vec3[1], vec3[2]);
+  		pvec.setValue(vec3[0], vec3[1], vec3[2]);
   		this.body.applyTorque(pvec);
   	};
   	
