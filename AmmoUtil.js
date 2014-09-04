@@ -131,6 +131,9 @@ AmmoUtil.createAmmoSystem = function(args){
   		if(index !== -1){
   			world._systems.splice(index, 1);
   		}
+  		
+  		console.log(AmmoUtil.rigidBodies);
+		console.log(AmmoUtil.colliders);
   	}
   };
   
