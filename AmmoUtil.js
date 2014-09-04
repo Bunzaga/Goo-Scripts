@@ -93,6 +93,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		AmmoUtil.ready = false;
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
+  			console.log('active entity'+i);
 	  		if(ent.rigidBodyComponent){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body){
