@@ -91,34 +91,36 @@ AmmoUtil.createAmmoSystem = function(args){
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	if(ammoSystem){
   		AmmoUtil.ready = false;
+  		for(var key in AmmoUtil.rigidBodies){
+  			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
+  				console.log('Removing body:'+key);
+  				var body = AmmoUtil.rigidBodies[key];
+				delete AmmoUtil.rigidBodies[key];
+				if(body.motionState){
+					Ammo.destroy(body.motionState);
+				}
+				ammoSystem.ammoWorld.removeCollisionObject(body);
+			//	ammoSystem.ammoWorld.removeRigidBody(body);
+				Ammo.destroy(body);	
+  			}
+  		}
+  		
+  		for(var key in AmmoUtil.colliders){
+  			if(AmmoUtil.colliders.hasOwnProperty(key)){
+  				console.log('Removing collider:'+key);
+  				var collider = AmmoUtil.colliders[key];
+  				delete AmmoUtil.colliders[key];
+  				Ammo.destroy(collider);
+  			}
+  		}
+  		
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
   			console.log('active entity'+i);
 	  		if(ent.rigidBodyComponent){
-				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(body){
-					console.log('Removing body:');
-					console.log(ent.rigidBodyComponent.ptr);
-					console.log(AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr]);
-					delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-					if(body.motionState){
-						Ammo.destroy(body.motionState);
-					}
-					ammoSystem.ammoWorld.removeCollisionObject(body);
-				//	ammoSystem.ammoWorld.removeRigidBody(body);
-					Ammo.destroy(body);
-				}
 				ent.clearComponent('RigidBodyComponent');
 			}
 			if(ent.colliderComponent){
-				var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
-				if(collider){
-					console.log('Removing collider:');
-					console.log(ent.colliderComponent.ptr);
-					console.log(AmmoUtil.colliders[ent.colliderComponent.ptr]);
-					delete AmmoUtil.colliders[ent.colliderComponent.ptr];
-					Ammo.destroy(collider);
-				}
 				ent.clearComponent('ColliderComponent');
 			}
   		}
