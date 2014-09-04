@@ -96,6 +96,9 @@ AmmoUtil.createAmmoSystem = function(args){
 	  		if(ent.rigidBodyComponent){
 				var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body){
+					console.log('Removing body:');
+					console.log(ent.rigidBodyComponent.ptr);
+					console.log(AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr]);
 					delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 					if(body.motionState){
 						Ammo.destroy(body.motionState);
@@ -109,6 +112,9 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(ent.colliderComponent){
 				var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 				if(collider){
+					console.log('Removing collider:');
+					console.log(ent.colliderComponent.ptr);
+					console.log(AmmoUtil.colliders[ent.colliderComponent.ptr]);
 					delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 					Ammo.destroy(collider);
 				}
