@@ -86,24 +86,28 @@ AmmoUtil.createAmmoSystem = function(args){
 						var pointOnA = new goo.Vector3(pvec.x(), pvec.y(), pvec.z());
 						var pointOnB = new goo.Vector3(pvec2.x(), pvec2.y(), pvec2.z());
 						var normalOnB = new goo.Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z());
-						if(bodyA.entity){
-							if(bodyA.entity.rigidBodyComponent){
-								if(bodyA.entity.rigidBodyComponent.collisionBegin){
-									bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB});
+						if(bodyA){
+							if(bodyA.entity){
+								if(bodyA.entity.rigidBodyComponent){
+									if(bodyA.entity.rigidBodyComponent.collisionBegin){
+										bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB});
+									}
 								}
 							}
 						}
-						if(bodyB.entity){
-							if(bodyB.entity.rigidBodyComponent){
-								if(bodyB.entity.rigidBodyComponent.collisionBegin){
-									bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB});
+						if(boxyB){
+							if(bodyB.entity){
+								if(bodyB.entity.rigidBodyComponent){
+									if(bodyB.entity.rigidBodyComponent.collisionBegin){
+										bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB});
+									}
 								}
 							}
 						}
 						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
 					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
-					//break;
+					break;
 				}
 			}
         	}
