@@ -83,9 +83,9 @@ AmmoUtil.createAmmoSystem = function(args){
 						console.log('hit');
 						console.log(bodyB.entity);
 						console.log('======');
-						break;
 					}
 					AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
+					break;
 				}
 			}
         	}
@@ -142,6 +142,11 @@ AmmoUtil.createAmmoSystem = function(args){
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	if(ammoSystem){
   		AmmoUtil.ready = false;
+  		for(var key in AmmoUtil.collision){
+			if(AmmoUtil.collision.hasOwnProperty(key)){
+				delete AmmoUtil.collision[key];
+			}
+		}
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
   			//	console.log('Removing body:'+key);
