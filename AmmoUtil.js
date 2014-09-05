@@ -95,7 +95,7 @@ AmmoUtil.createAmmoSystem = function(args){
 								}
 							}
 						}
-						if(boxyB){
+						if(bodyB){
 							if(bodyB.entity){
 								if(bodyB.entity.rigidBodyComponent){
 									if(bodyB.entity.rigidBodyComponent.collisionBegin){
