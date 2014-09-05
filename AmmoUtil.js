@@ -46,7 +46,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
-	var remove = {};
+	//var remove = {};
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
@@ -57,7 +57,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		
 		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-				remove[key] = true;
+				AmmoUtil.collision[key] = false;
 			}
 		}
 		
@@ -76,7 +76,6 @@ AmmoUtil.createAmmoSystem = function(args){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
 					if(AmmoUtil.collision[ptrA+"_"+ptrB] === undefined){
-						AmmoUtil.collision[ptrA+"_"+ptrB] = true;
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
 						var normalOnB = pt.get_m_normalWorldOnB();
@@ -87,20 +86,20 @@ AmmoUtil.createAmmoSystem = function(args){
 							bodyB.entity.rigidBodyComponent.collisionBegin();
 						}
 					}
-					else{
-						delete remove[ptrA+"_"+ptrB];
-					}
+					AmmoUtil.collision[ptrA+"_"+ptrB] = true;
 					break;
 				}
 			}
-        	}
-        	
-        	for(var key in remove){
-			if(remove.hasOwnProperty(key)){
-				delete AmmoUtil.collision[key];
-				delete remove[key];
+			if(AmmoUtil.collision[ptrA+"_"+ptrB] === false){
+				if(bodyA.entity.rigidBodyComponent.collisionEnd){
+					bodyA.entity.rigidBodyComponent.collisionEnd();	
+				}
+				if(bodyB.entity.rigidBodyComponent.collisionEnd){
+					bodyB.entity.rigidBodyComponent.collisionEnd();
+				}
+				delete AmmoUtil.collision[ptrA+"_"+ptrB];
 			}
-		}
+        	}
 	};
 	AmmoSystem.prototype.deleted = function(ent){
 		if(ent.rigidBodyComponent){
