@@ -51,7 +51,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		
 		var dp = this.dispatcher;
 
-        	for(var i = 0, ilen = dp.getNumMandfolds(); i < ilen; i++){
+        	for(var i = 0, ilen = dp.getNumManifolds(); i < ilen; i++){
         		var manifold = dp.getManifoldByIndexInternal(i);
         		var num_contacts = manifold.getNumContacts();
 		        if(num_contacts === 0){
