@@ -46,62 +46,59 @@ AmmoUtil.createAmmoSystem = function(args){
 			this.ammoWorld.addRigidBody(ent.rigidBodyComponent.body);
 		}
 	};
-	
+	var remove = {};
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
-		
-		var dp = this.dispatcher;
+		for(var i = 0, ilen = entities.length; i < ilen; i++){
+			if(entities[i].rigidBodyComponent.body.getMotionState()){
+				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
+			}
+		}
 		
 		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-				AmmoUtil.collision[key] = false;
+				remove[key] = true;
 			}
 		}
-
+		
+		var dp = this.dispatcher;
         	for(var i = 0, ilen = dp.getNumManifolds(); i < ilen; i++){
         		var manifold = dp.getManifoldByIndexInternal(i);
         		var num_contacts = manifold.getNumContacts();
 		        if(num_contacts === 0){
-		        	console.log('Contacts are zero');
 				continue;
 		        }
-		        var bodyA = AmmoUtil.rigidBodies[manifold.getBody0()];
-			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
+		        var ptrA = manifold.getBody0();
+		        var ptrB = manifold.getBody1()
+		        var bodyA = AmmoUtil.rigidBodies[ptrA];
+			var bodyB = AmmoUtil.rigidBodies[ptrB];
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
-					if(AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] === undefined){
-						AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
-						console.log('--- Start Collision ---');
-						console.log(pt);
-						console.log(pt.get_m_lifeTime());
+					if(AmmoUtil.collision[ptrA+"_"+ptrB] === undefined){
+						AmmoUtil.collision[ptrA+"_"+ptrB] = true;
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
-	        			
 						var normalOnB = pt.get_m_normalWorldOnB();
-						console.log(bodyA.entity);
-						console.log('hit');
-						console.log(bodyB.entity);
-						console.log('======');
+						if(bodyA.entity.rigidBodyComponent.collisionBegin){
+							bodyA.entity.rigidBodyComponent.collisionBegin();	
+						}
+						if(bodyB.entity.rigidBodyComponent.collisionBegin){
+							bodyB.entity.rigidBodyComponent.collisionBegin();
+						}
 					}
-					AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
+					else{
+						delete remove[ptrA+"_"+ptrB];
+					}
 					break;
 				}
 			}
         	}
         	
-        	for(var key in AmmoUtil.collision){
-			if(AmmoUtil.collision.hasOwnProperty(key)){
-				if(AmmoUtil.collision[key] === false){
-					console.log('No longer colliding');
-					delete AmmoUtil.collision[key];	
-				}
-			}
-		}
-		
-		for(var i = 0, ilen = entities.length; i < ilen; i++){
-			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
+        	for(var key in remove){
+			if(remove.hasOwnProperty(key)){
+				delete AmmoUtil.collision[key];
+				delete remove[key];
 			}
 		}
 	};
