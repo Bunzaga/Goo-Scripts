@@ -81,22 +81,22 @@ AmmoUtil.createAmmoSystem = function(args){
 						var normalOnB = pt.get_m_normalWorldOnB();
 						var info = {
 							bodyA:bodyA,
-							bodyB:bodyB,
-							pointOnA:new goo.Vector3(pvec.x(), pvec.y(), pvec.z()),
-							pointOnB:new goo.Vector3(pvec2.x(), pvec2.y(), pvec2.z()),
-							normalOnB:new goo.Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z())
-						};
+							bodyB:bodyB};
+							
+						var pointOnA = new goo.Vector3(pvec.x(), pvec.y(), pvec.z());
+						var pointOnB = new goo.Vector3(pvec2.x(), pvec2.y(), pvec2.z());
+						var normalOnB = new goo.Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z());
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionBegin){
-									bodyA.entity.rigidBodyComponent.collisionBegin(info);
+									bodyA.entity.rigidBodyComponent.collisionBegin(bodyB.entity, pointOnA, pointOnB, normalOnB);
 								}
 							}
 						}
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionBegin){
-									bodyB.entity.rigidBodyComponent.collisionBegin(info);
+									bodyB.entity.rigidBodyComponent.collisionBegin(bodyA.entity, pointOnB, pointOnA, normalOnB);
 								}
 							}
 						}
