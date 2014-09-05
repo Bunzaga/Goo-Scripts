@@ -204,10 +204,13 @@ AmmoUtil.CollisionFlags = {
 	CF_DISABLE_VISUALIZE_OBJECT:32,
 	CF_DISABLE_SPU_COLLISION_PROCESSING:64};
 	
-  AmmoUtil.createColliderComponent = function(ent){
+  AmmoUtil.createCollider = function(ent){
   	var collider = ent.getComponent("ColliderComponent");
   	if(undefined === collider){
   		collider = AmmoUtil.getColliderFromGooShape(ent);
+  	}
+  	if(null === collider){
+  		console.error("Could not identify collider info!");
   	}
   	return collider;
   }
