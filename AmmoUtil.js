@@ -56,17 +56,17 @@ AmmoUtil.createAmmoSystem = function(args){
 	};
 	AmmoSystem.prototype.deleted = function(ent){
 		if(ent.rigidBodyComponent){
-			console.log('removing rigidBodyComponent');
+			//console.log('removing rigidBodyComponent');
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.motionState){
 					Ammo.destroy(body.motionState);
-					console.log('Removed motion state');
+					//console.log('Removed motion state');
 				}
 				this.ammoWorld.removeCollisionObject(body);
 				//this.ammoWorld.removeRigidBody(body);
-				console.log('Removed rigidbody');
+				//console.log('Removed rigidbody');
 				Ammo.destroy(body);
 			}
 		}
@@ -93,7 +93,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		AmmoUtil.ready = false;
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
-  				console.log('Removing body:'+key);
+  			//	console.log('Removing body:'+key);
   				var body = AmmoUtil.rigidBodies[key];
 				delete AmmoUtil.rigidBodies[key];
 				if(body.motionState){
@@ -107,7 +107,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		
   		for(var key in AmmoUtil.colliders){
   			if(AmmoUtil.colliders.hasOwnProperty(key)){
-  				console.log('Removing collider:'+key);
+  			//	console.log('Removing collider:'+key);
   				var collider = AmmoUtil.colliders[key];
   				delete AmmoUtil.colliders[key];
   				Ammo.destroy(collider);
@@ -116,7 +116,7 @@ AmmoUtil.createAmmoSystem = function(args){
   		
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
-  			console.log('active entity'+i);
+  			//console.log('active entity'+i);
 	  		if(ent.rigidBodyComponent){
 				ent.clearComponent('RigidBodyComponent');
 			}
@@ -141,8 +141,8 @@ AmmoUtil.createAmmoSystem = function(args){
   			world._systems.splice(index, 1);
   		}
   		
-  		console.log(AmmoUtil.rigidBodies);
-		console.log(AmmoUtil.colliders);
+  		//console.log(AmmoUtil.rigidBodies);
+		//console.log(AmmoUtil.colliders);
   	}
   };
   
@@ -203,7 +203,14 @@ AmmoUtil.CollisionFlags = {
 	CF_CHARACTER_OBJECT:16,
 	CF_DISABLE_VISUALIZE_OBJECT:32,
 	CF_DISABLE_SPU_COLLISION_PROCESSING:64};
-  	
+	
+  AmmoUtil.createColliderComponent = function(ent){
+  	var collider = ent.getComponent("ColliderComponent");
+  	if(undefined === collider){
+  		collider = AmmoUtil.getColliderFromGooShape(ent);
+  	}
+  	return collider;
+  }
   AmmoUtil.createRigidBodyComponent = function(args, ent){
 	function RigidBodyComponent(){
 		args = args || {};
@@ -211,7 +218,7 @@ AmmoUtil.CollisionFlags = {
   		this.mass = args.mass || 0.0;
   		var collider = ent.getComponent("ColliderComponent");
   		if(undefined === collider){
-  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent, goo);
+  			collider = args.collider || AmmoUtil.getColliderFromGooShape(ent);
   			if(null === collider){
   				console.error("Could not identify collider info!");
   				return;
