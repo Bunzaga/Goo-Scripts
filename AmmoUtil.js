@@ -15,6 +15,7 @@ AmmoUtil.setup = function(_goo){
 	vec = new goo.Vector3();
 	AmmoUtil.rigidBodies = {};
 	AmmoUtil.colliders = {};
+	AmmoUtil.collision = {};
 	AmmoUtil.ready = true;
 };
 AmmoUtil.ready = false;
@@ -50,6 +51,12 @@ AmmoUtil.createAmmoSystem = function(args){
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		
 		var dp = this.dispatcher;
+		
+		for(var key in AmmoUtil.collision){
+			if(AmmoUtil.collision.hasOwnProperty(key)){
+				AmmoUtil.collision[key] = false;
+			}
+		}
 
         	for(var i = 0, ilen = dp.getNumManifolds(); i < ilen; i++){
         		var manifold = dp.getManifoldByIndexInternal(i);
@@ -63,9 +70,10 @@ AmmoUtil.createAmmoSystem = function(args){
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
-					if(pt.get_m_lifeTime() === 1){
+					if(AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] === null){
+						AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
+						console.log('--- Start Collision ---');
 						console.log(pt);
-						console.log('-----');
 						console.log(pt.get_m_lifeTime());
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
@@ -74,12 +82,22 @@ AmmoUtil.createAmmoSystem = function(args){
 						console.log(bodyA.entity);
 						console.log('hit');
 						console.log(bodyB.entity);
-						console.log('=====');
+						console.log('======');
 						break;
 					}
+					AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
 				}
 			}
         	}
+        	
+        	for(var key in AmmoUtil.collision){
+			if(AmmoUtil.collision.hasOwnProperty(key)){
+				if(AmmoUtil.collision[key] === false){
+					console.log('No longer colliding');
+					delete AmmoUtil.collision[key];	
+				}
+			}
+		}
 		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
