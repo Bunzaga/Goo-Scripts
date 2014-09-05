@@ -79,31 +79,17 @@ AmmoUtil.createAmmoSystem = function(args){
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
 						var normalOnB = pt.get_m_normalWorldOnB();
-						var info = {
-							bodyA:bodyA,
-							bodyB:bodyB};
-							
 						var pointOnA = new goo.Vector3(pvec.x(), pvec.y(), pvec.z());
 						var pointOnB = new goo.Vector3(pvec2.x(), pvec2.y(), pvec2.z());
 						var normalOnB = new goo.Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z());
-						if(bodyA){
-							if(bodyA.entity){
-								if(bodyA.entity.rigidBodyComponent){
-									if(bodyA.entity.rigidBodyComponent.collisionBegin){
-										bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB});
-									}
-								}
-							}
-						}
-						if(bodyB){
-							if(bodyB.entity){
-								if(bodyB.entity.rigidBodyComponent){
-									if(bodyB.entity.rigidBodyComponent.collisionBegin){
-										bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB});
-									}
-								}
-							}
-						}
+						
+						var info = {
+							first:true,
+							ptrA:ptrA,
+							ptrB:ptrB,
+							dataA:{other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB},
+							dataB:{other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB}};
+						
 						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
 					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
@@ -113,29 +99,47 @@ AmmoUtil.createAmmoSystem = function(args){
         	}
         	for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-        			if(AmmoUtil.collision[key].separated > 1){
-					var bodyA = AmmoUtil.collision[key].bodyA;
-					var bodyB = AmmoUtil.collision[key].bodyB;
-					if(bodyA){
-						if(bodyA.entity){
-							if(bodyA.entity.rigidBodyComponent){
-								if(bodyA.entity.rigidBodyComponent.collisionEnd){
-									bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
+				var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
+				var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
+				if(bodyA){
+					if(bodyA.entity){
+						if(bodyA.entity.rigidBodyComponent){
+							if(true === AmmoUtil.collision[key].first){
+								if(bodyA.entity.rigidBodyComponent.collisionBegin){
+									bodyA.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataA);
 								}
+							}
+							else{
+								if(AmmoUtil.collision[key].separated > 1){
+									if(bodyA.entity.rigidBodyComponent.collisionEnd){
+										bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
+									}	
+								}	
 							}
 						}
 					}
-					if(bodyB){
-						if(bodyB.entity){
-							if(bodyB.entity.rigidBodyComponent){
-								if(bodyB.entity.rigidBodyComponent.collisionEnd){
-									bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
+				}
+				if(bodyB){
+					if(bodyB.entity){
+						if(bodyB.entity.rigidBodyComponent){
+							if(true === AmmoUtil.collision[key].first){
+								if(bodyB.entity.rigidBodyComponent.collisionBegin){
+									bodyB.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataB);
 								}
+							}
+							else{
+								if(AmmoUtil.collision[key].separated > 1){
+									if(bodyB.entity.rigidBodyComponent.collisionEnd){
+										bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
+									}
+								}	
 							}
 						}
 					}
+				}
+				if(AmmoUtil.collision[key].separated > 1){
 					delete AmmoUtil.collision[key];
-        			}
+				}
 			}
         	}
 	};
