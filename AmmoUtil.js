@@ -89,14 +89,14 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionBegin){
-									bodyA.entity.rigidBodyComponent.collisionBegin(bodyB.entity, pointOnA, pointOnB, normalOnB);
+									bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB});
 								}
 							}
 						}
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionBegin){
-									bodyB.entity.rigidBodyComponent.collisionBegin(bodyA.entity, pointOnB, pointOnA, normalOnB);
+									bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB});
 								}
 							}
 						}
