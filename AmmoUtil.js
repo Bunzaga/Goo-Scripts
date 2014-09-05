@@ -101,44 +101,55 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
 				var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
 				var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
-				if(bodyA){
-					if(bodyA.entity){
-						if(bodyA.entity.rigidBodyComponent){
-							if(true === AmmoUtil.collision[key].first){
+				if(true === AmmoUtil.collision[key].first){
+					console.log('First Collision');
+					AmmoUtil.collision[key].first = false;	
+					if(bodyA){
+						console.log("bodyA: "+AmmoUtil.collision[key].ptrA);
+						if(bodyA.entity){
+							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionBegin){
 									bodyA.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataA);
 								}
 							}
-							else{
-								if(AmmoUtil.collision[key].separated > 1){
-									if(bodyA.entity.rigidBodyComponent.collisionEnd){
-										bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
-									}	
-								}	
-							}
 						}
 					}
-				}
-				if(bodyB){
-					if(bodyB.entity){
-						if(bodyB.entity.rigidBodyComponent){
-							if(true === AmmoUtil.collision[key].first){
+					if(bodyB){
+						console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
+						if(bodyB.entity){
+							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionBegin){
 									bodyB.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataB);
 								}
 							}
-							else{
-								if(AmmoUtil.collision[key].separated > 1){
-									if(bodyB.entity.rigidBodyComponent.collisionEnd){
-										bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
-									}
-								}	
-							}
 						}
 					}
 				}
-				if(AmmoUtil.collision[key].separated > 1){
-					delete AmmoUtil.collision[key];
+				else{
+					if(AmmoUtil.collision[key].separated > 1){
+						console.log('Collision Ended');
+						if(bodyA){
+							console.log("bodyA: "+AmmoUtil.collision[key].ptrA);
+							if(bodyA.entity){
+								if(bodyA.entity.rigidBodyComponent){
+									if(bodyA.entity.rigidBodyComponent.collisionEnd){
+										bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
+									}
+								}
+							}
+						}
+						if(bodyB){
+							console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
+							if(bodyB.entity){
+								if(bodyB.entity.rigidBodyComponent){
+									if(bodyB.entity.rigidBodyComponent.collisionEnd){
+										bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
+									}
+								}
+							}
+						}
+						delete AmmoUtil.collision[key];
+					}
 				}
 			}
         	}
