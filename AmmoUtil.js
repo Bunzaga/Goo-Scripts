@@ -50,16 +50,20 @@ AmmoUtil.createAmmoSystem = function(args){
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		
 		var dp = this.dispatcher;
+		console.log(dp);
+		
+		var num = dp.getNumManifolds();
+		console.log(num);
         	
-        	for(var i = 0, num = dp.getNumManifolds(); i < num; i++) {
+        	for(var i = 0; i < num; i++) {
         		var manifold = dp.getManifoldByIndexInternal(i);
         		var num_contacts = manifold.getNumContacts();
 		        if(num_contacts === 0){
 		        	console.log('Contacts are zero');
 				continue;
 		        }
-		        var bodyA = AmmoUtil.rigidbodies[manifold.getBody0()];
-			var bodyB = AmmoUtil.rigidbodies[manifold.getBody1()];
+		        var bodyA = AmmoUtil.rigidBodies[manifold.getBody0()];
+			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
 			
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
