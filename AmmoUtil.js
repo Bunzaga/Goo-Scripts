@@ -157,15 +157,22 @@ AmmoUtil.createAmmoSystem = function(args){
 	AmmoSystem.prototype.deleted = function(ent){
 		console.log('removing stuff '+ent.name);
 		if(ent.rigidBodyComponent){
+			console.log('there is a rb component');
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
+				console.log('there is a body');
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+				console.log('deleted rb pointer');
 				if(body.motionState){
+					console.log('there is a motion state');
 					Ammo.destroy(body.motionState);
+					console.log('removed motion state');
 				}
-				//this.ammoWorld.removeCollisionObject(body);
-				this.ammoWorld.removeRigidBody(body);
+				this.ammoWorld.removeCollisionObject(body);
+				console.log('removed collision object');
+			//	this.ammoWorld.removeRigidBody(body);
 				Ammo.destroy(body);
+				console.log('destroyed body');
 			}
 		}
 		if(ent.colliderComponent){
