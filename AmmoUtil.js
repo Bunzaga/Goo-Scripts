@@ -89,14 +89,14 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionBegin){
-									bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB}).bind(bodyA.entity);
+									bodyA.entity.rigidBodyComponent.collisionBegin({other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB});
 								}
 							}
 						}
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionBegin){
-									bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB}).bind(bodyB.entity);
+									bodyB.entity.rigidBodyComponent.collisionBegin({other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB});
 								}
 							}
 						}
@@ -116,7 +116,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionEnd){
-									bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity).bind(bodyA.entity);
+									bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
 								}
 							}
 						}
@@ -125,7 +125,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionEnd){
-									bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity).bind(bodyB.entity);
+									bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
 								}
 							}
 						}
