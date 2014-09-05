@@ -49,9 +49,9 @@ AmmoUtil.createAmmoSystem = function(args){
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		
-		var dp = this.dispatcher,
+		var dp = this.dispatcher;
         	
-        	for(var i = 0, num = dp.getNumManifolds(); i < num; i++ ) {
+        	for(var i = 0, num = dp.getNumManifolds(); i < num; i++) {
         		var manifold = dp.getManifoldByIndexInternal(i);
         		var num_contacts = manifold.getNumContacts();
 		        if(num_contacts === 0){
