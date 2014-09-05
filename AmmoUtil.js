@@ -65,6 +65,7 @@ AmmoUtil.createAmmoSystem = function(args){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
 					console.log(pt);
+					console.log(pt.get_m_lifeTime());
 					pt.getPositionWorldOnA(pvec);
         				pt.getPositionWorldOnB(pvec2);
         			
