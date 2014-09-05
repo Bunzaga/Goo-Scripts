@@ -57,7 +57,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		
 		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-				AmmoUtil.collision[key].separated = true;
+				AmmoUtil.collision[key].separated ++;
 			}
 		}
 		
@@ -102,14 +102,14 @@ AmmoUtil.createAmmoSystem = function(args){
 						}
 						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
-					AmmoUtil.collision[ptrA+"_"+ptrB].separated = false;
+					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
 					break;
 				}
 			}
         	}
         	for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-        			if(AmmoUtil.collision[key].separated === true){
+        			if(AmmoUtil.collision[key].separated > 1){
 					var bodyA = AmmoUtil.collision[key].bodyA;
 					var bodyB = AmmoUtil.collision[key].bodyB;
 					if(bodyA){
