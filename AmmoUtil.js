@@ -360,7 +360,7 @@ AmmoUtil.CollisionFlags = {
 		var trans = this.body.getWorldTransform();
 		trans.getBasis().setRotation(pquat);
 		this.body.getMotionState().setWorldTransform(trans);
-		this.body.setCenterOfMassTransform(trans);
+	//	this.body.setCenterOfMassTransform(trans);
   	};
   	RigidBodyComponent.prototype.setLinearVelocity = function(vec3){
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
