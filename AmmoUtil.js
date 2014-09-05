@@ -116,7 +116,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionEnd){
-									bodyA.entity.rigidBodyComponent.collisionEnd(info);
+									bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
 								}
 							}
 						}
@@ -125,7 +125,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionEnd){
-									bodyB.entity.rigidBodyComponent.collisionEnd(info);
+									bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
 								}
 							}
 						}
