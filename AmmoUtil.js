@@ -373,7 +373,7 @@ AmmoUtil.CollisionFlags = {
 		var trans = this.body.getWorldTransform();
 		trans.setOrigin(pvec);
 		this.body.getMotionState().setWorldTransform(trans);
-		this.body.setCenterOfMassTransform(trans);
+	//	this.body.setCenterOfMassTransform(trans);
   	};
   	RigidBodyComponent.prototype.setRotation = function(mat3x3){
   		quat.fromRotationMatrix(mat3x3);
@@ -381,7 +381,7 @@ AmmoUtil.CollisionFlags = {
 		var trans = this.body.getWorldTransform();
 		trans.getBasis().setRotation(pquat);
 		this.body.getMotionState().setWorldTransform(trans);
-		this.body.setCenterOfMassTransform(trans);
+	//	this.body.setCenterOfMassTransform(trans);
   	};
   	RigidBodyComponent.prototype.setLinearVelocity = function(vec3){
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
