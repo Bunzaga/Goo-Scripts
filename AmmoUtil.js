@@ -70,6 +70,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
+					console.log(AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()]);
 					if(AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] === null){
 						AmmoUtil.collision[manifold.getBody0()+"_"+manifold.getBody1()] = true;
 						console.log('--- Start Collision ---');
