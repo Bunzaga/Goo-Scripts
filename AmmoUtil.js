@@ -61,9 +61,9 @@ AmmoUtil.createAmmoSystem = function(args){
 		        var bodyA = AmmoUtil.rigidBodies[manifold.getBody0()];
 			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
 			for (var j = 0; j < num_contacts; j++){
+				var pt = manifold.getContactPoint(j);
 				console.log('-----');
 				console.log(pt.get_m_lifeTime());
-				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
 					console.log(pt);
 					pt.getPositionWorldOnA(pvec);
