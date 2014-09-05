@@ -2,7 +2,7 @@
 
 (function(window, document){
 var 	AmmoUtil = {};
-var 	pvec, ptrans, pquat,
+var 	pvec, pvec2, ptrans, pquat,
 	quat, goo, gooVec;
 
 AmmoUtil.setup = function(_goo){
@@ -48,6 +48,34 @@ AmmoUtil.createAmmoSystem = function(args){
 	
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
+		
+		var dp = this.dispatcher,
+        	
+        	for(var i = 0, num = dp.getNumManifolds(); i < num; i++ ) {
+        		var manifold = dp.getManifoldByIndexInternal(i);
+        		var num_contacts = manifold.getNumContacts();
+		        if(num_contacts === 0){
+		        	console.log('Contacts are zero');
+				continue;
+		        }
+		        var bodyA = AmmoUtil.rigidbodies[manifold.getBody0()];
+			var bodyB = AmmoUtil.rigidbodies[manifold.getBody1()];
+			
+			for (var j = 0; j < num_contacts; j++){
+				var pt = manifold.getContactPoint(j);
+				if(pt.getDistance() < 0.0){
+					pt.getPositionWorldOnA(pvec);
+        				pt.getPositionWorldOnB(pvec2);
+        			
+					var normalOnB = pt.get_m_normalWorldOnB();
+					console.log(bodyA.entity);
+					console.log('hit');
+					console.log(bodyB.entity);
+					break;
+				}
+			}
+        	}
+		
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
 			if(entities[i].rigidBodyComponent.body.getMotionState()){
 				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
