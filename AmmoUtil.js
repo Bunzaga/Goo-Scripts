@@ -57,7 +57,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		
 		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-				AmmoUtil.collision[key] = false;
+				AmmoUtil.collision[key].separated = true;
 			}
 		}
 		
@@ -79,25 +79,39 @@ AmmoUtil.createAmmoSystem = function(args){
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
 						var normalOnB = pt.get_m_normalWorldOnB();
+						var info = {
+							bodyA:bodyA,
+							bodyB:bodyB,
+							pointOnA:new goo.Vector3(pvec.x(), pvec.y(), pvec.z()),
+							pointOnB:new goo.Vector3(pvec2.x(), pvec2.y(), pvec2.z()),
+							normalOnB:new goo.Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z())
+						};
 						if(bodyA.entity.rigidBodyComponent.collisionBegin){
-							bodyA.entity.rigidBodyComponent.collisionBegin();	
+							bodyA.entity.rigidBodyComponent.collisionBegin(info);	
 						}
 						if(bodyB.entity.rigidBodyComponent.collisionBegin){
-							bodyB.entity.rigidBodyComponent.collisionBegin();
+							bodyB.entity.rigidBodyComponent.collisionBegin(info);
 						}
+						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
-					AmmoUtil.collision[ptrA+"_"+ptrB] = true;
+					AmmoUtil.collision[ptrA+"_"+ptrB].separated = false;
 					break;
 				}
 			}
-			if(AmmoUtil.collision[ptrA+"_"+ptrB] === false){
-				if(bodyA.entity.rigidBodyComponent.collisionEnd){
-					bodyA.entity.rigidBodyComponent.collisionEnd();	
-				}
-				if(bodyB.entity.rigidBodyComponent.collisionEnd){
-					bodyB.entity.rigidBodyComponent.collisionEnd();
-				}
-				delete AmmoUtil.collision[ptrA+"_"+ptrB];
+        	}
+        	for(var key in AmmoUtil.collision){
+			if(AmmoUtil.collision.hasOwnProperty(key)){
+        			if(AmmoUtil.collision[key].separated === true){
+					var bodyA = AmmoUtil.collision[key].bodyA;
+					var bodyB = AmmoUtil.collision[key].bodyB;
+					if(bodyA.entity.rigidBodyComponent.collisionEnd){
+						bodyA.entity.rigidBodyComponent.collisionEnd();	
+					}
+					if(bodyB.entity.rigidBodyComponent.collisionEnd){
+						bodyB.entity.rigidBodyComponent.collisionEnd();
+					}
+					delete AmmoUtil.collision[key];
+        			}
 			}
         	}
 	};
