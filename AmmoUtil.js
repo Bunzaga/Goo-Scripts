@@ -369,10 +369,10 @@ AmmoUtil.CollisionFlags = {
 		tc.setUpdated();
   	};
   	RigidBodyComponent.prototype.setTranslation = function(vec3){
-  		var col = this.entity.getComponent('ColliderComponent');
+  		var col = this.body.entity.getComponent('ColliderComponent');
   		if(col.offset){
 			vec.setv(collider.offset);
-			this.entity.transformComponent.transform.rotation.applyPost(vec);
+			this.body.entity.transformComponent.transform.rotation.applyPost(vec);
 			vec3.subv(vec);
 		}
   		pvec.setValue(vec3.x, vec3.y, vec3.z);
