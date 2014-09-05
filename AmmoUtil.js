@@ -103,7 +103,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
 					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
-					break;
+					//break;
 				}
 			}
         	}
