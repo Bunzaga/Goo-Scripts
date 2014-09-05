@@ -109,7 +109,7 @@ AmmoUtil.createAmmoSystem = function(args){
         	}
         	for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-        			if(AmmoUtil.collision[key].separated > 1){
+        			if(AmmoUtil.collision[key].separated > 2){
 					var bodyA = AmmoUtil.collision[key].bodyA;
 					var bodyB = AmmoUtil.collision[key].bodyB;
 					if(bodyA){
