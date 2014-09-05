@@ -62,18 +62,21 @@ AmmoUtil.createAmmoSystem = function(args){
 			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
-				console.log('-----');
-				console.log(pt.get_m_lifeTime());
-				if(pt.getDistance() < 0.0){
-					console.log(pt);
-					pt.getPositionWorldOnA(pvec);
-        				pt.getPositionWorldOnB(pvec2);
-        			
-					var normalOnB = pt.get_m_normalWorldOnB();
-					console.log(bodyA.entity);
-					console.log('hit');
-					console.log(bodyB.entity);
-					break;
+				if(pt.get_m_lifeTime() === 1){
+					if(pt.getDistance() < 0.0){
+						console.log(pt);
+						console.log('-----');
+						console.log(pt.get_m_lifeTime());
+						pt.getPositionWorldOnA(pvec);
+	        				pt.getPositionWorldOnB(pvec2);
+	        			
+						var normalOnB = pt.get_m_normalWorldOnB();
+						console.log(bodyA.entity);
+						console.log('hit');
+						console.log(bodyB.entity);
+						console.log('=====');
+						break;
+					}
 				}
 			}
         	}
