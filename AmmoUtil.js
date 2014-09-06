@@ -75,7 +75,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
-					if(AmmoUtil.collision[ptrA+"_"+ptrB] === undefined){
+					if(AmmoUtil.collision[bodyA.entity.id+"_"+bodyB.entity.id] === undefined){
 						pt.getPositionWorldOnA(pvec);
 	        				pt.getPositionWorldOnB(pvec2);
 						var normalOnB = pt.get_m_normalWorldOnB();
@@ -90,9 +90,9 @@ AmmoUtil.createAmmoSystem = function(args){
 							dataA:{pointA:pointOnA, pointB:pointOnB, normal:normalOnB},
 							dataB:{pointA:pointOnB, pointB:pointOnA, normal:normalOnB}};
 						
-						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
+						AmmoUtil.collision[bodyA.entity.id+"_"+bodyB.entity.id] = info;
 					}
-					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
+					AmmoUtil.collision[bodyA.entity.id+"_"+bodyB.entity.id].separated = 0;
 				//	break;
 				}
 			}
