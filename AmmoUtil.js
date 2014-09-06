@@ -133,7 +133,11 @@ AmmoUtil.createAmmoSystem = function(args){
 							if(bodyA.entity){
 								if(bodyA.entity.rigidBodyComponent){
 									if(bodyA.entity.rigidBodyComponent.collisionEnd){
-										bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
+										if(bodyB){
+											if(bodyB.entity){
+												bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
+											}
+										}
 									}
 								}
 							}
@@ -143,7 +147,11 @@ AmmoUtil.createAmmoSystem = function(args){
 							if(bodyB.entity){
 								if(bodyB.entity.rigidBodyComponent){
 									if(bodyB.entity.rigidBodyComponent.collisionEnd){
-										bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);
+										if(bodyA){
+											if(bodyA.entity){
+												bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);	
+											}
+										}
 									}
 								}
 							}
