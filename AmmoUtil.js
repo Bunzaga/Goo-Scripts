@@ -155,37 +155,37 @@ AmmoUtil.createAmmoSystem = function(args){
         	}
 	};
 	AmmoSystem.prototype.deleted = function(ent){
-		console.log('removing stuff '+ent.name);
-		console.log(ent);
+	//	console.log('removing stuff '+ent.name);
+	//	console.log(ent);
 		if(ent.rigidBodyComponent){
-			console.log('there is a rb component');
-			console.log(ent.rigidBodyComponent.ptr);
+	//		console.log('there is a rb component');
+	//		console.log(ent.rigidBodyComponent.ptr);
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
-				console.log('there is a body');
+	//			console.log('there is a body');
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				console.log('deleted rb pointer');
+	//			console.log('deleted rb pointer');
 				if(body.motionState){
-					console.log('there is a motion state');
+	//				console.log('there is a motion state');
 					Ammo.destroy(body.motionState);
-					console.log('removed motion state');
+	//				console.log('removed motion state');
 				}
 				this.ammoWorld.removeCollisionObject(body);
-				console.log('removed collision object');
+	//			console.log('removed collision object');
 			//	this.ammoWorld.removeRigidBody(body);
 				Ammo.destroy(body);
-				console.log('destroyed body');
+	//			console.log('destroyed body');
 			}
 		}
 		if(ent.colliderComponent){
-			console.log('there is a collider component');
+	//		console.log('there is a collider component');
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 			if(collider){
-				console.log('there is a collider');
+	//			console.log('there is a collider');
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
-				console.log('deleted collider pointer');
+	//			console.log('deleted collider pointer');
 				Ammo.destroy(collider);
-				console.log('destroyed collider');
+	//			console.log('destroyed collider');
 			}
 		}
 	};
