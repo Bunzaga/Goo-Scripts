@@ -136,6 +136,7 @@ AmmoUtil.createAmmoSystem = function(args){
 							if(bodyA.entity){
 								if(bodyA.entity.rigidBodyComponent){
 									if(bodyA.entity.rigidBodyComponent.collisionEnd){
+										var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 										if(bodyB){
 											if(bodyB.entity){
 												bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
@@ -151,6 +152,7 @@ AmmoUtil.createAmmoSystem = function(args){
 							if(bodyB.entity){
 								if(bodyB.entity.rigidBodyComponent){
 									if(bodyB.entity.rigidBodyComponent.collisionEnd){
+										var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
 										if(bodyA){
 											if(bodyA.entity){
 												bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);	
