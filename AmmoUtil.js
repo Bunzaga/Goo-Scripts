@@ -69,7 +69,7 @@ AmmoUtil.createAmmoSystem = function(args){
 				continue;
 		        }
 		        var ptrA = manifold.getBody0();
-		        var ptrB = manifold.getBody1()
+		        var ptrB = manifold.getBody1();
 		        var bodyA = AmmoUtil.rigidBodies[ptrA];
 			var bodyB = AmmoUtil.rigidBodies[ptrB];
 			for (var j = 0; j < num_contacts; j++){
@@ -87,21 +87,20 @@ AmmoUtil.createAmmoSystem = function(args){
 							first:true,
 							ptrA:ptrA,
 							ptrB:ptrB,
-							dataA:{other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB},
-							dataB:{other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB}};
+							dataA:{pointA:pointOnA, pointB:pointOnB, normal:normalOnB},
+							dataB:{pointA:pointOnB, pointB:pointOnA, normal:normalOnB}};
 						
 						AmmoUtil.collision[ptrA+"_"+ptrB] = info;
 					}
 					AmmoUtil.collision[ptrA+"_"+ptrB].separated = 0;
-					break;
+				//	break;
 				}
 			}
         	}
         	for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
-				var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
-				var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 				if(true === AmmoUtil.collision[key].first){
+					var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
 					console.log('First Collision');
 					AmmoUtil.collision[key].first = false;	
 					if(bodyA){
@@ -109,16 +108,19 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(bodyA.entity){
 							if(bodyA.entity.rigidBodyComponent){
 								if(bodyA.entity.rigidBodyComponent.collisionBegin){
+									AmmoUtil.collision[key].dataA.other = bodyB.entity;
 									bodyA.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataA);
 								}
 							}
 						}
 					}
+					var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 					if(bodyB){
 						console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
 						if(bodyB.entity){
 							if(bodyB.entity.rigidBodyComponent){
 								if(bodyB.entity.rigidBodyComponent.collisionBegin){
+									AmmoUtil.collision[key].dataB.other = bodyA.entity;
 									bodyB.entity.rigidBodyComponent.collisionBegin(AmmoUtil.collision[key].dataB);
 								}
 							}
@@ -128,6 +130,7 @@ AmmoUtil.createAmmoSystem = function(args){
 				else{
 					if(AmmoUtil.collision[key].separated > 1){
 						console.log('Collision Ended');
+						var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
 						if(bodyA){
 							console.log("bodyA: "+AmmoUtil.collision[key].ptrA);
 							if(bodyA.entity){
@@ -142,6 +145,7 @@ AmmoUtil.createAmmoSystem = function(args){
 								}
 							}
 						}
+						var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 						if(bodyB){
 							console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
 							if(bodyB.entity){
