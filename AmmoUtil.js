@@ -131,12 +131,12 @@ AmmoUtil.createAmmoSystem = function(args){
 					if(AmmoUtil.collision[key].separated > 1){
 						console.log('Collision Ended');
 						var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
+						var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 						if(bodyA){
 							console.log("bodyA: "+AmmoUtil.collision[key].ptrA);
 							if(bodyA.entity){
 								if(bodyA.entity.rigidBodyComponent){
 									if(bodyA.entity.rigidBodyComponent.collisionEnd){
-										var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 										if(bodyB){
 											if(bodyB.entity){
 												bodyA.entity.rigidBodyComponent.collisionEnd(bodyB.entity);
@@ -146,16 +146,16 @@ AmmoUtil.createAmmoSystem = function(args){
 								}
 							}
 						}
-						var bodyB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrB];
 						if(bodyB){
-							console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
-							if(bodyB.entity){
-								if(bodyB.entity.rigidBodyComponent){
-									if(bodyB.entity.rigidBodyComponent.collisionEnd){
-										var bodyA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].ptrA];
-										if(bodyA){
-											if(bodyA.entity){
-												bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);	
+							if(bodyA !== bodyB){
+								console.log("bodyB: "+AmmoUtil.collision[key].ptrB);
+								if(bodyB.entity){
+									if(bodyB.entity.rigidBodyComponent){
+										if(bodyB.entity.rigidBodyComponent.collisionEnd){
+											if(bodyA){
+												if(bodyA.entity){
+													bodyB.entity.rigidBodyComponent.collisionEnd(bodyA.entity);	
+												}
 											}
 										}
 									}
