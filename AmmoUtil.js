@@ -158,6 +158,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		console.log('removing stuff '+ent.name);
 		if(ent.rigidBodyComponent){
 			console.log('there is a rb component');
+			console.log(ent.rigidBodyComponent.ptr);
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
 				console.log('there is a body');
