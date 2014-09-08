@@ -446,6 +446,12 @@ AmmoUtil.CollisionFlags = {
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
   		this.body.applyTorque(pvec);
   	};
+  	RigidBodyComponent.prototype.addToAmmoSystem = function(system){
+  		system.ammoWorld.addRigidBody(this.body);
+  	};
+  	RigidBodyComponent.prototype.removeFromAmmoSystem = function(system){
+  		system.ammoWorld.removeCollisionObject(this.body);
+  	}
   	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
