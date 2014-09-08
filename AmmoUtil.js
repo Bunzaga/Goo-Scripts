@@ -174,12 +174,12 @@ AmmoUtil.createAmmoSystem = function(args){
 			}
 		}
 		if(ent.colliderComponent){
-			//var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
-			//if(collider){
-			//	delete AmmoUtil.colliders[ent.colliderComponent.ptr];
+			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
+			if(collider){
+				ent.clearComponent("ColliderComponent");
+				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 			//	Ammo.destroy(collider);
-			//}
-			ent.clearComponent("ColliderComponent");
+			}
 		}
 	};
 	
