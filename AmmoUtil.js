@@ -169,8 +169,7 @@ AmmoUtil.createAmmoSystem = function(args){
 				if(body.motionState){
 					Ammo.destroy(body.motionState);
 				}
-				this.ammoWorld.removeRigidBody(body);
-				//this.ammoWorld.removeCollisionObject(body);
+				this.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);
 			}
 		}
@@ -178,7 +177,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 			if(collider){
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
-				Ammo.destroy(collider);
+			//	Ammo.destroy(collider);
 			}
 		}
 	};
