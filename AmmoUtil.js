@@ -177,7 +177,6 @@ AmmoUtil.createAmmoSystem = function(args){
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 			if(collider){
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
-				ent.clearComponent("ColliderComponent");
 			//	Ammo.destroy(collider);
 			}
 		}
@@ -220,15 +219,15 @@ AmmoUtil.createAmmoSystem = function(args){
   			}
   		}
   		
-  		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
-  			var ent = ammoSystem._activeEntities[i];
-	  		if(ent.rigidBodyComponent){
+  		//for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
+  			//var ent = ammoSystem._activeEntities[i];
+	  		/*if(ent.rigidBodyComponent){
 				ent.clearComponent('RigidBodyComponent');
 			}
 			if(ent.colliderComponent){
 				ent.clearComponent('ColliderComponent');
-			}
-  		}
+			}*/
+  		//}
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
