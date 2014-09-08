@@ -204,21 +204,19 @@ AmmoUtil.createAmmoSystem = function(args){
 			}
 		}
   	
-  		for(var key in AmmoUtil.rigidBodies){
+  		/*for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
-  				var ent = AmmoUtil.rigidBodies[key].entity;
-  				ent.clearComponent('RigidBodyComponent');
-  				//var body = AmmoUtil.rigidBodies[key];
-				//delete AmmoUtil.rigidBodies[key];
-				//if(body.motionState){
-				//	Ammo.destroy(body.motionState);
-				//}
-				//ammoSystem.ammoWorld.removeCollisionObject(body);
-				//Ammo.destroy(body);	
+  				var body = AmmoUtil.rigidBodies[key];
+				delete AmmoUtil.rigidBodies[key];
+				if(body.motionState){
+					Ammo.destroy(body.motionState);
+				}
+				ammoSystem.ammoWorld.removeCollisionObject(body);
+				Ammo.destroy(body);	
   			}
   		}
   		
-  		/*for(var key in AmmoUtil.colliders){
+  		for(var key in AmmoUtil.colliders){
   			if(AmmoUtil.colliders.hasOwnProperty(key)){
   				var collider = AmmoUtil.colliders[key];
   				delete AmmoUtil.colliders[key];
@@ -226,15 +224,15 @@ AmmoUtil.createAmmoSystem = function(args){
   			}
   		}*/
   		
-  		//for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
-  			//var ent = ammoSystem._activeEntities[i];
-	  		/*if(ent.rigidBodyComponent){
+  		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
+  			var ent = ammoSystem._activeEntities[i];
+	  		if(ent.rigidBodyComponent){
 				ent.clearComponent('RigidBodyComponent');
 			}
 			if(ent.colliderComponent){
 				ent.clearComponent('ColliderComponent');
-			}*/
-  		//}
+			}
+  		}
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
