@@ -66,6 +66,7 @@ AmmoUtil.createAmmoSystem = function(args){
 		        //var ptrB = manifold.getBody1();
 		        var bodyA = AmmoUtil.rigidBodies[manifold.getBody0()];
 			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
+			
 			for (var j = 0; j < num_contacts; j++){
 				var pt = manifold.getContactPoint(j);
 				if(pt.getDistance() < 0.0){
@@ -100,7 +101,7 @@ AmmoUtil.createAmmoSystem = function(args){
 					AmmoUtil.collision[key].first = false;
 					console.log('First Collision');
 					console.log('-- EntityA --');
-					var entA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].entityA];
+					var entA = AmmoUtil.collision[key].entityA;
 					console.log(entA);
 					if(entA){
 						var rbc = entA.getComponent('RigidBodyComponent');
@@ -112,7 +113,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						}
 					}
 					console.log('-- EntityB --');
-					var entB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].entityB];
+					var entB = AmmoUtil.collision[key].entityB;
 					console.log(entB);
 					if(entB){
 						var rbc = entB.getComponent('RigidBodyComponent');
@@ -127,8 +128,8 @@ AmmoUtil.createAmmoSystem = function(args){
 				else{
 					if(AmmoUtil.collision[key].separated > 1){
 						console.log('Collision Ended');
-						var entA = AmmoUtil.rigidBodies[AmmoUtil.collision[key].entityA];
-						var entB = AmmoUtil.rigidBodies[AmmoUtil.collision[key].entityB];
+						var entA = AmmoUtil.collision[key].entityA;
+						var entB = AmmoUtil.collision[key].entityB;
 						console.log(entA);
 						if(entA){
 							var rbc = entA.getComponent("RigidBodyComponent");
