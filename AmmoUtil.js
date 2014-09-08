@@ -466,7 +466,6 @@ AmmoUtil.CollisionFlags = {
   		pvec = pvec || new Ammo.btVector3();
   		pvec.setValue(args.halfExtents[0], args.halfExtents[1], args.halfExtents[2]);
   		this.shape = new Ammo.btBoxShape(pvec);
-  		this.ptr = this.shape.a || this.shape.ptr;
 		AmmoUtil.colliders[this.ptr] = this;
   	}
   	BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
