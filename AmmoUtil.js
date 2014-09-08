@@ -208,7 +208,6 @@ AmmoUtil.createAmmoSystem = function(args){
 					Ammo.destroy(body.motionState);
 				}
 				ammoSystem.ammoWorld.removeCollisionObject(body);
-			//	ammoSystem.ammoWorld.removeRigidBody(body);
 				Ammo.destroy(body);	
   			}
   		}
@@ -217,11 +216,11 @@ AmmoUtil.createAmmoSystem = function(args){
   			if(AmmoUtil.colliders.hasOwnProperty(key)){
   				var collider = AmmoUtil.colliders[key];
   				delete AmmoUtil.colliders[key];
-  				Ammo.destroy(collider);
+  				//Ammo.destroy(collider);
   			}
   		}
   		
-  		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
+  		/*for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
 	  		if(ent.rigidBodyComponent){
 				ent.clearComponent('RigidBodyComponent');
@@ -229,7 +228,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(ent.colliderComponent){
 				ent.clearComponent('ColliderComponent');
 			}
-  		}
+  		}*/
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
