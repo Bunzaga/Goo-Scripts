@@ -48,6 +48,11 @@ AmmoUtil.createAmmoSystem = function(args){
 	};
 	AmmoSystem.prototype.process = function(entities, tpf) {
 		this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
+		for(var i = 0, ilen = entities.length; i < ilen; i++){
+			if(entities[i].rigidBodyComponent.body.getMotionState()){
+				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
+			}
+		}
 		
 		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
@@ -155,11 +160,6 @@ AmmoUtil.createAmmoSystem = function(args){
 				}
 			}
         	}
-        	for(var i = 0, ilen = entities.length; i < ilen; i++){
-			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
-			}
-		}
 	};
 	AmmoSystem.prototype.deleted = function(ent){
 		if(ent.rigidBodyComponent){
