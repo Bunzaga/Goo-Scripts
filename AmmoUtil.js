@@ -194,30 +194,37 @@ AmmoUtil.createAmmoSystem = function(args){
   AmmoUtil.destroyAmmoSystem = function(world, ammoSystem){
   	if(ammoSystem){
   		AmmoUtil.ready = false;
+  		var index = world._systems.indexOf(ammoSystem);
+  		if(index !== -1){
+  			world._systems.splice(index, 1);
+  		}
   		for(var key in AmmoUtil.collision){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
 				delete AmmoUtil.collision[key];
 			}
 		}
+  	
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
-  				var body = AmmoUtil.rigidBodies[key];
-				delete AmmoUtil.rigidBodies[key];
-				if(body.motionState){
-					Ammo.destroy(body.motionState);
-				}
-				ammoSystem.ammoWorld.removeCollisionObject(body);
-				Ammo.destroy(body);	
+  				var ent = AmmoUtil.rigidBodies[key].entity;
+  				ent.clearComponent('RigidBodyComponent');
+  				//var body = AmmoUtil.rigidBodies[key];
+				//delete AmmoUtil.rigidBodies[key];
+				//if(body.motionState){
+				//	Ammo.destroy(body.motionState);
+				//}
+				//ammoSystem.ammoWorld.removeCollisionObject(body);
+				//Ammo.destroy(body);	
   			}
   		}
   		
-  		for(var key in AmmoUtil.colliders){
+  		/*for(var key in AmmoUtil.colliders){
   			if(AmmoUtil.colliders.hasOwnProperty(key)){
   				var collider = AmmoUtil.colliders[key];
   				delete AmmoUtil.colliders[key];
   				Ammo.destroy(collider);
   			}
-  		}
+  		}*/
   		
   		//for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			//var ent = ammoSystem._activeEntities[i];
@@ -239,11 +246,6 @@ AmmoUtil.createAmmoSystem = function(args){
   		delete ammoSystem.overlappingPairCache;
   		delete ammoSystem.dispatcher;
   		delete ammoSystem.collisionConfiguration;
-
-  		var index = world._systems.indexOf(ammoSystem);
-  		if(index !== -1){
-  			world._systems.splice(index, 1);
-  		}
   	}
   };
   
