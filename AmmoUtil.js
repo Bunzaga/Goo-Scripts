@@ -149,19 +149,11 @@ AmmoUtil.createAmmoSystem = function(args){
 		if(ent.rigidBodyComponent){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
-				console.log('found body');
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
-					console.log('body has a motion state');
 					Ammo.destroy(body.getMotionState());
-					console.log('destroyed motion state');
 				}
-				else{
-					console.log('could not find motion state');
-				}
-				//this.ammoWorld.removeCollisionObject(body);
-				this.ammoWorld.removeRigidBody(body);
-				console.log('removing RigidBody.');
+				this.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);
 			}
 		}
@@ -197,12 +189,12 @@ AmmoUtil.createAmmoSystem = function(args){
 			}
 		}
   	
-  		/*for(var key in AmmoUtil.rigidBodies){
+  		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
   				var body = AmmoUtil.rigidBodies[key];
 				delete AmmoUtil.rigidBodies[key];
-				if(body.motionState){
-					Ammo.destroy(body.motionState);
+				if(body.getMotionState()){
+					Ammo.destroy(body.getMotionState());
 				}
 				ammoSystem.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);	
@@ -215,7 +207,7 @@ AmmoUtil.createAmmoSystem = function(args){
   				delete AmmoUtil.colliders[key];
   				Ammo.destroy(collider);
   			}
-  		}*/
+  		}
   		
   		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
