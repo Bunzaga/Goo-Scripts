@@ -161,7 +161,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
 			if(collider){
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
-			//	Ammo.destroy(collider);
+				Ammo.destroy(collider);
 			}
 			ent.clearComponent('ColliderComponent');
 		}
