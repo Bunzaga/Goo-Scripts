@@ -150,8 +150,8 @@ AmmoUtil.createAmmoSystem = function(args){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(body.getMotionState()){
-					Ammo.destroy(body.getMotionState());
+				if(ent.rigidBodyComponent.motionState){
+					Ammo.destroy(ent.rigidBodyComponent.motionState);
 				}
 				this.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);
@@ -192,9 +192,10 @@ AmmoUtil.createAmmoSystem = function(args){
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
   				var body = AmmoUtil.rigidBodies[key];
+  				var ent = body.entity;
 				delete AmmoUtil.rigidBodies[key];
-				if(body.getMotionState()){
-					Ammo.destroy(body.getMotionState());
+				if(ent.rigidBodyComponent.motionState){
+					Ammo.destroy(ent.rigidBodyComponent.motionState);
 				}
 				ammoSystem.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);	
@@ -205,7 +206,7 @@ AmmoUtil.createAmmoSystem = function(args){
   			if(AmmoUtil.colliders.hasOwnProperty(key)){
   				var collider = AmmoUtil.colliders[key];
   				delete AmmoUtil.colliders[key];
-  				Ammo.destroy(collider);
+  				//Ammo.destroy(collider);
   			}
   		}
   		
@@ -435,9 +436,9 @@ AmmoUtil.CollisionFlags = {
 		var body = this.body;
 		if(body){
 			delete AmmoUtil.rigidBodies[this.ptr];
-			if(body.motionState){
+			if(this.motionState){
 				console.log('deleting motionState');
-				Ammo.destroy(body.motionState);
+				Ammo.destroy(this.motionState);
 			}
 			system.ammoWorld.removeCollisionObject(body);
 			Ammo.destroy(body);
@@ -448,9 +449,9 @@ AmmoUtil.CollisionFlags = {
 				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
 				//Ammo.destroy(collider);
 			}
-			ent.clearComponent('RigidBodyComponent');
-			ent.clearComponent('ColliderComponent');
 		}
+		ent.clearComponent('RigidBodyComponent');
+		ent.clearComponent('ColliderComponent');
   	}
   	
   	var rigidBody = new RigidBodyComponent;
