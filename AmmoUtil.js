@@ -149,13 +149,19 @@ AmmoUtil.createAmmoSystem = function(args){
 		if(ent.rigidBodyComponent){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
+				console.log('found body');
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 				if(body.getMotionState()){
 					console.log('body has a motion state');
 					Ammo.destroy(body.getMotionState());
 					console.log('destroyed motion state');
 				}
-				this.ammoWorld.removeCollisionObject(body);
+				else{
+					console.log('could not find motion state');
+				}
+				//this.ammoWorld.removeCollisionObject(body);
+				this.ammoWorld.removeRigidBody(body);
+				console.log('removing RigidBody.');
 				Ammo.destroy(body);
 			}
 		}
