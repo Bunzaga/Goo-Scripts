@@ -437,7 +437,7 @@ AmmoUtil.CollisionFlags = {
 			delete AmmoUtil.rigidBodies[this.ptr];
 			if(body.motionState){
 				console.log('deleting motionState');
-				Ammo.destroy(body.motionState;
+				Ammo.destroy(body.motionState);
 			}
 			system.ammoWorld.removeCollisionObject(body);
 			Ammo.destroy(body);
