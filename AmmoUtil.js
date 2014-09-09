@@ -150,8 +150,8 @@ AmmoUtil.createAmmoSystem = function(args){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
 				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(body.motionState){
-					Ammo.destroy(body.motionState);
+				if(body.getMotionState()){
+					Ammo.destroy(body.getMotionState());
 				}
 				this.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);
