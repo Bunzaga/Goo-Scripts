@@ -67,8 +67,6 @@ AmmoUtil.createAmmoSystem = function(args){
 		        if(num_contacts === 0){
 				continue;
 		        }
-		        //var ptrA = manifold.getBody0();
-		        //var ptrB = manifold.getBody1();
 		        var bodyA = AmmoUtil.rigidBodies[manifold.getBody0()];
 			var bodyB = AmmoUtil.rigidBodies[manifold.getBody1()];
 			
@@ -88,8 +86,6 @@ AmmoUtil.createAmmoSystem = function(args){
 							first:true,
 							entityA:bodyA.entity,
 							entityB:bodyB.entity,
-							//ptrA:ptrA,
-							//ptrB:ptrB,
 							dataA:{other:bodyB.entity, pointA:pointOnA, pointB:pointOnB, normal:normalOnB},
 							dataB:{other:bodyA.entity, pointA:pointOnB, pointB:pointOnA, normal:normalOnB}};
 						
@@ -104,25 +100,18 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(AmmoUtil.collision.hasOwnProperty(key)){
 				if(true === AmmoUtil.collision[key].first){
 					AmmoUtil.collision[key].first = false;
-					console.log('First Collision');
-					console.log('-- EntityA --');
 					var entA = AmmoUtil.collision[key].entityA;
-					console.log(entA);
 					if(entA){
 						var rbc = entA.getComponent('RigidBodyComponent');
-						console.log(rbc);
 						if(rbc){
 							if(rbc.collisionBegin){
 								rbc.collisionBegin(AmmoUtil.collision[key].dataA);
 							}
 						}
 					}
-					console.log('-- EntityB --');
 					var entB = AmmoUtil.collision[key].entityB;
-					console.log(entB);
 					if(entB){
 						var rbc = entB.getComponent('RigidBodyComponent');
-						console.log(rbc);
 						if(rbc){
 							if(rbc.collisionBegin){
 								rbc.collisionBegin(AmmoUtil.collision[key].dataB);
@@ -132,23 +121,18 @@ AmmoUtil.createAmmoSystem = function(args){
 				}
 				else{
 					if(AmmoUtil.collision[key].separated > 1){
-						console.log('Collision Ended');
 						var entA = AmmoUtil.collision[key].entityA;
 						var entB = AmmoUtil.collision[key].entityB;
-						console.log(entA);
 						if(entA){
 							var rbc = entA.getComponent("RigidBodyComponent");
-							console.log(rbc);
 							if(rbc){
 								if(rbc.collisionEnd){
 									rbc.collisionEnd(entB);
 								}
 							}
 						}
-						console.log(entB);
 						if(entB){
 							var rbc = entB.getComponent("RigidBodyComponent");
-							console.log(rbc);
 							if(rbc){
 								if(rbc.collisionEnd){
 									rbc.collisionEnd(entA);
