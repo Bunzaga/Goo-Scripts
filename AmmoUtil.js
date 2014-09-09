@@ -435,12 +435,11 @@ AmmoUtil.CollisionFlags = {
 		var body = this.body;
 		if(body){
 			delete AmmoUtil.rigidBodies[this.ptr];
-				if(body.getMotionState()){
-					Ammo.destroy(body.getMotionState());
-				}
-				system.ammoWorld.removeCollisionObject(body);
-				Ammo.destroy(body);
+			if(body.getMotionState()){
+				Ammo.destroy(body.getMotionState());
 			}
+			system.ammoWorld.removeCollisionObject(body);
+			Ammo.destroy(body);
 		}
 		if(ent.colliderComponent){
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
