@@ -431,13 +431,13 @@ AmmoUtil.CollisionFlags = {
   		pvec.setValue(vec3[0], vec3[1], vec3[2]);
   		this.body.applyTorque(pvec);
   	};
-  	RigidBodyComponent.prototype.removeFromAmmoSystem = function(system){
+  	/*RigidBodyComponent.prototype.removeFromAmmoSystem = function(){
   		var ent = this.body.entity;
 		var body = this.body;
+		var system = ent._world.getSystem("AmmoSystem");
 		if(body){
 			delete AmmoUtil.rigidBodies[this.ptr];
 			if(this.motionState){
-			//console.log('deleting motionState');
 				Ammo.destroy(this.motionState);
 			}
 			system.ammoWorld.removeCollisionObject(body);
@@ -452,7 +452,7 @@ AmmoUtil.CollisionFlags = {
 		}
 		ent.clearComponent('RigidBodyComponent');
 		ent.clearComponent('ColliderComponent');
-  	}
+  	}*/
   	
   	var rigidBody = new RigidBodyComponent;
   	return rigidBody;
