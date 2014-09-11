@@ -202,7 +202,7 @@ AmmoUtil.createAmmoSystem = function(args){
 						if(rbc.motionState){
 							Ammo.destroy(rbc.motionState);
 						}
-						this.ammoWorld.removeCollisionObject(body);
+						ammoSystem.ammoWorld.removeCollisionObject(body);
 						Ammo.destroy(body);
 						ent.clearComponent('RigidBodyComponent');
 					}
