@@ -146,6 +146,7 @@ AmmoUtil.createAmmoSystem = function(args){
         	}
 	};
 	AmmoSystem.prototype.deleted = function(ent){
+		console.log('test123');
 		if(ent.rigidBodyComponent){
 			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
 			if(body){
