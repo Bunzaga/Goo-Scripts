@@ -190,29 +190,42 @@ AmmoUtil.createAmmoSystem = function(args){
 				delete AmmoUtil.collision[key];
 			}
 		}
-  	
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
-  				var body = AmmoUtil.rigidBodies[key];
-  				var ent = body.entity;
-				delete AmmoUtil.rigidBodies[key];
-				if(ent.rigidBodyComponent.motionState){
-					Ammo.destroy(ent.rigidBodyComponent.motionState);
+  				var rbc = ent.getComponent('RigidBodyComponent');
+				if(rbc){
+					var body = AmmoUtil.rigidBodies[rbc.ptr];
+					if(body){
+						delete AmmoUtil.rigidBodies[rbc.ptr];
+						if(rbc.motionState){
+							Ammo.destroy(rbc.motionState);
+						}
+						this.ammoWorld.removeCollisionObject(body);
+						Ammo.destroy(body);
+					}
+					ent.clearComponent('RigidBodyComponent');
 				}
-				ammoSystem.ammoWorld.removeCollisionObject(body);
-				Ammo.destroy(body);	
+				if(ent.colliderComponent){
+					var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
+					if(collider){
+						delete AmmoUtil.colliders[ent.colliderComponent.ptr];
+						//Ammo.destroy(collider);
+					}
+					ent.clearComponent('ColliderComponent');
+				}
   			}
   		}
   		
-  		for(var key in AmmoUtil.colliders){
-  			if(AmmoUtil.colliders.hasOwnProperty(key)){
-  				var collider = AmmoUtil.colliders[key];
-  				delete AmmoUtil.colliders[key];
+  		//for(var key in AmmoUtil.colliders){
+  		//	if(AmmoUtil.colliders.hasOwnProperty(key)){
+  		//		var collider = AmmoUtil.colliders[key];
+  		//		delete AmmoUtil.colliders[key];
   				//Ammo.destroy(collider);
-  			}
-  		}
+  		//		ent.clearComponent('ColliderComponent');
+  		//	}
+  		//}
   		
-  		for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
+  		/*for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
 	  		if(ent.rigidBodyComponent){
 				ent.clearComponent('RigidBodyComponent');
@@ -220,7 +233,7 @@ AmmoUtil.createAmmoSystem = function(args){
 			if(ent.colliderComponent){
 				ent.clearComponent('ColliderComponent');
 			}
-  		}
+  		}*/
   		Ammo.destroy(ammoSystem.ammoWorld);
   		Ammo.destroy(ammoSystem.solver);
   		Ammo.destroy(ammoSystem.overlappingPairCache);
