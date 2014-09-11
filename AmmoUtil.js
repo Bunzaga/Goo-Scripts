@@ -140,8 +140,11 @@ AmmoUtil.createAmmoSystem = function(args){
         	
         	this.ammoWorld.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		for(var i = 0, ilen = entities.length; i < ilen; i++){
-			if(entities[i].rigidBodyComponent.body.getMotionState()){
-				entities[i].rigidBodyComponent.updateVisuals(entities[i]);
+			var rbc = entities[i].getComponent('RigidBodyComponent');
+			if(rbc.motionState{
+				//if(rbc.active){
+					rbc.updateVisuals(entities[i]);
+				//}
 			}
 		}
 	};
