@@ -146,17 +146,18 @@ AmmoUtil.createAmmoSystem = function(args){
         	}
 	};
 	AmmoSystem.prototype.deleted = function(ent){
-		console.log('test123');
-		if(ent.rigidBodyComponent){
-			var body = AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
+		var rbc = ent.getComponent('RigidBodyComponent');
+		if(rbc){
+			var body = AmmoUtil.rigidBodies[rbc.ptr];
 			if(body){
-				delete AmmoUtil.rigidBodies[ent.rigidBodyComponent.ptr];
-				if(ent.rigidBodyComponent.motionState){
-					Ammo.destroy(ent.rigidBodyComponent.motionState);
+				delete AmmoUtil.rigidBodies[rbc.ptr];
+				if(rbc.motionState){
+					Ammo.destroy(rbc.motionState);
 				}
 				this.ammoWorld.removeCollisionObject(body);
 				Ammo.destroy(body);
 			}
+			ent.clearComponent('RigidBodyComponent');
 		}
 		if(ent.colliderComponent){
 			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
