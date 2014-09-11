@@ -449,6 +449,7 @@ AmmoUtil.CollisionFlags = {
 		var system = ent._world.getSystem("AmmoSystem");
 		if(body){
 			system.ammoWorld.addRigidBody(body);
+			this.enabled = true;
 		}
   	}
   	RigidBodyComponent.prototype.removeFromAmmoSystem = function(){
@@ -457,6 +458,7 @@ AmmoUtil.CollisionFlags = {
 		var system = ent._world.getSystem("AmmoSystem");
 		if(body){
 			system.ammoWorld.removeCollisionObject(body);
+			this.enabled = false;
 		}
   	}
   	
