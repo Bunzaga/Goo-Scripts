@@ -159,10 +159,11 @@ AmmoUtil.createAmmoSystem = function(args){
 			}
 			ent.clearComponent('RigidBodyComponent');
 		}
-		if(ent.colliderComponent){
-			var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
+		var cc = ent.getComponent('ColliderComponent');
+		if(cc){
+			var collider = AmmoUtil.colliders[cc.ptr];
 			if(collider){
-				delete AmmoUtil.colliders[ent.colliderComponent.ptr];
+				delete AmmoUtil.colliders[cc.ptr];
 				//Ammo.destroy(collider);
 			}
 			ent.clearComponent('ColliderComponent');
@@ -192,38 +193,30 @@ AmmoUtil.createAmmoSystem = function(args){
 		}
   		for(var key in AmmoUtil.rigidBodies){
   			if(AmmoUtil.rigidBodies.hasOwnProperty(key)){
-  				var rbc = ent.getComponent('RigidBodyComponent');
-				if(rbc){
-					var body = AmmoUtil.rigidBodies[rbc.ptr];
-					if(body){
+  				var body = AmmoUtil.rigidBodies[key];
+  				var ent = body.entity;
+  				if(ent){
+	  				var rbc = ent.getComponent('RigidBodyComponent');
+					if(rbc){
 						delete AmmoUtil.rigidBodies[rbc.ptr];
 						if(rbc.motionState){
 							Ammo.destroy(rbc.motionState);
 						}
 						this.ammoWorld.removeCollisionObject(body);
 						Ammo.destroy(body);
+						ent.clearComponent('RigidBodyComponent');
 					}
-					ent.clearComponent('RigidBodyComponent');
-				}
-				if(ent.colliderComponent){
-					var collider = AmmoUtil.colliders[ent.colliderComponent.ptr];
-					if(collider){
-						delete AmmoUtil.colliders[ent.colliderComponent.ptr];
+					var cc = ent.getComponent('ColliderComponent');
+					if(cc){
+						delete AmmoUtil.colliders[cc.ptr];
 						//Ammo.destroy(collider);
+						ent.clearComponent('ColliderComponent');	
 					}
-					ent.clearComponent('ColliderComponent');
-				}
+  				}
+  				
   			}
   		}
-  		
-  		//for(var key in AmmoUtil.colliders){
-  		//	if(AmmoUtil.colliders.hasOwnProperty(key)){
-  		//		var collider = AmmoUtil.colliders[key];
-  		//		delete AmmoUtil.colliders[key];
-  				//Ammo.destroy(collider);
-  		//		ent.clearComponent('ColliderComponent');
-  		//	}
-  		//}
+  				
   		
   		/*for(var i = ammoSystem._activeEntities.length-1; i >= 0; i--){
   			var ent = ammoSystem._activeEntities[i];
