@@ -9,7 +9,7 @@
 		}
 		var node = {previous:null, next:null, callback:callback};
 		if(undefined === priority){
-			eventList[e].addFirst(node);
+			eventList[e].addLast(node);
 		}
 		else{
 			node.priority = priority;
