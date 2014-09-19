@@ -17,13 +17,13 @@
     if (connecting) {
       gamepads[gamepad.index] = gamepad;
       console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-      gp.index, gp.id,
-      gp.buttons.length, gp.axes.length);
-    } else {
+      gamepad.index, gamepad.id,
+      gamepad.buttons.length, gamepad.axes.length);
+    }else{
       delete gamepads[gamepad.index];
       console.log("Gamepad removed at index %d: %s. %d buttons, %d axes.",
-      gp.index, gp.id,
-      gp.buttons.length, gp.axes.length);
+      gamepad.index, gamepad.id,
+      gamepad.buttons.length, gamepad.axes.length);
     }
   }
   
@@ -40,7 +40,7 @@
 			}
 		}
 		window.removeEventListener("gamepadconnected", stickAdded, false);
-    window.removeEventListener("gamepaddisconnected", stickRemoved, false);
+		window.removeEventListener("gamepaddisconnected", stickRemoved, false);
 		StickInput.ready = false;
 	};
 
