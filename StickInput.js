@@ -27,9 +27,9 @@
     }
   }
   
-  StickInput.setup = function(){
-		window.addEventListener("gamepadconnected", stickAdded}, false);
-    window.addEventListener("gamepaddisconnected", stickRemoved}, false);
+	StickInput.setup = function(){
+		window.addEventListener("gamepadconnected", stickAdded, false);
+		window.addEventListener("gamepaddisconnected", stickRemoved, false);
 		StickInput.ready = true;
 	}
 	StickInput.cleanup = function(){
@@ -39,8 +39,8 @@
 				//KeyInput.off(Number(i));
 			}
 		}
-		window.removeEventListener("gamepadconnected", stickAdded}, false);
-    window.removeEventListener("gamepaddisconnected", stickRemoved}, false);
+		window.removeEventListener("gamepadconnected", stickAdded, false);
+    window.removeEventListener("gamepaddisconnected", stickRemoved, false);
 		StickInput.ready = false;
 	};
 
