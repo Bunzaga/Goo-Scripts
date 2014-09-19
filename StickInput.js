@@ -1,6 +1,8 @@
+/****  This script is a work in progress and is not ready for use ****/
 "use strict";
 (function(window, document, undefined){
   var StickInput = {};
+  var haveEvents = 'GamepadEvent' in window;
   var gamepads = {};
   StickInput.ready = false;
   
@@ -26,6 +28,11 @@
       gamepad.buttons.length, gamepad.axes.length);
     }
   }
+  
+  function pollStatus(){
+  	
+  }
+  
   
 	StickInput.setup = function(){
 		window.addEventListener("gamepadconnected", stickAdded, false);
