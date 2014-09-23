@@ -15,9 +15,12 @@
 		MouseInput.wheelDelta = 0;
 		
 		document.addEventListener("contextmenu", contextMenu, false);
-		document.documentElement.addEventListener('mousedown', mouseDown, false);
-		document.documentElement.addEventListener('mouseup', mouseUp, false);
-		document.documentElement.addEventListener('mousemove', mouseMove, false);
+		//document.documentElement.addEventListener('mousedown', mouseDown, false);
+		//document.documentElement.addEventListener('mouseup', mouseUp, false);
+		//document.documentElement.addEventListener('mousemove', mouseMove, false);
+		ctx.domElement.addEventListener('mousedown', mouseDown, false);
+		ctx.domElement.addEventListener('mouseup', mouseUp, false);
+		ctx.domElement.addEventListener('mousemove', mouseMove, false);
 		ctx.domElement.addEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.addEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = true;
@@ -29,9 +32,12 @@
 			}
 		}
 		document.removeEventListener("contextmenu", contextMenu, false);
-		document.documentElement.removeEventListener('mousemove', mouseMove, false);
-		document.documentElement.removeEventListener('mousedown', mouseDown, false);
-		document.documentElement.removeEventListener('mouseup', mouseUp, false);
+		//document.documentElement.removeEventListener('mousemove', mouseMove, false);
+		//document.documentElement.removeEventListener('mousedown', mouseDown, false);
+		//document.documentElement.removeEventListener('mouseup', mouseUp, false);
+		ctx.domElement.removeEventListener('mousedown', mouseDown, false);
+		ctx.domElement.removeEventListener('mouseup', mouseUp, false);
+		ctx.domElement.removeEventListener('mousemove', mouseMove, false);
 		ctx.domElement.removeEventListener("mousewheel", mouseWheel, false);
 		ctx.domElement.removeEventListener("DOMMouseScroll", mouseWheel, false); // Firefox
 		MouseInput.ready = false;
