@@ -56,5 +56,7 @@ define("EventManager", ['https://bunzaga.github.io/Goo-Scripts/Require/NodeList.
 			EventManager.off(i);
 		}
 	};
+	var global = global || window;
+	global.EventManager = EventManager;
 	return EventManager;
 });
