@@ -1,4 +1,4 @@
-define("EventManager", ['https://bunzaga.github.io/Goo-Scripts/NodeList'], function(NodeList){
+define("EventManager", ['https://bunzaga.github.io/Goo-Scripts/Require/NodeList'], function(NodeList){
 "use strict";
 	var EventManager = {};
 	var eventList = {};
