@@ -2,6 +2,7 @@
   function Attachment(){}
   
   Attachment.prototype.attach = function(args, ctx, goo){
+  	console.log(ctx);
         ctx.parent = ctx.entity.transformComponent.parent.entity;
         //ctx.parent = ctx.parent.entity;
         //console.log("ctx.parent");
