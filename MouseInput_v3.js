@@ -11,8 +11,9 @@
 	MouseInput.old = new goo.Vector3();
 	MouseInput.position = new goo.Vector3();
 	MouseInput.wheelDelta = 0;
+	var gooCanvas = document.getElementById('goo');
 	MouseInput.setup = function(){
-		var gooCanvas = document.getElementById('goo');
+		//var gooCanvas = document.getElementById('goo');
 		document.addEventListener("contextmenu", contextMenu, false);
 		gooCanvas.addEventListener('mousedown', mouseDown, false);
 		gooCanvas.addEventListener('mouseup', mouseUp, false);
@@ -26,7 +27,7 @@
 				MouseInput.off(Number(i));
 			}
 		}
-		var gooCanvas = document.getElementById('goo');
+		//var gooCanvas = document.getElementById('goo');
 		document.removeEventListener("contextmenu", contextMenu, false);
 		gooCanvas.removeEventListener('mousedown', mouseDown, false);
 		gooCanvas.removeEventListener('mouseup', mouseUp, false);
@@ -184,13 +185,11 @@
 		var newY = e.pageY ? e.pageY : e.clientY + (document.documentElement.scrollTop) ||
 			(document.body.scrollTop - document.documentElement.scrollTop);
 
-		newX -= (domElement.getBoundingClientRect().left + domElement.offsetLeft);
-		newY -= (domElement.getBoundingClientRect().top + domElement.offsetTop);
+		newX -= (gooCanvas.getBoundingClientRect().left + gooCanvas.offsetLeft);
+		newY -= (gooCanvas.getBoundingClientRect().top + gooCanvas.offsetTop);
 		
 		MouseInput.movement.x = e.movementX;
 		MouseInput.movement.y = e.movementY;
-		//MouseInput.delta.x = newX - MouseInput.position.x;
-		//MouseInput.delta.y = newY - MouseInput.position.y;
 		MouseInput.old.x = MouseInput.position.x;
 		MouseInput.old.y = MouseInput.position.y;
 		MouseInput.position.x = newX;
