@@ -7,13 +7,12 @@
 	var domElement = undefined;
 	
 	var MouseInput = {};
+	MouseInput.movement = new goo.Vector3();
+	MouseInput.old = new goo.Vector3();
+	MouseInput.position = new goo.Vector3();
+	MouseInput.wheelDelta = 0;
 	MouseInput.setup = function(){
-	  var gooCanvas = document.getElementById('goo');
-		MouseInput.movement = new goo.Vector3();
-		MouseInput.old = new goo.Vector3();
-		MouseInput.position = new goo.Vector3();
-		MouseInput.wheelDelta = 0;
-		
+		var gooCanvas = document.getElementById('goo');
 		document.addEventListener("contextmenu", contextMenu, false);
 		gooCanvas.addEventListener('mousedown', mouseDown, false);
 		gooCanvas.addEventListener('mouseup', mouseUp, false);
@@ -39,25 +38,22 @@
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		return buttons[btn];
 	}
-	MouseInput.on = function(btnCode, callback){
+	MouseInput.on = function(btnCode, callback, priority){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		buttons[btn] = false;
 		if(callback){
 			if(typeof callback === 'function'){
 				if(!eventList["MouseInput"+btn]){
-					eventList["MouseInput"+btn] = {first:null, last:null};
+					eventList["MouseInput"+btn] = new NodeList();
 				}
 				var node = {previous:null, next:null, callback:callback};
-				if(null === eventList["MouseInput"+btn].first){
-					eventList["MouseInput"+btn].first = node;
-					eventList["MouseInput"+btn].last = node;
+				if(undefined === priority){
+					eventList["MouseInput"+btn].addFirst(node);
 				}
 				else{
-					node.next = eventList["MouseInput"+btn].first;
-					eventList["MouseInput"+btn].first.previous = node;
-					eventList["MouseInput"+btn].first = node;
+					node.priority = priority;
+					eventList["MouseInput"+btn].addSorted(node);
 				}
-					
 			}
 		}
 		return MouseInput;
@@ -65,14 +61,8 @@
 	MouseInput.off = function(btnCode, callback){
 		var btn = typeof btnCode === 'number' ? btnCode : stringToCode[btnCode];
 		if(undefined === callback){
-			if(eventList["MouseInput"+btn]){
-				while(null !== eventList["MouseInput"+btn].first){
-					var node = eventList["MouseInput"+btn].first;
-					eventList["MouseInput"+btn].first = node.next;
-					node.previous = null;
-					node.next = null;
-				}
-				eventList["MouseInput"+btn].last = null;
+			if(undefined !== eventList["MouseInput"+btn]){
+				eventList["MouseInput"+btn].clear();
 				delete eventList["MouseInput"+btn];
 			}
 			return MouseInput;
@@ -87,21 +77,10 @@
 					node = node.next;
 				}
 				if(node !== null){
-					if(eventList["MouseInput"+btn].first === node){
-						eventList["MouseInput"+btn].first = eventList["MouseInput"+btn].first.next;
-					}
-					if(eventList["MouseInput"+btn].last === node){
-						eventList["MouseInput"+btn].last = eventList["MouseInput"+btn].last.previous;
-					}
-					if(node.previous !== null){
-						node.previous.next = node.next;
-					}
-					if(node.next !== null ){
-						node.next.previous = node.previous;
-					}
+					eventList["MouseInput"+btn].remove(node);
 				}
 				if(null === eventList["MouseInput"+btn].first){
-					delete eventList["MouseInput"];
+					delete eventList["MouseInput"+btn];
 				}
 			}
 		}
