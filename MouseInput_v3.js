@@ -4,16 +4,15 @@
 	var eventList = {};
 	var buttons = {};
 	var stringToCode = {"Left":1, "Right":2, "Middle":4, "Wheel":8, "Move":16};
-	var domElement = undefined;
 	
 	var MouseInput = {};
 	MouseInput.movement = new goo.Vector3();
 	MouseInput.old = new goo.Vector3();
 	MouseInput.position = new goo.Vector3();
 	MouseInput.wheelDelta = 0;
-	var gooCanvas = document.getElementById('goo');
+	var gooCanvas = undefined;
 	MouseInput.setup = function(){
-		//var gooCanvas = document.getElementById('goo');
+		gooCanvas = document.getElementById('goo');
 		document.addEventListener("contextmenu", contextMenu, false);
 		gooCanvas.addEventListener('mousedown', mouseDown, false);
 		gooCanvas.addEventListener('mouseup', mouseUp, false);
@@ -27,7 +26,6 @@
 				MouseInput.off(Number(i));
 			}
 		}
-		//var gooCanvas = document.getElementById('goo');
 		document.removeEventListener("contextmenu", contextMenu, false);
 		gooCanvas.removeEventListener('mousedown', mouseDown, false);
 		gooCanvas.removeEventListener('mouseup', mouseUp, false);
