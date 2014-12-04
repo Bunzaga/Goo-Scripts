@@ -2,7 +2,7 @@
 // requires http://bunzaga.github.io/Goo-Scripts/NodeList.js
 (function(window, document, undefined){
 	var eventList = {};
-	var buttons = {};
+	var buttons = {1:false, 2:false, 4:false};
 	var stringToCode = {"Left":1, "Right":2, "Middle":4, "Wheel":8, "Move":16};
 	
 	var MouseInput = {};
