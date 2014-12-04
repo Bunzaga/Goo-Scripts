@@ -5,12 +5,6 @@
 	var stringToCode = {"Backspace":8,"Tab":9,"Enter":13,"Shift":16,"Ctrl":17,"Alt":18,"Pause":19,"Caps":20,"Esc":27,"Escape":27,"Space":32,"Page Up":33,"Page Down":34,"End":35,"Home":36,"Left":37,"Up":38,"Right":39,"Down":40,"Insert":45,"Delete":46,"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"A":65,"B":66,"C":67,"D":68,"E":69,"F":70,"G":71,"H":72,"I":73,"J":74,"K":75,"L":76,"M":77,"N":78,"O":79,"P":80,"Q":81,"R":82,"S":83,"T":84,"U":85,"V":86,"W":87,"X":88,"Y":89,"Z":90,"Windows":91,"Right Click":93,"Num0":96,"Num1":97,"Num2":98,"Num3":99,"Num4":100,"Num5":101,"Num6":102,"Num7":103,"Num8":104,"Num9":105,"Num*":106,"Num+":107,"Num-":109,"Num.":110,"Num/":111,"F1":112,"F2":113,"F3":114,"F4":115,"F5":116,"F6":117,"F7":118,"F8":119,"F9":120,"F10":121,"F11":122,"F12":123,"Num Lock":144,"Scroll Lock":145,"My Computer":182,"My Calculator":183,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222};
 	var eventList = {};
 	var KeyInput = {};
-	KeyInput.ready = false;
-	var gooCanvas = document.getElementById('goo');
-	console.log(gooCanvas);
-	console.log(gooCanvas.keyup);
-	gooCanvas.addEventListener("keyup", keyUp, false);
-	console.log(gooCanvas.keyup);
 	KeyInput.setup = function(){
 		var gooCanvas = document.getElementById('goo');
 		gooCanvas.addEventListener("keyup", keyUp, false);
@@ -26,7 +20,6 @@
 		var gooCanvas = document.getElementById('goo');
 		gooCanvas.removeEventListener("keyup", keyUp, false);
 		gooCanvas.removeEventListener("keydown", keyDown, false);
-		KeyInput.ready = false;
 	};
 	KeyInput.getKey = function(keyCode){
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
@@ -56,15 +49,16 @@
 		if(callback){
 			if(typeof callback === 'function'){
 				if(undefined === eventList["Key"+key]){
-			  	eventList["Key"+key] = new NodeList();
+			  		eventList["Key"+key] = new NodeList();
 				}
 				var node = {previous:null, next:null, callback:callback};
 				if(undefined !== priority){
-				  node.priority = priority;
-				  eventList["Key"+key].addSorted(node);
-				}else{
-  				eventList["Key"+key].addLast(node);
-  			}
+					node.priority = priority;
+					eventList["Key"+key].addSorted(node);
+				}
+				else{
+  					eventList["Key"+key].addLast(node);
+  				}
 			}
 		}
 		return KeyInput;
