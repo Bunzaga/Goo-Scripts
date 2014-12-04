@@ -6,9 +6,13 @@
 	var eventList = {};
 	var KeyInput = {};
 	KeyInput.ready = false;
+	var gooCanvas = document.getElementById('goo');
+	console.log(gooCanvas);
+	console.log(gooCanvas.keyup);
+	gooCanvas.addEventListener("keyup", keyUp, false);
+	console.log(gooCanvas.keyup);
 	KeyInput.setup = function(){
-	  var gooCanvas = document.getElementById('goo');
-	  console.log(gooCanvas);
+		var gooCanvas = document.getElementById('goo');
 		gooCanvas.addEventListener("keyup", keyUp, false);
 		gooCanvas.addEventListener("keydown", keyDown, false);
 		KeyInput.ready = true;
