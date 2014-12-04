@@ -3,7 +3,7 @@
 (function(window, document){
 var 	AmmoUtil = {};
 var 	pvec, pvec2, ptrans, pquat,
-	quat, goo, gooVec;
+	quat, gooVec;
 
 AmmoUtil.setup = function(){
 	pvec = new Ammo.btVector3();
