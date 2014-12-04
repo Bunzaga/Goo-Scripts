@@ -5,8 +5,7 @@ var 	AmmoUtil = {};
 var 	pvec, pvec2, ptrans, pquat,
 	quat, goo, gooVec;
 
-AmmoUtil.setup = function(_goo){
-	goo = _goo;
+AmmoUtil.setup = function(){
 	pvec = new Ammo.btVector3();
 	pvec2 = new Ammo.btVector3();
 	ptrans = new Ammo.btTransform();
