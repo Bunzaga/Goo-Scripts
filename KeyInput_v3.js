@@ -52,12 +52,12 @@
 			  		eventList["Key"+key] = new NodeList();
 				}
 				var node = {previous:null, next:null, callback:callback};
-				if(undefined !== priority){
-					node.priority = priority;
-					eventList["Key"+key].addSorted(node);
+				if(undefined === priority){
+					eventList["Key"+key].addFirst(node);
 				}
 				else{
-  					eventList["Key"+key].addLast(node);
+  					node.priority = priority;
+					eventList["Key"+key].addSorted(node);	
   				}
 			}
 		}
