@@ -242,25 +242,12 @@ AmmoUtil.createAmmoSystem = function(args){
   		delete ammoSystem.collisionConfiguration;
   	}
   };
-  
+  var scl = new goo.Vector3();
   AmmoUtil.getColliderFromGooShape = function(ent){
   	var col = null;
-  	var scl = [1,1,1];
-  	//	Math.abs(ent.transformComponent.transform.scale[0]),
-  	//	Math.abs(ent.transformComponent.transform.scale[1]),
-  	//	Math.abs(ent.transformComponent.transform.scale[2])];
-  		
+  	scl.copy(goo.Vector3.ONE);
   	function setScale(e1){
-  		console.log(e1.name);
-  		console.log('Before');
-  		console.log(scl[0]+","+scl[1]+","+scl[2]);
-	//	if(e1 !== ent){
-			scl[0] *= Math.abs(e1.transformComponent.transform.scale.x);
-			scl[1] *= Math.abs(e1.transformComponent.transform.scale.y);
-			scl[2] *= Math.abs(e1.transformComponent.transform.scale.z);
-	//	}
-		console.log('After');
-		console.log(scl[0]+","+scl[1]+","+scl[2]);
+		scl.mulVector(ent.transformComponent.transform.scale);
 	}
 	//fix scaleing issues for all parents
 	ent.traverseUp(setScale);
@@ -622,13 +609,12 @@ AmmoUtil.CollisionFlags = {
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.transform.translation);
-				var scl = new goo.Vector3(1,1,1);
+				scl.copy(goo.Vector3.ONE);
 				function setScale(ent){
-					scl.mulv(ent.transformComponent.transform.scale);
+					scl.mulVector(ent.transformComponent.transform.scale);
 				}
 				args.entity.traverseUp(setScale);
 				gooPos.mulv(scl);
-				//gooPos.mulv(args.entity.transformComponent.transform.scale);
 				if(childCol.offset){
 					vec.copy(childCol.offset);
 					child.transformComponent.transform.applyForwardVector(childCol.offset, vec);
