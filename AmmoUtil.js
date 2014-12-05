@@ -245,9 +245,11 @@ AmmoUtil.createAmmoSystem = function(args){
   
   AmmoUtil.getColliderFromGooShape = function(ent){
   	var col = null;
-  	var scl = new goo.Vector3(1,1,1);
+  	var scl = new goo.Vector3().copy(ent.transformComponent.transform.scale);
   	function setScale(e1){
-		scl.mulVector(e1.transformComponent.transform.scale);
+  		if(e1 !== ent){
+			scl.mulVector(e1.transformComponent.transform.scale);
+  		}
 	}
 	//fix scaleing issues for all parents
 	ent.traverseUp(setScale);
