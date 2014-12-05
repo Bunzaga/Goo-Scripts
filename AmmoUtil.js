@@ -255,7 +255,7 @@ AmmoUtil.createAmmoSystem = function(args){
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
   		if(md instanceof goo.Box){
-			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z});
+			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z]});
   		}else if(md instanceof goo.Sphere){
   			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl.x});
   		}else if(md instanceof goo.Quad){
