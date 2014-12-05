@@ -242,12 +242,12 @@ AmmoUtil.createAmmoSystem = function(args){
   		delete ammoSystem.collisionConfiguration;
   	}
   };
-  var scl = new goo.Vector3();
+  
   AmmoUtil.getColliderFromGooShape = function(ent){
   	var col = null;
-  	scl.copy(goo.Vector3.ONE);
+  	var scl = new goo.Vector3(1,1,1);
   	function setScale(e1){
-		scl.mulVector(ent.transformComponent.transform.scale);
+		scl.mulVector(e1.transformComponent.transform.scale);
 	}
 	//fix scaleing issues for all parents
 	ent.traverseUp(setScale);
@@ -255,16 +255,16 @@ AmmoUtil.createAmmoSystem = function(args){
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
   		if(md instanceof goo.Box){
-			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], md.zExtent * scl[2]]});
+			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z});
   		}else if(md instanceof goo.Sphere){
-  			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl[0]});
+  			col = AmmoUtil.createSphereColliderComponent({radius:md.radius * scl.x});
   		}else if(md instanceof goo.Quad){
-  			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl[0], md.yExtent * scl[1], 0.01]});
+  			col = AmmoUtil.createBoxColliderComponent({halfExtents:[md.xExtent * scl.x, md.yExtent * scl.y, 0.01]});
   		}else if(md instanceof goo.Cylinder){
-  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl[0], halfHeight:scl[2] * 0.5});
+  			col = AmmoUtil.createCylinderZColliderComponent({radius:md.radius * scl.x, halfHeight:scl.z * 0.5});
   		}else if(md instanceof goo.Cone){
-  			var offset = new goo.Vector3(0, 0, -md.height * scl[2] * 0.5);
-  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl[0], height:md.height * scl[2]});
+  			var offset = new goo.Vector3(0, 0, -md.height * scl.z * 0.5);
+  			col = AmmoUtil.createConeZColliderComponent({radius:md.radius * scl.x, height:md.height * scl.z});
   			col.offset = offset;
   		}else{
   			// mesh
@@ -609,7 +609,7 @@ AmmoUtil.CollisionFlags = {
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.transform.translation);
-				scl.copy(goo.Vector3.ONE);
+				var scl = new goo.Vector3(1,1,1);
 				function setScale(ent){
 					scl.mulVector(ent.transformComponent.transform.scale);
 				}
