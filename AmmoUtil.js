@@ -251,13 +251,13 @@ AmmoUtil.createAmmoSystem = function(args){
   	//	Math.abs(ent.transformComponent.transform.scale[2])];
   		
   	function setScale(e1){
-  		console.log(e1);
+  		console.log(e1.name);
   		console.log('Before');
   		console.log(scl[0]+","+scl[1]+","+scl[2]);
 	//	if(e1 !== ent){
-			scl[0] *= Math.abs(e1.transformComponent.transform.scale[0]);
-			scl[1] *= Math.abs(e1.transformComponent.transform.scale[1]);
-			scl[2] *= Math.abs(e1.transformComponent.transform.scale[2]);
+			scl[0] *= Math.abs(e1.transformComponent.transform.scale.x);
+			scl[1] *= Math.abs(e1.transformComponent.transform.scale.y);
+			scl[2] *= Math.abs(e1.transformComponent.transform.scale.z);
 	//	}
 		console.log('After');
 		console.log(scl[0]+","+scl[1]+","+scl[2]);
@@ -622,7 +622,13 @@ AmmoUtil.CollisionFlags = {
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.transform.translation);
-				gooPos.mulv(args.entity.transformComponent.transform.scale);
+				var scl = new goo.Vector3(1,1,1);
+				function setScale(ent){
+					scl.mulv(ent.transformComponent.transform.scale);
+				}
+				args.entity.traverseUp(setScale);
+				gooPos.mulv(scl);
+				//gooPos.mulv(args.entity.transformComponent.transform.scale);
 				if(childCol.offset){
 					vec.copy(childCol.offset);
 					child.transformComponent.transform.applyForwardVector(childCol.offset, vec);
