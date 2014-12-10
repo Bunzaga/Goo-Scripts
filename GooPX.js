@@ -26,7 +26,7 @@
 		if(ent.rigidbodyComponent){
 			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
 				console.log('Cleared Component: RigidbodyComponent');
-				ent.clearComponent('GooPX.RigidbodyComponent');
+				ent.clearComponent('RigidbodyComponent');
 				console.log(ent);
 			}
 		}
