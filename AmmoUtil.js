@@ -611,12 +611,12 @@ AmmoUtil.CollisionFlags = {
 				localTrans.setIdentity();
 				var gooPos = new goo.Vector3();
 				gooPos.copy(child.transformComponent.transform.translation);
-				var scl = new goo.Vector3(1,1,1);
-				function setScale(ent){
-					scl.mulVector(ent.transformComponent.transform.scale);
-				}
-				args.entity.traverseUp(setScale);
-				gooPos.mulv(scl);
+				//var scl = new goo.Vector3(1,1,1);
+				//function setScale(ent){
+				//	scl.mulVector(ent.transformComponent.transform.scale);
+				//}
+				//args.entity.traverseUp(setScale);
+				//gooPos.mulv(scl);
 				if(childCol.offset){
 					vec.copy(childCol.offset);
 					child.transformComponent.transform.applyForwardVector(childCol.offset, vec);
