@@ -13,8 +13,6 @@
 	var gooCanvas = undefined;
 	MouseInput.setup = function(){
 		gooCanvas = document.getElementById('goo');
-		console.log('MouseInput.setup');
-		console.log(gooCanvas.getBoundingClientRect().left);
 		document.addEventListener("contextmenu", contextMenu, false);
 		gooCanvas.addEventListener('mousedown', mouseDown, false);
 		gooCanvas.addEventListener('mouseup', mouseUp, false);
