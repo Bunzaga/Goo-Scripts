@@ -22,7 +22,7 @@
 				}
 				else{
 					console.log('The entity does not have a ColliderComponent');
-					ent.colliderComponent = 'collider'+Math.round(Math.random()*100);
+					ent.colliderComponent = "collider: + Math.round(Math.random() * 100);
 				}
 	    		}
 	    	}
@@ -52,10 +52,10 @@
 				}
 			}
 		}
-		
 	};
   
 	GooPX.RigidbodyComponent = function(settings){
+		this.type = 'RigidbodyComponent';
 		settings = settings || {};
 		_.defaults(settings, {
 			collider:undefined,
@@ -64,7 +64,6 @@
 			isTrigger:false,
 			useGravity:true
 		});
-		this.type = 'RigidbodyComponent';
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
