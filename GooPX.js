@@ -19,20 +19,14 @@
 	    		console.log('ent has GooPX.RigidbodyComponent');
 	    	}
 	};
-	GooPX.System.prototype.removed = function(){
-		console.log('GooPX.System.removed()');
+	GooPX.System.prototype.deleted = function(ent){
+		console.log('GooPX.System.deleted()');
+		if(ent['gooPX.RigidbodyComponent']){
+			ent.clearComponent('GooPX.RigidbodyComponent');
+		}
 	};
 	GooPX.System.prototype.process = function(){
 		console.log('GooPX.System.process()');
-	};
-	GooPX.System.prototype.cleanup = function(ents){
-		console.log('GooPX.System.cleanup()');
-		for(var i = 0, ilen = ents.length, ent = undefined; i < ilen; i++){
-			ent = ents[i];
-			if(ent['gooPX.RigidbodyComponent']){
-				ent.clearComponent('GooPX.RigidbodyComponent');
-			}
-		}
 	};
   
 	GooPX.RigidbodyComponent = function(settings){
