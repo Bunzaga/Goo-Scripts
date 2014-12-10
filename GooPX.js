@@ -16,14 +16,19 @@
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
 	    	if(ent.rigidbodyComponent){
-	    		console.log('ent has GooPX.RigidbodyComponent');
+	    		if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
+		    		console.log('ent has GooPX.RigidbodyComponent');
+	    		}
 	    	}
 	};
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		if(ent.rigidbodyComponent){
-			console.log('Cleared Component: RigidbodyComponent');
-			ent.clearComponent('GooPX.RigidbodyComponent');
+			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
+				console.log('Cleared Component: RigidbodyComponent');
+				ent.clearComponent('GooPX.RigidbodyComponent');
+				console.log(ent);
+			}
 		}
 	};
 	GooPX.System.prototype.process = function(){
