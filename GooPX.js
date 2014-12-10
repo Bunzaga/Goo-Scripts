@@ -15,7 +15,7 @@
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
-	    	if(ent.hasComponent('GooPX.RigidbodyComponent')){
+	    	if(ent.['gooPX.RigidBodyComponent']){
 	    		console.log('ent has GooPX.RigidbodyComponent');
 	    	}
 	};
@@ -25,8 +25,14 @@
 	GooPX.System.prototype.process = function(){
 		console.log('GooPX.System.process()');
 	};
-	GooPX.System.prototype.cleanup = function(){
+	GooPX.System.prototype.cleanup = function(ents){
 		console.log('GooPX.System.cleanup()');
+		for(var i = 0, ilen = ents.length, ent = undefined; i < ilen; i++){
+			ent = ents[i];
+			if(ent.['gooPX.RigidbodyComponent']){
+				ent.clearComponent('GooPX.RigidbodyComponent');
+			}
+		}
 	};
   
 	GooPX.RigidbodyComponent = function(settings){
