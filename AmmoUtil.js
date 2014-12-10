@@ -245,14 +245,14 @@ AmmoUtil.createAmmoSystem = function(args){
   
   AmmoUtil.getColliderFromGooShape = function(ent){
   	var col = null;
-  	var scl = new goo.Vector3().copy(ent.transformComponent.transform.scale);
-  	function setScale(e1){
-  		if(e1 !== ent){
-			scl.mulVector(e1.transformComponent.transform.scale);
-  		}
-	}
+  	var scl = new goo.Vector3().copy(ent.transformComponent.worldTransform.scale);
+  	//function setScale(e1){
+  	//	if(e1 !== ent){
+	//		scl.mulVector(e1.transformComponent.transform.scale);
+  	//	}
+	//}
 	//fix scaleing issues for all parents
-	ent.traverseUp(setScale);
+	//ent.traverseUp(setScale);
   	//var scl = [Math.abs(pTrans.scale[0] / entScl[0]), Math.abs(pTrans.scale[1] / entScl[1]), Math.abs(pTrans.scale[2] / entScl[2])];
   	if(ent.meshDataComponent && ent.meshDataComponent.meshData){
   		var md = ent.meshDataComponent.meshData;
