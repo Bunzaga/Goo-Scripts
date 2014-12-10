@@ -12,8 +12,12 @@
 	};
 	GooPX.System.prototype = Object.create(goo.System.prototype);
 	GooPX.System.constructor = GooPX.System;
-	GooPX.System.prototype.inserted = function(){
+	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
+	    	console.log(ent);
+	    	if(ent.hasComponent('GooPX.RigidbodyComponent')){
+	    		console.log('ent has GooPX.RigidbodyComponent');
+	    	}
 	};
 	GooPX.System.prototype.removed = function(){
 		console.log('GooPX.System.removed()');
