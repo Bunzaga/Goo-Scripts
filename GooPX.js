@@ -22,7 +22,7 @@
 				}
 				else{
 					console.log('The entity does not have a ColliderComponent');
-					ent.colliderComponent = "collider: + Math.round(Math.random() * 100);
+					ent.colliderComponent = "collider:" + Math.round(Math.random() * 100);
 				}
 	    		}
 	    	}
