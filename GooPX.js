@@ -7,7 +7,7 @@
 		_.defaults(settings, {
 			gravity:goo.Vector3(0, -9.8, 0)
 		});
-		this.gravity = new goo.Vector3(settings.gravity));
+		this.gravity = new goo.Vector3(settings.gravity);
 		console.log('GooPX.System constructor');
 	};
 	GooPX.System.prototype = Object.create(goo.System.prototype);
