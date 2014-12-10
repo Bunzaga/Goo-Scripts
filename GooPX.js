@@ -8,12 +8,16 @@
       gravity:goo.Vector3(0, -9.8, 0)
 		});
     this.inserted = function(){
+    	console.log('GooPX.System.inserted()');
     }
     this.deleted = function(){
+    	console.log('GooPX.System.deleted()');
     }
     this.process = function(){
+    	console.log('GooPX.System.process()');
     }
     this.cleanup = function(){
+    	console.log('GooPX.System.cleanup()');
     }
   }
   GooPX.System.prototype = Object.create(goo.System.prototype);
