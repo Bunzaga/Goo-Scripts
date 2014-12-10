@@ -16,8 +16,7 @@
 	    	console.log('GooPX.System.inserted()');
 	    	if(ent.rigidbodyComponent){
 	    		if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
-		    		console.log('ent has GooPX.RigidbodyComponent');
-		    		console.log(ent);
+				// do something with RigidbodyComponent or entity here?
 	    		}
 	    	}
 	};
@@ -25,9 +24,7 @@
 		console.log('GooPX.System.deleted()');
 		if(ent.rigidbodyComponent){
 			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
-				console.log('Cleared Component: GooPX.RigidbodyComponent');
 				ent.clearComponent('RigidbodyComponent');
-				console.log(ent);
 			}
 		}
 		console.log(ent);
