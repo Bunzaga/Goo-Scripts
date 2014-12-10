@@ -18,6 +18,12 @@
 	    		if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
 				// do something with RigidbodyComponent or entity here?
 				console.log(ent.rigidbodyComponent.test123);
+				if(undefined !== ent.colliderComponent){
+					console.log('The entity already has a ColliderComponent');	
+				}
+				else{
+					console.log('The entity does not have a ColliderComponent');
+				}
 	    		}
 	    	}
 	};
@@ -26,6 +32,7 @@
 		if(ent.rigidbodyComponent){
 			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
 				ent.clearComponent('RigidbodyComponent');
+				ent.clearComponent('ColliderComponent');
 			}
 		}
 		console.log(ent);
@@ -34,7 +41,7 @@
 		console.log('GooPX.System.process()');
 	};
   
-	GooPX.RigidbodyComponent = function(entity, settings){
+	GooPX.RigidbodyComponent = function(settings){
 		settings = settings || {};
 		_.defaults(settings, {
 			collider:undefined,
@@ -44,7 +51,6 @@
 			useGravity:true
 		});
 		this.type = 'RigidbodyComponent';
-		this.entity = entity;
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
