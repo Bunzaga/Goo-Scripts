@@ -8,10 +8,9 @@
 			gravity:goo.Vector3(0, -9.8, 0)
 		});
 		console.log('GooPX.System constructor');
-		this.cleanup = function(){
-			console.log('test 123');
-		}
 	};
+	GooPX.System.prototype = Object.create(goo.System.prototype);
+	GooPX.System.constructor = GooPX.System;
 	GooPX.System.prototype.inserted = function(){
 	    	console.log('GooPX.System.inserted()');
 	};
@@ -24,8 +23,6 @@
 	GooPX.System.prototype.cleanup = function(){
 		console.log('GooPX.System.cleanup()');
 	};
-	GooPX.System.prototype = Object.create(goo.System.prototype);
-	GooPX.System.constructor = GooPX.System;
   
 	GooPX.RigidbodyComponent = function(settings){
 		settings = settings || {};
