@@ -2,11 +2,12 @@
 	'use strict';
 	var GooPX = {};
 	GooPX.System = function(settings){
-		goo.System.call(this, 'GooPX.System', ['GooPX.RigidbodyComponent']);
+		goo.System.call(this, 'GooPX.System', ['GooPX.RigidbodyComponent', 'TransformComponent']);
 		settings = settings || {};
 		_.defaults(settings, {
 			gravity:goo.Vector3(0, -9.8, 0)
 		});
+		this.gravity = new goo.Vector3().copy(settings.gravity);
 		console.log('GooPX.System constructor');
 	};
 	GooPX.System.prototype = Object.create(goo.System.prototype);
@@ -14,8 +15,8 @@
 	GooPX.System.prototype.inserted = function(){
 	    	console.log('GooPX.System.inserted()');
 	};
-	GooPX.System.prototype.deleted = function(){
-		console.log('GooPX.System.deleted()');
+	GooPX.System.prototype.removed = function(){
+		console.log('GooPX.System.removed()');
 	};
 	GooPX.System.prototype.process = function(){
 		console.log('GooPX.System.process()');
