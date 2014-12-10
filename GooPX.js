@@ -2,7 +2,7 @@
 	'use strict';
 	var GooPX = {};
 	GooPX.System = function(settings){
-		goo.System.call(this, 'GooPX.System', ['GooPX.RigidbodyComponent', 'TransformComponent']);
+		goo.System.call(this, 'GooPXSystem', ['GooPX.RigidbodyComponent', 'TransformComponent']);
 		settings = settings || {};
 		_.defaults(settings, {
 			gravity:goo.Vector3(0, -9.8, 0)
@@ -15,13 +15,14 @@
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
-	    	if(ent['gooPX.RigidBodyComponent']){
+	    	if(ent.rigidbodyComponent){
 	    		console.log('ent has GooPX.RigidbodyComponent');
 	    	}
 	};
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
-		if(ent['gooPX.RigidbodyComponent']){
+		if(ent.rigidbodyComponent){
+			console.log('Cleared Component: RigidbodyComponent');
 			ent.clearComponent('GooPX.RigidbodyComponent');
 		}
 	};
@@ -34,7 +35,7 @@
 		_.defaults(settings,{
 			mass:1.0
 		});
-		this.type = 'GooPX.RigidbodyComponent';
+		this.type = 'RigidbodyComponent';
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
