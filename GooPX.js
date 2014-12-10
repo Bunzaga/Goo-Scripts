@@ -31,9 +31,9 @@
 		console.log('GooPX.System.deleted()');
 		if(ent.rigidbodyComponent){
 			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
+				delete ent.rigidbodyComponent.colliderComponent;
 				ent.clearComponent('RigidbodyComponent');
 				ent.clearComponent('ColliderComponent');
-				delete ent.colliderComponent;
 			}
 		}
 		console.log(ent);
