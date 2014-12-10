@@ -42,13 +42,13 @@
 		console.log('GooPX.System.process()');
 		for(var i = entArr.length-1; i > -1; i--){
 			var ent = entArr[i];
-			if(ent.rigidbodyComponent){
+			if(undefined !== ent.rigidbodyComponent){
 				console.log(ent.name+" has a RigidbodyComponent");
-				if(ent.rigidbodyComponent.test123){
+				if(undefined !== ent.rigidbodyComponent.test123){
 					console.log(ent.name+" has a test123:"+ent.rigidbodyComponent.test123);
 				}
-				if(ent.colliderComponent){
-					console.log(ent.name+" has a collider.");
+				if(undefined !== ent.colliderComponent){
+					console.log(ent.name+" has a colliderComponent.");
 				}
 			}
 		}
