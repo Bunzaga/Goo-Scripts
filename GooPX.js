@@ -15,7 +15,7 @@
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
-	    	if(ent.['gooPX.RigidBodyComponent']){
+	    	if(ent['gooPX.RigidBodyComponent']){
 	    		console.log('ent has GooPX.RigidbodyComponent');
 	    	}
 	};
@@ -29,7 +29,7 @@
 		console.log('GooPX.System.cleanup()');
 		for(var i = 0, ilen = ents.length, ent = undefined; i < ilen; i++){
 			ent = ents[i];
-			if(ent.['gooPX.RigidbodyComponent']){
+			if(ent['gooPX.RigidbodyComponent']){
 				ent.clearComponent('GooPX.RigidbodyComponent');
 			}
 		}
