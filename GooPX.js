@@ -2,7 +2,7 @@
   'use strict';
   var GooPX = {};
   GooPX.System = function(settings){
-    System.call(this, 'GooPX.System', ['GooPX.RigidbodyComponent']);
+    goo.System.call(this, 'GooPX.System', ['GooPX.RigidbodyComponent']);
     settings = settings || {};
     _.defaults(settings, {
       gravity:goo.Vector3(0, -9.8, 0)
