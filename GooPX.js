@@ -20,12 +20,9 @@
 				// do something with RigidbodyComponent or entity here
 				if(undefined !== ent.rigidbodyComponent.collider){
 					console.log('The entity already has a Collider,');
-					console.log('will add it to the rigidbody to the physics system "as is".');
 				}
 				else{
-					console.log('The entity does not have a ColliderComponent,');
-					console.log('will create one, based on the MeshRendererComponent, or');
-					console.log('create a compound collider.');
+					console.log('The entity does not have a Collider(adding one),');
 					ent.rigidbodyComponent.collider = GooPX.generateCollider(ent);
 				}
 				console.log(ent.rigidbodyComponent.collider);
@@ -99,6 +96,8 @@
 			console.log('This is a parent entity, no shape detected');
 			shape = 'new GooPX.CompoundCollider()';
 		}
+		console.log('MeshData:');
+		console.log(ctx.entity.meshDataComponent.meshData);
 		return shape;
 	}
 
