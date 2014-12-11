@@ -1,5 +1,7 @@
 (function(window, undefined){
 	'use strict';
+	var scl = new goo.Vector3();
+	var vec = new goo.Vector3();
 	var GooPX = {};
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
@@ -57,7 +59,7 @@
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
-	var scl = new goo.Vector3();
+	
 	GooPX.generateCollider = function(ent){
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
@@ -65,7 +67,7 @@
 			var md = ent.meshDataComponent.meshData;
 			if(md instanceof goo.Sphere){
 				console.log('Goo Shape is a Sphere');
-				shape = new GooPX.SphereCollider(md.radius * scl.x);
+				shape = new GooPX.SphereCollider(ent.transformComponent.worldTransform.translation, md.radius * scl.x);
 			}
 			else if(md instanceof goo.Box){
 				console.log('Goo Shape is a Box');
@@ -101,10 +103,36 @@
 		}
 		return shape;
 	}
-	
-	GooPX.SphereCollider = function(r){
-		this.radius = r || 0.5;
+	GooPX.SPHERE = 0;
+	GooPX.checkOverlap = function(a, b){
+		switch(a.type){
+			case:GooPX.SPHERE:
+				switch(b.type){
+					case:GooPX.SPHERE:
+						var rDist = a.radius + b.radius;
+						var tDist = goo.Vector3.sub(a.translation, b.translation, vec).length();
+						var dist = cDist - rDist;
+						return new CollisionData((cDist < rDist), dist);
+						break;
+				}
+				break;
+		}
 	}
+	GooPX.SphereCollider = function(translation, radius){
+		this.radius = r || 0.5;
+		this.translation = translation;
+		this.type = GooPX.SPHERE;
+	}
+	GooPX.CollisionData = function(bool, distance){
+		this.bool = bool;
+		this.distance = distance;
+	};
+	GooPX.CollisionData.create = function(){
+		
+	};
+	GooPX.CollisionData.destroy = function(){
+		
+	};
 	
 	var global = global || window;
 	window.GooPX = GooPX;
