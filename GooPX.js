@@ -61,19 +61,26 @@
 		// this.world.checkCollisions();
 		for(var i = entArr.length-1; i > -1; i--){
 			var entA = entArr[i];
+			entA.collided = false;
 			if(entA !== undefined){
 				for(var j = i-1; j > -1; j--){
 					var entB = entArr[j];
+					entB.collided = false;
 					if(entB !== undefined){
 						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
 						if(collision.bool === true){
 							entA.traverse(makeRed);
 							entB.traverse(makeRed);
-							break;
+							entA.collided = true;
+							entB.collided = true;
 						}
 						else{
-							entA.traverse(makeGrey);
-							entB.traverse(makeGrey);	
+							if(entA.collided === false){
+								entA.traverse(makeGrey);
+							}
+							if(entB.collided === false){
+								entB.traverse(makeGrey);
+							}
 						}
 					}
 				}
