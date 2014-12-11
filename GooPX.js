@@ -49,6 +49,17 @@
 		console.log('GooPX.System.process()');
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
+		for(var i = entArr.length-1; i > -1; i--){
+			var entA = entArr[i];
+			if(entA !== undefined){
+				for(var j = i-1; j > -1; j--){
+					var entB = entArr[j];
+					if(entB !== undefined){
+						console.log(GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider));
+					}
+				}
+			}
+		}
 	};
 	GooPX.System.prototype.cleanup = function(){
 		for (var i = 0, ent; ent = this._activeEntities[i++];) {
