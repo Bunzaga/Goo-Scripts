@@ -122,12 +122,12 @@
 		}
 		return shape;
 	}
-	GooPX.SPHERE = 0;
+
 	GooPX.checkCollision = function(a, b){
 		switch(a.type){
-			case GooPX.SPHERE:
+			case 'Sphere':
 				switch(b.type){
-					case GooPX.SPHERE:
+					case 'Sphere':
 						var rDist = a.radius + b.radius;
 						var tDist = goo.Vector3.sub(a.translation, b.translation, vec).length();
 						var dist = cDist - rDist;
@@ -138,7 +138,7 @@
 		}
 	}
 	GooPX.SphereCollider = function(){
-		this.type = GooPX.SPHERE;
+		this.type = 'Sphere';
 	};
 	GooPX.SphereCollider.pool = [];
 	GooPX.SphereCollider.create = function(translation, radius){
