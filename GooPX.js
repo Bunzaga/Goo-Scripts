@@ -11,9 +11,6 @@
 		});
 		this.gravity = new goo.Vector3(settings.gravity);
 		this.world = {};
-		GooPX.RigidbodyComponent.pool.length = 0;
-		GooPX.SphereCollider.pool.length = 0;
-		GooPX.CollisionData.pool.length = 0;
 		console.log(this);
 		console.log('GooPX.System constructor');
 	};
@@ -47,12 +44,18 @@
 			}
 		}
 		console.log(ent);
-		console.log(this._activeEntities);
 	};
 	GooPX.System.prototype.process = function(entArr){
 		console.log('GooPX.System.process()');
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
+	};
+	GooPX.System.prototype.cleanup = function(){
+		goo.System.call(this);
+		GooPX.RigidbodyComponent.pool.length = 0;
+		GooPX.SphereCollider.pool.length = 0;
+		GooPX.CollisionData.pool.length = 0;
+		console.log('Cleaned up!');
 	};
   
 	GooPX.RigidbodyComponent = function(){};
