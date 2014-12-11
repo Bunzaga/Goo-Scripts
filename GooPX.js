@@ -158,8 +158,8 @@
 					case 'Sphere':
 						var rDist = a.radius + b.radius;
 						var tDist = goo.Vector3.sub(a.translation, b.translation, vec).length();
-						var dist = cDist - rDist;
-						return new CollisionData((cDist < rDist), dist);
+						var dist = tDist - rDist;
+						return new CollisionData((tDist < rDist), dist);
 						break;
 				}
 				break;
