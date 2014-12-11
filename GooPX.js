@@ -43,6 +43,7 @@
 			}
 		}
 		console.log(ent);
+		console.log(this._activeEntities);
 	};
 	GooPX.System.prototype.process = function(entArr){
 		console.log('GooPX.System.process()');
