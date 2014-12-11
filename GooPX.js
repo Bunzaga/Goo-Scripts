@@ -5,6 +5,7 @@
 	var GooPX = {};
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
+		this.priority = 1;
 		settings = settings || {};
 		_.defaults(settings, {
 			gravity:goo.Vector3(0, -9.8, 0)
