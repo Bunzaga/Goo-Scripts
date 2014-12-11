@@ -44,6 +44,16 @@
 		}
 		console.log(ent);
 	};
+	function makeRed(child){
+		if(child.meshRendererComponent){
+			child.meshRendererComponent.materials[0].diffuseColor = [1, 0, 0];
+		}
+	}
+	function makeGrey(child){
+		if(child.meshRendererComponent){
+			child.meshRendererComponent.materials[0].diffuseColor = [0.25, 0.25, 0.25];
+		}
+	}
 	GooPX.System.prototype.process = function(entArr){
 		console.log('GooPX.System.process()');
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
@@ -56,20 +66,10 @@
 					if(entB !== undefined){
 						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
 						if(collision.bool === true){
-							function makeRed(child){
-								if(child.meshRendererComponent){
-									child.meshRendererComponent.materials[0].diffuseColor = [1, 0, 0];
-								}
-							}
 							entA.traverse(makeRed);
 							entB.traverse(makeRed);
 						}
 						else{
-							function makeGrey(child){
-								if(child.meshRendererComponent){
-									child.meshRendererComponent.materials[0].diffuseColor = [0.25, 0.25, 0.25];
-								}
-							}
 							entA.traverse(makeGrey);
 							entB.traverse(makeGrey);	
 						}
