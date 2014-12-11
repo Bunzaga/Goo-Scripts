@@ -27,6 +27,7 @@
 				else{
 					console.log('The entity does not have a Collider(adding one),');
 					ent.rigidbodyComponent.collider = GooPX.generateCollider(ent);
+					ent.rigidbodyComponent.entity = ent;
 				}
 				console.log(ent.rigidbodyComponent.collider);
 				console.log(ent.rigidbodyComponent.collider.translation.x+','+ent.rigidbodyComponent.collider.translation.y+','+ent.rigidbodyComponent.collider.translation.z);
@@ -37,8 +38,6 @@
 		console.log('GooPX.System.deleted()');
 		if(ent.rigidbodyComponent){
 			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
-				ent.rigidbodyComponent.collider.destroy();
-				delete ent.rigidbodyComponent.collider;
 				ent.rigidbodyComponent.destroy();
 				ent.clearComponent('RigidbodyComponent');
 			}
@@ -57,12 +56,22 @@
 					if(entB !== undefined){
 						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
 						if(collision.bool === true){
-							console.log(entA.name+" hitting "+entB.name);
-							console.log(collision.distance);
+							function makeRed(child){
+								if(child.meshRendererComponent){
+									child.meshRendererComponent.materials[0].diffuseColor = [1, 0, 0];
+								}
+							}
+							entA.traverse(makeRed);
+							entB.traverse(makeRed);
 						}
 						else{
-							console.log(entA.name+" is not hitting "+entB.name);
-							console.log(collision.distance);
+							function makeGrey(child){
+								if(child.meshRendererComponent){
+									child.meshRendererComponent.materials[0].diffuseColor = [0.25, 0.25, 0.25];
+								}
+							}
+							entA.traverse(makeGrey);
+							entB.traverse(makeGrey);	
 						}
 					}
 				}
@@ -100,10 +109,15 @@
 		return rbc;
 	};
 	GooPX.RigidbodyComponent.prototype.destroy = function(){
+		if(this.collider){
+			this.collider.destroy();
+			delete this.collider;
+		}
 		this.mass = 1.0;
 		this.isKinematic = false;
 		this.isTrigger = false;
 		this.useGravity = true;
+		delete this.entity;
 		GooPX.RigidbodyComponent.pool.push(this);
 	};
 	
@@ -143,6 +157,7 @@
 			}
 			console.log('MeshData:');
 			console.log(ent.meshDataComponent.meshData);
+			shape.entity = ent;
 		}
 		else{
 			console.log('This is a parent entity or no MeshData');
@@ -178,6 +193,7 @@
 	GooPX.SphereCollider.prototype.destroy = function(){
 		this.radius = 0.5;
 		this.translation = undefined;
+		delete this.entity;
 		GooPX.SphereCollider.pool.push(this);
 	};
 	
