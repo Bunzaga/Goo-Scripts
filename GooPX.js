@@ -64,7 +64,7 @@
 			var md = ent.meshDataComponent.meshData;
 			if(md instanceof goo.Sphere){
 				console.log('Goo Shape is a Sphere');
-				shape = new GooPX.SphereCollider();
+				shape = new GooPX.SphereCollider(md.radius);
 			}
 			else if(md instanceof goo.Box){
 				console.log('Goo Shape is a Box');
