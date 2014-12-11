@@ -6,9 +6,7 @@
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
 		this.priority = 1;
-		
 		this.gravity = new goo.Vector3(settings.gravity || 0, -9.8, 0);
-		
 		this.world = {};
 		console.log(this);
 		console.log('GooPX.System constructor');
@@ -102,7 +100,6 @@
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
 	GooPX.RigidbodyComponent.pool = [];
 	GooPX.RigidbodyComponent.create = function(settings){
-		settings = settings || {};
 		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
 		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass || 1.0;
