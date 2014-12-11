@@ -47,12 +47,12 @@
 	function makeRed(child){
 		console.log(child);
 		if(child.meshRendererComponent){
-			child.meshRendererComponent.materials[0].diffuseColor = [1, 0, 0];
+			child.meshRendererComponent.materials[0].uniforms.materialDiffuse = [1, 0, 0, 1];
 		}
 	}
 	function makeGrey(child){
 		if(child.meshRendererComponent){
-			child.meshRendererComponent.materials[0].diffuseColor = [0.25, 0.25, 0.25];
+			child.meshRendererComponent.materials[0].uniforms.materialDiffuse = [0.25, 0.25, 0.25, 1.0];
 		}
 	}
 	GooPX.System.prototype.process = function(entArr){
