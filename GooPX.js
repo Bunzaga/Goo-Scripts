@@ -6,9 +6,9 @@
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
 		this.priority = 1;
-		settings = settings || {};
-		settings.gravity = settings.gravity || new goo.Vector3();
-		this.gravity = new goo.Vector3(settings.gravity);
+		
+		this.gravity = new goo.Vector3(settings.gravity || 0, -9.8, 0);
+		
 		this.world = {};
 		console.log(this);
 		console.log('GooPX.System constructor');
