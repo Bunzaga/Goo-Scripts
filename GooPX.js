@@ -98,7 +98,11 @@
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
-				this.shape = 'new GooPX.ConeCollider()';
+				shape = 'new GooPX.ConeCollider()';
+			}
+			else if(md instanceof goo.Disk){
+				console.log('Goo Shape is a Disk');
+				shape = 'new GooPX.DiskCollider()';
 			}
 			// add one for capsule???
 			else{
