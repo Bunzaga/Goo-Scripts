@@ -7,9 +7,7 @@
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
 		this.priority = 1;
 		settings = settings || {};
-		_.defaults(settings, {
-			gravity:goo.Vector3(0, -9.8, 0)
-		});
+		settings.gravity = settings.gravity || new goo.Vector3();
 		this.gravity = new goo.Vector3(settings.gravity);
 		this.world = {};
 		console.log(this);
@@ -106,18 +104,12 @@
 	GooPX.RigidbodyComponent.pool = [];
 	GooPX.RigidbodyComponent.create = function(settings){
 		settings = settings || {};
-		_.defaults(settings, {
-			mass:1.0,
-			isKinematic:false,
-			isTrigger:false,
-			useGravity:true
-		});
 		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
 		rbc.type = 'RigidbodyComponent';
-		rbc.mass = settings.mass;
-		rbc.isKinematic = settings.isKinematic;
-		rbc.isTrigger = settings.isTrigger;
-		rbc.useGravity = settings.useGravity;
+		rbc.mass = settings.mass || 1.0;
+		rbc.isKinematic = settings.isKinematic || false;
+		rbc.isTrigger = settings.isTrigger || false;
+		rbc.useGravity = settings.useGravity || true;
 		return rbc;
 	};
 	GooPX.RigidbodyComponent.prototype.destroy = function(){
