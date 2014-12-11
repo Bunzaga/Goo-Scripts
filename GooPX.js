@@ -3,6 +3,11 @@
 	var scl = new goo.Vector3();
 	var vec = new goo.Vector3();
 	var GooPX = {};
+	GooPX.reset = function(){
+		GooPX.RigidbodyComponent.pool.length = 0;
+		GooPX.SphereCollider.pool.length = 0;
+		GooPX.CollisionData.pool.length = 0;
+	}
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
 		settings = settings || {};
@@ -11,6 +16,8 @@
 		});
 		this.gravity = new goo.Vector3(settings.gravity);
 		this.world = {};
+		//var rbEnts = 
+		console.log(this);
 		console.log('GooPX.System constructor');
 	};
 	GooPX.System.prototype = Object.create(goo.System.prototype);
@@ -51,9 +58,7 @@
 		// this.world.checkCollisions();
 	};
   
-	GooPX.RigidbodyComponent = function(){
-		this.type = 'RigidbodyComponent';
-	};
+	GooPX.RigidbodyComponent = function(){};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
 	GooPX.RigidbodyComponent.pool = [];
@@ -66,6 +71,7 @@
 			useGravity:true
 		});
 		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
+		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass;
 		rbc.isKinematic = settings.isKinematic;
 		rbc.isTrigger = settings.isTrigger;
@@ -79,7 +85,6 @@
 		this.useGravity = true;
 		GooPX.RigidbodyComponent.pool.push(this);
 	};
-	
 	
 	GooPX.generateCollider = function(ent){
 		var shape = undefined;
@@ -123,7 +128,7 @@
 			shape = 'new GooPX.CompoundCollider()';
 		}
 		return shape;
-	}
+	};
 
 	GooPX.checkCollision = function(a, b){
 		switch(a.type){
@@ -138,13 +143,13 @@
 				}
 				break;
 		}
-	}
-	GooPX.SphereCollider = function(){
-		this.type = 'Sphere';
 	};
+	
+	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
 	GooPX.SphereCollider.create = function(translation, radius){
 		var collider = (GooPX.SphereCollider.pool.length === 0) ? new GooPX.SphereCollider() : GooPX.SphereCollider.pool.shift();
+		collider.type = 'Sphere';
 		collider.translation = translation;
 		collider.radius = radius;
 		return collider;
