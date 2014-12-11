@@ -46,6 +46,7 @@
 	};
 	function makeRed(child){
 		if(child.meshRendererComponent){
+			console.log(child.meshRendererComponent);
 			child.meshRendererComponent.materials[0].diffuseColor = [1, 0, 0];
 		}
 	}
