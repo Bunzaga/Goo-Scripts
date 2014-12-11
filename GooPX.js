@@ -44,7 +44,6 @@
 		console.log(ent);
 	};
 	function makeRed(child){
-		console.log(child);
 		if(child.meshRendererComponent){
 			child.meshRendererComponent.materials[0].uniforms.materialDiffuse = [1, 0, 0, 1];
 		}
