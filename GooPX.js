@@ -51,7 +51,7 @@
 		// this.world.checkCollisions();
 	};
 	GooPX.System.prototype.cleanup = function(){
-		goo.System.call(this);
+		goo.System.cleanup.call(this);
 		GooPX.RigidbodyComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
 		GooPX.CollisionData.pool.length = 0;
