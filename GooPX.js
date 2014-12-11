@@ -46,21 +46,6 @@
 		console.log('GooPX.System.process()');
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
-		for(var i = entArr.length-1; i > -1; i--){
-			var ent = entArr[i];
-			if(undefined !== ent.rigidbodyComponent){
-				console.log(ent.name+" has a RigidbodyComponent");
-				if(undefined !== ent.rigidbodyComponent.collider){
-					console.log(ent.name+" has a collider.");
-				}
-				else{
-					console.log("The Collider for "+ent.name+" has not been initialized yet!");
-				}
-			}
-			else{
-				console.log("The rigidbodyComponent for "+ent.name+" has not been initialized yet!");
-			}
-		}
 	};
   
 	GooPX.RigidbodyComponent = function(settings){
