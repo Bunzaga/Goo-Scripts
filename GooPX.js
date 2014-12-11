@@ -28,6 +28,7 @@
 					ent.rigidbodyComponent.collider = GooPX.generateCollider(ent);
 				}
 				console.log(ent.rigidbodyComponent.collider);
+				console.log(ent.rigidbodyComponent.collider.translation.x+','+ent.rigidbodyComponent.collider.translation.y+','+ent.rigidbodyComponent.collider.translation.z);
 	    		}
 	    	}
 	};
