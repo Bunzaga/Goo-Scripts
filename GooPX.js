@@ -69,6 +69,7 @@
 						if(collision.bool === true){
 							entA.traverse(makeRed);
 							entB.traverse(makeRed);
+							break;
 						}
 						else{
 							entA.traverse(makeGrey);
