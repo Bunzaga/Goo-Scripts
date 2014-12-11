@@ -55,7 +55,15 @@
 				for(var j = i-1; j > -1; j--){
 					var entB = entArr[j];
 					if(entB !== undefined){
-						console.log(GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider));
+						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
+						if(collision.bool === true){
+							console.log(entA.name+" hitting "+entB.name);
+							console.log(collision.distance);
+						}
+						else{
+							console.log(entA.name+" is not hitting "+entB.name);
+							console.log(collision.distance);
+						}
 					}
 				}
 			}
