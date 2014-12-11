@@ -62,13 +62,13 @@
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
 			var md = ent.meshDataComponent.meshData;
-			if(md instanceof goo.Box){
+			if(md instanceof goo.Sphere){
+				console.log('Goo Shape is a Sphere');
+				shape = new GooPX.SphereCollider();
+			}
+			else if(md instanceof goo.Box){
 				console.log('Goo Shape is a Box');
 				shape = 'new GooPX.BoxCollider()';
-			}
-			else if(md instanceof goo.Sphere){
-				console.log('Goo Shape is a Sphere');
-				shape = 'new GooPX.SphereCollider()';
 			}
 			else if(md instanceof goo.Quad){
 				console.log('Goo Shape is a Quad');
@@ -100,7 +100,11 @@
 		}
 		return shape;
 	}
-
+	
+	GooPX.SphereCollider = function(r){
+		this.radius = r || 0.5;
+	}
+	
 	var global = global || window;
 	window.GooPX = GooPX;
 }(window));
