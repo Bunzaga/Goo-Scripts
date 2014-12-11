@@ -159,7 +159,7 @@
 						var rDist = a.radius + b.radius;
 						var tDist = goo.Vector3.sub(a.translation, b.translation, vec).length();
 						var dist = tDist - rDist;
-						return new CollisionData((tDist < rDist), dist);
+						return GooPX.CollisionData.create((tDist < rDist), dist);
 						break;
 				}
 				break;
