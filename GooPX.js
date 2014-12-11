@@ -60,12 +60,14 @@
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
 		for(var i = entArr.length-1; i > -1; i--){
+			var ent = entArr[i];
+			ent.collided = false;
+		}
+		for(var i = entArr.length-1; i > -1; i--){
 			var entA = entArr[i];
-			entA.collided = false;
 			if(entA !== undefined){
 				for(var j = i-1; j > -1; j--){
 					var entB = entArr[j];
-					entB.collided = false;
 					if(entB !== undefined){
 						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
 						if(collision.bool === true){
