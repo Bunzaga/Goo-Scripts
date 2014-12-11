@@ -57,14 +57,15 @@
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
-	
+	var scl = new goo.Vector3();
 	GooPX.generateCollider = function(ent){
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
+			scl.copy(ent.transformComponent.worldTransform.scale);
 			var md = ent.meshDataComponent.meshData;
 			if(md instanceof goo.Sphere){
 				console.log('Goo Shape is a Sphere');
-				shape = new GooPX.SphereCollider(md.radius);
+				shape = new GooPX.SphereCollider(md.radius * scl.x);
 			}
 			else if(md instanceof goo.Box){
 				console.log('Goo Shape is a Box');
