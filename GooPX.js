@@ -51,7 +51,9 @@
 		// this.world.checkCollisions();
 	};
 	GooPX.System.prototype.cleanup = function(){
-		goo.System.prototype.cleanup.call(this);
+		for (var i = 0, ent; ent = this._activeEntities[i++];) {
+			this.deleted(ent);
+		}
 		GooPX.RigidbodyComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
 		GooPX.CollisionData.pool.length = 0;
