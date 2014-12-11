@@ -3,11 +3,6 @@
 	var scl = new goo.Vector3();
 	var vec = new goo.Vector3();
 	var GooPX = {};
-	GooPX.reset = function(){
-		GooPX.RigidbodyComponent.pool.length = 0;
-		GooPX.SphereCollider.pool.length = 0;
-		GooPX.CollisionData.pool.length = 0;
-	}
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
 		settings = settings || {};
@@ -16,7 +11,9 @@
 		});
 		this.gravity = new goo.Vector3(settings.gravity);
 		this.world = {};
-		//var rbEnts = 
+		GooPX.RigidbodyComponent.pool.length = 0;
+		GooPX.SphereCollider.pool.length = 0;
+		GooPX.CollisionData.pool.length = 0;
 		console.log(this);
 		console.log('GooPX.System constructor');
 	};
