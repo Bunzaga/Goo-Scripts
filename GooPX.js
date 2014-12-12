@@ -127,7 +127,7 @@
 	GooPX.ColliderComponent.pool = [];
 	GooPX.ColliderComponent.create = function(collider){
 		console.log('GooPX.ColliderComponent.create()');
-		console.log(shape);
+		console.log(collider);
 		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
 		cc.type = 'ColliderComponent';
 		cc.collider = collider;
