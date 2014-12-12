@@ -15,7 +15,7 @@
 	GooPX.System.constructor = GooPX.System;
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
-	    	if(ent.rigidbodyComponent){
+	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
 			// do something with RigidbodyComponent or entity here
 			if(undefined === ent.colliderComponent){
 				console.log('The entity does not have a ColliderComponent(adding one),');
@@ -58,6 +58,8 @@
 		for(var i = entArr.length-1; i > -1; i--){
 			var ent = entArr[i];
 			ent.collided = false;
+			console.log(ent.name+" has Rigidbody: "+(ent.rigidbodyComponent !== undefined));
+			console.log(ent.name+" has Collider: "+(ent.colliderComponent !== undefined));
 		}
 		for(var i = entArr.length-1; i > -1; i--){
 			var entA = entArr[i];
@@ -101,6 +103,7 @@
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
 	GooPX.RigidbodyComponent.pool = [];
 	GooPX.RigidbodyComponent.create = function(settings){
+		console.log('GooPX.RigidbodyComponent.create()');
 		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
 		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass || 1.0;
@@ -110,6 +113,7 @@
 		return rbc;
 	};
 	GooPX.RigidbodyComponent.prototype.destroy = function(){
+		console.log('GooPX.RigidbodyComponent.destroy()');
 		this.mass = 1.0;
 		this.isKinematic = false;
 		this.isTrigger = false;
@@ -122,11 +126,13 @@
 	GooPX.ColliderComponent.constructor = GooPX.ColliderComponent;
 	GooPX.ColliderComponent.pool = [];
 	GooPX.ColliderComponent.create = function(shape){
+		console.log('GooPX.ColliderComponent.create()');
 		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
 		cc.type = 'ColliderComponent';
 		cc.shape = shape;
 	};
 	GooPX.ColliderComponent.prototype.destroy = function(){
+		console.log('GooPX.ColliderComponent.destroy()');
 		this.shape = undefined;
 		GooPX.ColliderComponent.pool.push(this);
 	};
