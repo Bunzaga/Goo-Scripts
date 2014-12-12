@@ -4,7 +4,7 @@
 	var vec = new goo.Vector3();
 	var GooPX = {};
 	GooPX.System = function(settings){
-		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
+		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent', 'TransformComponent']);
 		this.priority = 1;
 		this.gravity = new goo.Vector3(settings.gravity || 0, -9.8, 0);
 		this.world = {};
@@ -30,13 +30,13 @@
 	};
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
-		if(ent.rigidbodyComponent){
-			ent.rigidbodyComponent.destroy();
-			ent.clearComponent('RigidbodyComponent');
-		}
 		if(ent.colliderComponent){
 			ent.colliderComponent.destroy();
 			ent.clearComponent('ColliderComponent');
+		}
+		if(ent.rigidbodyComponent){
+			ent.rigidbodyComponent.destroy();
+			ent.clearComponent('RigidbodyComponent');
 		}
 		console.log(ent);
 	};
@@ -57,8 +57,6 @@
 		for(var i = entArr.length-1; i > -1; i--){
 			var ent = entArr[i];
 			ent.collided = false;
-			console.log(ent.name+" has Rigidbody: "+(ent.rigidbodyComponent !== undefined));
-			console.log(ent.name+" has Collider: "+(ent.colliderComponent !== undefined));
 		}
 		for(var i = entArr.length-1; i > -1; i--){
 			var entA = entArr[i];
@@ -87,7 +85,8 @@
 		}
 	};
 	GooPX.System.prototype.cleanup = function(){
-		for (var i = 0, ent; ent = this._activeEntities[i++];) {
+		for (var i = this._activeEntities.length-1; i > -1; i--) {
+			var ent = this._activeEntities[i];
 			this.deleted(ent);
 		}
 		GooPX.RigidbodyComponent.pool.length = 0;
