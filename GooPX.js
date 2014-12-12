@@ -37,9 +37,9 @@
 		if(ent.rigidbodyComponent){
 			ent.rigidbodyComponent.destroy();
 		}
-		//console.log('Clearing ColliderComponent');
+		console.log('Clearing ColliderComponent');
 		ent.clearComponent('ColliderComponent').bind(ent.colliderComponent);
-		//console.log('Clearing RigidbodyComponent');
+		console.log('Clearing RigidbodyComponent');
 		ent.clearComponent('RigidbodyComponent').bind(ent.rigidbodyComponent);
 		console.log(ent);
 	};
