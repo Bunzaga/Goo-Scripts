@@ -37,7 +37,9 @@
 		if(ent.rigidbodyComponent){
 			ent.rigidbodyComponent.destroy();
 		}
+		console.log('Clearing ColliderComponent');
 		ent.clearComponent('ColliderComponent');
+		console.log('Clearing RigidbodyComponent');
 		ent.clearComponent('RigidbodyComponent');
 		console.log(ent);
 	};
@@ -119,6 +121,7 @@
 		this.isTrigger = false;
 		this.useGravity = true;
 		GooPX.RigidbodyComponent.pool.push(this);
+		console.log('dont destroying rigidbody');
 	};
 	
 	GooPX.ColliderComponent = function(){};
