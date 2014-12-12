@@ -38,10 +38,12 @@
 			ent.rigidbodyComponent.destroy();
 		}
 		console.log('Clearing ColliderComponent');
-		ent.clearComponent('ColliderComponent').bind(ent.colliderComponent);
+		//ent.clearComponent('ColliderComponent');
 		console.log('Clearing RigidbodyComponent');
-		ent.clearComponent('RigidbodyComponent').bind(ent.rigidbodyComponent);
+		//ent.clearComponent('RigidbodyComponent');
 		console.log(ent);
+		console.log(ent.colliderComponent.installedAPI);
+		console.log(ent.rigidbodyComponent.installedAPI);
 	};
 	function makeRed(child){
 		if(child.meshRendererComponent){
@@ -55,6 +57,7 @@
 	}
 	GooPX.System.prototype.process = function(entArr){
 		console.log('GooPX.System.process()');
+		return;
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
 		for(var i = entArr.length-1; i > -1; i--){
