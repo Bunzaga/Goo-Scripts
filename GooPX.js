@@ -130,6 +130,7 @@
 		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
 		cc.type = 'ColliderComponent';
 		cc.shape = shape;
+		return cc;
 	};
 	GooPX.ColliderComponent.prototype.destroy = function(){
 		console.log('GooPX.ColliderComponent.destroy()');
