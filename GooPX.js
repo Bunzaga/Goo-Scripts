@@ -16,18 +16,17 @@
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
-			// do something with RigidbodyComponent or entity here
-			if(undefined === ent.colliderComponent){
-				console.log('The entity does not have a ColliderComponent(adding one),');
-				ent.setComponent(GooPX.ColliderComponent.create(GooPX.generateCollider(ent)));
+		// do something with RigidbodyComponent or entity here
+		if(undefined === ent.colliderComponent){
+			console.log('The entity does not have a ColliderComponent(adding one),');
+			ent.setComponent(GooPX.ColliderComponent.create(GooPX.generateCollider(ent)));
+		}
+		else{
+			console.log('The entity already has a ColliderComponent,');
+			if(undefined === ent.colliderComponent.shape){
+				ent.colliderComponent.shape = GooPX.generateCollider(ent);
 			}
-			else{
-				console.log('The entity already has a ColliderComponent,');
-				if(undefined === ent.colliderComponent.shape){
-					ent.colliderComponent.shape = GooPX.generateCollider(ent);
-				}
-			}
-	    	}
+		}
 	};
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
