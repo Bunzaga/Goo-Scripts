@@ -102,7 +102,7 @@
 		console.log('Cleaned up!');
 	};
   
-	GooPX.RigidbodyComponent = function(){};
+	GooPX.RigidbodyComponent = function(){goo.Component.call(this);};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
 	GooPX.RigidbodyComponent.pool = [];
@@ -126,7 +126,7 @@
 		console.log('done destroying rigidbody');
 	};
 	
-	GooPX.ColliderComponent = function(){};
+	GooPX.ColliderComponent = function(){goo.Component.call(this);};
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ColliderComponent.constructor = GooPX.ColliderComponent;
 	GooPX.ColliderComponent.pool = [];
