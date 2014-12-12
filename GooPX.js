@@ -31,6 +31,7 @@
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		if(ent.colliderComponent){
+			ent.colliderComponent.shape.destroy();
 			ent.colliderComponent.destroy();
 			ent.clearComponent('ColliderComponent');
 		}
