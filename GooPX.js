@@ -4,7 +4,7 @@
 	var vec = new goo.Vector3();
 	var GooPX = {};
 	GooPX.System = function(settings){
-		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent']);
+		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
 		this.priority = 1;
 		this.gravity = new goo.Vector3(settings.gravity || 0, -9.8, 0);
 		this.world = {};
@@ -16,28 +16,28 @@
 	GooPX.System.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	if(ent.rigidbodyComponent){
-	    		if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
-				// do something with RigidbodyComponent or entity here
-				if(undefined !== ent.rigidbodyComponent.collider){
-					console.log('The entity already has a Collider,');
+			// do something with RigidbodyComponent or entity here
+			if(undefined === ent.colliderComponent){
+				console.log('The entity does not have a ColliderComponent(adding one),');
+				ent.setComponent(GooPX.ColliderComponent.create(GooPX.generateCollider(ent)));
+			}
+			else{
+				console.log('The entity already has a ColliderComponent,');
+				if(undefined === ent.colliderComponent.shape){
+					ent.colliderComponent.shape = GooPX.generateCollider(ent);
 				}
-				else{
-					console.log('The entity does not have a Collider(adding one),');
-					ent.rigidbodyComponent.collider = GooPX.generateCollider(ent);
-					ent.rigidbodyComponent.entity = ent;
-				}
-				console.log(ent.rigidbodyComponent.collider);
-				console.log(ent.rigidbodyComponent.collider.translation.x+','+ent.rigidbodyComponent.collider.translation.y+','+ent.rigidbodyComponent.collider.translation.z);
-	    		}
+			}
 	    	}
 	};
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		if(ent.rigidbodyComponent){
-			if(ent.rigidbodyComponent instanceof GooPX.RigidbodyComponent){
-				ent.rigidbodyComponent.destroy();
-				ent.clearComponent('RigidbodyComponent');
-			}
+			ent.rigidbodyComponent.destroy();
+			ent.clearComponent('RigidbodyComponent');
+		}
+		if(ent.colliderComponent){
+			ent.colliderComponent.destroy();
+			ent.clearComponent('ColliderComponent');
 		}
 		console.log(ent);
 	};
@@ -65,7 +65,7 @@
 				for(var j = i-1; j > -1; j--){
 					var entB = entArr[j];
 					if(entB !== undefined){
-						var collision = GooPX.checkCollision(entA.rigidbodyComponent.collider, entB.rigidbodyComponent.collider);
+						var collision = GooPX.checkCollision(entA, entB);
 						if(collision.bool === true){
 							entA.traverse(makeRed);
 							entB.traverse(makeRed);
@@ -90,6 +90,7 @@
 			this.deleted(ent);
 		}
 		GooPX.RigidbodyComponent.pool.length = 0;
+		GooPX.ColliderComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
 		GooPX.CollisionData.pool.length = 0;
 		console.log('Cleaned up!');
@@ -109,16 +110,25 @@
 		return rbc;
 	};
 	GooPX.RigidbodyComponent.prototype.destroy = function(){
-		if(this.collider){
-			this.collider.destroy();
-			delete this.collider;
-		}
 		this.mass = 1.0;
 		this.isKinematic = false;
 		this.isTrigger = false;
 		this.useGravity = true;
-		delete this.entity;
 		GooPX.RigidbodyComponent.pool.push(this);
+	};
+	
+	GooPX.ColliderComponent = function(){};
+	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.ColliderComponent.constructor = GooPX.ColliderComponent;
+	GooPX.ColliderComponent.pool = [];
+	GooPX.ColliderComponent.create = function(shape){
+		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
+		cc.type = 'ColliderComponent';
+		cc.shape = shape;
+	};
+	GooPX.ColliderComponent.prototype.destroy = function(){
+		this.shape = undefined;
+		GooPX.ColliderComponent.pool.push(this);
 	};
 	
 	GooPX.generateCollider = function(ent){
@@ -157,7 +167,6 @@
 			}
 			console.log('MeshData:');
 			console.log(ent.meshDataComponent.meshData);
-			shape.entity = ent;
 		}
 		else{
 			console.log('This is a parent entity or no MeshData');
@@ -166,13 +175,15 @@
 		return shape;
 	};
 
-	GooPX.checkCollision = function(a, b){
-		switch(a.type){
+	GooPX.checkCollision = function(entA, entB){
+		var colA = entA.colliderComponent.shape;
+		var colB = entB.colliderComponent.shape;
+		switch(colA.type){
 			case 'Sphere':
-				switch(b.type){
+				switch(colB.type){
 					case 'Sphere':
-						var rDist = a.radius + b.radius;
-						var tDist = goo.Vector3.sub(a.translation, b.translation, vec).length();
+						var rDist = colA.radius + colB.radius;
+						var tDist = goo.Vector3.sub(entA.transformComponent.worldTransform.translation, entB.transformComponent.worldTransform.translation, vec).length();
 						var dist = tDist - rDist;
 						return GooPX.CollisionData.create((tDist < rDist), dist);
 						break;
