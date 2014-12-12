@@ -99,13 +99,14 @@
 		console.log('Cleaned up!');
 	};
   
-	GooPX.RigidbodyComponent = function(){this.type = 'RigidbodyComponent';};
+	GooPX.RigidbodyComponent = function(){};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
 	GooPX.RigidbodyComponent.pool = [];
 	GooPX.RigidbodyComponent.create = function(settings){
 		console.log('GooPX.RigidbodyComponent.create()');
 		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
+		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass || 1.0;
 		rbc.isKinematic = settings.isKinematic || false;
 		rbc.isTrigger = settings.isTrigger || false;
@@ -122,7 +123,7 @@
 		console.log('done destroying rigidbody');
 	};
 	
-	GooPX.ColliderComponent = function(){this.type = 'ColliderComponent';};
+	GooPX.ColliderComponent = function(){};
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ColliderComponent.constructor = GooPX.ColliderComponent;
 	GooPX.ColliderComponent.pool = [];
@@ -130,6 +131,7 @@
 		console.log('GooPX.ColliderComponent.create()');
 		console.log(collider);
 		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
+		cc.type = 'ColliderComponent';
 		cc.collider = collider;
 		return cc;
 	};
