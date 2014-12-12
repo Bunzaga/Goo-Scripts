@@ -32,12 +32,12 @@
 		console.log('GooPX.System.deleted()');
 		if(ent.colliderComponent){
 			ent.colliderComponent.destroy();
-			ent.clearComponent('ColliderComponent');
 		}
 		if(ent.rigidbodyComponent){
 			ent.rigidbodyComponent.destroy();
-			ent.clearComponent('RigidbodyComponent');
 		}
+		ent.clearComponent('ColliderComponent');
+		ent.clearComponent('RigidbodyComponent');
 		console.log(ent);
 	};
 	function makeRed(child){
@@ -55,11 +55,12 @@
 		// this.world.stepSimulation(tpf, this.maxSubSteps, this.fixedTime);
 		// this.world.checkCollisions();
 		for(var i = entArr.length-1; i > -1; i--){
-			var ent = entArr[i];
-			ent.collided = false;
+			//var ent = entArr[i];
+			//ent.collided = false;
 		}
 		for(var i = entArr.length-1; i > -1; i--){
 			var entA = entArr[i];
+			entA.collided = false;
 			if(entA !== undefined){
 				for(var j = i-1; j > -1; j--){
 					var entB = entArr[j];
@@ -123,18 +124,22 @@
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ColliderComponent.constructor = GooPX.ColliderComponent;
 	GooPX.ColliderComponent.pool = [];
-	GooPX.ColliderComponent.create = function(shape){
+	GooPX.ColliderComponent.create = function(collider){
 		console.log('GooPX.ColliderComponent.create()');
 		console.log(shape);
 		var cc = GooPX.ColliderComponent.pool.length === 0 ? new GooPX.ColliderComponent() : GooPX.ColliderComponent.pool.shift();
 		cc.type = 'ColliderComponent';
-		cc.shape = shape;
+		cc.collider = collider;
 		return cc;
 	};
 	GooPX.ColliderComponent.prototype.destroy = function(){
 		console.log('GooPX.ColliderComponent.destroy()');
-		this.shape.destroy();
-		this.shape = undefined;
+		if(undefined !== this.collider){
+			console.log('the collider exists...');
+			this.collider.destroy();
+		}
+		this.collider = undefined;
+		console.log('set this.collider to undefined');
 		GooPX.ColliderComponent.pool.push(this);
 	};
 	
@@ -183,8 +188,8 @@
 	};
 
 	GooPX.checkCollision = function(entA, entB){
-		var colA = entA.colliderComponent.shape;
-		var colB = entB.colliderComponent.shape;
+		var colA = entA.colliderComponent.collider;
+		var colB = entB.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
 				switch(colB.type){
@@ -208,6 +213,7 @@
 		return collider;
 	};
 	GooPX.SphereCollider.prototype.destroy = function(){
+		console.log('GooPX.SphereCollider.prototype.destroy');
 		this.radius = 0.5;
 		GooPX.SphereCollider.pool.push(this);
 	};
