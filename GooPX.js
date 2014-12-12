@@ -38,9 +38,9 @@
 			ent.rigidbodyComponent.destroy();
 		}
 		//console.log('Clearing ColliderComponent');
-		//ent.clearComponent('ColliderComponent').bind(ent);
-		console.log('Clearing RigidbodyComponent');
-		ent.clearComponent('RigidbodyComponent').bind(ent);
+		ent.clearComponent('ColliderComponent').bind(ent.colliderComponent);
+		//console.log('Clearing RigidbodyComponent');
+		ent.clearComponent('RigidbodyComponent').bind(ent.rigidbodyComponent);
 		console.log(ent);
 	};
 	function makeRed(child){
