@@ -23,8 +23,9 @@
 		}
 		else{
 			console.log('The entity already has a ColliderComponent,');
-			if(undefined === ent.colliderComponent.shape){
-				ent.colliderComponent.shape = GooPX.generateCollider(ent);
+			if(undefined === ent.colliderComponent.collider){
+				console.log('No collider in the ColliderComponent, creating one.');
+				ent.colliderComponent.collider = GooPX.generateCollider(ent);
 			}
 		}
 	};
