@@ -4,7 +4,7 @@
 	var vec = new goo.Vector3();
 	var GooPX = {};
 	GooPX.System = function(settings){
-		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent', 'TransformComponent']);
+		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
 		this.priority = 1;
 		this.gravity = new goo.Vector3(settings.gravity || 0, -9.8, 0);
 		this.world = {};
