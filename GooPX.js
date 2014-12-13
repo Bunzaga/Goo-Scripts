@@ -216,9 +216,9 @@
 				break;
 		}
 		gjk.dir.invert();
-		store.x = va.x - vb.x;
-		store.y = va.y - vb.y;
-		store.z = va.z - vb.z;
+		store.x = gjk.va.x - gjk.vb.x;
+		store.y = gjk.va.y - gjk.vb.y;
+		store.z = gjk.va.z - gjk.vb.z;
 	};
 	gjk.sphereSupport = function(ent, col, v){
 		var abs = gjk.dir.length();
