@@ -87,8 +87,7 @@
 			var ent = this._activeEntities[i];
 			this.deleted(ent);
 		}
-		RigidbodyComponent.pool = 0;
-		//GooPX.RigidbodyComponent.pool.length = 0;
+		GooPX.RigidbodyComponent.pool.length = 0;
 		GooPX.ColliderComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
 		GooPX.CollisionData.pool.length = 0;
