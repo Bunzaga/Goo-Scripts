@@ -275,18 +275,18 @@
 				console.log(gjk.a.x+','+gjk.a.y+','+gjk.a.z);
 				console.log('b');
 				console.log(gjk.b.x+','+gjk.b.y+','+gjk.b.z);
-				goo.Vector3.subv(gjk.b, gjk.a, gjk.ab);
+				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				console.log(gjk.ab.x+','+gjk.ab.y+','+gjk.ab.z);
 				if(gjk.ab.dot(gjk.a0) > 0){
 					console.log('gjk.ab.dot(gjk.a0) is > 0:'+gjk.ab.dot(gjk.a0));
 					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
 					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
-					gjk.c.copy(gjk.b);
-					gjk.b.copy(gjk.a);
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
 				}
+				gjk.c.copy(gjk.b);
+				gjk.b.copy(gjk.a);
 				break;
 			case 2:
 				break;
