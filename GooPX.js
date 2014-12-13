@@ -268,12 +268,13 @@
 					console.log('gjk.ab.dot(gjk.a0) is > 0');
 					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
 					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
+					gjk.c.copy(gjk.b);
+					gjk.b.copy(gjk.a);
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
+					return true;
 				}
-				gjk.c.copy(gjk.b);
-				gjk.b.copy(gjk.a);
 				break;
 			case 2:
 				break;
