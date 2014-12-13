@@ -94,18 +94,14 @@
 		GooPX.CollisionData.pool.length = 0;
 		console.log('Cleaned up!');
 	};
-	function RigidbodyComponent(){}
-	RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
-	RigidbodyComponent.constructor = RigidbodyComponent;
-	RigidbodyComponent.pool = [];
-	//GooPX.RigidbodyComponent = function(){goo.Component.call(this);};
-	//GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
-	//GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
-	//GooPX.RigidbodyComponent.pool = [];
-	
-	GooPX.RigidbodyComponent = function(settings){
+
+	GooPX.RigidbodyComponent = function(){goo.Component.call(this);};
+	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
+	GooPX.RigidbodyComponent.pool = [];
+	GooPX.RigidbodyComponent.create = function(settings){
 		console.log('GooPX.RigidbodyComponent.create()');
-		var rbc = RigidbodyComponent.pool.length === 0 ? new RigidbodyComponent() : RigidbodyComponent.pool.shift();
+		var rbc = GooPX.RigidbodyComponent.pool.length === 0 ? new GooPX.RigidbodyComponent() : GooPX.RigidbodyComponent.pool.shift();
 		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass || 1.0;
 		rbc.isKinematic = settings.isKinematic || false;
@@ -113,15 +109,14 @@
 		rbc.useGravity = settings.useGravity || true;
 		return rbc;
 	}
-	//GooPX.RigidbodyComponent.create = function(settings){};
 	//GooPX.RigidbodyComponent.prototype.attached = function(ent){};
-	RigidbodyComponent.prototype.detached = function(ent){
+	GooPX.RigidbodyComponent.prototype.detached = function(ent){
 		console.log('GooPX.RigidbodyComponent.destroy()');
 		this.mass = 1.0;
 		this.isKinematic = false;
 		this.isTrigger = false;
 		this.useGravity = true;
-		RigidbodyComponent.pool.push(this);
+		GooPX.RigidbodyComponent.pool.push(this);
 		console.log('done destroying rigidbody');
 	};
 	
@@ -137,7 +132,7 @@
 		cc.collider = collider;
 		return cc;
 	};
-	GooPX.ColliderComponent.prototype.attached = function(ent){};
+	//GooPX.ColliderComponent.prototype.attached = function(ent){};
 	GooPX.ColliderComponent.prototype.detached = function(ent){
 		console.log('GooPX.ColliderComponent.destroy()');
 		if(undefined !== this.collider){
@@ -148,7 +143,6 @@
 		console.log('set this.collider to undefined');
 		GooPX.ColliderComponent.pool.push(this);
 	};
-	GooPX.ColliderComponent.prototype.destroy = function(){};
 	
 	GooPX.generateCollider = function(ent){
 		var shape = undefined;
