@@ -32,11 +32,11 @@
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		if(ent.colliderComponent){
-			ent.colliderComponent.destroy();
+		//	ent.colliderComponent.destroy();
 			ent.clearComponent('ColliderComponent');
 		}
 		if(ent.rigidbodyComponent){
-			ent.rigidbodyComponent.destroy();
+		//	ent.rigidbodyComponent.destroy();
 			ent.clearComponent('RigidbodyComponent');
 		}
 	};
@@ -110,7 +110,8 @@
 		rbc.useGravity = settings.useGravity || true;
 		return rbc;
 	};
-	GooPX.RigidbodyComponent.prototype.destroy = function(){
+	GooPX.RigidbodyComponent.prototype.attached = function(ent){};
+	GooPX.RigidbodyComponent.prototype.detached = function(ent){
 		console.log('GooPX.RigidbodyComponent.destroy()');
 		this.mass = 1.0;
 		this.isKinematic = false;
@@ -119,6 +120,7 @@
 		GooPX.RigidbodyComponent.pool.push(this);
 		console.log('done destroying rigidbody');
 	};
+	GooPX.RigidbodyComponent.prototype.destroy = function(){};
 	
 	GooPX.ColliderComponent = function(){goo.Component.call(this);};
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
@@ -132,7 +134,8 @@
 		cc.collider = collider;
 		return cc;
 	};
-	GooPX.ColliderComponent.prototype.destroy = function(){
+	GooPX.ColliderComponent.prototype.attached = function(ent){};
+	GooPX.ColliderComponent.prototype.detached = function(ent){
 		console.log('GooPX.ColliderComponent.destroy()');
 		if(undefined !== this.collider){
 			console.log('the collider exists...');
@@ -142,6 +145,7 @@
 		console.log('set this.collider to undefined');
 		GooPX.ColliderComponent.pool.push(this);
 	};
+	GooPX.ColliderComponent.prototype.destroy = function(){};
 	
 	GooPX.generateCollider = function(ent){
 		var shape = undefined;
