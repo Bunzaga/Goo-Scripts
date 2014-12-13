@@ -251,7 +251,7 @@
 	gjk.processSimplex = function(){
 		console.log('gjk.processSimplex()');
 		gjk.a0.copy(gjk.a).invert();
-		console.log('gjk.simplex.count === '+gjk.simplex.count);
+		console.log('gjk.simplex.count === '+gjk.count);
 		switch(gjk.count){
 			case 1:
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
