@@ -235,23 +235,21 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		gjk.support(entA, entB, gjk.b);
+		gjk.support(entA, entB, gjk.a);
 		gjk.dir.invert();
 		while(true){
-			gjk.count++;
-			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
 				console.log('not colliding');
 				return false;
 			}
-			if(gjk.processSimplex()){
+			gjk.count++;
+			gjk.b.copy(gjk.a);
+			gjk.support(entA, entB, gjk.a);
+			if(true === gjk.processSimplex()){
 				return true;
 			}
-			if(gjk.count > 50){
-				return false;
-			}
+			return false;
 		}
-		return false;
 	};
 	
 	gjk.processSimplex = function(){
@@ -267,13 +265,13 @@
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
 					console.log('gjk.ab.dot(gjk.a0) is > 0');
-					gjk.dir.copy(gjk.ab).cross(gjk.a0).cross(gjk.ab);
+					Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
+					Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
 				}
 				gjk.c.copy(gjk.b);
-				gjk.b.copy(gjk.a);
 				console.log('gjk.dir');
 				console.log(gjk.dir);
 				break;
