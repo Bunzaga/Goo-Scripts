@@ -235,16 +235,15 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		gjk.support(entA, entB, gjk.a);
+		gjk.support(entA, entB, gjk.b);
 		gjk.dir.invert();
 		while(true){
+			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
 				console.log('not colliding');
 				return false;
 			}
 			gjk.count++;
-			gjk.b.copy(gjk.a);
-			gjk.support(entA, entB, gjk.a);
 			if(true === gjk.processSimplex()){
 				return true;
 			}
@@ -256,12 +255,12 @@
 		console.log('gjk.processSimplex()');
 		console.log('gjk.simplex.count === '+gjk.count);
 		gjk.a0.copy(gjk.a).invert();
-		console.log('gjk.a');
-		console.log(gjk.a);
-		console.log('gjk.a0');
-		console.log(gjk.a0);
 		switch(gjk.count){
 			case 1:
+				console.log('a');
+				console.log(gjk.a);
+				console.log('b');
+				console.log(gjk.b);
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
 					console.log('gjk.ab.dot(gjk.a0) is > 0');
@@ -272,8 +271,7 @@
 					gjk.dir.copy(gjk.a0);
 				}
 				gjk.c.copy(gjk.b);
-				console.log('gjk.dir');
-				console.log(gjk.dir);
+				gjk.b.copy(gjk.a);
 				break;
 			case 2:
 				break;
