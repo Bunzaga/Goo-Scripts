@@ -256,7 +256,7 @@
 			case 1:
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
-					gjk.dir.copy(ab).cross(gjk.a0).cross(gjk.ab);
+					gjk.dir.copy(gjk.ab).cross(gjk.a0).cross(gjk.ab);
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
