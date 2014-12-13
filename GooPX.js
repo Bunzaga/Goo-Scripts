@@ -229,7 +229,7 @@
 		var abs = gjk.dir.length();
 		console.log('abs');
 		console.log(abs);
-		v.copy(ent.transformComponent.transform.translation);
+		v.copy(ent.transformComponent.worldTransform.translation);
 		console.log('col.radius');
 		console.log(col.radius);
 		v.x += (col.radius * (gjk.dir.x / abs));
