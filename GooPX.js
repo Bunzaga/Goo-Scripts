@@ -216,11 +216,13 @@
 				break;
 		}
 		gjk.dir.invert();
+		console.log('support result:');
 		console.log(gjk.va);
 		console.log(gjk.vb);
 		store.x = gjk.va.x - gjk.vb.x;
 		store.y = gjk.va.y - gjk.vb.y;
 		store.z = gjk.va.z - gjk.vb.z;
+		console.log(store);
 	};
 	gjk.sphereSupport = function(ent, col, v){
 		var abs = gjk.dir.length();
@@ -265,7 +267,7 @@
 				console.log(gjk.b);
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
-					console.log('gjk.ab.dot(gjk.a0) is > 0');
+					console.log('gjk.ab.dot(gjk.a0) is:'+gjk.ab.dot(gjk.a0));
 					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
 					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
 					gjk.c.copy(gjk.b);
@@ -273,7 +275,6 @@
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
-					return true;
 				}
 				break;
 			case 2:
