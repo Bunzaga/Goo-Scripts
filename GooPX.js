@@ -216,6 +216,8 @@
 				break;
 		}
 		gjk.dir.invert();
+		console.log(gjk.va);
+		console.log(gjk.vb);
 		store.x = gjk.va.x - gjk.vb.x;
 		store.y = gjk.va.y - gjk.vb.y;
 		store.z = gjk.va.z - gjk.vb.z;
@@ -245,17 +247,26 @@
 			if(gjk.processSimplex()){
 				return true;
 			}
+			if(gjk.count > 50){
+				return false;
+			}
 		}
+		return false;
 	};
 	
 	gjk.processSimplex = function(){
 		console.log('gjk.processSimplex()');
-		gjk.a0.copy(gjk.a).invert();
 		console.log('gjk.simplex.count === '+gjk.count);
+		gjk.a0.copy(gjk.a).invert();
+		console.log('gjk.a');
+		console.log(gjk.a);
+		console.log('gjk.a0');
+		console.log(gjk.a0);
 		switch(gjk.count){
 			case 1:
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
-				if(gjk.ab.dot(gjk.a0) > 0){
+				if(gjk.ab.dot(gjk.a0) <= 0){
+					console.log('gjk.ab.dot(gjk.a0) is <= 0');
 					gjk.dir.copy(gjk.ab).cross(gjk.a0).cross(gjk.ab);
 				}
 				else{
@@ -263,6 +274,8 @@
 				}
 				gjk.c.copy(gjk.b);
 				gjk.b.copy(gjk.a);
+				console.log('gjk.dir');
+				console.log(gjk.dir);
 				break;
 			case 2:
 				break;
