@@ -105,7 +105,7 @@
 	
 	GooPX.RigidbodyComponent = function(settings){
 		console.log('GooPX.RigidbodyComponent.create()');
-		var rbc = RigidbodyComponent.pool.length === 0 ? RigidbodyComponent() : RigidbodyComponent.pool.shift();
+		var rbc = RigidbodyComponent.pool.length === 0 ? new RigidbodyComponent() : RigidbodyComponent.pool.shift();
 		rbc.type = 'RigidbodyComponent';
 		rbc.mass = settings.mass || 1.0;
 		rbc.isKinematic = settings.isKinematic || false;
