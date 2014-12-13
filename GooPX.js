@@ -201,68 +201,74 @@
 	gjk.abP = new goo.Vector3();
 	gjk.acP = new goo.Vector3();
 	gjk.dir = new goo.Vector3();
-	gjk.support = function(entA, entB){
+	gjk.support = function(entA, entB, store){
 		var colA = entA.colliderComponent.collider;
 		var colB = entB.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
+				var abs = gjk.dir.length();
 				va.copy(entA.transformComponent.transform.translation);
+				va.x += (colA.radius * (gjk.dir.x / abs));
+				va.y += (colA.radius * (gjk.dir.y / abs));
+				va.z += (colA.radius * (gjk.dir.z / abs));
 		}
+		gjk.dir.invert();
 		switch(colB.type){
 			case 'Sphere':
+				var abs = gjk.dir.length();
+				vb.copy(entB.transformComponent.transform.translation);
+				vb.x = (colB.radius * (gjk.dir.x / abs));
+				vb.y = (colB.radius * (gjk.dir.y / abs));
+				vb.z = (colB.radius * (gjk.dir.z / abs));
 				break;
 		}
 		break;
+		gjk.dir.invert();
+		store.x = va.x - vb.x;
+		store.y = va.y - vb.y;
+		store.z = va.z - vb.z;
 	};
 	
 	GooPX.checkCollision = function(entA, entB){
+		console.log('GooPX.checkCollision()');
+		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subV(entA.transformComponent.worldTransform.translation);
-		gjk.b = gjk.support(entA, entB);
+		gjk.support(entA, entB, gjk.b);
 		gjk.dir.invert();
 		while(true){
 			gjk.count++;
-			gjk.a = gjk.support(entA, entB);
-			if (gjk.a.dot(gjk.dir) <= 0) {
+			gjk.support(entA, entB, gjk.a);
+			if(gjk.a.dot(gjk.dir) <= 0) {
+				console.log('not colliding');
 				return false;
 			}
-			if(gjk.containsOrigin()){
+			if(gjk.processSimplex()){
 				return true;
 			}
-			gjk.setDirection();
 		}
 	};
 	
-	gjk.containsOrigin = function(){
-		var a = gjk.simplex[gjk.simplex.length-1];
-		gjk.a0.copy(a).invert();
-		//var a = s.getLast();
-		a0.copy(a).invert();
-		if(s.size() === 3){
-			b = s.getB();
-			c = s.getC();
-			var ab = b - a;
-			var ac = c - a;
-			abPerp = tripleProduct(ac, ab, ab);
-			acPerp = tripleProduct(ab, ac, ac);
-			if(abPerp.dot(a0) > 0){
-				s.remove(c);
-				dir.set(abPerp);
-			}
-			else{
-				if(acPerp.dot(a0) > 0){
-					s.remove(b);
-					d.set(acPerp);
+	gjk.processSimplex = function(){
+		console.log('gjk.processSimplex()');
+		gjk.a0.copy(gjk.a).invert();
+		console.log('gjk.simplex.count === '+gjk.simplex.count);
+		switch(gjk.count){
+			case 1:
+				gjk.ab.copy(gjk.b).subVector(gjk.a);
+				if(gjk.ab.dot(gjk.a0) > 0){
+					gjk.dir.copy(ab).cross(gjk.a0).cross(gjk.ab);
 				}
 				else{
-					return true;
+					gjk.dir.copy(gjk.a0);
 				}
-			}
-		}else{
-			b = s.getB();
-			ab = b-a;
-			abPerp = tripleProduct(ab, a0, ab);
-			d.set(abPerp);
+				gjk.c.copy(gjk.b);
+				gjk.b.copy(gjk.a);
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
 		}
 		return false;
 	};
@@ -281,27 +287,6 @@
 			break;
 	}
 	*/
-
-	function getDirection(Simplex){
-		//(AB x AO) x AB
-		// ab = b - a
-		// a0 = 0 - a
-		//newDir = ab.cross(a0).cross(ab);
-		
-		// ab = b - a;
-		// ac = c - a;
-		// acPerp = ab.cross(ac).cross(ac)
-		// a0 = 0 - a;
-		//acPerp.dot(a0);
-		// ac.cross(a0).cross(ac);
-		
-	}
-	function support(shape1, shape2, dir){
-		shape1.getFarthestPointInDirection(dir, gjkV1);
-		shape2.getFarthestPointInDirection(dir.invert(), gjkV2);
-		dir.invert();
-		return vec.copy(gjkV1).subVector(gjkV2);
-	}
 	
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
