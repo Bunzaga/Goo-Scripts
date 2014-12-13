@@ -225,8 +225,13 @@
 		console.log(store);
 	};
 	gjk.sphereSupport = function(ent, col, v){
+		console.log('gjk.sphereSupport()');
 		var abs = gjk.dir.length();
+		console.log('abs');
+		console.log(abs);
 		v.copy(ent.transformComponent.transform.translation);
+		console.log('col.radius');
+		console.log(col.radius);
 		v.x += (col.radius * (gjk.dir.x / abs));
 		v.y += (col.radius * (gjk.dir.y / abs));
 		v.z += (col.radius * (gjk.dir.z / abs));
@@ -237,6 +242,8 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
+		console.log('first time gjk.dir');
+		console.log(gjk.dir);
 		gjk.support(entA, entB, gjk.b);
 		gjk.dir.invert();
 		while(true){
