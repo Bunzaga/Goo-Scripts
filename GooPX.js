@@ -264,8 +264,8 @@
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
 					console.log('gjk.ab.dot(gjk.a0) is > 0');
-					Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
-					Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
+					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
+					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
