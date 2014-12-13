@@ -217,12 +217,12 @@
 		}
 		gjk.dir.invert();
 		console.log('support result:');
-		console.log(gjk.va);
-		console.log(gjk.vb);
+		console.log(gjk.va.x+','+gjk.va.y+','+gjk.va.z);
+		console.log(gjk.vb.x+','+gjk.vb.y+','+gjk.vb.z);
 		store.x = gjk.va.x - gjk.vb.x;
 		store.y = gjk.va.y - gjk.vb.y;
 		store.z = gjk.va.z - gjk.vb.z;
-		console.log(store);
+		console.log(store.x+","+store.y+","+store.z);
 	};
 	gjk.sphereSupport = function(ent, col, v){
 		console.log('gjk.sphereSupport()');
@@ -242,8 +242,8 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		console.log('first time gjk.dir');
-		console.log(gjk.dir);
+		console.log('first gjk.dir');
+		console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 		gjk.support(entA, entB, gjk.b);
 		gjk.dir.invert();
 		while(true){
@@ -269,9 +269,9 @@
 		switch(gjk.count){
 			case 1:
 				console.log('a');
-				console.log(gjk.a);
+				console.log(gjk.a.x+','+gjk.a.y+','+gjk.a.z);
 				console.log('b');
-				console.log(gjk.b);
+				console.log(gjk.b.x+','+gjk.b.y+','+gjk.b.z);
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
 				if(gjk.ab.dot(gjk.a0) > 0){
 					console.log('gjk.ab.dot(gjk.a0) is:'+gjk.ab.dot(gjk.a0));
