@@ -203,31 +203,30 @@
 	gjk.dir = new goo.Vector3();
 	gjk.support = function(entA, entB, store){
 		var colA = entA.colliderComponent.collider;
-		var colB = entB.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
-				var abs = gjk.dir.length();
-				va.copy(entA.transformComponent.transform.translation);
-				va.x += (colA.radius * (gjk.dir.x / abs));
-				va.y += (colA.radius * (gjk.dir.y / abs));
-				va.z += (colA.radius * (gjk.dir.z / abs));
-		}
-		gjk.dir.invert();
-		switch(colB.type){
-			case 'Sphere':
-				var abs = gjk.dir.length();
-				vb.copy(entB.transformComponent.transform.translation);
-				vb.x = (colB.radius * (gjk.dir.x / abs));
-				vb.y = (colB.radius * (gjk.dir.y / abs));
-				vb.z = (colB.radius * (gjk.dir.z / abs));
+				gjk.sphereSupport(entA, colA, gjk.va);
 				break;
 		}
-		break;
+		gjk.dir.invert();
+		var colB = entB.colliderComponent.collider;
+		switch(colB.type){
+			case 'Sphere':
+				gjk.sphereSupport(entB, colB, gjk.vb);
+				break;
+		}
 		gjk.dir.invert();
 		store.x = va.x - vb.x;
 		store.y = va.y - vb.y;
 		store.z = va.z - vb.z;
 	};
+	gjk.sphereSupport = function(ent, col, v){
+		var abs = gjk.dir.length();
+		v.copy(ent.transformComponent.transform.translation);
+		v.x += (col.radius * (gjk.dir.x / abs));
+		v.y += (col.radius * (gjk.dir.y / abs));
+		v.z += (col.radius * (gjk.dir.z / abs));
+	}
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
