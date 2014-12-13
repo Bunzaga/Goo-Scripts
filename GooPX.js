@@ -186,23 +186,124 @@
 		}
 		return shape;
 	};
-
-	GooPX.checkCollision = function(entA, entB){
+	
+	var gjk = {};
+	gjk.count = 0;
+	gjk.a = new goo.Vector3();
+	gjk.b = new goo.Vector3();
+	gjk.c = new goo.Vector3();
+	gjk.d = new goo.Vector3();
+	gjk.dir = new goo.Vector3();
+	gjk.support = function(entA, entB){
+		switch(gjk.count){
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
 		var colA = entA.colliderComponent.collider;
 		var colB = entB.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
 				switch(colB.type){
 					case 'Sphere':
-						var rDist = colA.radius + colB.radius;
-						var tDist = goo.Vector3.sub(entA.transformComponent.worldTransform.translation, entB.transformComponent.worldTransform.translation, vec).length();
-						var dist = tDist - rDist;
-						return GooPX.CollisionData.create((tDist < rDist), dist);
 						break;
 				}
 				break;
 		}
 	};
+	
+	GooPX.checkCollision = function(entA, entB){
+		gjk.count = 0;
+		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subV(entA.transformComponent.worldTransform.translation);
+		gjk.support(entA, entB);
+		gjk.dir.invert();
+		while(true){
+			gjk.count++;
+			gjk.support(entA, entB);
+			if (gjk.a.dot(gjk.dir) <= 0) {
+				return false;
+			}
+			if(gjk.containsOrigin()){
+				return true;
+			}
+			gjk.setDirection();
+		}
+	};
+	
+	gjk.containsOrigin = function(){
+		var a = gjk.simplex[gjk.simplex.length-1];
+		gjk.a0.copy(a).invert();
+		//var a = s.getLast();
+		a0.copy(a).invert();
+		if(s.size() === 3){
+			b = s.getB();
+			c = s.getC();
+			var ab = b - a;
+			var ac = c - a;
+			abPerp = tripleProduct(ac, ab, ab);
+			acPerp = tripleProduct(ab, ac, ac);
+			if(abPerp.dot(a0) > 0){
+				s.remove(c);
+				dir.set(abPerp);
+			}
+			else{
+				if(acPerp.dot(a0) > 0){
+					s.remove(b);
+					d.set(acPerp);
+				}
+				else{
+					return true;
+				}
+			}
+		}else{
+			b = s.getB();
+			ab = b-a;
+			abPerp = tripleProduct(ab, a0, ab);
+			d.set(abPerp);
+		}
+		return false;
+	};
+	
+	/*
+	switch(colA.type){
+		case 'Sphere':
+			switch(colB.type){
+				case 'Sphere':
+					var rDist = colA.radius + colB.radius;
+					var tDist = goo.Vector3.sub(entA.transformComponent.worldTransform.translation, entB.transformComponent.worldTransform.translation, vec).length();
+					var dist = tDist - rDist;
+					return GooPX.CollisionData.create((tDist < rDist), dist);
+					break;
+			}
+			break;
+	}
+	*/
+
+	function getDirection(Simplex){
+		//(AB x AO) x AB
+		// ab = b - a
+		// a0 = 0 - a
+		//newDir = ab.cross(a0).cross(ab);
+		
+		// ab = b - a;
+		// ac = c - a;
+		// acPerp = ab.cross(ac).cross(ac)
+		// a0 = 0 - a;
+		//acPerp.dot(a0);
+		// ac.cross(a0).cross(ac);
+		
+	}
+	function support(shape1, shape2, dir){
+		shape1.getFarthestPointInDirection(dir, gjkV1);
+		shape2.getFarthestPointInDirection(dir.invert(), gjkV2);
+		dir.invert();
+		return vec.copy(gjkV1).subVector(gjkV2);
+	}
 	
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
