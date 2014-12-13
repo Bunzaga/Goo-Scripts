@@ -248,6 +248,8 @@
 		gjk.support(entA, entB, gjk.b);
 		gjk.dir.invert();
 		while(true){
+			console.log('new gjk.dir');
+			console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
 				console.log('not colliding');
@@ -273,9 +275,10 @@
 				console.log(gjk.a.x+','+gjk.a.y+','+gjk.a.z);
 				console.log('b');
 				console.log(gjk.b.x+','+gjk.b.y+','+gjk.b.z);
-				gjk.ab.copy(gjk.b).subVector(gjk.a);
+				goo.Vector3.subv(gjk.b, gjk.a, gjk.ab);
+				console.log(gjk.ab.x+','+gjk.ab.y+','+gjk.ab.z);
 				if(gjk.ab.dot(gjk.a0) > 0){
-					console.log('gjk.ab.dot(gjk.a0) is:'+gjk.ab.dot(gjk.a0));
+					console.log('gjk.ab.dot(gjk.a0) is > 0:'+gjk.ab.dot(gjk.a0));
 					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
 					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
 					gjk.c.copy(gjk.b);
