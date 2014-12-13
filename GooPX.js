@@ -189,42 +189,40 @@
 	
 	var gjk = {};
 	gjk.count = 0;
+	gjk.va = new goo.Vector3();
+	gjk.vb = new goo.Vector3();
 	gjk.a = new goo.Vector3();
 	gjk.b = new goo.Vector3();
 	gjk.c = new goo.Vector3();
 	gjk.d = new goo.Vector3();
+	gjk.ab = new goo.Vector3();
+	gjk.ac = new goo.Vector3();
+	gjk.a0 = new goo.Vector3();
+	gjk.abP = new goo.Vector3();
+	gjk.acP = new goo.Vector3();
 	gjk.dir = new goo.Vector3();
 	gjk.support = function(entA, entB){
-		switch(gjk.count){
-			case 0:
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-		}
 		var colA = entA.colliderComponent.collider;
 		var colB = entB.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
-				switch(colB.type){
-					case 'Sphere':
-						break;
-				}
+				va.copy(entA.transformComponent.transform.translation);
+		}
+		switch(colB.type){
+			case 'Sphere':
 				break;
 		}
+		break;
 	};
 	
 	GooPX.checkCollision = function(entA, entB){
 		gjk.count = 0;
 		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subV(entA.transformComponent.worldTransform.translation);
-		gjk.support(entA, entB);
+		gjk.b = gjk.support(entA, entB);
 		gjk.dir.invert();
 		while(true){
 			gjk.count++;
-			gjk.support(entA, entB);
+			gjk.a = gjk.support(entA, entB);
 			if (gjk.a.dot(gjk.dir) <= 0) {
 				return false;
 			}
