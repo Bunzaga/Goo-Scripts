@@ -241,13 +241,15 @@
 			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
 				console.log('not colliding');
-				return false;
+				return GooPX.CollisionData.create(false, 0);
 			}
 			gjk.count++;
 			if(true === gjk.processSimplex()){
-				return true;
+				return GooPX.CollisionData.create(true, 0);
 			}
-			return false;
+			if(gjk.count > 10){
+				return GooPX.CollisionData.create(false, 0);
+			}
 		}
 	};
 	
