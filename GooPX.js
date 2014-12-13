@@ -32,11 +32,9 @@
 	GooPX.System.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		if(ent.colliderComponent){
-		//	ent.colliderComponent.destroy();
 			ent.clearComponent('ColliderComponent');
 		}
 		if(ent.rigidbodyComponent){
-		//	ent.rigidbodyComponent.destroy();
 			ent.clearComponent('RigidbodyComponent');
 		}
 	};
@@ -95,7 +93,7 @@
 		GooPX.CollisionData.pool.length = 0;
 		console.log('Cleaned up!');
 	};
-  
+	console.log(goo.Component);
 	GooPX.RigidbodyComponent = function(){goo.Component.call(this);};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.constructor = GooPX.RigidbodyComponent;
