@@ -235,6 +235,7 @@
 		v.x += (col.radius * (gjk.dir.x / abs));
 		v.y += (col.radius * (gjk.dir.y / abs));
 		v.z += (col.radius * (gjk.dir.z / abs));
+
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
