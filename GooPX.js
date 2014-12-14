@@ -308,7 +308,7 @@
 					}
 					return false;
 				}
-				if(vec.dot(a0) > 0){
+				if(vec.dot(gjk.a0) > 0){
 					gjk.d.copy(gjk.c);
 					gjk.c.copy(gjk.b);
 					gjk.b.copy(gjk.a);
