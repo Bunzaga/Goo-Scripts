@@ -243,8 +243,7 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		v = vec3c( 1, 0, 0 ); //some arbitrary starting vector
- 
+		
 		gjk.support(entA, entB, gjk.c);
 		if(gjk.c.dot(gjk.dir) <= 0 ){
 			console.log('not colliding 0');
