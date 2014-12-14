@@ -2,7 +2,7 @@
 	'use strict';
 	var scl = new goo.Vector3(); 
 	var vec = new goo.Vector3();
-	var GooPX = {};
+	var GooPX = {}; 
 	GooPX.System = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
 		this.priority = 1;
