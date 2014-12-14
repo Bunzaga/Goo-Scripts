@@ -243,17 +243,38 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		v = vec3c( 1, 0, 0 ); //some arbitrary starting vector
+ 
+		gjk.support(entA, entB, gjk.c);
+		if(gjk.c.dot(gjk.dir) <= 0 ){
+			console.log('not colliding 0');
+			return GooPX.CollisionData.create(false, 0);
+		}
+		gjk.dir.copy(gjk.c).invert();
+		gjk.support(entA, entB, gjk.b);
+		
+		if(gjk.b.dot(gjk.dir) <= 0){
+			console.log('not colliding 1');
+			return GooPX.CollisionData.create(false, 0);
+		}
+		gjk.a0.copy(gjk.b).invert();
+		gjk.ab.copy(gjk.c).subVector(gjk.b);
+		goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
+		goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
+		
+		gjk.count = 2;
+		
 		while(true){
 			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
-				console.log('not colliding');
+				console.log('not colliding 2');
 				return GooPX.CollisionData.create(false, 0);
 			}
 			if(true === gjk.processSimplex()){
 				return GooPX.CollisionData.create(true, 0);
 			}
 			if(gjk.count > 10){
-				return GooPX.CollisionData.create(false, 0);
+				return GooPX.CollisionData.create(true, 0);
 			}
 			gjk.count++;
 		}
@@ -264,17 +285,6 @@
 		console.log('gjk.simplex.count === '+gjk.count);
 		gjk.a0.copy(gjk.a).invert();
 		switch(gjk.count){
-			case 0:
-				gjk.b.copy(gjk.a);
-				gjk.dir.copy(gjk.a0);
-				break;
-			case 1:
-				gjk.ab.copy(gjk.b).subVector(gjk.a);
-				goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
-				goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
-				gjk.c.copy(gjk.b);
-				gjk.b.copy(gjk.a);
-				break;
 			case 2:
 				break;
 			case 3:
