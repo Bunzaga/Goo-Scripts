@@ -230,16 +230,14 @@
 		*/
 		console.log('gjk.sphereSupport()');
 		v.copy(ent.transformComponent.worldTransform.translation);
-		v.x += (gjk.dir.x * col.radius);
-		v.y += (gjk.dir.y * col.radius);
-		v.z += (gjk.dir.z * col.radius);
+		v.addVector(vec.copy(gjk.dir).mul(col.radius));
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
 		gjk.dir.normalize();
 		gjk.support(entA, entB, gjk.c);
 		if(gjk.c.dot(gjk.dir) <= 0 ){
