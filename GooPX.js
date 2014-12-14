@@ -285,7 +285,7 @@
 				else{
 					gjk.dir.copy(gjk.a0);
 				}
-				if(dir.length() === 0){
+				if(gjk.dir.length() === 0){
 					return true;
 				}
 				gjk.c.copy(gjk.b);
