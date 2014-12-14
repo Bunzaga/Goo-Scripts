@@ -220,11 +220,9 @@
 				bu.sphereSupport(colB, bu.dirBA, bu.vb);
 				break;
 		}
-		console.log(bu.dist.length() - (bu.va.length() + bu.vb.length()));
-		console.log(bu.dist.lengthSquared() - (bu.va.lengthSquared() + bu.vb.lengthSquared()));
-		
-		var diff = bu.dist.lengthSquared() - (bu.va.lengthSquared() + bu.vb.lengthSquared());
-		return GooPX.CollisionData.create(diff < 0, Math.sqrt(((diff < 0) ? -diff : diff)));
+
+		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
+		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 
 	GooPX.SphereCollider = function(){};
