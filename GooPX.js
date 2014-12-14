@@ -235,16 +235,16 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation).normalize();
+		gjk.dir.copy(entA.transformComponent.worldTransform.translation).invert().normalize();
 		gjk.support(entA, entB, gjk.c);
-		if(gjk.c.dot(gjk.dir) <= 0 ){
+		if(gjk.c.dot(gjk.dir) < 0 ){
 			console.log('not colliding 0');
 			return GooPX.CollisionData.create(false, 0);
 		}
 		gjk.dir.copy(gjk.c).invert().normalize();
 		gjk.support(entA, entB, gjk.b);
 		
-		if(gjk.b.dot(gjk.dir) <= 0){
+		if(gjk.b.dot(gjk.dir) < 0){
 			console.log('not colliding 1');
 			return GooPX.CollisionData.create(false, 0);
 		}
@@ -255,20 +255,22 @@
 		gjk.dir.normalize();
 		
 		gjk.count = 2;
-		
+		var iter = 0;
 		while(true){
 			gjk.support(entA, entB, gjk.a);
-			if(gjk.a.dot(gjk.dir) <= 0) {
+			if(gjk.a.dot(gjk.dir) < 0) {
 				console.log('not colliding 2');
 				return GooPX.CollisionData.create(false, 0);
 			}
 			if(true === gjk.processSimplex()){
+				console.log('colliding 0');
 				return GooPX.CollisionData.create(true, 0);
 			}
-			if(gjk.count > 10){
+			iter++;
+			if(iter > 10){
+				console.log('colliding 1');
 				return GooPX.CollisionData.create(true, 0);
 			}
-			gjk.count++;
 		}
 	};
 	
@@ -278,8 +280,10 @@
 		gjk.a0.copy(gjk.a).invert();
 		switch(gjk.count){
 			case 2:
+				gjk.count = 3;
 				break;
 			case 3:
+				gjk.count = 3;
 				break;
 		}
 		return false;
