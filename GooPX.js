@@ -223,7 +223,7 @@
 
 		console.log('distance between entities:'+bu.dist.length());
 		console.log('distance between closes points:'+(bu.va.length()+bu.vb.length()));
-		var diff = bu.dist1.length() - (bu.va.length() + bu.vb.length());
+		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
 		return GooPX.CollisionData.create(diff < 0, diff);
 	};
 
