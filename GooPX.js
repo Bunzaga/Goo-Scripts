@@ -194,7 +194,7 @@
 	bu.dirBA = new goo.Vector3();
 	bu.dist = new goo.Vector3();
 
-	bu.sphereSupport = function(ent, col, dir, v){
+	bu.sphereSupport = function(col, dir, v){
 		/*
 		return s.center + v * (s.radius / length( v ));
 		*/
@@ -211,13 +211,13 @@
 		var colA = entA.colliderComponent.collider;
 		switch(colA.type){
 			case 'Sphere':
-				bu.sphereSupport(entA, colA, bu.dirAB, bu.va);
+				bu.sphereSupport(colA, bu.dirAB, bu.va);
 				break;
 		}
 		var colB = entB.colliderComponent.collider;
 		switch(colB.type){
 			case 'Sphere':
-				bu.sphereSupport(entB, colB, bu.dirBA, bu.vb);
+				bu.sphereSupport(colB, bu.dirBA, bu.vb);
 				break;
 		}
 		var diff = bu.dist.lengthSquared() - (bu.va.lengthSquared() + bu.vb.lengthSquared());
