@@ -229,8 +229,8 @@
 		return s.center + v * (s.radius / length( v ));
 		*/
 		console.log('gjk.sphereSupport()');
-		v.copy(ent.transformComponent.worldTransform.translation);
-		v.addVector(vec.copy(gjk.dir).mul(col.radius));
+		v.copy(gjk.dir).mul(col.radius).addVector(ent.transformComponent.worldTransform.translation);
+		console.log(v);
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
