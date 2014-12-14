@@ -220,11 +220,8 @@
 				bu.sphereSupport(entB, colB, bu.dirBA, bu.vb);
 				break;
 		}
-
-		console.log('distance between entities:'+bu.dist.length());
-		console.log('distance between closes points:'+(bu.va.length()+bu.vb.length()));
-		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
-		return GooPX.CollisionData.create(diff < 0, diff);
+		var diff = bu.dist.lengthSquared() - (bu.va.lengthSquared() + bu.vb.lengthSquared());
+		return GooPX.CollisionData.create(diff < 0, Math.sqrt(diff < 0 ? -diff : diff));
 	};
 
 	GooPX.SphereCollider = function(){};
