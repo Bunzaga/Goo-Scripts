@@ -192,8 +192,7 @@
 	bu.dirAB = new goo.Vector3();
 	bu.vb = new goo.Vector3();
 	bu.dirBA = new goo.Vector3();
-	bu.dist1 = new goo.Vector3();
-	bu.dist2 = new goo.Vector3();
+	bu.dist = new goo.Vector3();
 
 	bu.sphereSupport = function(ent, col, dir, v){
 		/*
@@ -206,7 +205,7 @@
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
-		bu.dist1.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		bu.dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		bu.dirAB.copy(bu.dist1).normalize();
 		bu.dirBA.copy(bu.dirAB).invert();
 		var colA = entA.colliderComponent.collider;
@@ -221,10 +220,10 @@
 				bu.sphereSupport(entB, colB, bu.dirBA, bu.vb);
 				break;
 		}
-		bu.dist2.copy(bu.va).addVector(bu.vb);
-		console.log('distance between entities:'+bu.dist1.length());
-		console.log('distance between closes points:'+bu.dist2.length());
-		var diff = bu.dist1.length() - bu.dist2.length();
+
+		console.log('distance between entities:'+bu.dist.length());
+		console.log('distance between closes points:'+(bu.va.length()+bu.vb.length()));
+		var diff = bu.dist1.length() - (bu.va.length() + bu.vb.length());
 		return GooPX.CollisionData.create(diff < 0, diff);
 	};
 
