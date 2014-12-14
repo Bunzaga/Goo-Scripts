@@ -229,13 +229,10 @@
 		return s.center + v * (s.radius / length( v ));
 		*/
 		console.log('gjk.sphereSupport()');
-		var abs = gjk.dir.length();
-		console.log('abs');
-		console.log(abs);
 		v.copy(ent.transformComponent.worldTransform.translation);
-		v.x += (gjk.dir.x * (col.radius / abs));
-		v.y += (gjk.dir.y * (col.radius / abs));
-		v.z += (gjk.dir.z * (col.radius / abs));
+		v.x += (gjk.dir.x * col.radius);
+		v.y += (gjk.dir.y * col.radius);
+		v.z += (gjk.dir.z * col.radius);
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
@@ -243,13 +240,14 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		
+		gjk.dir.normalize();
 		gjk.support(entA, entB, gjk.c);
 		if(gjk.c.dot(gjk.dir) <= 0 ){
 			console.log('not colliding 0');
 			return GooPX.CollisionData.create(false, 0);
 		}
 		gjk.dir.copy(gjk.c).invert();
+		gjk.dir.normalize();
 		gjk.support(entA, entB, gjk.b);
 		
 		if(gjk.b.dot(gjk.dir) <= 0){
