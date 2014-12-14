@@ -219,9 +219,7 @@
 		console.log('support result:');
 		console.log(gjk.va.x+','+gjk.va.y+','+gjk.va.z);
 		console.log(gjk.vb.x+','+gjk.vb.y+','+gjk.vb.z);
-		store.x = gjk.va.x - gjk.vb.x;
-		store.y = gjk.va.y - gjk.vb.y;
-		store.z = gjk.va.z - gjk.vb.z;
+		store.copy(gjk.va).subVector(gjk.vb);
 		console.log(store.x+","+store.y+","+store.z);
 	};
 	gjk.sphereSupport = function(ent, col, v){
@@ -230,7 +228,7 @@
 		*/
 		console.log('gjk.sphereSupport()');
 		v.copy(gjk.dir).mul(col.radius).addVector(ent.transformComponent.worldTransform.translation);
-		console.log(v);
+		console.log(v.x+','+v.y+','+v.z);
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
