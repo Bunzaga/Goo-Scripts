@@ -250,8 +250,8 @@
 		}
 		gjk.a0.copy(gjk.b).invert();
 		gjk.ab.copy(gjk.c).subVector(gjk.b);
-		goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
-		goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
+		goo.Vector3.cross(gjk.ab, gjk.a0, vec);
+		goo.Vector3.cross(vec, gjk.ab, gjk.dir);
 		if(gjk.dir.length() === 0){
 			gjk.dir.set(-gjk.ab.y, gjk.ab.x, 0); 
 		}
@@ -283,10 +283,44 @@
 		gjk.a0.copy(gjk.a).invert();
 		switch(gjk.count){
 			case 2:
+				gjk.ab.copy(gjk.b).subVector(gjk.a);
+				gjk.ac.copy(gjk.c).subVector(gjk.a);
+				goo.Vector3.cross(gjk.ab, gjk.ac, vec);
+				goo.Vector3.cross(gjk.ab, vec, gjk.abP);
+				if(gjk.abP.dot(gjk.a0) > 0){
+					gjk.c.copy(gjk.b);
+					gjk.b.copy(gjk.a);
+					goo.Vector3.cross(gjk.ab, gjk.a0, vec);
+					goo.Vector3.cross(vec, gjk.ab, gjk.dir);
+					if(gjk.dir.length() === 0){
+						gjk.dir.set(-gjk.ab.y, gjk.ab.x, 0); 
+					}
+				}
+				goo.Vector3.cross(vec, gjk.ac, gjk.acP);
+				if(gjk.acP.dot(gjk.a0) > 0){
+					gjk.b.copy(gjk.a);
+					goo.Vector3.cross(gjk.ac, gjk.a0, vec);
+					goo.Vector3.cross(vec, gjk.ac, gjk.dir);
+					if(gjk.dir.length() === 0){
+						gjk.dir.set(-gjk.ac.y, gjk.ac.x, 0); 
+					}
+				}
+				if(vec.dot(a0) > 0){
+					gjk.d.copy(gjk.c);
+					gjk.c.copy(gjk.b);
+					gjk.b.copy(gjk.a);
+					gjk.dir.copy(vec);
+				}
+				else{
+					gjk.d.copy(gjk.b);
+					gjk.b.copy(gjk.a);
+					gjk.dir.copy(vec).invert();
+				}
+				gjk.dir.normalize();
 				gjk.count = 3;
 				break;
 			case 3:
-				gjk.count = 3;
+				gjk.count = -1;
 				break;
 		}
 		return false;
