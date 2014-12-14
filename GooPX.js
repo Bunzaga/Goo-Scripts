@@ -243,14 +243,14 @@
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
 		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		console.log('first gjk.dir');
-		console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
-		gjk.support(entA, entB, gjk.b);
-		if(gjk.b.dot(gjk.dir) <= 0) {
-			console.log('not colliding');
-			return GooPX.CollisionData.create(false, 0);
-		}
-		gjk.dir.invert();
+		//console.log('first gjk.dir');
+		//console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
+		//gjk.support(entA, entB, gjk.b);
+		//if(gjk.b.dot(gjk.dir) <= 0) {
+		//	console.log('not colliding');
+		//	return GooPX.CollisionData.create(false, 0);
+		//}
+		//gjk.dir.invert();
 		while(true){
 			console.log('new gjk.dir');
 			console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
@@ -259,13 +259,13 @@
 				console.log('not colliding');
 				return GooPX.CollisionData.create(false, 0);
 			}
-			gjk.count++;
 			if(true === gjk.processSimplex()){
 				return GooPX.CollisionData.create(true, 0);
 			}
 			if(gjk.count > 10){
 				return GooPX.CollisionData.create(false, 0);
 			}
+			gjk.count++;
 		}
 	};
 	
@@ -274,6 +274,9 @@
 		console.log('gjk.simplex.count === '+gjk.count);
 		gjk.a0.copy(gjk.a).invert();
 		switch(gjk.count){
+			case 0:
+				gjk.b.copy(gjk.a);
+				break;
 			case 1:
 				console.log('a');
 				console.log(gjk.a.x+','+gjk.a.y+','+gjk.a.z);
