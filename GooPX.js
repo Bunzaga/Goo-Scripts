@@ -225,17 +225,17 @@
 		console.log(store.x+","+store.y+","+store.z);
 	};
 	gjk.sphereSupport = function(ent, col, v){
+		/*
+		return s.center + v * (s.radius / length( v ));
+		*/
 		console.log('gjk.sphereSupport()');
 		var abs = gjk.dir.length();
 		console.log('abs');
 		console.log(abs);
 		v.copy(ent.transformComponent.worldTransform.translation);
-		console.log('col.radius');
-		console.log(col.radius);
-		v.x += (col.radius * (gjk.dir.x / abs));
-		v.y += (col.radius * (gjk.dir.y / abs));
-		v.z += (col.radius * (gjk.dir.z / abs));
-
+		v.x += (gjk.dir.x * (col.radius / abs));
+		v.y += (gjk.dir.y * (col.radius / abs));
+		v.z += (gjk.dir.z * (col.radius / abs));
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
