@@ -195,7 +195,7 @@
 	bu.dist1 = new goo.Vector3();
 	bu.dist2 = new goo.Vector3();
 
-	gjk.sphereSupport = function(ent, col, dir, v){
+	bu.sphereSupport = function(ent, col, dir, v){
 		/*
 		return s.center + v * (s.radius / length( v ));
 		*/
