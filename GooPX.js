@@ -237,15 +237,13 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		gjk.dir.normalize();
+		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation).normalize();
 		gjk.support(entA, entB, gjk.c);
 		if(gjk.c.dot(gjk.dir) <= 0 ){
 			console.log('not colliding 0');
 			return GooPX.CollisionData.create(false, 0);
 		}
-		gjk.dir.copy(gjk.c).invert();
-		gjk.dir.normalize();
+		gjk.dir.copy(gjk.c).invert().normalize();
 		gjk.support(entA, entB, gjk.b);
 		
 		if(gjk.b.dot(gjk.dir) <= 0){
@@ -256,6 +254,7 @@
 		gjk.ab.copy(gjk.c).subVector(gjk.b);
 		goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
 		goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
+		gjk.dir.normalize();
 		
 		gjk.count = 2;
 		
