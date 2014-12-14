@@ -246,6 +246,10 @@
 		console.log('first gjk.dir');
 		console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 		gjk.support(entA, entB, gjk.b);
+		if(gjk.b.dot(gjk.dir) <= 0) {
+			console.log('not colliding');
+			return GooPX.CollisionData.create(false, 0);
+		}
 		gjk.dir.invert();
 		while(true){
 			console.log('new gjk.dir');
@@ -284,9 +288,6 @@
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
-				}
-				if(gjk.dir.length() === 0){
-					return true;
 				}
 				gjk.c.copy(gjk.b);
 				gjk.b.copy(gjk.a);
