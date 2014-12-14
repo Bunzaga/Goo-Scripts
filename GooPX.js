@@ -1,6 +1,6 @@
 (function(window, undefined){
 	'use strict';
-	var scl = new goo.Vector3();
+	var scl = new goo.Vector3(); 
 	var vec = new goo.Vector3();
 	var GooPX = {};
 	GooPX.System = function(settings){
