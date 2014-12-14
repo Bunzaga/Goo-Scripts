@@ -206,7 +206,7 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		bu.dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		bu.dirAB.copy(bu.dist1).normalize();
+		bu.dirAB.copy(bu.dist).normalize();
 		bu.dirBA.copy(bu.dirAB).invert();
 		var colA = entA.colliderComponent.collider;
 		switch(colA.type){
