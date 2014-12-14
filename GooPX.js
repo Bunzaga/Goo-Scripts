@@ -193,14 +193,19 @@
 	bu.vb = new goo.Vector3();
 	bu.dirBA = new goo.Vector3();
 	bu.dist = new goo.Vector3();
-
+	
+	bu.support = function(ent, dir, v){
+		var col = ent.colliderComponent.collider;
+		switch(col.type){
+			case 'Sphere':
+				bu.sphereSupport(col, dir, v);
+				break;	
+		}
+	};
+	
 	bu.sphereSupport = function(col, dir, v){
-		/*
-		return s.center + v * (s.radius / length( v ));
-		*/
-		console.log('bu.sphereSupport()');
 		v.copy(dir).mul(col.radius);
-	}
+	};
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
@@ -208,18 +213,8 @@
 		bu.dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		bu.dirAB.copy(bu.dist).normalize();
 		bu.dirBA.copy(bu.dirAB).invert();
-		var colA = entA.colliderComponent.collider;
-		switch(colA.type){
-			case 'Sphere':
-				bu.sphereSupport(colA, bu.dirAB, bu.va);
-				break;
-		}
-		var colB = entB.colliderComponent.collider;
-		switch(colB.type){
-			case 'Sphere':
-				bu.sphereSupport(colB, bu.dirBA, bu.vb);
-				break;
-		}
+		bu.support(entA, bu.dirAB, bu.va);
+		bu.support(entB, bu.dirAB, bu.vb);
 
 		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
