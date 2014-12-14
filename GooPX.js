@@ -242,7 +242,7 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
 		console.log('first gjk.dir');
 		console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 		gjk.support(entA, entB, gjk.b);
@@ -284,6 +284,9 @@
 				}
 				else{
 					gjk.dir.copy(gjk.a0);
+				}
+				if(dir.length() === 0){
+					return true;
 				}
 				gjk.c.copy(gjk.b);
 				gjk.b.copy(gjk.a);
