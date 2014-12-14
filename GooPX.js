@@ -242,18 +242,8 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		//console.log('first gjk.dir');
-		//console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
-		//gjk.support(entA, entB, gjk.b);
-		//if(gjk.b.dot(gjk.dir) <= 0) {
-		//	console.log('not colliding');
-		//	return GooPX.CollisionData.create(false, 0);
-		//}
-		//gjk.dir.invert();
+		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		while(true){
-			console.log('new gjk.dir');
-			console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 			gjk.support(entA, entB, gjk.a);
 			if(gjk.a.dot(gjk.dir) <= 0) {
 				console.log('not colliding');
@@ -279,20 +269,9 @@
 				gjk.dir.copy(gjk.a0);
 				break;
 			case 1:
-				console.log('a');
-				console.log(gjk.a.x+','+gjk.a.y+','+gjk.a.z);
-				console.log('b');
-				console.log(gjk.b.x+','+gjk.b.y+','+gjk.b.z);
 				gjk.ab.copy(gjk.b).subVector(gjk.a);
-				console.log(gjk.ab.x+','+gjk.ab.y+','+gjk.ab.z);
-				if(gjk.ab.dot(gjk.a0) > 0){
-					console.log('gjk.ab.dot(gjk.a0) is > 0:'+gjk.ab.dot(gjk.a0));
-					goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
-					goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
-				}
-				else{
-					gjk.dir.copy(gjk.a0);
-				}
+				goo.Vector3.cross(gjk.ab, gjk.a0, gjk.abP);
+				goo.Vector3.cross(gjk.abP, gjk.ab, gjk.dir);
 				gjk.c.copy(gjk.b);
 				gjk.b.copy(gjk.a);
 				break;
