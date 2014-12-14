@@ -242,7 +242,7 @@
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
 		gjk.count = 0;
-		gjk.dir.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
+		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		console.log('first gjk.dir');
 		console.log(gjk.dir.x+','+gjk.dir.y+','+gjk.dir.z);
 		gjk.support(entA, entB, gjk.b);
