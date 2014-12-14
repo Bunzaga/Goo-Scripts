@@ -218,7 +218,7 @@
 		var colB = entB.colliderComponent.collider;
 		switch(colB.type){
 			case 'Sphere':
-				gjk.sphereSupport(entB, colB, bu.dirBA, bu.vb);
+				bu.sphereSupport(entB, colB, bu.dirBA, bu.vb);
 				break;
 		}
 		bu.dist2.copy(bu.va).addVector(bu.vb);
