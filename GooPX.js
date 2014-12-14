@@ -187,163 +187,47 @@
 		return shape;
 	};
 	
-	var gjk = {};
-	gjk.count = 0;
-	gjk.va = new goo.Vector3();
-	gjk.vb = new goo.Vector3();
-	gjk.a = new goo.Vector3();
-	gjk.b = new goo.Vector3();
-	gjk.c = new goo.Vector3();
-	gjk.d = new goo.Vector3();
-	gjk.ab = new goo.Vector3();
-	gjk.ac = new goo.Vector3();
-	gjk.a0 = new goo.Vector3();
-	gjk.abP = new goo.Vector3();
-	gjk.acP = new goo.Vector3();
-	gjk.dir = new goo.Vector3();
-	gjk.support = function(entA, entB, store){
-		var colA = entA.colliderComponent.collider;
-		switch(colA.type){
-			case 'Sphere':
-				gjk.sphereSupport(entA, colA, gjk.va);
-				break;
-		}
-		gjk.dir.invert();
-		var colB = entB.colliderComponent.collider;
-		switch(colB.type){
-			case 'Sphere':
-				gjk.sphereSupport(entB, colB, gjk.vb);
-				break;
-		}
-		gjk.dir.invert();
-		console.log('support result:');
-		console.log(gjk.va.x+','+gjk.va.y+','+gjk.va.z);
-		console.log(gjk.vb.x+','+gjk.vb.y+','+gjk.vb.z);
-		store.copy(gjk.va).subVector(gjk.vb);
-		console.log(store.x+","+store.y+","+store.z);
-	};
-	gjk.sphereSupport = function(ent, col, v){
+	var bu = {};
+	bu.va = new goo.Vector3();
+	bu.dirAB = new goo.Vector3();
+	bu.vb = new goo.Vector3();
+	bu.dirBA = new goo.Vector3();
+	bu.dist1 = new goo.Vector3();
+	bu.dist2 = new goo.Vector3();
+
+	gjk.sphereSupport = function(ent, col, dir, v){
 		/*
 		return s.center + v * (s.radius / length( v ));
 		*/
-		console.log('gjk.sphereSupport()');
-		v.copy(gjk.dir).mul(col.radius).addVector(ent.transformComponent.worldTransform.translation);
-		console.log(v.x+','+v.y+','+v.z);
+		console.log('bu.sphereSupport()');
+		v.copy(dir).mul(col.radius);
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
-		gjk.count = 0;
-		gjk.dir.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation).normalize();
-		gjk.support(entA, entB, gjk.c);
-		if(gjk.c.dot(gjk.dir) < 0 ){
-			console.log('not colliding 0');
-			return GooPX.CollisionData.create(false, 0);
-		}
-		gjk.dir.copy(gjk.c).invert().normalize();
-		gjk.support(entA, entB, gjk.b);
-		
-		if(gjk.b.dot(gjk.dir) < 0){
-			console.log('not colliding 1');
-			return GooPX.CollisionData.create(false, 0);
-		}
-		gjk.a0.copy(gjk.b).invert();
-		gjk.ab.copy(gjk.c).subVector(gjk.b);
-		goo.Vector3.cross(gjk.ab, gjk.a0, vec);
-		goo.Vector3.cross(vec, gjk.ab, gjk.dir);
-		if(gjk.dir.length() === 0){
-			gjk.dir.set(-gjk.ab.y, gjk.ab.x, 0); 
-		}
-		gjk.dir.normalize();
-		
-		gjk.count = 2;
-		var iter = 0;
-		while(true){
-			gjk.support(entA, entB, gjk.a);
-			if(gjk.a.dot(gjk.dir) < 0) {
-				console.log('not colliding 2');
-				return GooPX.CollisionData.create(false, 0);
-			}
-			if(true === gjk.processSimplex()){
-				console.log('colliding 0');
-				return GooPX.CollisionData.create(true, 0);
-			}
-			gjk.dir.normalize();
-			iter++;
-			if(iter > 10){
-				console.log('colliding 1');
-				return GooPX.CollisionData.create(true, 0);
-			}
-		}
-	};
-	
-	gjk.processSimplex = function(){
-		console.log('gjk.processSimplex()');
-		console.log('gjk.simplex.count === '+gjk.count);
-		gjk.a0.copy(gjk.a).invert();
-		switch(gjk.count){
-			case 2:
-				gjk.ab.copy(gjk.b).subVector(gjk.a);
-				gjk.ac.copy(gjk.c).subVector(gjk.a);
-				goo.Vector3.cross(gjk.ab, gjk.ac, vec);
-				goo.Vector3.cross(gjk.ab, vec, gjk.abP);
-				if(gjk.abP.dot(gjk.a0) > 0){
-					gjk.c.copy(gjk.b);
-					gjk.b.copy(gjk.a);
-					goo.Vector3.cross(gjk.ab, gjk.a0, vec);
-					goo.Vector3.cross(vec, gjk.ab, gjk.dir);
-					if(gjk.dir.length() === 0){
-						gjk.dir.set(-gjk.ab.y, gjk.ab.x, 0); 
-					}
-					return false;
-				}
-				goo.Vector3.cross(vec, gjk.ac, gjk.acP);
-				if(gjk.acP.dot(gjk.a0) > 0){
-					gjk.b.copy(gjk.a);
-					goo.Vector3.cross(gjk.ac, gjk.a0, vec);
-					goo.Vector3.cross(vec, gjk.ac, gjk.dir);
-					if(gjk.dir.length() === 0){
-						gjk.dir.set(-gjk.ac.y, gjk.ac.x, 0); 
-					}
-					return false;
-				}
-				if(vec.dot(gjk.a0) > 0){
-					gjk.d.copy(gjk.c);
-					gjk.c.copy(gjk.b);
-					gjk.b.copy(gjk.a);
-					gjk.dir.copy(vec);
-				}
-				else{
-					gjk.d.copy(gjk.b);
-					gjk.b.copy(gjk.a);
-					gjk.dir.copy(vec).invert();
-				}
-				gjk.count = 3;
-				return false;
-				break;
-			case 3:
-				gjk.count = -1;
+		bu.dist1.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		bu.dirAB.copy(bu.dist1).normalize;
+		bu.dirBA.copy(bu.dirAB).invert;
+		var colA = entA.colliderComponent.collider;
+		switch(colA.type){
+			case 'Sphere':
+				bu.sphereSupport(entA, colA, bu.dirAB, bu.va);
 				break;
 		}
-		return false;
+		var colB = entB.colliderComponent.collider;
+		switch(colB.type){
+			case 'Sphere':
+				gjk.sphereSupport(entB, colB, bu.dirBA, bu.vb);
+				break;
+		}
+		bu.dist2.copy(bu.va).addVector(bu.vb);
+		console.log('distance between entities:'+bu.dist1.length());
+		console.log('distance between closes points:'+bu.dist2.length());
+		var diff = bu.dist1.length() - bu.dist2.length();
+		return GooPX.CollisionData.create(diff < 0, diff);
 	};
-	
-	/*
-	switch(colA.type){
-		case 'Sphere':
-			switch(colB.type){
-				case 'Sphere':
-					var rDist = colA.radius + colB.radius;
-					var tDist = goo.Vector3.sub(entA.transformComponent.worldTransform.translation, entB.transformComponent.worldTransform.translation, vec).length();
-					var dist = tDist - rDist;
-					return GooPX.CollisionData.create((tDist < rDist), dist);
-					break;
-			}
-			break;
-	}
-	*/
-	
+
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
 	GooPX.SphereCollider.create = function(radius){
