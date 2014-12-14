@@ -269,6 +269,7 @@
 				console.log('colliding 0');
 				return GooPX.CollisionData.create(true, 0);
 			}
+			gjk.dir.normalize();
 			iter++;
 			if(iter > 10){
 				console.log('colliding 1');
@@ -295,6 +296,7 @@
 					if(gjk.dir.length() === 0){
 						gjk.dir.set(-gjk.ab.y, gjk.ab.x, 0); 
 					}
+					return false;
 				}
 				goo.Vector3.cross(vec, gjk.ac, gjk.acP);
 				if(gjk.acP.dot(gjk.a0) > 0){
@@ -304,6 +306,7 @@
 					if(gjk.dir.length() === 0){
 						gjk.dir.set(-gjk.ac.y, gjk.ac.x, 0); 
 					}
+					return false;
 				}
 				if(vec.dot(a0) > 0){
 					gjk.d.copy(gjk.c);
@@ -316,8 +319,8 @@
 					gjk.b.copy(gjk.a);
 					gjk.dir.copy(vec).invert();
 				}
-				gjk.dir.normalize();
 				gjk.count = 3;
+				return false;
 				break;
 			case 3:
 				gjk.count = -1;
