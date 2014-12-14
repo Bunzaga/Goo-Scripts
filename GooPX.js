@@ -276,6 +276,7 @@
 		switch(gjk.count){
 			case 0:
 				gjk.b.copy(gjk.a);
+				gjk.dir.copy(gjk.a0);
 				break;
 			case 1:
 				console.log('a');
