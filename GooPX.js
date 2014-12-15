@@ -189,55 +189,28 @@
 		return shape;
 	};
 	
-	var bu = {};
-	bu.va = new goo.Vector3();
-	bu.dirAB = new goo.Vector3();
-	bu.vb = new goo.Vector3();
-	bu.dirBA = new goo.Vector3();
-	bu.dist = new goo.Vector3();
+	var D = new goo.Vector3();
+	var AB = new goo.Vector3();
 	
-	bu.support = function(ent, dir, v){
-		var col = ent.colliderComponent.collider;
-		switch(col.type){
-			case 'Sphere':
-				return bu.sphereSupport(col, dir, v);
-				break;
-			case 'Box':
-				return bu.boxSupport(ent, col, dir);
-				break;
-		}
+	GooPX.Sphere_SphereSupport = function(entA, entB){
+		AB.copy(entB.transformComponent.transform.translation).subVector(entA.transformComponent.transform.translation);
+		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
+		var diff = AB.length() - rr;
+		return GooPX.collisionData.create(diff < 0, Math.abs(diff));
 	};
-	
-	bu.sphereSupport = function(col, dir, v){
-		v.copy(dir).mul(col.radius);
-		return v.length();
+	GooPX.Sphere_BoxSupport = function(entA, entB){
+		return GooPX.collisionData.create(false, 0);
 	};
-	var aX = new goo.Vector3();
-	var aY = new goo.Vector3();
-	var aZ = new goo.Vector3();
-	bu.boxSupport = function(ent, col, dir, v){
-		console.log('bu.boxSupport()');
-		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_X, aX);
-		aX.mul(col.xExtent);
-		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Y, aY);
-		aY.mul(col.yExtent);
-		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
-		aZ.mul(col.zExtent);
-		console.log((Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir))));
-		return (Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir)));
-	};
+	GooPX.Box_SphereSupport = function(entA, entB){
+	}
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
-		bu.dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		bu.dirAB.copy(bu.dist).normalize();
-		bu.dirBA.copy(bu.dirAB).invert();
-		var a = bu.support(entA, bu.dirAB, bu.va);
-		var b = bu.support(entB, bu.dirAB, bu.vb);
 		
-		var diff = bu.dist.length() - (a + b);
-		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
+		dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+
+		return GooPX[entA.colliderComponent.collider.type+"_"+entB.colliderComponent.collider.type+"Support"](entA, entB);
 	};
 	GooPX.BoxCollider = function(){};
 	GooPX.BoxCollider.pool = [];
