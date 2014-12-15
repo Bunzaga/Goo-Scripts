@@ -153,7 +153,9 @@
 				shape = GooPX.SphereCollider.create(md.radius * scl.x);
 			}
 			else if(md instanceof goo.Box){
+				//xExtent: 0.5, yExtent, zExtent
 				console.log('Goo Shape is a Box');
+				console.log(md);
 				shape = 'new GooPX.BoxCollider()';
 			}
 			else if(md instanceof goo.Quad){
@@ -219,7 +221,8 @@
 		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
-
+	GooPX.BoxCollider = function(){};
+	//xExtent: 0.5, yExtent, zExtent
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
 	GooPX.SphereCollider.create = function(radius){
