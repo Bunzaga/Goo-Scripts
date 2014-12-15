@@ -196,10 +196,10 @@
 		AB.copy(entB.transformComponent.transform.translation).subVector(entA.transformComponent.transform.translation);
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
 		var diff = AB.length() - rr;
-		return GooPX.collisionData.create(diff < 0, Math.abs(diff));
+		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
-		return GooPX.collisionData.create(false, 0);
+		return GooPX.CollisionData.create(false, 0);
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
 	}
