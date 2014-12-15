@@ -240,7 +240,7 @@
 	GooPX.BoxCollider = function(){};
 	GooPX.BoxCollider.pool = [];
 	GooPX.BoxCollider.create = function(x, y, z){
-		var collider = undefined;
+		var collider = (GooPX.BoxCollider.pool.length === 0) ? new GooPX.BoxCollider() : GooPX.BoxCollider.pool.shift();
 		collider.xExtent = x;
 		collider.yExtent = y;
 		collider.zExtent = z;
