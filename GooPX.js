@@ -207,9 +207,6 @@
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
-		
-		dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-
 		return GooPX[entA.colliderComponent.collider.type+"_"+entB.colliderComponent.collider.type+"Support"](entA, entB);
 	};
 	GooPX.BoxCollider = function(){};
