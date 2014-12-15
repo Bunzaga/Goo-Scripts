@@ -202,6 +202,7 @@
 		return GooPX.CollisionData.create(false, 0);
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
+		return GooPX.Sphere_BoxSupport(entB, entA);
 	}
 	
 	GooPX.checkCollision = function(entA, entB){
