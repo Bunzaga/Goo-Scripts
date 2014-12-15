@@ -242,11 +242,13 @@
 	GooPX.BoxCollider = function(){};
 	GooPX.BoxCollider.pool = [];
 	GooPX.BoxCollider.create = function(x, y, z){
+		console.log('GooPX.BoxCollider.create()');
 		var collider = (GooPX.BoxCollider.pool.length === 0) ? new GooPX.BoxCollider() : GooPX.BoxCollider.pool.shift();
 		collider.type = 'Box';
 		collider.xExtent = x;
 		collider.yExtent = y;
 		collider.zExtent = z;
+		console.log(collider);
 		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
