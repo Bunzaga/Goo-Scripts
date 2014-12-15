@@ -220,9 +220,9 @@
 		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_X, aX);
 		aX.mul(col.xExtent);
 		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Y, aY);
-		aX.mul(col.yExtent);
+		aY.mul(col.yExtent);
 		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
-		aX.mul(col.zExtent);
+		aZ.mul(col.zExtent);
 		console.log((Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir))));
 		return (Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir)));
 	};
