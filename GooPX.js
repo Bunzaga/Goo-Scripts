@@ -248,7 +248,7 @@
 		collider.xExtent = x;
 		collider.yExtent = y;
 		collider.zExtent = z;
-		console.log(collider);
+		console.log(collider.xExtent+","+collider.yExtent+","+collider.zExtent);
 		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
