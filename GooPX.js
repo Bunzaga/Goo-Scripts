@@ -216,13 +216,15 @@
 	var aY = new goo.Vector3();
 	var aZ = new goo.Vector3();
 	bu.boxSupport = function(ent, col, dir, v){
-		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_X, aX);
+		console.log('bu.boxSupport()');
+		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_X, aX);
 		aX.mul(col.xExtent);
-		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_Y, aY);
+		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Y, aY);
 		aX.mul(col.yExtent);
-		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
+		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
 		aX.mul(col.zExtent);
-		return aX.dot(dir) + aY.dot(dir) + aZ.dot(dir);
+		console.log((aX.dot(dir) + aY.dot(dir) + aZ.dot(dir)))
+		return (aX.dot(dir) + aY.dot(dir) + aZ.dot(dir));
 	};
 	
 	GooPX.checkCollision = function(entA, entB){
