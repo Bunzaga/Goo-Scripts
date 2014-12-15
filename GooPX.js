@@ -193,7 +193,7 @@
 	var AB = new goo.Vector3();
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
-		AB.copy(entB.transformComponent.transform.translation).subVector(entA.transformComponent.transform.translation);
+		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
 		var diff = AB.length() - rr;
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
