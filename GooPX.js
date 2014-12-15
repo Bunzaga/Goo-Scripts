@@ -90,6 +90,7 @@
 		GooPX.RigidbodyComponent.pool.length = 0;
 		GooPX.ColliderComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
+		GooPX.BoxCollider.pool.length = 0;
 		GooPX.CollisionData.pool.length = 0;
 		console.log('Cleaned up!');
 	};
@@ -153,10 +154,9 @@
 				shape = GooPX.SphereCollider.create(md.radius * scl.x);
 			}
 			else if(md instanceof goo.Box){
-				//xExtent: 0.5, yExtent, zExtent
 				console.log('Goo Shape is a Box');
 				console.log(md);
-				shape = 'new GooPX.BoxCollider()';
+				shape = GooPX.BoxCollider.create(md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z);
 			}
 			else if(md instanceof goo.Quad){
 				console.log('Goo Shape is a Quad');
@@ -200,13 +200,29 @@
 		var col = ent.colliderComponent.collider;
 		switch(col.type){
 			case 'Sphere':
-				bu.sphereSupport(col, dir, v);
-				break;	
+				return bu.sphereSupport(col, dir, v);
+				break;
+			case 'Box':
+				return bu.boxSupport(ent, col, dir);
+				break;
 		}
 	};
 	
 	bu.sphereSupport = function(col, dir, v){
 		v.copy(dir).mul(col.radius);
+		return v.length();
+	};
+	var aX = new goo.Vector3();
+	var aY = new goo.Vector3();
+	var aZ = new goo.Vector3();
+	bu.boxSupport = function(ent, col, dir, v){
+		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_X, aX);
+		aX.mul(col.xExtent);
+		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_Y, aY);
+		aX.mul(col.yExtent);
+		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
+		aX.mul(col.zExtent);
+		return aX.dot(dir) + aY.dot(dir) + aZ.dot(dir);
 	};
 	
 	GooPX.checkCollision = function(entA, entB){
@@ -215,14 +231,28 @@
 		bu.dist.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		bu.dirAB.copy(bu.dist).normalize();
 		bu.dirBA.copy(bu.dirAB).invert();
-		bu.support(entA, bu.dirAB, bu.va);
-		bu.support(entB, bu.dirAB, bu.vb);
-
-		var diff = bu.dist.length() - (bu.va.length() + bu.vb.length());
+		var a = bu.support(entA, bu.dirAB, bu.va);
+		var b = bu.support(entB, bu.dirAB, bu.vb);
+		
+		var diff = bu.dist.length() - (a + b);
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.BoxCollider = function(){};
-	//xExtent: 0.5, yExtent, zExtent
+	GooPX.BoxCollider.pool = [];
+	GooPX.BoxCollider.create = function(x, y, z){
+		var collider = undefined;
+		collider.xExtent = x;
+		collider.yExtent = y;
+		collider.zExtent = z;
+	};
+	GooPX.BoxCollider.prototype.destroy = function(){
+		console.log('GooPX.BoxCollider.prototype.destroy');
+		this.xExtent = 0;
+		this.yExtent = 0;
+		this.zExtent = 0;
+		GooPX.BoxCollider.pool.push(this);
+	}
+
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
 	GooPX.SphereCollider.create = function(radius){
