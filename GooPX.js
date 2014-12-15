@@ -223,8 +223,8 @@
 		aX.mul(col.yExtent);
 		ent.transformComponent.worldTransform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
 		aX.mul(col.zExtent);
-		console.log((aX.dot(dir) + aY.dot(dir) + aZ.dot(dir)))
-		return (aX.dot(dir) + aY.dot(dir) + aZ.dot(dir));
+		console.log((Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir))));
+		return (Math.abs(aX.dot(dir)) + Math.abs(aY.dot(dir)) + Math.abs(aZ.dot(dir)));
 	};
 	
 	GooPX.checkCollision = function(entA, entB){
