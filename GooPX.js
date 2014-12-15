@@ -216,11 +216,11 @@
 	var aY = new goo.Vector3();
 	var aZ = new goo.Vector3();
 	bu.boxSupport = function(ent, col, dir, v){
-		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_X, aX);
+		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_X, aX);
 		aX.mul(col.xExtent);
-		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_Y, aY);
+		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_Y, aY);
 		aX.mul(col.yExtent);
-		ent.transformComponent.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
+		ent.transformComponent.transform.applyForwardVector(goo.Vector3.UNIT_Z, aZ);
 		aX.mul(col.zExtent);
 		return aX.dot(dir) + aY.dot(dir) + aZ.dot(dir);
 	};
