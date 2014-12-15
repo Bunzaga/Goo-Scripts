@@ -207,7 +207,10 @@
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
 		console.log(entA.name+":"+entB.name);
-		return GooPX[entA.colliderComponent.collider.type+"_"+entB.colliderComponent.collider.type+"Support"](entA, entB);
+		var sf = entA.colliderComponent.collider.type+"_"+entB.colliderComponent.collider.type+"Support";
+		console.log(sf);
+		var result = GooPX[sf](entA, entB);
+		return result;
 	};
 	GooPX.BoxCollider = function(){};
 	GooPX.BoxCollider.pool = [];
@@ -218,7 +221,6 @@
 		collider.xExtent = x;
 		collider.yExtent = y;
 		collider.zExtent = z;
-		console.log(collider.xExtent+","+collider.yExtent+","+collider.zExtent);
 		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
