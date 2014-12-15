@@ -6,9 +6,11 @@
 	var eventList = {};
 	var KeyInput = {};
 	KeyInput.setup = function(){
-		var gooCanvas = document.getElementById('goo');
-		gooCanvas.addEventListener("keyup", keyUp, false);
-		gooCanvas.addEventListener("keydown", keyDown, false);
+		//var gooCanvas = document.getElementById('goo');
+		//gooCanvas.addEventListener("keyup", keyUp, false);
+		//gooCanvas.addEventListener("keydown", keyDown, false);
+		document.documentElement.addEventListener("keyup", keyUp, false);
+		document.documentElement.addEventListener("keydown", keyDown, false);
 		KeyInput.ready = true;
 	}
 	KeyInput.cleanup = function(){
@@ -18,8 +20,10 @@
 			}
 		}
 		var gooCanvas = document.getElementById('goo');
-		gooCanvas.removeEventListener("keyup", keyUp, false);
-		gooCanvas.removeEventListener("keydown", keyDown, false);
+		//gooCanvas.removeEventListener("keyup", keyUp, false);
+		//gooCanvas.removeEventListener("keydown", keyDown, false);
+		document.documentElement.removeEventListener("keyup", keyUp, false);
+		document.documentElement.removeEventListener("keydown", keyDown, false);
 	};
 	KeyInput.getKey = function(keyCode){
 		var key = typeof keyCode === 'number' ? keyCode : stringToCode[""+keyCode];
