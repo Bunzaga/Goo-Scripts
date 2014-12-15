@@ -241,9 +241,11 @@
 	GooPX.BoxCollider.pool = [];
 	GooPX.BoxCollider.create = function(x, y, z){
 		var collider = (GooPX.BoxCollider.pool.length === 0) ? new GooPX.BoxCollider() : GooPX.BoxCollider.pool.shift();
+		collider.type = 'Box';
 		collider.xExtent = x;
 		collider.yExtent = y;
 		collider.zExtent = z;
+		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
 		console.log('GooPX.BoxCollider.prototype.destroy');
