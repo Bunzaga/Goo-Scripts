@@ -214,25 +214,30 @@
 		
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
-		AB.copy(C).subVector(vec);
+		AB.copy(C).subVector(PT);
 		
-		var dist = AB.dot(goo.Vector3.UNIT_X);
+		var xA = new goo.Vector3();
+		var yA = new goo.Vector3();
+		var zA = new goo.Vector3();
+		
+		xA.copy(goo.Vector3.UNIT_X);
+		yA.copy(goo.Vector3.UNIT_Y);
+		zA.copy(goo.Vector3.UNIT_Z);
+		
+		var dist = AB.dot(xA);
 		if(dist > entB.colliderComponent.xExtent){dist = entB.colliderComponent.xExtent;}
 		if(dist < - entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
-		vec.copy(goo.Vector3.UNIT_X);
-		PT.addVector(vec.mul(dist));
+		PT.addVector(xA.mul(dist));
 		
-		dist = AB.dot(goo.Vector3.UNIT_Y);
+		dist = AB.dot(yA);
 		if(dist > entB.colliderComponent.yExtent){dist = entB.colliderComponent.yExtent;}
 		if(dist < - entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
-		vec.copy(goo.Vector3.UNIT_Y);
-		PT.addVector(vec.mul(dist));
+		PT.addVector(yA.mul(dist));
 		
-		dist = AB.dot(goo.Vector3.UNIT_Z);
+		dist = AB.dot(zA);
 		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
-		vec.copy(goo.Vector3.UNIT_Z);
-		PT.addVector(vec.mul(dist));
+		PT.addVector(zA.mul(dist));
 
 		// v === (pt - C)
 		//Vector3f v = pt - sphereCenter;
