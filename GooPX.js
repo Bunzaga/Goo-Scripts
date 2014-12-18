@@ -192,6 +192,9 @@
 	var C = new goo.Vector3();
 	var AB = new goo.Vector3();
 	var PT = new goo.Vector3();
+	var xA = new goo.Vector3();
+	var yA = new goo.Vector3();
+	var zA = new goo.Vector3();
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
 		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
@@ -215,11 +218,7 @@
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
 		AB.copy(C).subVector(PT);
-		
-		var xA = new goo.Vector3();
-		var yA = new goo.Vector3();
-		var zA = new goo.Vector3();
-		
+
 		xA.copy(goo.Vector3.UNIT_X);
 		yA.copy(goo.Vector3.UNIT_Y);
 		zA.copy(goo.Vector3.UNIT_Z);
@@ -239,12 +238,12 @@
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
 
+		vec.subVector(entB.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(vec);
+		
 		// v === (pt - C)
 		//Vector3f v = pt - sphereCenter;
 		vec.copy(PT).subVector(C);
-		
-		vec.subVector(entB.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(vec);
 		
 		// return v.dot(v) <= r * r;
 		//return v.Dot(v) <= sphereRadius * sphereRadius;
