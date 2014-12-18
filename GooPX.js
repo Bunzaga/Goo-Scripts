@@ -226,28 +226,28 @@
 		var dist = AB.dot(xA);
 		if(entA.name === 'Sphere 3'){
 			console.log('xDist: '+dist);
-			console.log('xExtent: '+entB.colliderComponent.xExtent);
+			console.log('xExtent: '+entB.colliderComponent.collider.xExtent);
 		}
-		if(dist > entB.colliderComponent.xExtent){dist = entB.colliderComponent.xExtent;}
-		if(dist < -entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
+		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
+		if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
 		PT.addVector(xA.mul(dist));
 		
 		dist = AB.dot(yA);
 		if(entA.name === 'Sphere 3'){
 			console.log('yDist: '+dist);
-			console.log('yExtent: '+entB.colliderComponent.yExtent);
+			console.log('yExtent: '+entB.colliderComponent.collider.yExtent);
 		}
-		if(dist > entB.colliderComponent.yExtent){dist = entB.colliderComponent.yExtent;}
-		if(dist < -entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
+		if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
+		if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
 		PT.addVector(yA.mul(dist));
 		
 		dist = AB.dot(zA);
 		if(entA.name === 'Sphere 3'){
 			console.log('zDist: '+dist);
-			console.log('zExtent: '+entB.colliderComponent.zExtent);
+			console.log('zExtent: '+entB.colliderComponent.collider.zExtent);
 		}
-		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
-		if(dist < -entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
+		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
+		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
 		if(entA.name === 'Sphere 3'){
