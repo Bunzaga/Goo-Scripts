@@ -220,30 +220,34 @@
 		zA.copy(goo.Vector3.UNIT_Z);
 
 		entB.transformComponent.worldTransform.rotation.applyPost(xA);
+		entB.transformComponent.worldTransform.rotation.applyPost(yA);
+		entB.transformComponent.worldTransform.rotation.applyPost(zA);
+		
 		var dist = AB.dot(xA);
 		if(entA.name === 'Sphere 3'){
 			console.log('xDist: '+dist);
+			console.log('xExtent: '+entB.colliderComponent.xExtent);
 		}
 		if(dist > entB.colliderComponent.xExtent){dist = entB.colliderComponent.xExtent;}
-		if(dist < - entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
+		if(dist < -entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
 		PT.addVector(xA.mul(dist));
 		
-		entB.transformComponent.worldTransform.rotation.applyPost(yA);
 		dist = AB.dot(yA);
 		if(entA.name === 'Sphere 3'){
 			console.log('yDist: '+dist);
+			console.log('yExtent: '+entB.colliderComponent.yExtent);
 		}
 		if(dist > entB.colliderComponent.yExtent){dist = entB.colliderComponent.yExtent;}
-		if(dist < - entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
+		if(dist < -entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
 		PT.addVector(yA.mul(dist));
 		
-		entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		dist = AB.dot(zA);
 		if(entA.name === 'Sphere 3'){
 			console.log('zDist: '+dist);
+			console.log('zExtent: '+entB.colliderComponent.zExtent);
 		}
 		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
-		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
+		if(dist < -entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
 		if(entA.name === 'Sphere 3'){
