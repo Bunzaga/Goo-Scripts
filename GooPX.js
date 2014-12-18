@@ -247,6 +247,8 @@
 		
 		// return v.dot(v) <= r * r;
 		//return v.Dot(v) <= sphereRadius * sphereRadius;
+		
+		console.log('Sphere->OBB':+(vec.dot(vec))+"<"+(r*r)+","+Math.abs(vec.dot(vec)));
 		return GooPX.CollisionData.create(vec.dot(vec) < r * r, Math.abs(vec.dot(vec)));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
