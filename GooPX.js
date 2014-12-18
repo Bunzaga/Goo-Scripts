@@ -245,10 +245,12 @@
 		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
+		
 		if(entA.name === 'Sphere 3'){
 			var pt = entA._world.by.name('PT').first();
 			pt.transformComponent.transform.translation.copy(PT);
 			pt.transformComponent.setUpdated();
+			console.log(PT.x+","+PT.y+","+PT.z);
 		}
 		
 		// v === (pt - C)
