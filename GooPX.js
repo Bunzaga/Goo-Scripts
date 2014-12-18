@@ -236,9 +236,11 @@
 
 		// v === (pt - C)
 		//Vector3f v = pt - sphereCenter;
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
 		vec.copy(PT).subVector(C);
-
+		
+		vec.subVector(entB.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(vec);
+		
 		// return v.dot(v) <= r * r;
 		//return v.Dot(v) <= sphereRadius * sphereRadius;
 		return GooPX.CollisionData.create(vec.dot(vec) < r * r, Math.abs(vec.dot(vec)));
