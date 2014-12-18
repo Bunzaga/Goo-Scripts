@@ -204,12 +204,10 @@
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		// C === Center of sphere collider
-		// convert C to entB 'local' axis
-		// old way: C.copy(entA.transformComponent.worldTransform.translation);
 		C.copy(entA.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(C);
-		C.invert();
-		
+		C.subVector(entB.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.rotation.applyPost(C);
+
 		// r === radius of sphere collider
 		var r = entA.colliderComponent.collider.radius;
 		
@@ -238,8 +236,8 @@
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		PT.subVector(entB.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
+		entB.transformComponent.worldTransform.rotation.applyPre(PT);
+		PT.addVector(entB.transformComponent.worldTransform.translation);
 		
 		// v === (pt - C)
 		//Vector3f v = pt - sphereCenter;
