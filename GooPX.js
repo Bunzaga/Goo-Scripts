@@ -221,26 +221,32 @@
 
 		entB.transformComponent.worldTransform.rotation.applyPost(xA);
 		var dist = AB.dot(xA);
-		console.log('xDist: '+dist);
+		if(entA.name === 'Sphere 3'){
+			console.log('xDist: '+dist);
+		}
 		if(dist > entB.colliderComponent.xExtent){dist = entB.colliderComponent.xExtent;}
 		if(dist < - entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
 		PT.addVector(xA.mul(dist));
 		
 		entB.transformComponent.worldTransform.rotation.applyPost(yA);
 		dist = AB.dot(yA);
-		console.log('yDist: '+dist);
+		if(entA.name === 'Sphere 3'){
+			console.log('yDist: '+dist);
+		}
 		if(dist > entB.colliderComponent.yExtent){dist = entB.colliderComponent.yExtent;}
 		if(dist < - entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
 		PT.addVector(yA.mul(dist));
 		
 		entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		dist = AB.dot(zA);
-		console.log('zDist: '+dist);
+		if(entA.name === 'Sphere 3'){
+			console.log('zDist: '+dist);
+		}
 		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
 		if(entA.name === 'Sphere 3'){
-			var pt = entA.world.by.name('PT').first();
+			var pt = entA._world.by.name('PT').first();
 			pt.transformComponent.transform.translation.copy(PT);
 			pt.transformComponent.setUpdated();
 		}
