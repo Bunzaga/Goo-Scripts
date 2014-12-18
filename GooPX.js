@@ -199,6 +199,42 @@
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
+		vec.copy(entA.transformComponent.worldTransform.translation);
+		var scl = entB.transformComponent.worldTransform.scale;
+		vec.setDirect(vec.x * scl.x, vec.y * scl.y, vec.z * scl.z);
+		entB.transformComponent.worldTransform.rotation.applyPre(vec);
+		
+		/*
+		//Check to see if the sphere overlaps the AABB
+const bool AABBOverlapsSphere ( const AABB&	B, const SCALAR	r, VECTOR&	C ) 
+{
+
+float s, d = 0;
+//find the square of the distance
+//from the sphere to the box
+for( long i=0 ; i<3 ; i++ ) 
+{
+
+if( C[i] < B.min(i) )
+{
+ 
+
+s = C[i] - B.min(i);
+d += s*s;
+}
+
+else if( C[i] > B.max(i) )
+{
+
+s = C[i] - B.max(i);
+d += s*s;
+}
+
+}
+return d <= r*r;
+
+}
+		*/
 		return GooPX.CollisionData.create(false, 0);
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
