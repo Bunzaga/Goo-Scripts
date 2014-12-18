@@ -237,9 +237,9 @@
 		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
 		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
 		PT.addVector(zA.mul(dist));
-
-		vec.subVector(entB.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(vec);
+		
+		PT.subVector(entB.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
 		
 		// v === (pt - C)
 		//Vector3f v = pt - sphereCenter;
@@ -247,9 +247,9 @@
 		
 		// return v.dot(v) <= r * r;
 		//return v.Dot(v) <= sphereRadius * sphereRadius;
-		
-		console.log('Sphere->OBB:'+(vec.dot(vec))+"<"+(r*r)+","+Math.abs(vec.dot(vec)));
-		return GooPX.CollisionData.create(vec.dot(vec) < r * r, Math.abs(vec.dot(vec)));
+		var diff = vec.length() - r;
+		console.log('Sphere->OBB:'+vec.length()+"<"+r+", "+diff);
+		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
