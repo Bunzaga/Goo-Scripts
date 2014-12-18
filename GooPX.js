@@ -189,8 +189,9 @@
 		return shape;
 	};
 	
-	var D = new goo.Vector3();
+	var C = new goo.Vector3();
 	var AB = new goo.Vector3();
+	var PT = new goo.Vector3();
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
 		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
@@ -199,43 +200,48 @@
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
-		vec.copy(entA.transformComponent.worldTransform.translation);
-		var scl = entB.transformComponent.worldTransform.scale;
-		vec.setDirect(vec.x * scl.x, vec.y * scl.y, vec.z * scl.z);
-		entB.transformComponent.worldTransform.rotation.applyPre(vec);
+		// C === Center of sphere collider
+		// convert C to entB 'local' axis
+		// old way: C.copy(entA.transformComponent.worldTransform.translation);
+		C.copy(entA.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(C);
+		C.invert();
 		
-		/*
-		//Check to see if the sphere overlaps the AABB
-const bool AABBOverlapsSphere ( const AABB&	B, const SCALAR	r, VECTOR&	C ) 
-{
+		// r === radius of sphere collider
+		var r = entA.colliderComponent.collider.radius;
+		
+		// determine closest point on cube to sphere
+		
+		PT.copy(entB.transformComponent.worldTransform.translation);
+		//p - m_center
+		AB.copy(C).subVector(vec);
+		
+		var dist = AB.dot(goo.Vector3.UNIT_X);
+		if(dist > entB.colliderComponent.xExtent){dist = entB.colliderComponent.xExtent;}
+		if(dist < - entB.colliderComponent.xExtent){dist = -entB.colliderComponent.xExtent;}
+		vec.copy(goo.Vector3.UNIT_X);
+		PT.addVector(vec.mul(dist));
+		
+		dist = AB.dot(goo.Vector3.UNIT_Y);
+		if(dist > entB.colliderComponent.yExtent){dist = entB.colliderComponent.yExtent;}
+		if(dist < - entB.colliderComponent.yExtent){dist = -entB.colliderComponent.yExtent;}
+		vec.copy(goo.Vector3.UNIT_Y);
+		PT.addVector(vec.mul(dist));
+		
+		dist = AB.dot(goo.Vector3.UNIT_Z);
+		if(dist > entB.colliderComponent.zExtent){dist = entB.colliderComponent.zExtent;}
+		if(dist < - entB.colliderComponent.zExtent){dist = -entB.colliderComponent.zExtent;}
+		vec.copy(goo.Vector3.UNIT_Z);
+		PT.addVector(vec.mul(dist));
 
-float s, d = 0;
-//find the square of the distance
-//from the sphere to the box
-for( long i=0 ; i<3 ; i++ ) 
-{
+		// v === (pt - C)
+		//Vector3f v = pt - sphereCenter;
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
+		vec.copy(PT).subVector(C);
 
-if( C[i] < B.min(i) )
-{
- 
-
-s = C[i] - B.min(i);
-d += s*s;
-}
-
-else if( C[i] > B.max(i) )
-{
-
-s = C[i] - B.max(i);
-d += s*s;
-}
-
-}
-return d <= r*r;
-
-}
-		*/
-		return GooPX.CollisionData.create(false, 0);
+		// return v.dot(v) <= r * r;
+		//return v.Dot(v) <= sphereRadius * sphereRadius;
+		return GooPX.CollisionData.create(vec.dot(vec) < r * r, Math.abs(vec.dot(vec));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
