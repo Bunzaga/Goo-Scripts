@@ -205,7 +205,7 @@
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		// C === Center of sphere collider
 		C.copy(entA.transformComponent.worldTransform.translation);
-		C.subVector(entB.transformComponent.worldTransform);
+		C.subVector(entB.transformComponent.worldTransform.translation);
 		entB.transformComponent.worldTransform.rotation.applyPost(C);
 		
 		// r === radius of sphere collider
