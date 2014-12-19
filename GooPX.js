@@ -211,8 +211,8 @@
 		var r = entA.colliderComponent.collider.radius;
 		
 		// determine closest point on cube to sphere
-		
-		PT.copy(entB.transformComponent.worldTransform.translation);
+		PT.copy(goo.Vector3.ZERO);
+		//PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
 		AB.copy(C).subVector(PT);
 
@@ -251,7 +251,8 @@
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		entB.transformComponent.worldTransform.rotation.applyPost(PT);
+		//entB.transformComponent.worldTransform.rotation.applyPost(PT);
+		
 		
 		if(entA.name === 'Sphere 3'){
 			var pt = entA._world.by.name('PT').first();
