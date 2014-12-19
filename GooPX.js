@@ -223,43 +223,23 @@
 		entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		
 		var dist = AB.dot(xA);
-		if(entA.name === 'Sphere 3'){
-			console.log('xDist: '+dist);
-			console.log('xExtent: '+entB.colliderComponent.collider.xExtent);
-		}
 		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
 		if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
 		PT.addVector(xA.mul(dist));
 		
 		dist = AB.dot(yA);
-		if(entA.name === 'Sphere 3'){
-			console.log('yDist: '+dist);
-			console.log('yExtent: '+entB.colliderComponent.collider.yExtent);
-		}
 		if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
 		if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
 		PT.addVector(yA.mul(dist));
 		
 		dist = AB.dot(zA);
-		if(entA.name === 'Sphere 3'){
-			console.log('zDist: '+dist);
-			console.log('zExtent: '+entB.colliderComponent.collider.zExtent);
-		}
 		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		if(entA.name === 'Sphere 3'){
-			var pt = entA._world.by.name('PT').first();
-			pt.transformComponent.transform.translation.copy(PT);
-			pt.transformComponent.setUpdated();
-			console.log(PT.x+","+PT.y+","+PT.z);
-		}
-		
 		vec.copy(PT).subVector(C);
 
 		var diff = vec.length() - r;
-		console.log('Sphere->OBB:'+vec.length()+"<"+r+", "+diff);
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
