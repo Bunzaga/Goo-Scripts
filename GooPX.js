@@ -252,7 +252,7 @@
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		//entB.transformComponent.worldTransform.rotation.applyPost(PT);
+		entB.transformComponent.worldTransform.rotation.applyPost(PT);
 		
 		
 		if(entA.name === 'Sphere 3'){
