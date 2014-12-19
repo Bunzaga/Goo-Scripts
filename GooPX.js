@@ -205,16 +205,12 @@
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		// C === Center of sphere collider
 		C.copy(entA.transformComponent.worldTransform.translation);
-		C.subVector(entB.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.rotation.applyPost(C);
-		C.addVector(entB.transformComponent.worldTransform.translation);
 		
 		// r === radius of sphere collider
 		var r = entA.colliderComponent.collider.radius;
 		
 		// determine closest point on cube to sphere
-		PT.copy(goo.Vector3.ZERO);
-		//PT.copy(entB.transformComponent.worldTransform.translation);
+		PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
 		AB.copy(C).subVector(PT);
 
@@ -222,9 +218,9 @@
 		yA.copy(goo.Vector3.UNIT_Y);
 		zA.copy(goo.Vector3.UNIT_Z);
 
-		//entB.transformComponent.worldTransform.rotation.applyPost(xA);
-		//entB.transformComponent.worldTransform.rotation.applyPost(yA);
-		//entB.transformComponent.worldTransform.rotation.applyPost(zA);
+		entB.transformComponent.worldTransform.rotation.applyPost(xA);
+		entB.transformComponent.worldTransform.rotation.applyPost(yA);
+		entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		
 		var dist = AB.dot(xA);
 		if(entA.name === 'Sphere 3'){
@@ -252,9 +248,6 @@
 		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
-		
-		entB.transformComponent.worldTransform.rotation.applyPost(PT);
-		PT.addVector(entB.transformComponent.worldTransform.translation);
 		
 		if(entA.name === 'Sphere 3'){
 			var pt = entA._world.by.name('PT').first();
