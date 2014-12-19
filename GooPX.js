@@ -196,6 +196,10 @@
 	var yA = new goo.Vector3();
 	var zA = new goo.Vector3();
 	
+	GooPX.Box_BoxSupport = function(entA, entB){
+		return GooPX.CollisionData.create(false, 0);
+	}
+	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
 		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
@@ -203,15 +207,11 @@
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
-		// C === Center of sphere collider
 		C.copy(entA.transformComponent.worldTransform.translation);
 		
-		// r === radius of sphere collider
 		var r = entA.colliderComponent.collider.radius;
 		
-		// determine closest point on cube to sphere
 		PT.copy(entB.transformComponent.worldTransform.translation);
-		//p - m_center
 		AB.copy(C).subVector(PT);
 
 		xA.copy(goo.Vector3.UNIT_X);
@@ -256,12 +256,8 @@
 			console.log(PT.x+","+PT.y+","+PT.z);
 		}
 		
-		// v === (pt - C)
-		//Vector3f v = pt - sphereCenter;
 		vec.copy(PT).subVector(C);
-		
-		// return v.dot(v) <= r * r;
-		//return v.Dot(v) <= sphereRadius * sphereRadius;
+
 		var diff = vec.length() - r;
 		console.log('Sphere->OBB:'+vec.length()+"<"+r+", "+diff);
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
