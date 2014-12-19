@@ -205,6 +205,7 @@
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		// C === Center of sphere collider
 		C.copy(entA.transformComponent.worldTransform.translation);
+		entB.transformComponent.worldTransform.applyPost(C);
 
 		// r === radius of sphere collider
 		var r = entA.colliderComponent.collider.radius;
@@ -219,9 +220,9 @@
 		yA.copy(goo.Vector3.UNIT_Y);
 		zA.copy(goo.Vector3.UNIT_Z);
 
-		entB.transformComponent.worldTransform.rotation.applyPost(xA);
-		entB.transformComponent.worldTransform.rotation.applyPost(yA);
-		entB.transformComponent.worldTransform.rotation.applyPost(zA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(xA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(yA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		
 		var dist = AB.dot(xA);
 		if(entA.name === 'Sphere 3'){
