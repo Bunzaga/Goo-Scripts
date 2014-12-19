@@ -216,7 +216,7 @@
 		//PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
 		AB.copy(entA.transformComponent.worldTransform.translation).subVector(PT);
-		AB.copy(C).subVector(PT);
+		//AB.copy(C).subVector(PT);
 
 		xA.copy(goo.Vector3.UNIT_X);
 		yA.copy(goo.Vector3.UNIT_Y);
