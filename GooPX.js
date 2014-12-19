@@ -215,6 +215,7 @@
 		PT.copy(goo.Vector3.ZERO);
 		//PT.copy(entB.transformComponent.worldTransform.translation);
 		//p - m_center
+		AB.copy(entA.transformComponent.worldTransform.translation).subVector(PT);
 		AB.copy(C).subVector(PT);
 
 		xA.copy(goo.Vector3.UNIT_X);
@@ -252,8 +253,8 @@
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		entB.transformComponent.worldTransform.rotation.applyPost(PT);
-		
+		entB.transformComponent.worldTransform.rotation.applyPre(PT);
+		PT.subVector(entB.transformComponent.worldTransform.translation);
 		
 		if(entA.name === 'Sphere 3'){
 			var pt = entA._world.by.name('PT').first();
