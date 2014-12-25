@@ -208,7 +208,7 @@
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
-		entB.transformComponent.matrix.applyPostPoint(C);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(C);
 		var r = entA.colliderComponent.collider.radius;
 		
 		//PT.copy(entB.transformComponent.worldTransform.translation);
@@ -235,7 +235,7 @@
 		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
 		PT.addVector(zA.mul(dist));
 		
-		entB.transformComponent.matrix.applyPostPoint(PT);
+		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
 		vec.copy(PT).subVector(C);
 
 		var diff = vec.length() - r;
