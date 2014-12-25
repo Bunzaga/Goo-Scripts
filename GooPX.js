@@ -189,12 +189,12 @@
 		return shape;
 	};
 	
-	var C = new goo.Vector3();
-	var AB = new goo.Vector3();
-	var PT = new goo.Vector3();
-	var xA = new goo.Vector3();
-	var yA = new goo.Vector3();
-	var zA = new goo.Vector3();
+	var C = new goo.Vector3(); // Center
+	var AB = new goo.Vector3(); // Direction A to B
+	var PT = new goo.Vector3(); // Point
+	var xA = new goo.Vector3(); // x Axis
+	var yA = new goo.Vector3(); // y Axis
+	var zA = new goo.Vector3(); // z Axis
 	
 	GooPX.Box_BoxSupport = function(entA, entB){
 		return GooPX.CollisionData.create(false, 0);
@@ -207,6 +207,41 @@
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
+		C.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
+		entB.transformComponent.matrix.applyPostPoint(C);
+		var r = entA.colliderComponent.collider.radius;
+		
+		//PT.copy(entB.transformComponent.worldTransform.translation);
+		PT.copy(goo.Vector3.ZERO);
+		
+		AB.copy(C).subVector(PT);
+		
+		xA.copy(goo.Vector3.UNIT_X);
+		yA.copy(goo.Vector3.UNIT_Y);
+		zA.copy(goo.Vector3.UNIT_Z);
+		
+		var dist = AB.dot(xA);
+		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
+		if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
+		PT.addVector(xA.mul(dist));
+		
+		dist = AB.dot(yA);
+		if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
+		if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
+		PT.addVector(yA.mul(dist));
+		
+		dist = AB.dot(zA);
+		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
+		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
+		PT.addVector(zA.mul(dist));
+		
+		entB.transformComponent.matrix.applyPostPoint(PT);
+		vec.copy(PT).subVector(C);
+
+		var diff = vec.length() - r;
+		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
+	};
+	/*GooPX.Sphere_BoxSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
 		
 		var r = entA.colliderComponent.collider.radius;
@@ -241,7 +276,7 @@
 
 		var diff = vec.length() - r;
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
-	};
+	};*/
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
 	}
