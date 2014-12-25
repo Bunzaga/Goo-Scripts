@@ -206,42 +206,8 @@
 		var diff = AB.length() - rr;
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
-	GooPX.Sphere_BoxSupport = function(entA, entB){
-		C.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(C);
-		var r = entA.colliderComponent.collider.radius;
-		
-		//PT.copy(entB.transformComponent.worldTransform.translation);
-		PT.copy(goo.Vector3.ZERO);
-		
-		AB.copy(C).subVector(PT);
-		
-		xA.copy(goo.Vector3.UNIT_X);
-		yA.copy(goo.Vector3.UNIT_Y);
-		zA.copy(goo.Vector3.UNIT_Z);
-		
-		var dist = AB.dot(xA);
-		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
-		if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
-		PT.addVector(xA.mul(dist));
-		
-		dist = AB.dot(yA);
-		if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
-		if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
-		PT.addVector(yA.mul(dist));
-		
-		dist = AB.dot(zA);
-		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
-		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
-		PT.addVector(zA.mul(dist));
-		
-		entB.transformComponent.worldTransform.matrix.applyPostPoint(PT);
-		vec.copy(PT).subVector(C);
 
-		var diff = vec.length() - r;
-		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
-	};
-	/*GooPX.Sphere_BoxSupport = function(entA, entB){
+	GooPX.Sphere_BoxSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
 		
 		var r = entA.colliderComponent.collider.radius;
@@ -276,7 +242,7 @@
 
 		var diff = vec.length() - r;
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
-	};*/
+	};
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
 	}
