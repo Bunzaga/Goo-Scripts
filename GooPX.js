@@ -207,7 +207,7 @@
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Sphere_BoxSupport = function(entA, entB){
-		C.copy(entA.transformComponent.worldTransform.translation).subVector(entB.transformComponent.worldTransform.translation);
+		C.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		entB.transformComponent.worldTransform.matrix.applyPostPoint(C);
 		var r = entA.colliderComponent.collider.radius;
 		
