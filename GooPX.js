@@ -216,32 +216,15 @@
 		
 		var rot = entB.transformComponent.worldTransform.rotation;
 		var extents = entB.colliderComponent.collider.extents.data;
-		//xA.setDirect(rot[0], rot[1], rot[2]);
-		//yA.setDirect(rot[3], rot[4], rot[5]);
-		//zA.setDirect(rot[6], rot[7], rot[8]);
 
-		//var dist = AB.dot(xA);
-		for(var i, dist = 0; i < 3; i*=3){
+		for(var i, ext, dist = 0; i < 3; i*=3){
 			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
-			var ext = extents[i/3];
+			ext = extents[i/3];
 			dist = AB.dot(vec);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
 			PT.addVector(xA.mul(dist));
 		}
-		//if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
-		//if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
-		//PT.addVector(xA.mul(dist));
-		
-		//dist = AB.dot(yA);
-		//if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
-		//if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
-		//PT.addVector(yA.mul(dist));
-		
-		//dist = AB.dot(zA);
-		//if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
-		//if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
-		//PT.addVector(zA.mul(dist));
 		
 		vec.copy(PT).subVector(C);
 
