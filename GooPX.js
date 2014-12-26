@@ -219,13 +219,16 @@
 			AbsR.data[i] = Math.abs(R[i]) + 0.00001;
 		}
 		
-		for (var i = 0, i1 = 0; i < 3; i++, i1+=3) {
+		for(var i = 0, i1 = 0; i < 3; i++, i1+=3) {
 			ar = aExt[i];
-			br = (bExt[0] * AbsR[i1]) + (bExt[1] * AbsR[i1+1]) + (bExt[2] * AbsR[i1+2]);
-			if (Math.abs(AB.data[i]) > ar + br){return GooPX.CollisionData.create(false, 0);}
+			br = (bExt[0] * AbsR.data[i1]) + (bExt[1] * AbsR.data[i1+1]) + (bExt[2] * AbsR.data[i1+2]);
+			if (Math.abs(AB.data[i]) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
 		}
-		
-		
+		for(var i = 0; i < 3; i++) { // 3, 4, 5 | 6, 7, 8
+			ar = aExt[0] * AbsR.data[i] + aExt[1] * AbsR.data[i+3] + aExt[2] * AbsR.data[i+6];
+			br = bExt[i];
+			if (Math.abs((AB.data[0] * R.data[i]) + (AB.data[1] * R.data[i+3]) + (AB.data[2] * R.data[i+6])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		}
 		
 		return GooPX.CollisionData.create(true, 0);
 	}
