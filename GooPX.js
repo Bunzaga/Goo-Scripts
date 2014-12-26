@@ -202,15 +202,12 @@
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
 		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
-		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
-		var diff = AB.length() - rr;
+		var diff = AB.length() - (entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius);
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
-		var r = entA.colliderComponent.collider.radius;
-		
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
 		
@@ -227,8 +224,7 @@
 		}
 		
 		vec.copy(PT).subVector(C);
-
-		var diff = vec.length() - r;
+		var diff = vec.length() - entA.colliderComponent.collider.radius;
 		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
