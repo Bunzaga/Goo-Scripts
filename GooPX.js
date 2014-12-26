@@ -239,6 +239,10 @@
 		ar = (aExt[1] * AbsR.data[7]) + (aExt[2] * AbsR.data[4]);
 		br = (bExt[0] * AbsR.data[2]) + (bExt[2] * AbsR.data[0]);
 		if(Math.abs((AB.data[2] * R.data[4]) - (AB.data[1] * R.data[7])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A0 x B2
+		ar = aExt[1] * AbsR.data[8] + aExt[2] * AbsR.data[5];
+		br = bExt[0] * AbsR.data[1] + bExt[1] * AbsR.data[0];
+		if(Math.abs((AB.data[2] * R.data[5]) - (AB.data[1] * R.data[8])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
 		
 		return GooPX.CollisionData.create(true, 0);
 	}
