@@ -192,12 +192,42 @@
 	var C = new goo.Vector3(); // Center
 	var AB = new goo.Vector3(); // Direction A to B
 	var PT = new goo.Vector3(); // Point
-	var xA = new goo.Vector3(); // x Axis
-	var yA = new goo.Vector3(); // y Axis
-	var zA = new goo.Vector3(); // z Axis
+	var R = new goo.Matrix3x3(); // 3x3 Rotation
+	var AbsR = new goo.Matrix3x3(); // 3x3 Rotation
+	var AX = new goo.Vector3(); // A Axis
+	var BX = new goo.Vector3(); // B Axis
 	
 	GooPX.Box_BoxSupport = function(entA, entB){
-		return GooPX.CollisionData.create(false, 0);
+		var ar = 0, br = 0;
+		var aRot = entA.transformComponent.worldTransform.rotation;
+		var bRot = entB.transformComponent.worldTransform.rotation;
+		var aExt = entA.colliderComponent.collider.extents.data;
+		var bExt = entB.colliderComponent.collider.extents.data;
+		//R.setIdentity();
+		//AbsR.setIdentity();
+		for(var i = 0, i1 = 0; i < 3; i++, i1+=3){
+			AX.setDirect(aRot[i1], aRot[i1+1], aRot[i1+2]);
+			for (var j = 0, j1 = 0; j < 3; j++, j1+=3){
+				BX.setDirect(bRot[j1], bRot[j1+1], bRot[j1+2]);
+				R.data[i1+j] = goo.Vector3.dot(AX, BX);
+			}
+		}
+		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
+		AB.setDirect(AB.dot(AX.setDirect(aRot[0], aRot[1], aRot[2])), AB.dot(AX.setDirect(aRot[3], aRot[4], aRot[5])), AB.dot(AX.setDirect(aRot[6], aRot[7], aRot[8])));
+		
+		for(var i = 0; i < 9; i++){
+			AbsR.data[i] = Math.abs(R[i]) + 0.00001;
+		}
+		
+		for (var i = 0, i1 = 0; i < 3; i++, i1+=3) {
+			ar = aExt[i];
+			br = (bExt[0] * AbsR[i1]) + (bExt[1] * AbsR[i1+1]) + (bExt[2] * AbsR[i1+2]);
+			if (Math.abs(AB.data[i]) > ar + br){return GooPX.CollisionData.create(false, 0);}
+		}
+		
+		
+		
+		return GooPX.CollisionData.create(true, 0);
 	}
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
@@ -215,12 +245,12 @@
 		var extents = entB.colliderComponent.collider.extents.data;
  
 		for(var i = 0, ext = 0, dist = 0; i < 9; i+=3){
-			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
+			AX.setDirect(rot[i], rot[i+1], rot[i+2]);
 			ext = extents[i/3];
-			dist = AB.dot(vec);
+			dist = AB.dot(AX);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
-			PT.addVector(vec.mul(dist));
+			PT.addVector(AX.mul(dist));
 		}
 		
 		vec.copy(PT).subVector(C);
