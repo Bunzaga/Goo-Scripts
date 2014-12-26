@@ -214,14 +214,18 @@
 		
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
+		
+		//xA.copy(goo.Vector3.UNIT_X);
+		//yA.copy(goo.Vector3.UNIT_Y);
+		//zA.copy(goo.Vector3.UNIT_Z);
+		var rot = entB.transformComponent.worldTransform.rotation;
+		xA.setDirect(rot[0], rot[1], rot[2]);
+		yA.setDirect(rot[3], rot[4], rot[5]);
+		zA.setDirect(rot[6], rot[7], rot[8]);
 
-		xA.copy(goo.Vector3.UNIT_X);
-		yA.copy(goo.Vector3.UNIT_Y);
-		zA.copy(goo.Vector3.UNIT_Z);
-
-		entB.transformComponent.worldTransform.rotation.applyPost(xA);
-		entB.transformComponent.worldTransform.rotation.applyPost(yA);
-		entB.transformComponent.worldTransform.rotation.applyPost(zA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(xA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(yA);
+		//entB.transformComponent.worldTransform.rotation.applyPost(zA);
 		
 		var dist = AB.dot(xA);
 		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
