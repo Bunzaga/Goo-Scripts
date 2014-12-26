@@ -207,6 +207,7 @@
 	};
 
 	GooPX.Sphere_BoxSupport = function(entA, entB){
+		console.log('***Sphere_BoxSupport('+entA.name+','+entB.name+')');
 		C.copy(entA.transformComponent.worldTransform.translation);
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
@@ -216,8 +217,11 @@
 
 		for(var i, ext, dist = 0; i < 3; i*=3){
 			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
+			console.log(vec.x+","+vec.y+","+vec.z);
 			ext = extents[i/3];
+			console.log('ext:'+ext);
 			dist = AB.dot(vec);
+			console.log('dist:'+dist);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
 			PT.addVector(vec.mul(dist));
@@ -242,7 +246,8 @@
 		console.log('GooPX.BoxCollider.create()');
 		var collider = (GooPX.BoxCollider.pool.length === 0) ? new GooPX.BoxCollider() : GooPX.BoxCollider.pool.shift();
 		collider.type = 'Box';
-		collider.extents = new goo.Vector3(x, y, z);
+		collider.extents = collider.extents || new goo.Vector3();
+		collider.extents.setDirect(x, y, z);
 		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
