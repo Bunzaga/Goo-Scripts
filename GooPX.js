@@ -256,18 +256,18 @@
 		ar = (aExt[0] * AbsR.data[2][2]) + (aExt[2] * AbsR.data[0][2]);
 		br = (bExt[0] * AbsR.data[1][1]) + (bExt[1] * AbsR.data[1][0]);
 		if(Math.abs((AB.data[0] * R.data[8]) - (AB.data[2] * R.data[2])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
-// Test axis L = A2 x B0
-ra = a.e[0] * AbsR[1][0] + a.e[1] * AbsR[0][0];
-rb = b.e[1] * AbsR[2][2] + b.e[2] * AbsR[2][1];
-if (Abs(t[1] * R[0][0] - t[0] * R[1][0]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
-// Test axis L = A2 x B1
-ra = a.e[0] * AbsR[1][1] + a.e[1] * AbsR[0][1];
-rb = b.e[0] * AbsR[2][2] + b.e[2] * AbsR[2][0];
-if (Abs(t[1] * R[0][1] - t[0] * R[1][1]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
-// Test axis L = A2 x B2
-ra = a.e[0] * AbsR[1][2] + a.e[1] * AbsR[0][2];
-rb = b.e[0] * AbsR[2][1] + b.e[1] * AbsR[2][0];
-if (Abs(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A2 x B0
+		ar = (aExt[0] * AbsR.data[3]) + (aExt[1] * AbsR.data[0]);
+		br = (bExt[1] * AbsR.data[8]) + (bExt[2] * AbsR.data[7]);
+		if(Math.abs((AB.data[1] * R.data[0]) - (AB.data[0] * R.data[3])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A2 x B1
+		ar = (aExt[0] * AbsR.data[4]) + (aExt[1] * AbsR.data[1]);
+		br = (bExt[0] * AbsR.data[8]) + (bExt[2] * AbsR.data[6]);
+		if(Math.abs((AB.data[1] * R.data[1]) - (AB.data[0] * R.data[4])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A2 x B2
+		ar = (aExt[0] * AbsR.data[4]) + (aExt[1] * AbsR.data[2]);
+		br = (bExt[0] * AbsR.data[7]) + (bExt[1] * AbsR.data[6]);
+		if(Math.abs((AB.data[1] * R.data[2]) - (AB.data[0] * R.data[5])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
 		return GooPX.CollisionData.create(true, 0);
 	}
 	
