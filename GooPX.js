@@ -214,7 +214,7 @@
 		
 		var rot = entB.transformComponent.worldTransform.rotation;
 		var extents = entB.colliderComponent.collider.extents.data;
-
+ 
 		for(var i, ext, dist = 0; i < 9; i*=3){
 			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
 			console.log(vec.x+","+vec.y+","+vec.z);
