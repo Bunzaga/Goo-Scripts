@@ -207,7 +207,6 @@
 	};
 
 	GooPX.Sphere_BoxSupport = function(entA, entB){
-		console.log('***Sphere_BoxSupport('+entA.name+','+entB.name+')');
 		C.copy(entA.transformComponent.worldTransform.translation);
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
@@ -217,11 +216,8 @@
  
 		for(var i = 0, ext = 0, dist = 0; i < 9; i+=3){
 			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
-			console.log(vec.x+","+vec.y+","+vec.z);
 			ext = extents[i/3];
-			console.log('ext:'+ext);
 			dist = AB.dot(vec);
-			console.log('dist:'+dist);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
 			PT.addVector(vec.mul(dist));
