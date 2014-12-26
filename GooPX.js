@@ -220,7 +220,7 @@
 			dist = AB.dot(vec);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
-			PT.addVector(xA.mul(dist));
+			PT.addVector(vec.mul(dist));
 		}
 		
 		vec.copy(PT).subVector(C);
