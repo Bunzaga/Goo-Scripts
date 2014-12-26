@@ -209,38 +209,39 @@
 
 	GooPX.Sphere_BoxSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
-		
 		var r = entA.colliderComponent.collider.radius;
 		
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
 		
-		//xA.copy(goo.Vector3.UNIT_X);
-		//yA.copy(goo.Vector3.UNIT_Y);
-		//zA.copy(goo.Vector3.UNIT_Z);
 		var rot = entB.transformComponent.worldTransform.rotation;
-		xA.setDirect(rot[0], rot[1], rot[2]);
-		yA.setDirect(rot[3], rot[4], rot[5]);
-		zA.setDirect(rot[6], rot[7], rot[8]);
+		var extents = entB.colliderComponent.collider.extents.data;
+		//xA.setDirect(rot[0], rot[1], rot[2]);
+		//yA.setDirect(rot[3], rot[4], rot[5]);
+		//zA.setDirect(rot[6], rot[7], rot[8]);
 
-		//entB.transformComponent.worldTransform.rotation.applyPost(xA);
-		//entB.transformComponent.worldTransform.rotation.applyPost(yA);
-		//entB.transformComponent.worldTransform.rotation.applyPost(zA);
+		//var dist = AB.dot(xA);
+		for(var i, dist = 0; i < 3; i*=3){
+			vec.setDirect(rot[i], rot[i+1], rot[i+2]);
+			var ext = extents[i/3];
+			dist = AB.dot(vec);
+			if(dist > ext){dist = ext;}
+			if(dist < -ext){dist = -ext;}
+			PT.addVector(xA.mul(dist));
+		}
+		//if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
+		//if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
+		//PT.addVector(xA.mul(dist));
 		
-		var dist = AB.dot(xA);
-		if(dist > entB.colliderComponent.collider.xExtent){dist = entB.colliderComponent.collider.xExtent;}
-		if(dist < -entB.colliderComponent.collider.xExtent){dist = -entB.colliderComponent.collider.xExtent;}
-		PT.addVector(xA.mul(dist));
+		//dist = AB.dot(yA);
+		//if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
+		//if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
+		//PT.addVector(yA.mul(dist));
 		
-		dist = AB.dot(yA);
-		if(dist > entB.colliderComponent.collider.yExtent){dist = entB.colliderComponent.collider.yExtent;}
-		if(dist < -entB.colliderComponent.collider.yExtent){dist = -entB.colliderComponent.collider.yExtent;}
-		PT.addVector(yA.mul(dist));
-		
-		dist = AB.dot(zA);
-		if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
-		if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
-		PT.addVector(zA.mul(dist));
+		//dist = AB.dot(zA);
+		//if(dist > entB.colliderComponent.collider.zExtent){dist = entB.colliderComponent.collider.zExtent;}
+		//if(dist < -entB.colliderComponent.collider.zExtent){dist = -entB.colliderComponent.collider.zExtent;}
+		//PT.addVector(zA.mul(dist));
 		
 		vec.copy(PT).subVector(C);
 
@@ -262,16 +263,12 @@
 		console.log('GooPX.BoxCollider.create()');
 		var collider = (GooPX.BoxCollider.pool.length === 0) ? new GooPX.BoxCollider() : GooPX.BoxCollider.pool.shift();
 		collider.type = 'Box';
-		collider.xExtent = x;
-		collider.yExtent = y;
-		collider.zExtent = z;
+		collider.extents = new goo.Vector3(x, y, z);
 		return collider;
 	};
 	GooPX.BoxCollider.prototype.destroy = function(){
 		console.log('GooPX.BoxCollider.prototype.destroy');
-		this.xExtent = 0;
-		this.yExtent = 0;
-		this.zExtent = 0;
+		this.extents.setDirect(0, 0, 0);
 		GooPX.BoxCollider.pool.push(this);
 	}
 
