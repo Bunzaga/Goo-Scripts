@@ -226,7 +226,7 @@
 			if (Math.abs(AB.data[i]) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
 		}
 		// Test axes L = B0, L = B1, L = B2
-		for(var i = 0; i < 3; i++) { // 0, 1, 2 | 3, 4, 5 | 6, 7, 8
+		for(var i = 0; i < 3; i++) {
 			ar = (aExt[0] * AbsR.data[i]) + (aExt[1] * AbsR.data[i+3]) + (aExt[2] * AbsR.data[i+6]);
 			br = bExt[i];
 			if(Math.abs((AB.data[0] * R.data[i]) + (AB.data[1] * R.data[i+3]) + (AB.data[2] * R.data[i+6])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
@@ -243,7 +243,31 @@
 		ar = aExt[1] * AbsR.data[8] + aExt[2] * AbsR.data[5];
 		br = bExt[0] * AbsR.data[1] + bExt[1] * AbsR.data[0];
 		if(Math.abs((AB.data[2] * R.data[5]) - (AB.data[1] * R.data[8])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
-		
+		// Test axis L = A1 x B0
+// 0, 1, 2 | 3, 4, 5 | 6, 7, 8
+		ar = (aExt[0] * AbsR.data[6]) + (aExt[2] * AbsR.data[0]);
+		br = (bExt[1] * AbsR.data[5]) + (bExt[2] * AbsR.data[4]);
+		if(Math.abs((AB.data[0] * R.data[6]) - (AB.data[2] * R.data[0])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A1 x B1
+		ar = (aExt[0] * AbsR.data[7]) + (aExt[2] * AbsR.data[1]);
+		br = (bExt[0] * AbsR.data[5]) + (bExt[2] * AbsR.data[3]);
+		if(Math.abs((AB.data[0] * R.data[7]) - (AB.data[2] * R.data[1])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		// Test axis L = A1 x B2
+		ar = (aExt[0] * AbsR.data[2][2]) + (aExt[2] * AbsR.data[0][2]);
+		br = (bExt[0] * AbsR.data[1][1]) + (bExt[1] * AbsR.data[1][0]);
+		if(Math.abs((AB.data[0] * R.data[8]) - (AB.data[2] * R.data[2])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+// Test axis L = A2 x B0
+ra = a.e[0] * AbsR[1][0] + a.e[1] * AbsR[0][0];
+rb = b.e[1] * AbsR[2][2] + b.e[2] * AbsR[2][1];
+if (Abs(t[1] * R[0][0] - t[0] * R[1][0]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
+// Test axis L = A2 x B1
+ra = a.e[0] * AbsR[1][1] + a.e[1] * AbsR[0][1];
+rb = b.e[0] * AbsR[2][2] + b.e[2] * AbsR[2][0];
+if (Abs(t[1] * R[0][1] - t[0] * R[1][1]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
+// Test axis L = A2 x B2
+ra = a.e[0] * AbsR[1][2] + a.e[1] * AbsR[0][2];
+rb = b.e[0] * AbsR[2][1] + b.e[1] * AbsR[2][0];
+if (Abs(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb){return GooPX.CollisionData.create(false, 0);}
 		return GooPX.CollisionData.create(true, 0);
 	}
 	
