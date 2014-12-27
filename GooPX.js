@@ -222,13 +222,13 @@
 		for(var i = 0, i1 = 0; i < 3; i++, i1+=3) {
 			ar = aExt[i];
 			br = (bExt[0] * AbsR.data[i1]) + (bExt[1] * AbsR.data[i1+1]) + (bExt[2] * AbsR.data[i1+2]);
-			if (Math.abs(AB.data[i]) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+			if(Math.abs(AB.data[i]) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		}
 		// Test axes L = B0, L = B1, L = B2
 		for(var i = 0; i < 3; i++) {
 			ar = (aExt[0] * AbsR.data[i]) + (aExt[1] * AbsR.data[i+3]) + (aExt[2] * AbsR.data[i+6]);
 			br = bExt[i];
-			if(Math.abs((AB.data[0] * R.data[i]) + (AB.data[1] * R.data[i+3]) + (AB.data[2] * R.data[i+6])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+			if(Math.abs((AB.data[0] * R.data[i]) + (AB.data[1] * R.data[i+3]) + (AB.data[2] * R.data[i+6])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		}
 		// Test axis L = A0 x B0
 		ar = (aExt[1] * AbsR.data[6]) + (aExt[2] * AbsR.data[3]);
