@@ -91,7 +91,6 @@
 		GooPX.ColliderComponent.pool.length = 0;
 		GooPX.SphereCollider.pool.length = 0;
 		GooPX.BoxCollider.pool.length = 0;
-		GooPX.CollisionData.pool.length = 0;
 		console.log('Cleaned up!');
 	};
 
@@ -234,47 +233,46 @@
 		// Test axis L = A0 x B0
 		ar = (aExt[1] * AbsR.data[6]) + (aExt[2] * AbsR.data[3]);
 		br = (bExt[1] * AbsR.data[2]) + (bExt[2] * AbsR.data[1]);
-		if(Math.abs(AB.data[2] * R.data[3] - AB.data[1] * R.data[6]) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs(AB.data[2] * R.data[3] - AB.data[1] * R.data[6]) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A0 x B1
 		ar = (aExt[1] * AbsR.data[7]) + (aExt[2] * AbsR.data[4]);
 		br = (bExt[0] * AbsR.data[2]) + (bExt[2] * AbsR.data[0]);
-		if(Math.abs((AB.data[2] * R.data[4]) - (AB.data[1] * R.data[7])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[2] * R.data[4]) - (AB.data[1] * R.data[7])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A0 x B2
 		ar = aExt[1] * AbsR.data[8] + aExt[2] * AbsR.data[5];
 		br = bExt[0] * AbsR.data[1] + bExt[1] * AbsR.data[0];
-		if(Math.abs((AB.data[2] * R.data[5]) - (AB.data[1] * R.data[8])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[2] * R.data[5]) - (AB.data[1] * R.data[8])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A1 x B0
-// 0, 1, 2 | 3, 4, 5 | 6, 7, 8
 		ar = (aExt[0] * AbsR.data[6]) + (aExt[2] * AbsR.data[0]);
 		br = (bExt[1] * AbsR.data[5]) + (bExt[2] * AbsR.data[4]);
-		if(Math.abs((AB.data[0] * R.data[6]) - (AB.data[2] * R.data[0])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[0] * R.data[6]) - (AB.data[2] * R.data[0])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A1 x B1
 		ar = (aExt[0] * AbsR.data[7]) + (aExt[2] * AbsR.data[1]);
 		br = (bExt[0] * AbsR.data[5]) + (bExt[2] * AbsR.data[3]);
-		if(Math.abs((AB.data[0] * R.data[7]) - (AB.data[2] * R.data[1])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[0] * R.data[7]) - (AB.data[2] * R.data[1])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A1 x B2
 		ar = (aExt[0] * AbsR.data[2][2]) + (aExt[2] * AbsR.data[0][2]);
 		br = (bExt[0] * AbsR.data[1][1]) + (bExt[1] * AbsR.data[1][0]);
-		if(Math.abs((AB.data[0] * R.data[8]) - (AB.data[2] * R.data[2])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[0] * R.data[8]) - (AB.data[2] * R.data[2])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A2 x B0
 		ar = (aExt[0] * AbsR.data[3]) + (aExt[1] * AbsR.data[0]);
 		br = (bExt[1] * AbsR.data[8]) + (bExt[2] * AbsR.data[7]);
-		if(Math.abs((AB.data[1] * R.data[0]) - (AB.data[0] * R.data[3])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[1] * R.data[0]) - (AB.data[0] * R.data[3])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A2 x B1
 		ar = (aExt[0] * AbsR.data[4]) + (aExt[1] * AbsR.data[1]);
 		br = (bExt[0] * AbsR.data[8]) + (bExt[2] * AbsR.data[6]);
-		if(Math.abs((AB.data[1] * R.data[1]) - (AB.data[0] * R.data[4])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
+		if(Math.abs((AB.data[1] * R.data[1]) - (AB.data[0] * R.data[4])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
 		// Test axis L = A2 x B2
 		ar = (aExt[0] * AbsR.data[4]) + (aExt[1] * AbsR.data[2]);
 		br = (bExt[0] * AbsR.data[7]) + (bExt[1] * AbsR.data[6]);
-		if(Math.abs((AB.data[1] * R.data[2]) - (AB.data[0] * R.data[5])) > (ar + br)){return GooPX.CollisionData.create(false, 0);}
-		return GooPX.CollisionData.create(true, 0);
+		if(Math.abs((AB.data[1] * R.data[2]) - (AB.data[0] * R.data[5])) > (ar + br)){return new GooPX.CollisionData(false, 0);}
+		return new GooPX.CollisionData(true, 0);
 	}
 	
 	GooPX.Sphere_SphereSupport = function(entA, entB){
 		AB.copy(entB.transformComponent.worldTransform.translation).subVector(entA.transformComponent.worldTransform.translation);
 		var diff = AB.length() - (entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius);
-		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
+		return new GooPX.CollisionData(diff < 0, Math.abs(diff));
 	};
 
 	GooPX.Sphere_BoxSupport = function(entA, entB){
@@ -282,12 +280,12 @@
 		PT.copy(entB.transformComponent.worldTransform.translation);
 		AB.copy(C).subVector(PT);
 		
-		var rot = entB.transformComponent.worldTransform.rotation;
+		var rot = entB.transformComponent.worldTransform.rotation.data;
 		var extents = entB.colliderComponent.collider.extents.data;
  
-		for(var i = 0, ext = 0, dist = 0; i < 9; i+=3){
-			AX.setDirect(rot[i], rot[i+1], rot[i+2]);
-			ext = extents[i/3];
+		for(var i = 0, dist = 0, i1 = 0; i < 3; i++, i1+=3){
+			AX.setDirect(rot[i1], rot[i1+1], rot[i1+2]);
+			ext = extents[i];
 			dist = AB.dot(AX);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
@@ -296,7 +294,7 @@
 		
 		vec.copy(PT).subVector(C);
 		var diff = vec.length() - entA.colliderComponent.collider.radius;
-		return GooPX.CollisionData.create(diff < 0, Math.abs(diff));
+		return new GooPX.CollisionData(diff < 0, Math.abs(diff));
 	};
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
@@ -337,18 +335,9 @@
 		GooPX.SphereCollider.pool.push(this);
 	};
 	
-	GooPX.CollisionData = function(){};
-	GooPX.CollisionData.pool = [];
-	GooPX.CollisionData.create = function(bool, distance){
-		var collision = (GooPX.CollisionData.pool.length === 0) ? new GooPX.CollisionData() : collision = GooPX.CollisionData.pool.shift();
-		collision.bool = bool;
-		collision.distance = distance;
-		return collision;
-	};
-	GooPX.CollisionData.prototype.destroy = function(){
-		this.bool = false;
-		this.distance = 0.0;
-		GooPX.CollisionData.pool.push(this);
+	GooPX.CollisionData = function(bool, distance){
+		this.bool = bool;
+		this.distance = distance;
 	};
 	
 	var global = global || window;
