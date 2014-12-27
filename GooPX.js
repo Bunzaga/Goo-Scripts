@@ -283,10 +283,10 @@
 		var rot = entB.transformComponent.worldTransform.rotation.data;
 		var extents = entB.colliderComponent.collider.extents.data;
  
-		for(var i = 0, dist = 0, i1 = 0; i < 3; i++, i1+=3){
+		for(var i = 0, i1 = 0; i < 3; i++, i1+=3){
 			AX.setDirect(rot[i1], rot[i1+1], rot[i1+2]);
-			ext = extents[i];
-			dist = AB.dot(AX);
+			var ext = extents[i];
+			var dist = AB.dot(AX);
 			if(dist > ext){dist = ext;}
 			if(dist < -ext){dist = -ext;}
 			PT.addVector(AX.mul(dist));
