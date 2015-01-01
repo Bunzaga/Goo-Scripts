@@ -313,6 +313,7 @@
 		// vec === the end cap pointA
 		var p1 = entA._world.by.name('_Point1').first();
 		p1.transformComponent.transform.translation.copy(vec);
+		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
 		p1.transformComponent.setUpdated();
 		
 		vec.copy(AX).mul(-entA.colliderComponent.collider.halfHeight);
@@ -320,6 +321,7 @@
 		// vec === the end cap pointB
 		var p2 = entA._world.by.name('_Point2').first();
 		p2.transformComponent.transform.translation.copy(vec);
+		p2.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
 		p2.transformComponent.setUpdated();
 		
 		return new GooPX.CollisionData(false, 0);
