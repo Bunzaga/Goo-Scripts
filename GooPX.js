@@ -163,14 +163,12 @@
 			}
 			else if(md instanceof goo.Cylinder){
 				console.log('Goo Shape is a Cylinder');
-				console.log(md);
-				console.log(scl);
-				shape = GooPX.CylinderCollider.create(0.5, 1.0);
+				shape = GooPX.CylinderCollider.create(scl.x * md.radius, scl.z * md.height);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
 				console.log(md);
-				shape = 'new GooPX.ConeCollider()';
+				shape = GooPX.ConeCollider.create(scl.x * md.radius, scl.z * md.height);
 			}
 			else if(md instanceof goo.Disk){
 				console.log('Goo Shape is a Disk');
@@ -317,6 +315,27 @@
 	GooPX.Box_CylinderSupport = function(entA, entB){
 		return GooPX.Cylinder_BoxSupport(entB, entA);
 	};
+	GooPX.Cone_ConeSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Cone_SphereSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Cone_CylinderSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Cone_BoxSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Sphere_ConeSupport = function(entA, entB){
+		return GooPX.Cone_SphereSupport(entB, entA);
+	};
+	GooPX.Cylinder_ConeSupport = function(entA, entB){
+		return GooPX.Cone_CylinderSupport(entB, entA);
+	};
+	GooPX.Box_ConeSupport = function(entA, entB){
+		return GooPX.Cone_BoxSupport(entB, entA);
+	};
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
@@ -365,9 +384,26 @@
 	};
 	GooPX.CylinderCollider.prototype.destroy = function(){
 		console.log('GooPX.CylinderCollider.prototype.destroy');
-		this.radius = 0.5;
+		this.radius = 1.0;
 		this.height = 1.0;
 		GooPX.CylinderCollider.pool.push(this);
+	};
+	
+	GooPX.ConeCollider = function(){};
+	GooPX.ConeCollider.pool = [];
+	GooPX.ConeCollider.create = function(r, h){
+		console.log('GooPX.ConeCollider.create()');
+		var collider = (GooPX.ConeCollider.pool.length === 0) ? new GooPX.ConeCollider() : GooPX.ConeCollider.pool.shift();
+		collider.type = 'Cone';
+		collider.radius = r;
+		collider.height = h;
+		return collider;
+	};
+	GooPX.ConeCollider.prototype.destroy = function(){
+		console.log('GooPX.ConeCollider.prototype.destroy');
+		this.radius = 1.0;
+		this.height = 1.0;
+		GooPX.ConeCollider.pool.push(this);
 	};
 	
 	GooPX.CollisionData = function(bool, distance){
