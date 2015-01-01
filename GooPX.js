@@ -163,7 +163,7 @@
 			}
 			else if(md instanceof goo.Cylinder){
 				console.log('Goo Shape is a Cylinder');
-				shape = GooPX.CylinderCollider.create(scl.x * md.radius, scl.z * md.height);
+				shape = GooPX.CylinderCollider.create(scl.x * md.radius, scl.z * md.height * 0.5);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
@@ -379,13 +379,13 @@
 		var collider = (GooPX.CylinderCollider.pool.length === 0) ? new GooPX.CylinderCollider() : GooPX.CylinderCollider.pool.shift();
 		collider.type = 'Cylinder';
 		collider.radius = r;
-		collider.height = h;
+		collider.halfHeight = h;
 		return collider;
 	};
 	GooPX.CylinderCollider.prototype.destroy = function(){
 		console.log('GooPX.CylinderCollider.prototype.destroy');
 		this.radius = 1.0;
-		this.height = 1.0;
+		this.halfHeight = 0.5;
 		GooPX.CylinderCollider.pool.push(this);
 	};
 	
@@ -402,7 +402,7 @@
 	GooPX.ConeCollider.prototype.destroy = function(){
 		console.log('GooPX.ConeCollider.prototype.destroy');
 		this.radius = 1.0;
-		this.height = 1.0;
+		this.height = 2.0;
 		GooPX.ConeCollider.pool.push(this);
 	};
 	
