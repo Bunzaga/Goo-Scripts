@@ -304,6 +304,24 @@
 		return new GooPX.CollisionData(false, 0);
 	};
 	GooPX.Cylinder_SphereSupport = function(entA, entB){
+		C.copy(entA.transformComponent.worldTransform.translation);
+		
+		R.copy(entA.transformComponent.worldTransform.rotation);
+		AX.setDirect(rot[6], rot[7], rot[8]);
+		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight);
+		vec.addVector(C);
+		// vec === the end cap pointA
+		var p1 = entA.world.by.name('_Point1').first();
+		p1.transformComponent.transform.translation.copy(vec);
+		p1.transformCOmponent.setUpdated();
+		
+		vec.copy(AX).mul(-entA.colliderComponent.collider.halfHeight);
+		vec.addVector(C);
+		// vec === the end cap pointB
+		var p2 = entA.world.by.name('_Point2').first();
+		p2.transformComponent.transform.translation.copy(vec);
+		p2.transformCOmponent.setUpdated();
+		
 		return new GooPX.CollisionData(false, 0);
 	};
 	GooPX.Sphere_CylinderSupport = function(entA, entB){
