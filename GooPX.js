@@ -307,7 +307,7 @@
 		C.copy(entA.transformComponent.worldTransform.translation);
 		
 		R.copy(entA.transformComponent.worldTransform.rotation);
-		AX.setDirect(rot[6], rot[7], rot[8]);
+		AX.setDirect(R.data[6], R.data[7], R.data[8]);
 		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight);
 		vec.addVector(C);
 		// vec === the end cap pointA
