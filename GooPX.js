@@ -311,14 +311,14 @@
 		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight);
 		vec.addVector(C);
 		// vec === the end cap pointA
-		var p1 = entA.world.by.name('_Point1').first();
+		var p1 = entA._world.by.name('_Point1').first();
 		p1.transformComponent.transform.translation.copy(vec);
 		p1.transformCOmponent.setUpdated();
 		
 		vec.copy(AX).mul(-entA.colliderComponent.collider.halfHeight);
 		vec.addVector(C);
 		// vec === the end cap pointB
-		var p2 = entA.world.by.name('_Point2').first();
+		var p2 = entA._world.by.name('_Point2').first();
 		p2.transformComponent.transform.translation.copy(vec);
 		p2.transformCOmponent.setUpdated();
 		
