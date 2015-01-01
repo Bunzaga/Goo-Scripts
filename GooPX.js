@@ -163,7 +163,9 @@
 			}
 			else if(md instanceof goo.Cylinder){
 				console.log('Goo Shape is a Cylinder');
-				shape = 'new GooPX.CylinderCollider()';
+				console.log(md);
+				console.log(scl);
+				shape = GooPX.CylinderCollider.create(0.5, 1.0);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
@@ -319,7 +321,7 @@
 		console.log('GooPX.BoxCollider.prototype.destroy');
 		this.extents.setDirect(0, 0, 0);
 		GooPX.BoxCollider.pool.push(this);
-	}
+	};
 
 	GooPX.SphereCollider = function(){};
 	GooPX.SphereCollider.pool = [];
@@ -333,6 +335,23 @@
 		console.log('GooPX.SphereCollider.prototype.destroy');
 		this.radius = 0.5;
 		GooPX.SphereCollider.pool.push(this);
+	};
+	
+	GooPX.CylinderCollider = function(){};
+	GooPX.CylinderCollider.pool = [];
+	GooPX.CylinderCollider.create = function(r, h){
+		console.log('GooPX.CylinderCollider.create()');
+		var collider = (GooPX.CylinderCollider.pool.length === 0) ? new GooPX.CylinderCollider() : GooPX.CylinderCollider.pool.shift();
+		collider.type = 'Cylinder';
+		collider.radius = r;
+		collider.height = h;
+		return collider;
+	};
+	GooPX.CylinderCollider.prototype.destroy = function(){
+		console.log('GooPX.CylinderCollider.prototype.destroy');
+		this.radius = 0.5;
+		this.height = 1.0;
+		GooPX.CylinderCollider.pool.push(this);
 	};
 	
 	GooPX.CollisionData = function(bool, distance){
