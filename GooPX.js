@@ -169,6 +169,7 @@
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
+				console.log(md);
 				shape = 'new GooPX.ConeCollider()';
 			}
 			else if(md instanceof goo.Disk){
@@ -301,6 +302,21 @@
 	GooPX.Box_SphereSupport = function(entA, entB){
 		return GooPX.Sphere_BoxSupport(entB, entA);
 	}
+	GooPX.Cylinder_CylinderSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Cylinder_SphereSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Sphere_CylinderSupport = function(entA, entB){
+		return GooPX.Cylinder_SphereSupport(entB, entA);
+	};
+	GooPX.Cylinder_BoxSupport = function(entA, entB){
+		return new GooPX.CollisionData(false, 0);
+	};
+	GooPX.Box_CylinderSupport = function(entA, entB){
+		return GooPX.Cylinder_BoxSupport(entB, entA);
+	};
 	
 	GooPX.checkCollision = function(entA, entB){
 		console.log('GooPX.checkCollision()');
