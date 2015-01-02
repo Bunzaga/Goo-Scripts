@@ -303,7 +303,7 @@
 	GooPX.Cylinder_CylinderSupport = function(entA, entB){
 		return new GooPX.CollisionData(false, 0);
 	};
-	GooPX.Cylinder_SPhereSupport = function(entA, entB){
+	GooPX.Cylinder_SphereSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
