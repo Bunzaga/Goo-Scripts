@@ -342,7 +342,7 @@
 		}
 		AB.copy(CB).subVector(vec.copy(BX).mul(distance));
 		var centerDistance = AB.distance(PT1);
-		if(centerDistance > entA.colliderComponent.collider.radius){
+		if(centerDistance > rr){
 			console.log('*** Returned 4');
 			return new GooPX.CollisionData(false, 0);
 		}
