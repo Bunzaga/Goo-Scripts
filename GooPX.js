@@ -334,42 +334,25 @@
 		AB.copy(CB).subVector(PT1);
 		var distance = AB.dot(AX);
 		if(distance < 0){
+			console.log('distance < 0');
+			console.log(distance+"<"+0);
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(PT2);
 		if(AB.dot(BX) < 0){
+			console.log('AB.dot(BX) < 0');
+			console.log(AB.dot(BX)+"<"+0);
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(vec.copy(AX).mul(distance));
 		var centerDistance = AB.distance(PT1);
 		if(centerDistance > rr){
+			console.log('centerDistance > rr');
+			console.log(centerDistance+">"+rr);
 			return new GooPX.CollisionData(false, 0);
 		}
 		return new GooPX.CollisionData(true, 0);
 	}
-	/*GooPX.Cylinder_SphereSupport = function(entA, entB){
-		C.copy(entA.transformComponent.worldTransform.translation);
-		
-		R.copy(entA.transformComponent.worldTransform.rotation);
-		AX.setDirect(R.data[6], R.data[7], R.data[8]);
-		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight);
-		vec.addVector(C);
-		// vec === the end cap pointA
-		var p1 = entA._world.by.name('_Point1').first();
-		p1.transformComponent.transform.translation.copy(vec);
-		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
-		p1.transformComponent.setUpdated();
-		
-		vec.copy(AX).mul(-entA.colliderComponent.collider.halfHeight);
-		vec.addVector(C);
-		// vec === the end cap pointB
-		var p2 = entA._world.by.name('_Point2').first();
-		p2.transformComponent.transform.translation.copy(vec);
-		p2.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
-		p2.transformComponent.setUpdated();
-		
-		return new GooPX.CollisionData(false, 0);
-	};*/
 	GooPX.Sphere_CylinderSupport = function(entA, entB){
 		return GooPX.Cylinder_SphereSupport(entB, entA);
 	};
