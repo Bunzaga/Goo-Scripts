@@ -310,7 +310,8 @@
 		CB.copy(entB.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
-		BX.copy(AX).invert();
+		BX.copy(AX);
+		AX.invert();
 		
 		var hr = entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius;
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
