@@ -313,13 +313,23 @@
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
 		BX.copy(AX).invert();
+		
 		var hr = entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius;
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
 		
 		PT1.copy(AX).mul(hr);
-		PT2.copy(BX).invert().mul(hr);
+		PT2.copy(BX).mul(hr);
 		PT1.addVector(CA);
 		PT2.addVector(CA);
+		
+		var p1 = entA._world.by.name('_Point1').first();
+		p1.transformComponent.transform.translation.copy(PT1);
+		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
+		p1.transformComponent.setUpdated();
+		var p2 = entA._world.by.name('_Point2').first();
+		p1.transformComponent.transform.translation.copy(PT2);
+		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
+		p1.transformComponent.setUpdated();
 		
 		AB.copy(CB).subVector(PT1);
 		var distance = AB.dot(AX);
