@@ -310,8 +310,7 @@
 		CB.copy(entB.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
-		BX.copy(AX);
-		AX.invert();
+		BX.copy(AX).invert();
 		
 		var hr = entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius;
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
@@ -331,17 +330,17 @@
 		p2.transformComponent.setUpdated();
 		
 		AB.copy(CB).subVector(PT1);
-		var distance = AB.dot(AX);
+		var distance = AB.dot(BX);
 		if(distance < 0){
 			console.log('*** Returned 1');
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(PT2);
-		if(AB.dot(BX) < 0){
+		if(AB.dot(AX) < 0){
 			console.log('*** Returned 2');
 			return new GooPX.CollisionData(false, 0);
 		}
-		AB.copy(CB).subVector(vec.copy(AX).mul(distance));
+		AB.copy(CB).subVector(vec.copy(BX).mul(distance));
 		var centerDistance = AB.distance(PT1);
 		if(centerDistance > rr){
 			console.log('*** Returned 4');
