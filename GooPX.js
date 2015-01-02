@@ -329,16 +329,16 @@
 		p2.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
 		p2.transformComponent.setUpdated();
 		
-		AB.copy(CB).subVector(PT1);
-		var distance = AB.dot(BX);
+		AB.copy(PT1).subVector(CB);
+		var distance = AB.dot(AX);
 		if(distance < 0){
 			return new GooPX.CollisionData(false, 0);
 		}
-		AB.copy(CB).subVector(PT2);
+		AB.copy(PT2).subVector(CB);
 		if(AB.dot(AX) < 0){
 			return new GooPX.CollisionData(false, 0);
 		}
-		AB.copy(CB).subVector(vec.copy(BX).mul(distance));
+		AB.copy(vec.copy(AX).mul(distance)).subVector(CB);
 		var centerDistance = AB.distance(PT1);
 		if(centerDistance > rr){
 			return new GooPX.CollisionData(false, 0);
