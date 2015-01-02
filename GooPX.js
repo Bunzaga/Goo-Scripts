@@ -303,7 +303,34 @@
 	GooPX.Cylinder_CylinderSupport = function(entA, entB){
 		return new GooPX.CollisionData(false, 0);
 	};
-	GooPX.Cylinder_SphereSupport = function(entA, entB){
+	GooPX.Cylinder_SPhereSupport = function(entA, entB){
+		C.copy(entA.transformComponent.worldTransform.translation);
+		R.copy(entA.transformComponent.worldTransform.rotation);
+		AX.setDirect(R.data[6], R.data[7], R.data[8]);
+		BX.copy(AX).invert();
+		
+		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius);
+		vec.addVector(C);
+		AB.copy(entB.transformComponent.worldTransform.translation).subVector(vec);
+		var distance = AB.dot(AX);
+		if(distance < 0){
+			return new GooPX.CollisionData(false, 0);
+		}
+		
+		vec.copy(BX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius);
+		vec.addVector(C);
+		AB.copy(entB.transformComponent.worldTransform.translation).subVector(vec);
+		if(AB.dot(BX) < 0){
+			return new GooPX.CollisionData(false, 0);
+		}
+		PT.copy(entB.transformComponent.worldTransform.translation).subVector(vec.copy(AX).mul(distance));
+		var centerDistance = PT.distance(vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius).addVector(C));
+		if(centerDistance > entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius){
+			return new GooPX.CollisionData(false, 0);
+		}
+		return new GooPX.CollisionData(true, 0);
+	}
+	/*GooPX.Cylinder_SphereSupport = function(entA, entB){
 		C.copy(entA.transformComponent.worldTransform.translation);
 		
 		R.copy(entA.transformComponent.worldTransform.rotation);
@@ -325,7 +352,7 @@
 		p2.transformComponent.setUpdated();
 		
 		return new GooPX.CollisionData(false, 0);
-	};
+	};*/
 	GooPX.Sphere_CylinderSupport = function(entA, entB){
 		return GooPX.Cylinder_SphereSupport(entB, entA);
 	};
