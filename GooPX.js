@@ -333,21 +333,21 @@
 		AB.copy(CB).subVector(PT1);
 		var distance = AB.dot(AX);
 		if(distance < 0){
-			console.log('Returned 1');
+			console.log('*** Returned 1');
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(PT2);
-		if(AB.dot(AX) < 0){
-			console.log('Returned 2');
+		if(AB.dot(BX) < 0){
+			console.log('*** Returned 2');
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(vec.copy(AX).mul(distance));
 		var centerDistance = AB.distance(PT1);
 		if(centerDistance > rr){
-			console.log('Returned 4');
+			console.log('*** Returned 4');
 			return new GooPX.CollisionData(false, 0);
 		}
-		console.log('Returned 5');
+		console.log('*** Returned 5');
 		return new GooPX.CollisionData(true, 0);
 	}
 	GooPX.Sphere_CylinderSupport = function(entA, entB){
