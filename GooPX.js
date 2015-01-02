@@ -327,9 +327,9 @@
 		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
 		p1.transformComponent.setUpdated();
 		var p2 = entA._world.by.name('_Point2').first();
-		p1.transformComponent.transform.translation.copy(PT2);
-		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
-		p1.transformComponent.setUpdated();
+		p2.transformComponent.transform.translation.copy(PT2);
+		p2.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
+		p2.transformComponent.setUpdated();
 		
 		AB.copy(CB).subVector(PT1);
 		var distance = AB.dot(AX);
