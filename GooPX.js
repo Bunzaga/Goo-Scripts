@@ -332,19 +332,19 @@
 		p2.transformComponent.setUpdated();
 		
 		AB.copy(CB).subVector(PT1);
-		var distance = AB.dot(AX);
+		var distance = AB.dot(BX);
 		if(distance < 0){
 			console.log('distance < 0');
 			console.log(distance+"<"+0);
 			return new GooPX.CollisionData(false, 0);
 		}
 		AB.copy(CB).subVector(PT2);
-		if(AB.dot(BX) < 0){
+		if(AB.dot(AX) < 0){
 			console.log('AB.dot(BX) < 0');
 			console.log(AB.dot(BX)+"<"+0);
 			return new GooPX.CollisionData(false, 0);
 		}
-		AB.copy(CB).subVector(vec.copy(AX).mul(distance));
+		AB.copy(CB).subVector(vec.copy(BX).mul(distance));
 		var centerDistance = AB.distance(PT1);
 		if(centerDistance > rr){
 			console.log('centerDistance > rr');
