@@ -309,7 +309,7 @@
 	var CB = new goo.Vector3();
 	GooPX.Cylinder_SphereSupport = function(entA, entB){
 		CA.copy(entA.transformComponent.worldTransform.translation);
-		CB.copy(entA.transformComponent.worldTransform.translation);
+		CB.copy(entB.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
 		BX.copy(AX).invert();
