@@ -303,29 +303,36 @@
 	GooPX.Cylinder_CylinderSupport = function(entA, entB){
 		return new GooPX.CollisionData(false, 0);
 	};
+	var PT1 = new goo.Vector3();
+	var PT2 = new goo.Vector3();
+	var CA = new goo.Vector3();
+	var CB = new goo.Vector3();
 	GooPX.Cylinder_SphereSupport = function(entA, entB){
-		C.copy(entA.transformComponent.worldTransform.translation);
+		CA.copy(entA.transformComponent.worldTransform.translation);
+		CB.copy(entA.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
 		BX.copy(AX).invert();
+		var hr = entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius;
+		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
 		
-		vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius);
-		vec.addVector(C);
-		AB.copy(entB.transformComponent.worldTransform.translation).subVector(vec);
+		PT1.copy(AX).mul(hr);
+		PT2.copy(BX).mul(hr);
+		PT1.addVector(CA);
+		PT2.addVector(CA);
+		
+		AB.copy(CB).subVector(PT1);
 		var distance = AB.dot(AX);
 		if(distance < 0){
 			return new GooPX.CollisionData(false, 0);
 		}
-		
-		vec.copy(BX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius);
-		vec.addVector(C);
-		AB.copy(entB.transformComponent.worldTransform.translation).subVector(vec);
+		AB.copy(CB).subVector(PT2);
 		if(AB.dot(BX) < 0){
 			return new GooPX.CollisionData(false, 0);
 		}
-		PT.copy(entB.transformComponent.worldTransform.translation).subVector(vec.copy(AX).mul(distance));
-		var centerDistance = PT.distance(vec.copy(AX).mul(entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius).addVector(C));
-		if(centerDistance > entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius){
+		AB.copy(CB).subVector(vec.copy(AX).mul(distance));
+		var centerDistance = AB.distance(PT1);
+		if(centerDistance > rr){
 			return new GooPX.CollisionData(false, 0);
 		}
 		return new GooPX.CollisionData(true, 0);
