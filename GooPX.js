@@ -317,7 +317,7 @@
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
 		
 		PT1.copy(AX).mul(hr);
-		PT2.copy(BX).mul(hr);
+		PT2.copy(BX).invert().mul(hr);
 		PT1.addVector(CA);
 		PT2.addVector(CA);
 		
