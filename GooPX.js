@@ -309,7 +309,9 @@
 		CA.copy(entA.transformComponent.worldTransform.translation);
 		CB.copy(entB.transformComponent.worldTransform.translation);
 		R.copy(entA.transformComponent.worldTransform.rotation);
+		
 		AX.setDirect(R.data[6], R.data[7], R.data[8]);
+		BX.copy(AX).invert();
 		
 		var hr = entA.colliderComponent.collider.halfHeight + entB.colliderComponent.collider.radius;
 		var rr = entA.colliderComponent.collider.radius + entB.colliderComponent.collider.radius;
@@ -318,11 +320,7 @@
 		PT2.copy(AX).mul(-hr);
 		PT1.addVector(CA);
 		PT2.addVector(CA);
-		
-		AX.copy(PT1).subVector(PT2);
-		AX.normalize();
-		BX.copy(AX).invert();
-		
+
 		var p1 = entA._world.by.name('_Point1').first();
 		p1.transformComponent.transform.translation.copy(PT1);
 		p1.transformComponent.transform.scale.setDirect(entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius,entA.colliderComponent.collider.radius);
