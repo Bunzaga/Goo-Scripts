@@ -58,7 +58,6 @@
 	Attach.System.prototype.process = function(ents, tpf){
 		console.log('Attach.System.process()');
 		for(var i = ents.length; i--;){
-			console.log('attach.system.process');
 			var ent = ents[i];
 			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
