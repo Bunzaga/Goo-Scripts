@@ -88,15 +88,23 @@
 				trans.scale.z = ac._oldScale.z;
 			}
 			
+			if(true === ac.copyScale){
+				trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
+				trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
+				trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
+			}
+			
 			trans.translation.addVector(ac.offsetTranslation);
+			
 			trans.rotation.rotateX(ac.offsetRotation.x);
 	            	trans.rotation.rotateY(ac.offsetRotation.y);
 	            	trans.rotation.rotateZ(ac.offsetRotation.z);
-			
-			
+	            	
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
 			ent.traverse(Attach.updateWorldTransform);
+			
+			if()
 			
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
