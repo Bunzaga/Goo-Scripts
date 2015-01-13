@@ -78,6 +78,11 @@
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
 			//ent.traverse(Attach.updateWorldTransform);
+			m.getScale(trans.scale);
+			trans.scale.x = 1/trans.scale.x;
+			trans.scale.y = 1/trans.scale.y;
+			trans.scale.z = 1/trans.scale.z;
+			
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
 			ent.transformComponent.setUpdated();
