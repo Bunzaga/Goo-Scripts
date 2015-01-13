@@ -31,7 +31,7 @@
 		this.copyScale = rot || true;
 		if(undefined === this.parent){console.log('this.parent undefined'); return;}
 		if(undefined === this.jointID){console.log('this.jointID undefined'); return;}
-		if (!this.parent.animationComponent || !this.parent.animationComponent._skeletonPose) {console.log('no _skeletonPose');return;}
+		if (undefined === this.parent.animationComponent || undefined === this.parent.animationComponent._skeletonPose) {console.log('no _skeletonPose');return;}
 		var pose = this.parent.animationComponent._skeletonPose;
 		var joints = pose._skeleton.joints;
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
@@ -59,8 +59,6 @@
 		console.log('Attach.System.process()');
 		for(var i = ents.length; i--;){
 			var ent = ents[i];
-			console.log('entity:'+i);
-			console.log(ent.name);
 			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
 			var j = ac.jointTrans;
