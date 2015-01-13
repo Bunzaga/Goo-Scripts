@@ -69,14 +69,9 @@
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
 			var m = j.matrix;
-			
-			if(true === ac.copyTranslation){
-	            		m.getTranslation(trans.translation);
-        	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
-			}
+
 			if(true === ac.copyRotation){
 	            		m.getRotation(trans.rotation);
-	            		
 	            		m.getScale(trans.scale);
 	            		if(true === ac.copyScale){
 					trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
@@ -96,6 +91,11 @@
 					trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
 					trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
 				}
+			}
+			
+			if(true === ac.copyTranslation){
+	            		m.getTranslation(trans.translation);
+        	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
 			}
 			
 			trans.translation.addVector(ac.offsetTranslation);
