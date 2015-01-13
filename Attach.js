@@ -67,14 +67,14 @@
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
 			trans.matrix.copy(j.matrix);
-			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
+			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			j.matrix.getTranslation(trans.translation);
 			j.matrix.getScale(trans.scale);
 			j.matrix.getRotation(trans.rotation);
-			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
+			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			ent.traverse(Attach.updateWorldTransform);
 			ent.transformComponent._dirty = true;
-			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
+			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 		}
 	};
 	
