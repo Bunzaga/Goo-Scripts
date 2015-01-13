@@ -29,9 +29,9 @@
 		this.copyTranslation = trans || true;
 		this.copyRotation = rot || true;
 		this.copyScale = rot || true;
-		if(undefined === this.parent){return;}
-		if(undefined === this.jointID){return;}
-		if (!this.parent.animationComponent || !this.parent.animationComponent._skeletonPose) {return;}
+		if(undefined === this.parent){console.log('this.parent undefined'); return;}
+		if(undefined === this.jointID){console.log('this.jointID undefined'); return;}
+		if (!this.parent.animationComponent || !this.parent.animationComponent._skeletonPose) {console.log('no _skeletonPose');return;}
 		var pose = this.parent.animationComponent._skeletonPose;
 		var joints = pose._skeleton.joints;
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
@@ -39,7 +39,7 @@
 				this.jointTrans = pose._globalTransforms[i];
 			}
 		}
-		if(undefined === this.jointTrans){return;}
+		if(undefined === this.jointTrans){console.log('this.jointTrans undefined'); return;}
 	};
 	Attach.Component.prototype.detach = function(){
 		this.jointID = undefined;
