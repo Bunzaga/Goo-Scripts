@@ -70,11 +70,11 @@
 			if (!j) { return; }
 			var m = j.matrix;
 			
-			if(ac.copyTranslation){
+			if(ture === ac.copyTranslation){
 	            		m.getTranslation(trans.translation);
         	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
 			}
-			if(ac.copyRotation){
+			if(true === ac.copyRotation){
 	            		m.getRotation(trans.rotation);
 	            		trans.rotation.rotateX(ac.offsetRotation.x);
 	            		trans.rotation.rotateY(ac.offsetRotation.y);
