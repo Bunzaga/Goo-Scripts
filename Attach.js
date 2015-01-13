@@ -33,7 +33,11 @@
 		if(undefined === this.jointID){console.log('this.jointID undefined'); return;}
 		if (undefined === this.parent.animationComponent || undefined === this.parent.animationComponent._skeletonPose) {console.log('no _skeletonPose');return;}
 		var pose = this.parent.animationComponent._skeletonPose;
+		console.log('pose:');
+		console.log(pose);
 		var joints = pose._skeleton.joints;
+		console.log('joints:');
+		console.log(joints);
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
 			if(joints[i]._name === this.jointID){
 				this.jointTrans = pose._globalTransforms[i];
