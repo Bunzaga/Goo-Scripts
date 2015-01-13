@@ -78,6 +78,11 @@
 	            		m.getRotation(trans.rotation);
 	            		
 	            		m.getScale(trans.scale);
+	            		if(true === ac.copyScale){
+					trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
+					trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
+					trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
+				}
 				trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
 				trans.scale.y = (ac._oldScale.y / trans.scale.y) + ac.offsetScale.y;
 				trans.scale.z = (ac._oldScale.z / trans.scale.z) + ac.offsetScale.z;
@@ -86,12 +91,11 @@
 				trans.scale.x = ac._oldScale.x;
 				trans.scale.y = ac._oldScale.y;
 				trans.scale.z = ac._oldScale.z;
-			}
-			
-			if(true === ac.copyScale){
-				trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
-				trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
-				trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
+				if(true === ac.copyScale){
+					trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
+					trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
+					trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
+				}
 			}
 			
 			trans.translation.addVector(ac.offsetTranslation);
