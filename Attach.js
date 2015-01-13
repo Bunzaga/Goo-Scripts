@@ -22,7 +22,7 @@
 		this.offsetScale = new goo.Vector3(0, 0, 0);
 		this.attach(parent, jointID, trans, rot, scl);
 	};
-	Attach.Component.prototype = Object.create(goo.Object.prototype);
+	Attach.Component.prototype = Object.create(goo.Component.prototype);
 	Attach.Component.prototype.constructor = Attach.Component;
 	Attach.Component.prototype.attach = function(pEnt, jointID, trans, rot, scl){
 		this.parent = pEnt || undefined;
