@@ -58,6 +58,7 @@
 	Attach.System.prototype.process = function(ents, tpf){
 		console.log('Attach.System.process()');
 		for(var i = ents.length; i--;){
+			console.log('attach.system.process');
 			var ent = ents[i];
 			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
@@ -66,11 +67,14 @@
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
 			trans.matrix.copy(j.matrix);
+			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
 			j.matrix.getTranslation(trans.translation);
 			j.matrix.getScale(trans.scale);
 			j.matrix.getRotation(trans.rotation);
+			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
 			ent.traverse(Attach.updateWorldTransform);
 			ent.transformComponent._dirty = true;
+			console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
 		}
 	};
 	
