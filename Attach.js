@@ -73,9 +73,12 @@
             		//trans.rotation.rotateZ(Math.PI*0.5);
             		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			trans.rotation.set(
-				m.e00, m.e10, m.e20,
-				m.e01, m.e11, m.e21,
-				m.e02, m.e12, m.e22);
+				//m.e00, m.e10, m.e20,
+				//m.e01, m.e11, m.e21,
+				//m.e02, m.e12, m.e22);
+				m.e00, m.e20, m.e10,
+				m.e01, m.e21, m.e11,
+				m.e02, m.e22, m.e12);
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
 			//ent.traverse(Attach.updateWorldTransform);
