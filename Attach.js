@@ -79,12 +79,19 @@
 	            		trans.rotation.rotateX(ac.offsetRotation.x);
 	            		trans.rotation.rotateY(ac.offsetRotation.y);
 	            		trans.rotation.rotateZ(ac.offsetRotation.z);
+	            		
+	            		m.getScale(trans.scale);
+				trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
+				trans.scale.y = (ac._oldScale.y / trans.scale.y) + ac.offsetScale.y;
+				trans.scale.z = (ac._oldScale.z / trans.scale.z) + ac.offsetScale.z;
+			}
+			else{
+				trans.scale.x = ac._oldScale.x;
+				trans.scale.y = ac._oldScale.y;
+				trans.scale.z = ac._oldScale.z;
 			}
 			
-			m.getScale(trans.scale);
-			trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
-			trans.scale.y = (ac._oldScale.y / trans.scale.y) + ac.offsetScale.y;
-			trans.scale.z = (ac._oldScale.z / trans.scale.z) + ac.offsetScale.z;
+			
 			
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
