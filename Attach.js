@@ -64,9 +64,9 @@
 			var j = ac.jointTrans;
 			if(undefined !== j){
 				trans.matrix.copy(j.matrix);
-				j.matrix.getTranslation(trans.translation);
-			//	j.matrix.getScale(trans.scale);
-				j.matrix.getRotation(trans.rotation);
+				//j.matrix.getTranslation(trans.translation);
+				//j.matrix.getScale(trans.scale);
+				//j.matrix.getRotation(trans.rotation);
 				ent.traverse(Attach.updateWorldTransform);
 				ent.transformComponent._dirty = true;
 			}
