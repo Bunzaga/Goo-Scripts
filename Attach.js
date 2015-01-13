@@ -28,7 +28,7 @@
 		this.parent = pEnt || undefined;
 		this.jointID = jointID || undefined;
 		this.jointTrans = undefined;
-		this.copyTranslation = pos || true;
+		this.copyTranslation = trans || true;
 		this.copyRotation = rot || true;
 		this.copyScale = rot || true;
 		if(undefined === this.parent){return;}
