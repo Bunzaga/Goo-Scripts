@@ -16,6 +16,25 @@
   	};
 	GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
 	GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
+	
+	GooPX.System.prototype.inserted = function(ent){
+	    	console.log('GooPX.System.inserted()');
+	    	console.log(ent);
+	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
+		// do something with RigidbodyComponent or entity here
+		if(undefined === ent.colliderComponent){
+			console.log('The entity does not have a ColliderComponent(adding one),');
+			ent.setComponent(new GooPX.ColliderComponent(GooPX.generateCollider(ent)));
+		}
+		else{
+			console.log('The entity already has a ColliderComponent,');
+			if(undefined === ent.colliderComponent.collider){
+				console.log('No collider in the ColliderComponent, creating one.');
+				ent.colliderComponent.collider = GooPX.generateCollider(ent);
+			}
+		}
+		console.log('-----------');
+	};
   
 	GooPX.CannonSystem.prototype.setBroadphaseAlgorithm = function(algorithm){
 		var world = this.world;
@@ -38,6 +57,56 @@
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
 	
+	GooPX.generateCollider = function(ent){
+		console.log('GooPX.generateCollider()');
+		console.log(ent);
+		
+		var shape = undefined;
+		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
+			/*scl.copy(ent.transformComponent.worldTransform.scale);
+			var md = ent.meshDataComponent.meshData;
+			if(md instanceof goo.Sphere){
+				console.log('Goo Shape is a Sphere');
+				shape = GooPX.SphereCollider.create(md.radius * scl.x);
+			}
+			else if(md instanceof goo.Box){
+				console.log('Goo Shape is a Box');
+				console.log(md);
+				shape = GooPX.BoxCollider.create(md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z);
+			}
+			else if(md instanceof goo.Quad){
+				console.log('Goo Shape is a Quad');
+				shape = 'new GooPX.QuadCollider()';
+			}
+			else if(md instanceof goo.Cylinder){
+				console.log('Goo Shape is a Cylinder');
+				shape = GooPX.CylinderCollider.create(scl.x * md.radius, scl.z * md.height * 0.5);
+			}
+			else if(md instanceof goo.Cone){
+				console.log('Goo Shape is a Cone');
+				console.log(md);
+				shape = GooPX.ConeCollider.create(scl.x * md.radius, scl.z * md.height);
+			}
+			else if(md instanceof goo.Disk){
+				console.log('Goo Shape is a Disk');
+				shape = 'new GooPX.DiskCollider()';
+			}
+			// add one for capsule???
+			else{
+				console.log('Goo Shape is a StaticMesh');
+				shape = 'new GooPX.StaticMeshCollider()';	
+			}*/
+			console.log('MeshData:');
+			console.log(ent.meshDataComponent.meshData);
+		}
+		else{
+			console.log('This is a parent entity or no MeshData');
+			//shape = 'new GooPX.CompoundCollider()';
+		}
+		console.log('-----------');
+		return shape;
+	};
+
 	GooPX.ColliderComponent = function(){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
