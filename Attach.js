@@ -69,50 +69,41 @@
 			var p = ac.parent.animationComponent._skeletonPose;
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
+			
 			var m = j.matrix;
-
-			if(true === ac.copyRotation){
-	            		m.getRotation(trans.rotation);
-	            		m.getScale(trans.scale);
-	            		
-				trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
-				trans.scale.y = (ac._oldScale.y / trans.scale.y) + ac.offsetScale.y;
-				trans.scale.z = (ac._oldScale.z / trans.scale.z) + ac.offsetScale.z;
-			}
-			else{
-				trans.scale.x = ac._oldScale.x;
-				trans.scale.y = ac._oldScale.y;
-				trans.scale.z = ac._oldScale.z;
-				
-			}
+			
+			m.getScale(trans.scale);
+			trans.scale.x = (ac._oldScale.x / trans.scale.x);
+			trans.scale.y = (ac._oldScale.y / trans.scale.y);
+			trans.scale.z = (ac._oldScale.z / trans.scale.z);
 			
 			if(true === ac.copyScale){
 				trans.scale.x *= ac.parent.transformComponent.worldTransform.scale.x;
 				trans.scale.y *= ac.parent.transformComponent.worldTransform.scale.y;
 				trans.scale.z *= ac.parent.transformComponent.worldTransform.scale.z;
 			}
-			
-			if(true === ac.copyTranslation){
-	            		m.getTranslation(trans.translation);
-	            		vec.copy(ac.parent.transformComponent.worldTransform.translation);
-        	    		trans.translation.addVector(vec.mul(trans.scale));
+			else{
+				//trans.scale.x = ac._oldScale.x;
+				//trans.scale.y = ac._oldScale.y;
+				//trans.scale.z = ac._oldScale.z;	
 			}
 			
-			trans.translation.addVector(ac.offsetTranslation);
-			
-			trans.rotation.rotateX(ac.offsetRotation.x);
-	            	trans.rotation.rotateY(ac.offsetRotation.y);
-	            	trans.rotation.rotateZ(ac.offsetRotation.z);
-	            	
+			if(true === ac.copyRotation){
+	            		m.getRotation(trans.rotation);
+	            		trans.rotation.rotateX(ac.offsetRotation.x);
+	            		trans.rotation.rotateY(ac.offsetRotation.y);
+	            		trans.rotation.rotateZ(ac.offsetRotation.z);
+			}
+
+			if(true === ac.copyTranslation){
+	            		m.getTranslation(trans.translation);
+        	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
+        	    		trans.translation.addVector(ac.offsetTranslation);
+			}
+
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
 			ent.traverse(Attach.updateWorldTransform);
-			
-			//ent.transformComponent.updateTransform();
-			//ent.transformComponent.updateWorldTransform();
-			//ent.transformComponent.setUpdated();
-			//ent.transformComponent._dirty = true;
-
 		}
 	};
 	
