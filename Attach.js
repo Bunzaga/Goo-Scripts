@@ -25,7 +25,7 @@
 		console.log('Attach.Component.attach()');
 		this.parent = pEnt || undefined;
 		this.jointID = jointID || undefined;
-		this.jointTrans = undefined;
+		this.jointIndex = -1;
 		this.copyTranslation = trans || true;
 		this.copyRotation = rot || true;
 		this.copyScale = rot || true;
@@ -36,7 +36,7 @@
 		var joints = pose._skeleton._joints;
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
 			if(joints[i]._name === this.jointID){
-				this.jointTrans = pose._localTransforms[i];
+				this.jointIndex = i;
 			}
 		}
 		if(undefined === this.jointTrans){console.log('this.jointTrans undefined'); return;}
@@ -61,8 +61,10 @@
 			var ent = ents[i];
 			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
-			var j = ac.jointTrans;
-			if(undefined !== j){
+			if (undefined === ac.parent.animationComponent || undefined === ac.parent.animationComponent._skeletonPose) { return; }
+			var p = ac.parent.animationComponent._skeletonPose;
+			var j = p._globalTransforms[ac.jointIndex];
+			if (!j) { return; }
 				trans.matrix.copy(j.matrix);
 				j.matrix.getTranslation(trans.translation);
 				j.matrix.getScale(trans.scale);
