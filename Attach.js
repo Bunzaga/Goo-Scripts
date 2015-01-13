@@ -69,27 +69,21 @@
             		m.getTranslation(trans.translation);
             		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
             		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
-            		//m.getRotation(trans.rotation);
-            		//trans.rotation.rotateZ(Math.PI*0.5);
-            		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
-			trans.rotation.set(
-				//m.e00, m.e10, m.e20,
-				//m.e01, m.e11, m.e21,
-				//m.e02, m.e12, m.e22);
-				m.e00, m.e20, m.e10,
-				m.e01, m.e21, m.e11,
-				m.e02, m.e22, m.e12);
-			//ent.transformComponent.updateTransform();
-			//ent.transformComponent.updateWorldTransform();
-			//ent.traverse(Attach.updateWorldTransform);
+            		m.getRotation(trans.rotation);
+            		trans.rotation.rotateZ(Math.PI*0.5);
+
 			m.getScale(trans.scale);
-			trans.scale.x = 1/trans.scale.x;
-			trans.scale.y = 1/trans.scale.y;
-			trans.scale.z = 1/trans.scale.z;
+			trans.scale.x = (1 / trans.scale.x) + ac.offsetScale.x;
+			trans.scale.y = (1 / trans.scale.y) + ac.offsetScale.y;
+			trans.scale.z = (1 / trans.scale.z) + ac.offsetScale.z;
 			
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
-			ent.transformComponent.setUpdated();
+			ent.traverse(Attach.updateWorldTransform);
+			
+			//ent.transformComponent.updateTransform();
+			//ent.transformComponent.updateWorldTransform();
+			//ent.transformComponent.setUpdated();
 			//ent.transformComponent._dirty = true;
 
 		}
