@@ -26,9 +26,9 @@
 		this.parent = pEnt || undefined;
 		this.jointID = jointID || undefined;
 		this.jointIndex = -1;
-		this.copyTranslation = trans || true;
-		this.copyRotation = rot || true;
-		this.copyScale = rot || true;
+		this.copyTranslation = (trans === undefined) ? true : trans;
+		this.copyRotation = (rot === undefined) ? true : rot;
+		this.copyScale = (scl === undefined) ? true : scl;
 		this.offsetTranslation = new goo.Vector3();
 		this.offsetRotation = new goo.Vector3();
 		this.offsetScale = new goo.Vector3(1, 1, 1);
