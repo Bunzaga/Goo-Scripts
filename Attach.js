@@ -39,7 +39,7 @@
 				this.jointIndex = i;
 			}
 		}
-		if(undefined === this.jointTrans){console.log('this.jointTrans undefined'); return;}
+		if(-1 === this.jointIndex){console.log('this.jointTrans undefined'); return;}
 	};
 	Attach.Component.prototype.detach = function(){
 		this.jointID = undefined;
@@ -66,15 +66,17 @@
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
 			var m = j.matrix;
-            		m.getTranslation(trans.translation);           
-			trans.rotation.set(
-				m.e00, m.e10, m.e20,
-				m.e01, m.e11, m.e21,
-				m.e02, m.e12, m.e22
-			);
-			ent.transformComponent.updateTransform();
-			ent.transformComponent.updateWorldTransform();
-			//ent.traverse(Attach.updateWorldTransform);
+            		m.getTranslation(trans.translation);
+            		console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
+            		m.getRotation(trans.rotation);
+			//trans.rotation.set(
+			//	m.e00, m.e10, m.e20,
+			//	m.e01, m.e11, m.e21,
+			//	m.e02, m.e12, m.e22
+			//);
+			//ent.transformComponent.updateTransform();
+			//ent.transformComponent.updateWorldTransform();
+			ent.traverse(Attach.updateWorldTransform);
 			//ent.transformComponent._dirty = true;
 
 		}
