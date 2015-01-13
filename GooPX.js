@@ -13,6 +13,7 @@
 		world.gravity.y = this.gravity.y;
 		world.gravity.z = this.gravity.z;
 		this.setBroadphaseAlgorithm(this.broadphase);
+		this._lastTime = performance.now() * 0.001;
   	};
 	GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
 	GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
@@ -35,6 +36,42 @@
 		}
 		console.log('-----------');
 	};
+	var tmpVec = new goo.Vector3();
+	var tmpQuat = new goo.Quaternion();
+	GooPX.CannonSystem.prototype.process = function(ents, tpf){
+		var world = this.world;
+		
+		// Step the world forward in time
+		var maxSubSteps = this.maxSubSteps;
+		if (maxSubSteps > 0){
+			var fixedTimeStep = 1 / this.stepFrequency;
+			//var now = performance.now() * 0.001;
+			//var dt = now - this._lastTime;
+			//this._lastTime = now;
+			world.step(fixedTimeStep, tpf, maxSubSteps);
+		} else {
+			world.step(tpf);
+			//world.step(fixedTimeStep);
+		}
+		
+		// Update positions of entities from the physics data
+		for (var i = ents.length; i--;) {
+			var ent = ents[i];
+			var cannonComponent = ent.cannonComponent;
+			cannonComponent.body.computeAABB(); // Quick fix
+			var cannonQuat = cannonComponent.body.quaternion;
+			var position = cannonComponent.body.position;
+
+			// Add center of mass offset
+			cannonQuat.vmult(cannonComponent.centerOfMassOffset, tmpVec);
+			position.vadd(tmpVec, tmpVec);
+			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
+
+			tmpQuat.set(cannonQuat.x, cannonQuat.y, cannonQuat.z, cannonQuat.w);
+			ent.transformComponent.transform.rotation.copyQuaternion(tmpQuat);
+			ent.transformComponent.setUpdated();
+		}
+	}
   
 	GooPX.CannonSystem.prototype.setBroadphaseAlgorithm = function(algorithm){
 		var world = this.world;
