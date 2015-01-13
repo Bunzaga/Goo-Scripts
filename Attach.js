@@ -82,9 +82,9 @@
 			}
 			
 			m.getScale(trans.scale);
-			trans.scale.x = (ac._oldScale / trans.scale.x) + ac.offsetScale.x;
-			trans.scale.y = (ac._oldScale / trans.scale.y) + ac.offsetScale.y;
-			trans.scale.z = (ac._oldScale / trans.scale.z) + ac.offsetScale.z;
+			trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
+			trans.scale.y = (ac._oldScale.y / trans.scale.y) + ac.offsetScale.y;
+			trans.scale.z = (ac._oldScale.z / trans.scale.z) + ac.offsetScale.z;
 			
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
