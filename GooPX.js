@@ -17,7 +17,7 @@
 	GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
 	GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
 	
-	GooPX.System.prototype.inserted = function(ent){
+	GooPX.CannonSystem.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
