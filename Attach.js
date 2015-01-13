@@ -73,9 +73,9 @@
             		trans.rotation.rotateZ(Math.PI*0.5);
 
 			m.getScale(trans.scale);
-			trans.scale.x = (1 / trans.scale.x) + ac.offsetScale.x;
-			trans.scale.y = (1 / trans.scale.y) + ac.offsetScale.y;
-			trans.scale.z = (1 / trans.scale.z) + ac.offsetScale.z;
+			trans.scale.x = (trans._oldScale / trans.scale.x) + ac.offsetScale.x;
+			trans.scale.y = (trans._oldScale / trans.scale.y) + ac.offsetScale.y;
+			trans.scale.z = (trans._oldScale / trans.scale.z) + ac.offsetScale.z;
 			
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
@@ -90,6 +90,8 @@
 	};
 	
 	Attach.System.prototype.inserted = function(ent){
+		var trans = ent.transformComponent.worldTransform;
+		ent.attachComponent._oldScale = new goo.Vector3(trans.scale);
 		console.log('Attach.System.prorotype.inserted()');
 		console.log(ent.name);
 	}
