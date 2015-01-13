@@ -43,7 +43,7 @@
 	};
 	Attach.Component.prototype.detach = function(){
 		this.jointID = undefined;
-		this.joint = undefined;
+		this.jointIndex = -1;
 		this.offsetTranslation.setDirect(0, 0, 0);
 		this.offsetRotation.setIdentity();
 		this.offsetScale.setDirect(1, 1, 1);
@@ -66,15 +66,16 @@
 			var p = ac.parent.animationComponent._skeletonPose;
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
-			trans.matrix.copy(j.matrix);
-			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
-			j.matrix.getTranslation(trans.translation);
-			j.matrix.getScale(trans.scale);
-			j.matrix.getRotation(trans.rotation);
-			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
+			var m = j.matrix;
+            		m.getTranslation(trans.translation);           
+			trans.rotation.set(
+				m.e00, m.e10, m.e20,
+				m.e01, m.e11, m.e21,
+				m.e02, m.e12, m.e22
+			);
 			ent.traverse(Attach.updateWorldTransform);
 			ent.transformComponent._dirty = true;
-			console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
+
 		}
 	};
 	
