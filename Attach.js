@@ -77,8 +77,11 @@
 			//);
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
-			ent.traverse(Attach.updateWorldTransform);
-			ent.transformComponent._dirty = true;
+			//ent.traverse(Attach.updateWorldTransform);
+			ent.transformComponent.updateTransform();
+			ent.transformComponent.updateWorldTransform();
+			ent.transformComponent.setUpdated();
+			//ent.transformComponent._dirty = true;
 
 		}
 	};
