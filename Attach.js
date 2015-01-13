@@ -104,8 +104,6 @@
 			ent.transformComponent.updateWorldTransform();
 			ent.traverse(Attach.updateWorldTransform);
 			
-			if()
-			
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
 			//ent.transformComponent.setUpdated();
