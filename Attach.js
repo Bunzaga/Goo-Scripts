@@ -77,7 +77,7 @@
 			//ent.transformComponent.updateTransform();
 			//ent.transformComponent.updateWorldTransform();
 			ent.traverse(Attach.updateWorldTransform);
-			//ent.transformComponent._dirty = true;
+			ent.transformComponent._dirty = true;
 
 		}
 	};
