@@ -55,6 +55,7 @@
 	Attach.System.prototype.constructor = Attach.System;
 	Attach.System.prototype.process = function(ents, tpf){
 		for(var i = ents.length, ent = undefined; ent = ents[i--];){
+			console.log(ent.name);
 			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
 			var j = ac.jointTrans;
