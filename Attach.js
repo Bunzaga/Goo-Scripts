@@ -36,7 +36,7 @@
 		var joints = pose._skeleton._joints;
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
 			if(joints[i]._name === this.jointID){
-				this.jointTrans = pose._globalTransforms[i];
+				this.jointTrans = pose._localTransforms[i];
 			}
 		}
 		if(undefined === this.jointTrans){console.log('this.jointTrans undefined'); return;}
@@ -64,9 +64,9 @@
 			var j = ac.jointTrans;
 			if(undefined !== j){
 				trans.matrix.copy(j.matrix);
-				//j.matrix.getTranslation(trans.translation);
-				//j.matrix.getScale(trans.scale);
-				//j.matrix.getRotation(trans.rotation);
+				j.matrix.getTranslation(trans.translation);
+				j.matrix.getScale(trans.scale);
+				j.matrix.getRotation(trans.rotation);
 				ent.traverse(Attach.updateWorldTransform);
 				ent.transformComponent._dirty = true;
 			}
