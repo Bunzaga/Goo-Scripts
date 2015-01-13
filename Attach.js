@@ -35,7 +35,7 @@
 		var pose = this.parent.animationComponent._skeletonPose;
 		console.log('pose:');
 		console.log(pose);
-		var joints = pose._skeleton.joints;
+		var joints = pose._skeleton._joints;
 		console.log('joints:');
 		console.log(joints);
 		for(var i = 0, ilen = joints.length; i < ilen; i++){
