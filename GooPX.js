@@ -31,20 +31,20 @@
 		}
 	};
   
-  GooPX.RigidbodyComponent = function(){
-    goo.Component.call(this, arguments);
-    this.type = 'RigidbodyComponent';
-  };
-  GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
-  GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
-  
-  GooPX.ColliderComponent = function(){
-    goo.Component.call(this, arguments);
-    this.type = 'ColliderComponent';
-  };
-  GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
-  GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
-  
-  var global = global || window;
-  window.GooPX = GooPX;
+	GooPX.RigidbodyComponent = function(){
+		goo.Component.call(this, arguments);
+		this.type = 'RigidbodyComponent';
+	};
+	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
+	
+	GooPX.ColliderComponent = function(){
+		goo.Component.call(this, arguments);
+		this.type = 'ColliderComponent';
+	};
+	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
+	
+	var global = global || window;
+	window.GooPX = GooPX;
 }(window, document));
