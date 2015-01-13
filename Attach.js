@@ -67,8 +67,9 @@
 			if (!j) { return; }
 			var m = j.matrix;
             		m.getTranslation(trans.translation);
-            		console.log(trans.translation.x+","+trans.translation.y+","+trans.translation.z);
+            		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
             		m.getRotation(trans.rotation);
+            		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			//trans.rotation.set(
 			//	m.e00, m.e10, m.e20,
 			//	m.e01, m.e11, m.e21,
