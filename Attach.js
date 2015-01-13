@@ -72,6 +72,11 @@
 			}
 		}
 	};
+	
+	Attach.System.prototype.inserted = function(ent){
+		console.log('Attach.System.prorotype.inserted()');
+		console.log(ent.name);
+	}
   
 	var global = global || window;
 	global.Attach = Attach;
