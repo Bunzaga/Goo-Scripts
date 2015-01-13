@@ -29,6 +29,9 @@
 		this.copyTranslation = trans || true;
 		this.copyRotation = rot || true;
 		this.copyScale = rot || true;
+		this.offsetTranslation = new goo.Vector3();
+		this.offsetRotation = new goo.Vector3();
+		this.offsetScale = new goo.Vector3(1, 1, 1);
 		if(undefined === this.parent){console.log('this.parent undefined'); return;}
 		if(undefined === this.jointID){console.log('this.jointID undefined'); return;}
 		if (undefined === this.parent.animationComponent || undefined === this.parent.animationComponent._skeletonPose) {console.log('no _skeletonPose');return;}
@@ -45,7 +48,7 @@
 		this.jointID = undefined;
 		this.jointIndex = -1;
 		this.offsetTranslation.setDirect(0, 0, 0);
-		this.offsetRotation.setIdentity();
+		this.offsetRotation.setDirect(0, 0, 0);
 		this.offsetScale.setDirect(1, 1, 1);
 	};
   
@@ -66,12 +69,18 @@
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
 			var m = j.matrix;
-            		m.getTranslation(trans.translation);
-            		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
-            		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
-            		m.getRotation(trans.rotation);
-            		trans.rotation.rotateZ(Math.PI*0.5);
-
+			
+			if(ac.copyTranslation){
+	            		m.getTranslation(trans.translation);
+        	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
+			}
+			if(ac.copyRotation){
+	            		m.getRotation(trans.rotation);
+	            		trans.rotation.rotateX(ac.offsetRotation.x);
+	            		trans.rotation.rotateY(ac.offsetRotation.y);
+	            		trans.rotation.rotateZ(ac.offsetRotation.z);
+			}
+			
 			m.getScale(trans.scale);
 			trans.scale.x = (trans._oldScale / trans.scale.x) + ac.offsetScale.x;
 			trans.scale.y = (trans._oldScale / trans.scale.y) + ac.offsetScale.y;
@@ -92,8 +101,6 @@
 	Attach.System.prototype.inserted = function(ent){
 		var trans = ent.transformComponent.worldTransform;
 		ent.attachComponent._oldScale = new goo.Vector3(trans.scale);
-		console.log('Attach.System.prorotype.inserted()');
-		console.log(ent.name);
 	}
   
 	var global = global || window;
