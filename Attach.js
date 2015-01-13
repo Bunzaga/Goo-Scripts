@@ -73,6 +73,7 @@
 			if(true === ac.copyTranslation){
 	            		m.getTranslation(trans.translation);
         	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
+        	    		trans.translation.addVector(ac.offsetTranslation);
 			}
 			if(true === ac.copyRotation){
 	            		m.getRotation(trans.rotation);
