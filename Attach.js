@@ -56,6 +56,7 @@
 		goo.System.call(this, 'AttachSystem', ['AttachComponent']);
 		this.priority = 1;
 	};
+	var vec = new goo.Vector3();
 	Attach.System.prototype = Object.create(goo.System.prototype);
 	Attach.System.prototype.constructor = Attach.System;
 	Attach.System.prototype.process = function(ents, tpf){
@@ -93,9 +94,12 @@
 				}
 			}
 			
+			trans.mulVector(trans.scale);
+			
 			if(true === ac.copyTranslation){
 	            		m.getTranslation(trans.translation);
-        	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
+	            		vec.copy(ac.parent.transformComponent.worldTransform.translation);
+        	    		trans.translation.addVector(vec);
 			}
 			
 			trans.translation.addVector(ac.offsetTranslation);
