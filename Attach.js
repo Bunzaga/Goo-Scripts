@@ -17,7 +17,7 @@
 		this.offsetTranslation = new goo.Vector3(0, 0, 0);
 		this.offsetRotation = new goo.Matrix3x3();
 		this.offsetScale = new goo.Vector3(1, 1, 1);
-		this.attach(parent, jointID, trans, rot, scl);
+		this.attach(pEnt, jointID, trans, rot, scl);
 	};
 	Attach.Component.prototype = Object.create(goo.Component.prototype);
 	Attach.Component.prototype.constructor = Attach.Component;
