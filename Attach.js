@@ -65,13 +65,12 @@
 			var p = ac.parent.animationComponent._skeletonPose;
 			var j = p._globalTransforms[ac.jointIndex];
 			if (!j) { return; }
-				trans.matrix.copy(j.matrix);
-				j.matrix.getTranslation(trans.translation);
-				j.matrix.getScale(trans.scale);
-				j.matrix.getRotation(trans.rotation);
-				ent.traverse(Attach.updateWorldTransform);
-				ent.transformComponent._dirty = true;
-			}
+			trans.matrix.copy(j.matrix);
+			j.matrix.getTranslation(trans.translation);
+			j.matrix.getScale(trans.scale);
+			j.matrix.getRotation(trans.rotation);
+			ent.traverse(Attach.updateWorldTransform);
+			ent.transformComponent._dirty = true;
 		}
 	};
 	
