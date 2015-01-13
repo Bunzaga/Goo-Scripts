@@ -70,7 +70,7 @@
 			if (!j) { return; }
 			var m = j.matrix;
 			
-			if(ture === ac.copyTranslation){
+			if(true === ac.copyTranslation){
 	            		m.getTranslation(trans.translation);
         	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
 			}
