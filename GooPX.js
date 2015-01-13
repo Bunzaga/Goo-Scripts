@@ -1,6 +1,7 @@
 (function(window, document, undefined){
-  goo.CannonSystem = function(settings){
-    goo.System.call(this, 'CannonSystem', ['RigidbodyComponent', 'ColliderComponent']);
+var GooPX = {};
+  GooPX.CannonSystem = function(settings){
+    goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
     this.priority = 1;
     this.gravity = settings === undefined || settings.gravity === undefined ? new goo.Vector3() : settings.gravity;
     this.stepFrequency = settings === undefined || settings.stepFrequency === undefined ? 60 : settings.stepFrequency;
@@ -13,13 +14,23 @@
 		world.gravity.z = this.gravity.z;
 		this.setBroadphaseAlgorithm(this.broadphase);
   };
-  goo.RigidbodyComponent = function(){
+  GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
+  GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
+  
+  GooPX.RigidbodyComponent = function(){
     goo.Component.call(this, arguments);
     this.type = 'RigidbodyComponent';
   };
-  goo.ColliderComponent = function(){
+  GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
+  GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
+  
+  GooPX.ColliderComponent = function(){
     goo.Component.call(this, arguments);
     this.type = 'ColliderComponent';
   };
+  GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
+  GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
   
+  var global = global || window;
+  window.GooPX = GooPX;
 }(window, document));
