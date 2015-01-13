@@ -70,7 +70,7 @@
             		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
             		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
             		m.getRotation(trans.rotation);
-            		trans.rotation.rotateX(Math.PI*0.5);
+            		trans.rotation.rotateZ(Math.PI*0.5);
             		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			//trans.rotation.set(
 			//	m.e00, m.e10, m.e20,
