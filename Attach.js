@@ -1,16 +1,12 @@
 (function(window, document){
 	var Attach = {};
-	Attach.updateWorldTransform = function(transformComponent){
-		transformComponent.updateWorldTransform();
-		var entity = transformComponent.entity;
-		if (entity && entity.meshDataComponent && entity.meshRendererComponent){
-			entity.meshRendererComponent.updateBounds(
-			entity.meshDataComponent.modelBound,
-			transformComponent.worldTransform);
-		}
-		
-		for (var i = 0; i < transformComponent.children.length; i++) {
-			Attach.updateWorldTransform(transformComponent.children[i]);
+	Attach.updateWorldTransform = function(ent){
+		ent.transformComponent.updateWorldTransform();
+		if(ent.meshDataComponent && ent.meshRendererComponent){
+			ent.meshRendererComponent.updateBounds(
+				ent.meshDataComponent.modelBound,
+				ent.transformComponent.worldTransform
+			);
 		}
 	};
 
@@ -59,15 +55,16 @@
 	Attach.System.prototype.constructor = Attach.System;
 	Attach.System.prototype.process = function(ents, tpf){
 		for(var i = ents.length, ent = undefined; ent = ents[i--];){
+			var trans = ent.transformComponent.transform;
 			var ac = ent.attachComponent;
 			var j = ac.jointTrans;
-			if(undefined !== jointTrans){
-	/*ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
-	ctx.jointTransform.matrix.getTranslation(ctx.attachee.transformComponent.transform.translation);
-	ctx.jointTransform.matrix.getScale(ctx.attachee.transformComponent.transform.scale);
-	ctx.jointTransform.matrix.getRotation(ctx.attachee.transformComponent.transform.rotation);
-	Attachment.updateWorldTransform(ctx.attachee.transformComponent);
-	ctx.attachee.transformComponent._dirty = true;*/
+			if(undefined !== j){
+				//ctx.attachee.transformComponent.transform.matrix.copy(ctx.jointTransform.matrix);
+				j.matrix.getTranslation(trans.translation);
+				j.matrix.getScale(trans.scale);
+				j.matrix.getRotation(trans.rotation);
+				ent.traverse(Attach.updateWorldTransform);
+				ent.transformComponent._dirty = true;
 			}
 		}
 	};
