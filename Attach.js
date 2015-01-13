@@ -73,9 +73,9 @@
             		//trans.rotation.rotateZ(Math.PI*0.5);
             		console.log(trans.scale.x+","+trans.scale.y+","+trans.scale.z);
 			trans.rotation.set(
-				m.data[0], m.data[1], m.data[2],
-				m.data[3], m.data[4], m.data[5],
-				m.data[6], m.data[7], m.data[8]
+				m.data[0], m.data[3], m.data[6],
+				m.data[1], m.data[4], m.data[7],
+				m.data[2], m.data[5], m.data[8]
 			);
 				/*m.e00, m.e10, m.e20,
 				m.e01, m.e11, m.e21,
