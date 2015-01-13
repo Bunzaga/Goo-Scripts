@@ -73,13 +73,9 @@
 			if(true === ac.copyTranslation){
 	            		m.getTranslation(trans.translation);
         	    		trans.translation.addVector(ac.parent.transformComponent.worldTransform.translation);
-        	    		trans.translation.addVector(ac.offsetTranslation);
 			}
 			if(true === ac.copyRotation){
 	            		m.getRotation(trans.rotation);
-	            		trans.rotation.rotateX(ac.offsetRotation.x);
-	            		trans.rotation.rotateY(ac.offsetRotation.y);
-	            		trans.rotation.rotateZ(ac.offsetRotation.z);
 	            		
 	            		m.getScale(trans.scale);
 				trans.scale.x = (ac._oldScale.x / trans.scale.x) + ac.offsetScale.x;
@@ -92,6 +88,10 @@
 				trans.scale.z = ac._oldScale.z;
 			}
 			
+			trans.translation.addVector(ac.offsetTranslation);
+			trans.rotation.rotateX(ac.offsetRotation.x);
+	            	trans.rotation.rotateY(ac.offsetRotation.y);
+	            	trans.rotation.rotateZ(ac.offsetRotation.z);
 			
 			
 			ent.transformComponent.updateTransform();
