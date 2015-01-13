@@ -11,16 +11,18 @@
 	};
 
 	Attach.Component = function(pEnt, jointID, trans, rot, scl){
+		console.log('Attach.Component.constructor()');
 		goo.Component.apply(this, arguments);
 		this.type = 'AttachComponent';
 		this.offsetTranslation = new goo.Vector3(0, 0, 0);
 		this.offsetRotation = new goo.Matrix3x3();
-		this.offsetScale = new goo.Vector3(0, 0, 0);
+		this.offsetScale = new goo.Vector3(1, 1, 1);
 		this.attach(parent, jointID, trans, rot, scl);
 	};
 	Attach.Component.prototype = Object.create(goo.Component.prototype);
 	Attach.Component.prototype.constructor = Attach.Component;
 	Attach.Component.prototype.attach = function(pEnt, jointID, trans, rot, scl){
+		console.log('Attach.Component.attach()');
 		this.parent = pEnt || undefined;
 		this.jointID = jointID || undefined;
 		this.jointTrans = undefined;
@@ -54,6 +56,7 @@
 	Attach.System.prototype = Object.create(goo.System.prototype);
 	Attach.System.prototype.constructor = Attach.System;
 	Attach.System.prototype.process = function(ents, tpf){
+		console.log('Attach.System.process()');
 		for(var i = ents.length, ent = undefined; ent = ents[i--];){
 			console.log(ent.name);
 			var trans = ent.transformComponent.transform;
