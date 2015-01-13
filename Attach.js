@@ -73,8 +73,10 @@
 				m.e01, m.e11, m.e21,
 				m.e02, m.e12, m.e22
 			);
-			ent.traverse(Attach.updateWorldTransform);
-			ent.transformComponent._dirty = true;
+			ent.transformComponent.updateTransform();
+			ent.transformComponent.updateWorldTransform();
+			//ent.traverse(Attach.updateWorldTransform);
+			//ent.transformComponent._dirty = true;
 
 		}
 	};
