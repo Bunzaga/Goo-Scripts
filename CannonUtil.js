@@ -22,4 +22,4 @@
     this.type = 'ColliderComponent';
   };
   
-}(window, document););
+}(window, document));
