@@ -1,4 +1,10 @@
 (function(window, document, undefined){
+	
+	var invBodyTransform = new goo.Transform();
+	var gooTrans = new goo.Transform();
+	var gooTrans2 = new goo.Transform();
+	var offset = new CANNON.Vec3();
+	var orientation = new CANNON.Quaternion();
 	var tmpVec = new goo.Vector3();
 	var tmpQuat = new goo.Quaternion();
 	var GooPX = {};
@@ -47,6 +53,13 @@
 		}
 		
 		var rbc = ent.rigidbodyComponent;
+		GooPX.CannonSystem.addShapesToBody(ent);
+		console.log(body.shapes.length);
+		if(!body.shapes.length){
+			console.warn('Could not add cannon shapes to body!');
+			entity.clearComponent('CannonRigidbodyComponent');
+			return;
+		}
 		var trans = ent.transformComponent.transform;
 		rbc.setTranslation(trans.translation);
 		rbc.setRotation(trans.rotation);
@@ -99,25 +112,20 @@
 	GooPX.CannonSystem.generateCollider = function(ent){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
-		var body = ent.rigidbodyComponent.body;
-		var collider = ent.colliderComponent;
-		if(undefined === collider){
-			
-		}
-		else{
-			body.addShape(collider.shape);
-		}
+		
+		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
-			/*scl.copy(ent.transformComponent.worldTransform.scale);
+			tmpVec.copy(ent.transformComponent.worldTransform.scale);
 			var md = ent.meshDataComponent.meshData;
+			
 			if(md instanceof goo.Sphere){
 				console.log('Goo Shape is a Sphere');
 				shape = GooPX.SphereCollider.create(md.radius * scl.x);
 			}
 			else if(md instanceof goo.Box){
 				console.log('Goo Shape is a Box');
-				console.log(md);
-				shape = GooPX.BoxCollider.create(md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z);
+				offset.set(md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z);
+				shape = new CANNON.Box(offset);
 			}
 			else if(md instanceof goo.Quad){
 				console.log('Goo Shape is a Quad');
@@ -140,19 +148,70 @@
 			else{
 				console.log('Goo Shape is a StaticMesh');
 				shape = 'new GooPX.StaticMeshCollider()';	
-			}*/
+			}
 			console.log('MeshData:');
 			console.log(ent.meshDataComponent.meshData);
 		}
 		else{
 			console.log('This is a parent entity or no MeshData');
-			//shape = 'new GooPX.CompoundCollider()';
+			shape = 'new GooPX.CompoundCollider()';
 		}
-		
 		console.log('-----------');
 		return shape;
 	};
-  
+	
+	GooPX.CannonSystem.addShapesToBody = function(ent){
+		console.log('GooPX.CannonSystem.addShapesToBody()');
+		console.log(ent);
+		var rbc = ent.rigidbodyComponent;
+		var body = rbc.body;
+		var collider = ent.colliderComponent;
+		if(undefined === collider) {
+			// Needed for getting the Rigidbody-local transform of each collider
+			var bodyTransform = ent.transformComponent.worldTransform;
+			invBodyTransform.copy(bodyTransform);
+			invBodyTransform.invert(invBodyTransform);
+
+			var cmOffset = rbc.centerOfMassOffset;
+
+			ent.traverse(function (childEntity) {
+				var collider = childEntity.colliderComponent;
+				if (undefined !== collider) {
+
+					// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
+					gooTrans.copy(childEntity.transformComponent.worldTransform);
+					//var gooTrans2 = new Transform();
+					goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
+					gooTrans2.update();
+
+					var trans = gooTrans2.translation;
+					var rot = gooTrans2.rotation;
+					offset.set(trans.x, trans.y, trans.z);
+					var q = tmpQuat;
+					q.fromRotationMatrix(rot);
+					orientation.set(q.x, q.y, q.z, q.w);
+
+					// Subtract center of mass offset
+					offset.vadd(cmOffset, offset);
+
+					if(true === collider.isTrigger) {
+						collider.shape.collisionResponse = false;
+					}
+					
+					// Add the shape
+					body.addShape(collider.shape, offset, orientation);
+				}
+			});
+
+		} else {
+
+			// Entity has a collider on the root
+			// Create a simple shape
+			body.addShape(collider.shape);
+		}
+		console.log('--------');
+	}
+
 	GooPX.CannonSystem.prototype.setBroadphaseAlgorithm = function(algorithm){
 		var world = this.world;
 		switch(algorithm){
@@ -199,9 +258,11 @@
 		this.body.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z);
 	};
 	
-	GooPX.ColliderComponent = function(){
+	GooPX.ColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
+		this.shape = settings === undefined ? undefined : settings.shape;
+		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
 	};
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
