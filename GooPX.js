@@ -102,7 +102,7 @@
 				ent.clearComponent('ColliderComponent');
 				console.log('removed cc');
 			}
-			parent = parent.transformComponent.parent;
+			parent = ent.transformComponent.parent;
 			console.log(____);
 		}
 		console.log('------');
