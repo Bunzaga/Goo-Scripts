@@ -85,6 +85,7 @@
 			ent.clearComponent('ColliderComponent');
 		}
 		if(ent.rigidbodyComponent){
+			this.world.remove(ent.rigidbodyComponent.body);
 			ent.clearComponent('RigidbodyComponent');
 		}
 		console.log('------');
