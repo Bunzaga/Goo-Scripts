@@ -151,7 +151,7 @@
 	GooPX.CannonSystem.generateCollider = function(ent, isTrigger){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
-		isTrigger = isTrigger === undefined ? false || isTrigger;
+		isTrigger = isTrigger === undefined ? false : isTrigger;
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
 			var scl = tmpVec;
