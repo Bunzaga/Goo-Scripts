@@ -68,26 +68,22 @@
 		//}
 		console.log('-----------');
 	};
-	
+
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
-		var parent = ent.transformComponent;
-		while(parent !== null){
-			console.log('Checking entity:');
-			ent = parent.entity;
-			console.log(ent);
-			if(undefined !== ent.rigidbodyComponent){
-				this.world.remove(ent.rigidbodyComponent.body);
-				delete ent.rigidbodyComponent.shape;
-				ent.clearComponent('RigidbodyComponent');
-				console.log('removed rbc');
-			}
-			if(undefined !== ent.colliderComponent){
-				delete ent.colliderComponent.shape;
-				ent.clearComponent('ColliderComponent');
-				console.log('removed cc');
-			}
-			parent = ent.transformComponent.parent;
+		if(undefined !== ent.rigidbodyComponent){
+			this.world.remove(ent.rigidbodyComponent.body);
+			delete ent.rigidbodyComponent.shape;
+			ent.clearComponent('RigidbodyComponent');
+			console.log('removed rbc');
+		}
+		if(undefined !== ent.colliderComponent){
+			delete ent.colliderComponent.shape;
+			ent.clearComponent('ColliderComponent');
+			console.log('removed cc');
+		}
+		for(var i = ent.transformComponent.children.length; i--;){
+			GooPX.CannonSystem.prototype.deleted(ent.transformComponent.children[i]);
 			console.log('____');
 		}
 		console.log('------');
