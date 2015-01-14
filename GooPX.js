@@ -63,11 +63,13 @@
 			return;
 		}
 		var trans = ent.transformComponent.transform;
-		var shape = ent.colliderComponent.shape;
-		if(shape._offset){
-			tmpVec.copy(shape._offset);
-			trans.rotation.applyPost(tmpVec);
-			trans.translation.subv(tmpVec);
+		if(ent.colliderComponent){
+			var shape = ent.colliderComponent.shape;
+			if(shape._offset){
+				tmpVec.copy(shape._offset);
+				trans.rotation.applyPost(tmpVec);
+				trans.translation.subv(tmpVec);
+			}
 		}
 		rbc.setTranslation(trans.translation);
 		rbc.setRotation(trans.rotation);
