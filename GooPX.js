@@ -161,8 +161,8 @@
 				console.log('Goo Shape is a Cone');
 				console.log(md);
 				shape = new CANNON.Cylinder(
-					scl.x * md.radius,
 					0,
+					scl.x * md.radius,
 					md.height,
 					10
 				);
