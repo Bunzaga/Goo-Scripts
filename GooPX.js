@@ -196,7 +196,8 @@
 				collider.shape.collisionResponse = false;
 			}
 			if(collider._offset){
-				rbc.centerOfMassOffset.addVector(collider._offset);
+				tmpVec.copy(collider._offset).mul(0.5);
+				rbc.centerOfMassOffset.addVector(tmpVec);
 			}
 			body.addShape(collider.shape, collider._offset);
 		}
