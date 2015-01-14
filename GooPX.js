@@ -42,7 +42,7 @@
 			console.log('The entity already has a ColliderComponent,');
 			if(undefined === ent.colliderComponent.shape){
 				console.log('No collider in the ColliderComponent, creating one.');
-				ent.colliderComponent.shape = GooPX.CannonSystem.generateCollider(ent);
+				ent.colliderComponent.shape = GooPX.CannonSystem.generateCollider(ent, ent.colliderComponent.isTrigger);
 			}
 		}
 		else{
@@ -148,10 +148,10 @@
 		}
 	};
 	
-	GooPX.CannonSystem.generateCollider = function(ent, rootEnt){
+	GooPX.CannonSystem.generateCollider = function(ent, isTrigger){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
-		
+		isTrigger = isTrigger === undefined ? false || isTrigger;
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
 			var scl = tmpVec;
@@ -208,10 +208,9 @@
 				var child = ent.transformComponent.children[i].entity;
 				console.log('Creating collider for sub child:');
 				console.log(child);
-				rootEnt = rootEnt || ent;
-				var childShape = GooPX.CannonSystem.generateCollider(child, rootEnt);
+				var childShape = GooPX.CannonSystem.generateCollider(child, isTrigger);
 				if(childShape !== undefined){
-					child.setComponent(new GooPX.ColliderComponent({shape:childShape, isTrigger:rootEnt.isTrigger:}));
+					child.setComponent(new GooPX.ColliderComponent({shape:childShape, isTrigger:isTrigger}));
 				}
 				console.log('______');
 			}
