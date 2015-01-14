@@ -6,6 +6,7 @@
 	var tmpVec = new goo.Vector3();
 	var tmpQuat = new goo.Quaternion();
 	var pVec;
+	var pQuat;
 	var offset;
 	var orientation;
 	
@@ -26,6 +27,7 @@
 		this.setBroadphaseAlgorithm(this.broadphase);
 		
 		pVec = new CANNON.Vec3();
+		pQuat = new CANNON.Quaternion();
 		offset = new CANNON.Vec3();
 		orientation = new CANNON.Quaternion();
   	};
@@ -208,54 +210,50 @@
 		var rbc = ent.rigidbodyComponent;
 		var body = rbc.body;
 		var collider = ent.colliderComponent;
-		if(undefined === collider) {
-			// Needed for getting the Rigidbody-local transform of each collider
+		if(undefined !== collider){
+			if(true === collider.isTrigger) {
+				collider.shape.collisionResponse = false;
+			}
+			body.addShape(collider.shape);
+		}
+		if(ent.transformComponent.children.length > 0){
 			var bodyTransform = ent.transformComponent.worldTransform;
-			
 			invBodyTransform.copy(bodyTransform);
 			invBodyTransform.invert(invBodyTransform);
-
 			var cmOffset = rbc.centerOfMassOffset;
 
 			ent.traverse(function (childEntity) {
 				if(ent !== childEntity){
-				var collider = childEntity.colliderComponent;
-				if (undefined !== collider) {
-					
-					// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
-					gooTrans.copy(childEntity.transformComponent.worldTransform);
-					if(collider.shape && collider.shape._offset){
-						gooTrans.translation.addVector(collider.shape._offset);
+					var collider = childEntity.colliderComponent;
+					if (undefined !== collider) {
+						// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
+						gooTrans.copy(childEntity.transformComponent.worldTransform);
+						goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
+						gooTrans2.update();
+						gooTrans2.updateNormalMatrix();
+	
+						var trans = gooTrans2.translation;
+						var rot = gooTrans2.rotation;
+						pVec.set(trans.x, trans.y, trans.z);
+						var q = tmpQuat;
+						q.fromRotationMatrix(rot);
+						pQuat.set(q.x, q.y, q.z, q.w);
+	
+						// Subtract center of mass offset
+						pVec.vadd(cmOffset, pVec);
+	
+						if(true === collider.isTrigger) {
+							collider.shape.collisionResponse = false;
+						}
+						
+						// Add the shape
+						body.addShape(collider.shape, pVec, pQuat);
 					}
-					//var gooTrans2 = new Transform();
-					goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
-					gooTrans2.update();
-
-					var trans = gooTrans2.translation;
-					var rot = gooTrans2.rotation;
-					offset.set(trans.x, trans.y, trans.z);
-					var q = tmpQuat;
-					q.fromRotationMatrix(rot);
-					orientation.set(q.x, q.y, q.z, q.w);
-
-					// Subtract center of mass offset
-					offset.vadd(cmOffset, offset);
-
-					if(true === collider.isTrigger) {
-						collider.shape.collisionResponse = false;
-					}
 					
-					// Add the shape
-					body.addShape(collider.shape, offset, orientation);
-				}}
+				}
 			});
-
-		} else {
-
-			// Entity has a collider on the root
-			// Create a simple shape
-			body.addShape(collider.shape);
 		}
+
 		console.log('--------');
 	}
 
