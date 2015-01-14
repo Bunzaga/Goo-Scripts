@@ -103,7 +103,7 @@
 				console.log('removed cc');
 			}
 			parent = ent.transformComponent.parent;
-			console.log(____);
+			console.log('____');
 		}
 		console.log('------');
 	};
