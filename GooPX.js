@@ -21,19 +21,33 @@
 	GooPX.CannonSystem.prototype.inserted = function(ent){
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
+	    	var world = this.world;
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
 		// do something with RigidbodyComponent or entity here
 		if(undefined === ent.colliderComponent){
 			console.log('The entity does not have a ColliderComponent(adding one),');
-			ent.setComponent(new GooPX.ColliderComponent(GooPX.generateCollider(ent)));
+			ent.setComponent(new GooPX.ColliderComponent(GooPX.CannonSystem.generateCollider(ent)));
 		}
 		else{
 			console.log('The entity already has a ColliderComponent,');
 			if(undefined === ent.colliderComponent.collider){
 				console.log('No collider in the ColliderComponent, creating one.');
-				ent.colliderComponent.collider = GooPX.generateCollider(ent);
+				ent.colliderComponent.collider = GooPX.CannonSystem.generateCollider(ent);
 			}
 		}
+		
+		var rbc = ent.rigidbodyComponent;
+		var trans = ent.transformComponent.transform;
+		rbc.setTranslation(trans.translation);
+		rbc.setVelocity(rbc.velocity);
+		rbc.setRotation(trans.rotation);
+		
+		world.add(body);
+		
+		// var c = entity.cannonDistanceJointComponent;
+		// if (c) {
+		//	world.addConstraint(c.createConstraint(entity));
+		//}
 		console.log('-----------');
 	};
 	var tmpVec = new goo.Vector3();
@@ -71,30 +85,9 @@
 			ent.transformComponent.transform.rotation.copyQuaternion(tmpQuat);
 			ent.transformComponent.setUpdated();
 		}
-	}
-  
-	GooPX.CannonSystem.prototype.setBroadphaseAlgorithm = function(algorithm){
-		var world = this.world;
-		switch(algorithm){
-		case 'naive':
-			world.broadphase = new CANNON.NaiveBroadphase();
-			break;
-		case 'sap':
-			world.broadphase = new CANNON.SAPBroadphase(world);
-			break;
-		default:
-			throw new Error('Broadphase not supported: ' + algorithm);
-		}
 	};
-  
-	GooPX.RigidbodyComponent = function(){
-		goo.Component.call(this, arguments);
-		this.type = 'RigidbodyComponent';
-	};
-	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
-	GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
 	
-	GooPX.generateCollider = function(ent){
+	GooPX.CannonSystem.generateCollider = function(ent){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
 		
@@ -140,10 +133,62 @@
 			console.log('This is a parent entity or no MeshData');
 			//shape = 'new GooPX.CompoundCollider()';
 		}
+		
+		if (!body.shapes.length) {
+			ent.clearComponent('CannonRigidbodyComponent');
+			continue;
+		}
+		
 		console.log('-----------');
 		return shape;
 	};
-
+  
+	GooPX.CannonSystem.prototype.setBroadphaseAlgorithm = function(algorithm){
+		var world = this.world;
+		switch(algorithm){
+		case 'naive':
+			world.broadphase = new CANNON.NaiveBroadphase();
+			break;
+		case 'sap':
+			world.broadphase = new CANNON.SAPBroadphase(world);
+			break;
+		default:
+			throw new Error('Broadphase not supported: ' + algorithm);
+		}
+	};
+  
+	GooPX.RigidbodyComponent = function(settings){
+		goo.Component.call(this, arguments);
+		this.type = 'RigidbodyComponent';
+		this.mass = settings === undefined || settings.mass === undefined ? 1 : settings.mass;
+		this._initialVelocity = new goo.Vector3().copy(settings === undefined || settings.velocity === undefined ? goo.Vector3.ZERO : settings.velocity);
+		this.centerOfMassOffset = new goo.Vector3();
+		
+		this.body = new CANNON.Body({
+			mass: this.mass
+		});
+	};
+	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
+	
+	GooPX.RigidbodyComponent.prototype.setForce = function(force){
+		this.body.force.set(force.x, force.y, force.z);
+	};
+	GooPX.RigidbodyComponent.prototype.setVelocity = function(velocity){
+		this.body.velocity.set(velocity.x, velocity.y, velocity.z);
+	};
+	GooPX.RigidbodyComponent.prototype.setTranslation = function(pos){
+		this.body.position.set(pos.x, pos.y, pos.z);
+	};
+	GooPX.RigidbodyComponent.prototype.setRotation = function(rot){
+		var q = tmpQuat;
+		q.fromRotationMatrix(rot);
+		this.body.quaternion.set(q.x, q.y, q.z, q.w);
+	};
+	GooPX.RigidbodyComponent.prototype.setAngularVelocity = function(angularVelocity){
+		this.body.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z);
+	};
+	
 	GooPX.ColliderComponent = function(){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
