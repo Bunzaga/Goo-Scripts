@@ -65,6 +65,12 @@
 			return;
 		}
 		var trans = ent.transformComponent.transform;
+		var shape = ent.colliderComponent.shape;
+		if(shape._offset){
+			tmpVec.copy(shape._offset);
+			trans.rotation.applyPost(tmpVec);
+			trans.translation.subv(tmpVec);
+		}
 		rbc.setTranslation(trans.translation);
 		rbc.setRotation(trans.rotation);
 		rbc.setVelocity(rbc.velocity);
@@ -108,15 +114,22 @@
 			var rbc = ent.rigidbodyComponent;
 			rbc.body.computeAABB(); // Quick fix
 			var cannonQuat = rbc.body.quaternion;
+			tmpQuat.set(cannonQuat.x, cannonQuat.y, cannonQuat.z, cannonQuat.w);
+			ent.transformComponent.transform.rotation.copyQuaternion(tmpQuat);
+			
 			var position = rbc.body.position;
-
 			// Add center of mass offset
 			cannonQuat.vmult(rbc.centerOfMassOffset, tmpVec);
 			position.vadd(tmpVec, tmpVec);
+			
 			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
+			var shape = ent.colliderComponent.shape;
+			if(shape._offset){
+				tmpVec.copy(shape._offset);
+				ent.transformComponent.transform.rotation.applyPost(tmpVec);
+				ent.transformComponent.transform.translation.addVector(tmpVec);
+			}
 
-			tmpQuat.set(cannonQuat.x, cannonQuat.y, cannonQuat.z, cannonQuat.w);
-			ent.transformComponent.transform.rotation.copyQuaternion(tmpQuat);
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
 			ent.transformComponent._dirty = true;
@@ -164,6 +177,7 @@
 					md.height * scl.z,
 					10
 				);
+				shape._offset = new goo.Vector3(0, 0, -md.height * scl.z * 0.5);
 			}
 			else if(md instanceof goo.Disk){
 				console.log('Goo Shape is a Disk');
@@ -194,6 +208,9 @@
 		if(undefined === collider) {
 			// Needed for getting the Rigidbody-local transform of each collider
 			var bodyTransform = ent.transformComponent.worldTransform;
+			if(collider._offset){
+				bodyTransform.translation.addVector(collider._offset);
+			}
 			invBodyTransform.copy(bodyTransform);
 			invBodyTransform.invert(invBodyTransform);
 
@@ -256,8 +273,7 @@
 		this.type = 'RigidbodyComponent';
 		this.mass = settings === undefined || settings.mass === undefined ? 1 : settings.mass;
 		this.velocity = new goo.Vector3().copy(settings === undefined || settings.velocity === undefined ? goo.Vector3.ZERO : settings.velocity);
-		this.centerOfMassOffset = new goo.Vector3().copy(settings === undefined || settings.centerOfMass === undefined ? goo.Vector3.ZERO : settings.centerOfMass);
-		
+		this.centerOfMassOffset = new goo.Vector3();
 		this.body = new CANNON.Body({
 			mass: this.mass
 		});
