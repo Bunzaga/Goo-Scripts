@@ -225,7 +225,7 @@
 					
 					// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
 					gooTrans.copy(childEntity.transformComponent.worldTransform);
-					if(collider.shape._offset){
+					if(collider.shape && collider.shape._offset){
 						gooTrans.translation.addVector(collider.shape._offset);
 					}
 					//var gooTrans2 = new Transform();
