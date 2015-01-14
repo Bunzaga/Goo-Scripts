@@ -98,10 +98,10 @@
 		// Update positions of entities from the physics data
 		for (var i = ents.length; i--;) {
 			var ent = ents[i];
-			var cannonComponent = ent.cannonComponent;
-			cannonComponent.body.computeAABB(); // Quick fix
-			var cannonQuat = cannonComponent.body.quaternion;
-			var position = cannonComponent.body.position;
+			var rbc = ent.rigidbodyComponent;
+			rbc.body.computeAABB(); // Quick fix
+			var cannonQuat = rbc.body.quaternion;
+			var position = rbc.body.position;
 
 			// Add center of mass offset
 			cannonQuat.vmult(cannonComponent.centerOfMassOffset, tmpVec);
