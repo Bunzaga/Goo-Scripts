@@ -84,17 +84,27 @@
 		console.log('-----------');
 	};
 	
-	GooPX.CannonSystem.prototype.deleted = function(ent){
-		console.log('GooPX.System.deleted()');
+	GooPX.CannonSystem.removeRigidbody = function(ent){
 		if(ent.rigidbodyComponent){
 			this.world.remove(ent.rigidbodyComponent.body);
+			delete ent.rigidbodyComponent.body;
 			ent.clearComponent('RigidbodyComponent');
 		}
+	};
+	GooPX.CannonSystem.removeCollider = function(){
 		if(ent.colliderComponent){
+			delete ent.rigidbodyComponent.shape;
 			ent.clearComponent('ColliderComponent');
 		}
+	};
+	
+	GooPX.CannonSystem.prototype.deleted = function(ent){
+		console.log('GooPX.System.deleted()');
+		console.log(ent);
+		ent.traverse(GooPX.System.removeRigidbody);
+		ent.traverse(GooPX.System.removeCollider);
 		console.log('------');
-	}
+	};
 	
 	GooPX.CannonSystem.prototype.process = function(ents, tpf){
 		var world = this.world;
