@@ -100,12 +100,12 @@
 		if (maxSubSteps > 0){
 			world.step(fixedTimeStep, tpf, maxSubSteps);
 		} else {
-			this._accumulated += tpf;
+			/* this._accumulated += tpf;
 			while(this._accumulated >= fixedTimeStep){
 				world.step(fixedTimeStep);
 				this._accumulated -= fixedTimeStep;
-			}
-			//world.step(fixedTimeStep);
+			} */
+			world.step(tpf);
 		}
 		
 		// Update positions of entities from the physics data
