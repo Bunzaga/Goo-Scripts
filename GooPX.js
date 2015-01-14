@@ -222,7 +222,6 @@
 			var cmOffset = rbc.centerOfMassOffset;
 
 			ent.traverse(function (childEntity) {
-				if(childEntity !== ent){
 				var collider = childEntity.colliderComponent;
 				if (undefined !== collider) {
 					
@@ -251,7 +250,7 @@
 					
 					// Add the shape
 					body.addShape(collider.shape, offset, orientation);
-				}}
+				}
 			});
 
 		} else {
