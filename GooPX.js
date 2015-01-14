@@ -12,7 +12,7 @@
 	var GooPX = {};
 	
 	GooPX.CannonSystem = function(settings){
-		goo.System.call(this, 'CannonSystem', ['RigidbodyComponent', 'ColliderComponent']);
+		goo.System.call(this, 'CannonSystem', ['RigidbodyComponent' 'TransformComponent']);
 		this.priority = 1;
 		this.gravity = settings === undefined || settings.gravity === undefined ? new goo.Vector3(0, -9.806, 0) : settings.gravity;
 		this.stepFrequency = settings === undefined || settings.stepFrequency === undefined ? 60 : settings.stepFrequency;
@@ -52,7 +52,7 @@
 		
 		if(undefined === ent.colliderComponent.shape){
 			console.warn('No cannon shape available!');
-		//	ent.clearComponent('ColliderComponent');
+			ent.clearComponent('ColliderComponent');
 		//	return;
 		}
 		
@@ -210,7 +210,7 @@
 		var rbc = ent.rigidbodyComponent;
 		var body = rbc.body;
 		var collider = ent.colliderComponent;
-		if(undefined === collider || undefined === collider.shape) {
+		if(undefined === collider) {
 			// Needed for getting the Rigidbody-local transform of each collider
 			var bodyTransform = ent.transformComponent.worldTransform;
 			
@@ -221,7 +221,7 @@
 
 			ent.traverse(function (childEntity) {
 				var collider = childEntity.colliderComponent;
-				if (undefined !== collider && undefined !== collider.shape) {
+				if (undefined !== collider) {
 					
 					// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
 					gooTrans.copy(childEntity.transformComponent.worldTransform);
