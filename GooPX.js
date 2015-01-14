@@ -217,6 +217,7 @@
 						if(collider._offset){
 							gooTrans2.applyForwardVector(collider._offset, tmpVec);
 							trans.subVector(tmpVec);
+							cmOffset.addVector(collider._offset);
 						}
 						var rot = gooTrans2.rotation;
 						pVec.set(trans.x, trans.y, trans.z);
