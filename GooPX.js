@@ -3,10 +3,12 @@
 	var invBodyTransform = new goo.Transform();
 	var gooTrans = new goo.Transform();
 	var gooTrans2 = new goo.Transform();
-	var offset = new CANNON.Vec3();
-	var orientation = new CANNON.Quaternion();
 	var tmpVec = new goo.Vector3();
 	var tmpQuat = new goo.Quaternion();
+	
+	var offset;
+	var orientation;
+	
 	var GooPX = {};
 	
 	GooPX.CannonSystem = function(settings){
@@ -22,7 +24,10 @@
 		world.gravity.y = this.gravity.y;
 		world.gravity.z = this.gravity.z;
 		this.setBroadphaseAlgorithm(this.broadphase);
-		this._lastTime = performance.now() * 0.001;
+	//	this._lastTime = performance.now() * 0.001;
+		
+		offset = new CANNON.Vec3();
+		orientation = new CANNON.Quaternion();
   	};
 	GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
 	GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
