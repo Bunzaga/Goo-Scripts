@@ -168,15 +168,15 @@
 			}
 			// add one for capsule???
 			else{
-				console.log('Goo Shape is a StaticMesh');
-				shape = 'new GooPX.StaticMeshCollider()';	
+				//console.log('Goo Shape is a StaticMesh');
+				//shape = 'new GooPX.StaticMeshCollider()';	
 			}
 			console.log('MeshData:');
 			console.log(ent.meshDataComponent.meshData);
 		}
 		else{
-			console.log('This is a parent entity or no MeshData');
-			shape = 'new GooPX.CompoundCollider()';
+			//console.log('This is a parent entity or no MeshData');
+			//shape = 'new GooPX.CompoundCollider()';
 		}
 		console.log('-----------');
 		return shape;
