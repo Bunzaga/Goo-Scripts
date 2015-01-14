@@ -209,15 +209,15 @@
 					if (undefined !== collider) {
 						// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
 						gooTrans.copy(childEntity.transformComponent.worldTransform);
+						if(collider._offset){
+							gooTrans.applyForwardVector(collider._offset, tmpVec);
+							gooTrans.translation.addVector(tmpVec);
+						}
 						goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
 						gooTrans2.update();
 						gooTrans2.updateNormalMatrix();
-	
 						var trans = gooTrans2.translation;
-						if(collider._offset){
-							gooTrans2.applyForwardVector(collider._offset, tmpVec);
-							trans.subVector(tmpVec);
-						}
+						
 						var rot = gooTrans2.rotation;
 						pVec.set(trans.x, trans.y, trans.z);
 						var q = tmpQuat;
