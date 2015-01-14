@@ -120,7 +120,8 @@
 		
 		var shape = undefined;
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
-			tmpVec.copy(ent.transformComponent.worldTransform.scale);
+			var scl = tmpVec;
+			scl.copy(ent.transformComponent.worldTransform.scale);
 			var md = ent.meshDataComponent.meshData;
 			
 			if(md instanceof goo.Sphere){
