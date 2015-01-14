@@ -52,8 +52,8 @@
 		
 		if(undefined === ent.colliderComponent.shape){
 			console.warn('No cannon shape available!');
-			ent.clearComponent('ColliderComponent');
-			return;
+		//	ent.clearComponent('ColliderComponent');
+		//	return;
 		}
 		
 		var rbc = ent.rigidbodyComponent;
@@ -211,9 +211,7 @@
 		if(undefined === collider) {
 			// Needed for getting the Rigidbody-local transform of each collider
 			var bodyTransform = ent.transformComponent.worldTransform;
-			if(collider._offset){
-				bodyTransform.translation.addVector(collider._offset);
-			}
+			
 			invBodyTransform.copy(bodyTransform);
 			invBodyTransform.invert(invBodyTransform);
 
@@ -222,9 +220,12 @@
 			ent.traverse(function (childEntity) {
 				var collider = childEntity.colliderComponent;
 				if (undefined !== collider) {
-
+					
 					// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
 					gooTrans.copy(childEntity.transformComponent.worldTransform);
+					if(collider.shape._offset){
+						gooTrans.translation.addVector(collider.shape._offset);
+					}
 					//var gooTrans2 = new Transform();
 					goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
 					gooTrans2.update();
