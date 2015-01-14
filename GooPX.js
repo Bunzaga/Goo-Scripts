@@ -13,7 +13,7 @@
 	
 	GooPX.CannonSystem = function(settings){
 		goo.System.call(this, 'CannonSystem', ['RigidbodyComponent', 'ColliderComponent']);
-		this.priority = 1;
+		this.priority = -1;
 		this.gravity = settings === undefined || settings.gravity === undefined ? new goo.Vector3(0, -9.806, 0) : settings.gravity;
 		this.stepFrequency = settings === undefined || settings.stepFrequency === undefined ? 60 : settings.stepFrequency;
 		this.broadphase = settings === undefined || settings.broadphase === undefined ? 'naive' : settings.broadphase;
