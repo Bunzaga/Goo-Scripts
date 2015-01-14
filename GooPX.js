@@ -325,9 +325,9 @@
 	GooPX.BoxColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
-		this.extents = settings === undefined || settings.extents === undefined ? [1,1,1] : settings.extents;
+		this.extents = settings === undefined || settings.extents === undefined ? new goo.Vector3(1,1,1) : settings.extents;
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
-		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Box(pVec.set(this.extents[0], this.extents[1], this.extents[2])) : settings.shape;
+		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Box(pVec.set(this.extents.x, this.extents.y, this.extents.z)) : settings.shape;
 	}
 	GooPX.BoxColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.BoxColliderComponent.prototype.constructor = GooPX.BoxColliderComponent;
