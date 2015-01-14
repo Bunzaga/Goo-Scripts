@@ -61,7 +61,7 @@
 		console.log(rbc.body.shapes.length);
 		if(!rbc.body.shapes.length){
 			console.warn('Could not add cannon shapes to body!');
-			entity.clearComponent('CannonRigidbodyComponent');
+			ent.clearComponent('CannonRigidbodyComponent');
 			return;
 		}
 		var trans = ent.transformComponent.transform;
