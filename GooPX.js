@@ -107,14 +107,6 @@
 			position.vadd(tmpVec, tmpVec);
 			
 			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
-			if(ent.colliderComponent){
-				var shape = ent.colliderComponent.shape;
-				if(shape._offset){
-					tmpVec.copy(shape._offset);
-					ent.transformComponent.transform.rotation.applyPost(tmpVec);
-					ent.transformComponent.transform.translation.addVector(tmpVec);
-				}
-			}
 
 			ent.transformComponent.updateTransform();
 			ent.transformComponent.updateWorldTransform();
@@ -222,6 +214,11 @@
 						gooTrans2.updateNormalMatrix();
 	
 						var trans = gooTrans2.translation;
+						if(collider._offset){
+							gooTrans2.applyForwardVector(collider._offset, tmpVec);
+							trans.addVector(tmpVec);
+							rbc.centerOfMassOffset.subVector(tmpVec);
+						}
 						var rot = gooTrans2.rotation;
 						pVec.set(trans.x, trans.y, trans.z);
 						var q = tmpQuat;
@@ -322,10 +319,23 @@
 		this.radiusBottom = settings === undefined || settings.radiusBottom === undefined ? 1.0 : settings.radiusBottom;
 		this.height = settings === undefined || settings.height === undefined ? 1.0 : settings.height;
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
-		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Cylinder(this.radiusTop, this.radiusBottom, this.height, 16) : settings.shape;
+		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Cylinder(this.radiusTop, this.radiusBottom, this.height, 32) : settings.shape;
 	}
 	GooPX.CylinderColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.CylinderColliderComponent.prototype.constructor = GooPX.CylinderColliderComponent;
+	
+	GooPX.ConeColliderComponent = function(settings){
+		goo.Component.call(this, arguments);
+		this.type = 'ColliderComponent';
+		this.radiusTop = settings === undefined || settings.radiusTop === undefined ? 0.0 : settings.radiusTop;
+		this.radiusBottom = settings === undefined || settings.radiusBottom === undefined ? 1.0 : settings.radiusBottom;
+		this.height = settings === undefined || settings.height === undefined ? 2.0 : settings.height;
+		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
+		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Cylinder(this.radiusTop, this.radiusBottom, this.height, 32) : settings.shape;
+		this._offset = new goo.Vector3(0, 0, -this.height*0.5);
+	}
+	GooPX.ConeColliderComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.ConeColliderComponent.prototype.constructor = GooPX.ConeColliderComponent;
 	
 	GooPX.ColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
