@@ -325,7 +325,7 @@
 	GooPX.BoxColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
-		this.extents = settings === undefined || settings.radius === undefined ? [0,0,0] : settings.extents;
+		this.extents = settings === undefined || settings.extents === undefined ? [1,1,1] : settings.extents;
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
 		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Box(pVec.set(this.extents[0], this.extents[1], this.extents[2])) : settings.shape;
 	}
