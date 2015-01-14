@@ -196,10 +196,11 @@
 				collider.shape.collisionResponse = false;
 			}
 			if(collider._offset){
-			//	ent.transformComponent.transform.applyForwardVector(collider._offset, tmpVec);
-				rbc.centerOfMassOffset.addVector(collider._offset);
+				body.addShape(collider.shape, collider._offset);
 			}
-			body.addShape(collider.shape);
+			else{
+				body.addShape(collider.shape);
+			}
 		}
 		if(ent.transformComponent.children.length > 0){
 			var bodyTransform = ent.transformComponent.worldTransform;
@@ -336,7 +337,7 @@
 		this.height = settings === undefined || settings.height === undefined ? 2.0 : settings.height;
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
 		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Cylinder(this.radiusTop, this.radiusBottom, this.height, 32) : settings.shape;
-		this._offset = new goo.Vector3(0, 0, this.height*0.5);
+		this._offset = new goo.Vector3(0, 0, -this.height*0.5);
 	}
 	GooPX.ConeColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ConeColliderComponent.prototype.constructor = GooPX.ConeColliderComponent;
