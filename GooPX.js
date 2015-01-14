@@ -197,7 +197,7 @@
 			}
 			if(collider._offset){
 				ent.transformComponent.transform.applyForwardVector(collider._offset, tmpVec);
-				rbc.centerOfMassOffset.subVector(tmpVec);
+				rbc.centerOfMassOffset.addVector(tmpVec);
 			}
 			body.addShape(collider.shape);
 		}
