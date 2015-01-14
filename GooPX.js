@@ -79,6 +79,17 @@
 		console.log('-----------');
 	};
 	
+	GooPX.CannonSystem.prototype.deleted = function(ent){
+		console.log('GooPX.System.deleted()');
+		if(ent.colliderComponent){
+			ent.clearComponent('ColliderComponent');
+		}
+		if(ent.rigidbodyComponent){
+			ent.clearComponent('RigidbodyComponent');
+		}
+		console.log('------');
+	}
+	
 	GooPX.CannonSystem.prototype.process = function(ents, tpf){
 		var world = this.world;
 		
