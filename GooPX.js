@@ -124,7 +124,7 @@
 			
 			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
 			var shape = ent.colliderComponent.shape;
-			if(shape._offset){
+			if(shape && shape._offset){
 				tmpVec.copy(shape._offset);
 				ent.transformComponent.transform.rotation.applyPost(tmpVec);
 				ent.transformComponent.transform.translation.addVector(tmpVec);
