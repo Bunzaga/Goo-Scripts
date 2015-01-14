@@ -38,22 +38,15 @@
 	    	
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
 		// do something with RigidbodyComponent or entity here
-		if(undefined === ent.colliderComponent){
-			console.log('The entity does not have a ColliderComponent(adding one),');
-			ent.setComponent(new GooPX.ColliderComponent(GooPX.CannonSystem.generateCollider(ent)));
-		}
-		else{
+		if(undefined !== ent.colliderComponent){
 			console.log('The entity already has a ColliderComponent,');
 			if(undefined === ent.colliderComponent.shape){
 				console.log('No collider in the ColliderComponent, creating one.');
 				ent.colliderComponent.shape = GooPX.CannonSystem.generateCollider(ent);
 			}
 		}
-		
-		if(undefined === ent.colliderComponent.shape){
-			console.warn('No cannon shape available!');
-			ent.clearComponent('ColliderComponent');
-		//	return;
+		else{
+			GooPX.CannonSystem.generateCollider(ent);
 		}
 		
 		var rbc = ent.rigidbodyComponent;
@@ -207,12 +200,15 @@
 		}
 		else{
 			for(var i = ent.transformComponent.children.length; i--;){
+				var child = ent.transformComponent.children[i].entity;
 				console.log('Creating collider for sub child:');
-				console.log(ent.transformComponent.children[i].entity);
-				// need to figure out a way to do compond colliders.
+				console.log(child);
+				var childShape = GooPX.CannonSystem.generateCollider(child);
+				if(childShape !== undefined){
+					child.setComponent(new GooPX.ColliderComponent(childShape));
+				}
+				console.log('______');
 			}
-			//console.log('This is a parent entity or no MeshData');
-			//shape = 'new GooPX.CompoundCollider()';
 		}
 		console.log('-----------');
 		return shape;
