@@ -195,7 +195,7 @@
 			if(true === collider.isTrigger) {
 				collider.shape.collisionResponse = false;
 			}
-			body.addShape(collider.shape. collider._offset);
+			body.addShape(collider.shape, collider._offset);
 		}
 		if(ent.transformComponent.children.length > 0){
 			var bodyTransform = ent.transformComponent.worldTransform;
