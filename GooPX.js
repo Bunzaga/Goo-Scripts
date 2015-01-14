@@ -104,7 +104,7 @@
 			var position = rbc.body.position;
 
 			// Add center of mass offset
-			cannonQuat.vmult(cannonComponent.centerOfMassOffset, tmpVec);
+			cannonQuat.vmult(rbc.centerOfMassOffset, tmpVec);
 			position.vadd(tmpVec, tmpVec);
 			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
 
