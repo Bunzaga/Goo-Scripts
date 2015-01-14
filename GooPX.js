@@ -150,7 +150,12 @@
 			}
 			else if(md instanceof goo.Cylinder){
 				console.log('Goo Shape is a Cylinder');
-				shape = GooPX.CylinderCollider.create(scl.x * md.radius, scl.z * md.height * 0.5);
+				shape = new CANNON.Cylinder(
+					scl.x * md.radius,
+					scl.x * md.radius,
+					md.height * 0.5,
+					10
+				);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
