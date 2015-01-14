@@ -101,7 +101,7 @@
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		console.log(ent);
-		ent.traverse(this.removeRigidbody);
+		ent.traverse(this.removeRigidbody).bind(this);
 		ent.traverse(this.removeCollider);
 		console.log('------');
 	};
