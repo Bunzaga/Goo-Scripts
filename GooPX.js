@@ -136,6 +136,7 @@
 			
 			if(md instanceof goo.Sphere){
 				console.log('Goo Shape is a Sphere');
+				console.log('The radius is '+(md.radius * Math.max(scl.x, scl.y, scl.z)));
 				shape = new CANNON.Sphere(md.radius * Math.max(scl.x, scl.y, scl.z));
 			}
 			else if(md instanceof goo.Box){
