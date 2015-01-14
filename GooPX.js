@@ -7,8 +7,6 @@
 	var tmpQuat = new goo.Quaternion();
 	var pVec;
 	var pQuat;
-	var offset;
-	var orientation;
 	
 	var GooPX = {};
 	
@@ -29,7 +27,6 @@
 		pVec = new CANNON.Vec3();
 		pQuat = new CANNON.Quaternion();
 		offset = new CANNON.Vec3();
-		orientation = new CANNON.Quaternion();
   	};
 	GooPX.CannonSystem.prototype = Object.create(goo.System.prototype);
 	GooPX.CannonSystem.prototype.constructor = GooPX.CannonSystem;
@@ -50,14 +47,6 @@
 			return;
 		}
 		var trans = ent.transformComponent.transform;
-		//if(ent.colliderComponent){
-		//	var shape = ent.colliderComponent.shape;
-		//	if(shape._offset){
-		//		tmpVec.copy(shape._offset);
-		//		trans.rotation.applyPost(tmpVec);
-		//		trans.translation.subv(tmpVec);
-		//	}
-		//}
 		rbc.setTranslation(trans.translation);
 		rbc.setRotation(trans.rotation);
 		rbc.setVelocity(rbc.velocity);
