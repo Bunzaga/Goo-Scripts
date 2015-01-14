@@ -195,6 +195,9 @@
 			if(true === collider.isTrigger) {
 				collider.shape.collisionResponse = false;
 			}
+			if(collider._offset){
+				rbc.centerOfMassOffset.subVector(collider._offset);
+			}
 			body.addShape(collider.shape, collider._offset);
 		}
 		if(ent.transformComponent.children.length > 0){
