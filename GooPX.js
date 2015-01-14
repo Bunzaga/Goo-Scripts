@@ -83,7 +83,7 @@
 			console.log('removed cc');
 		}
 		for(var i = ent.transformComponent.children.length; i--;){
-			GooPX.CannonSystem.prototype.deleted(ent.transformComponent.children[i]);
+			GooPX.CannonSystem.prototype.deleted(ent.transformComponent.children[i].entity);
 			console.log('____');
 		}
 		console.log('------');
