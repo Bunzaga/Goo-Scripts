@@ -52,7 +52,7 @@
 		
 		if(undefined === ent.colliderComponent.shape){
 			console.warn('No cannon shape available!');
-		//	ent.clearComponent('ColliderComponent');
+			ent.clearComponent('ColliderComponent');
 		//	return;
 		}
 		
