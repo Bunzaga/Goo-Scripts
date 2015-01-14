@@ -153,17 +153,16 @@
 				shape = new CANNON.Cylinder(
 					scl.x * md.radius,
 					scl.x * md.radius,
-					md.height,
+					md.height * scl.z,
 					10
 				);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
-				console.log(md);
 				shape = new CANNON.Cylinder(
-					0,
+					0.1,
 					scl.x * md.radius,
-					md.height,
+					md.height * scl.z,
 					10
 				);
 			}
