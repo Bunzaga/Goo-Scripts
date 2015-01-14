@@ -84,40 +84,27 @@
 		console.log('-----------');
 	};
 	
-	GooPX.CannonSystem.prototype.removeRigidbody = function(ent){
-		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
-		console.log(ent);
-		console.log(this);
-		if(undefined !== ent.rigidbodyComponent){
-			console.log(this);
-			this.world.remove(ent.rigidbodyComponent.body);
-			delete ent.rigidbodyComponent.body;
-			ent.clearComponent('RigidbodyComponent');
-		}
-		else{
-			console.log('no rbc to remove');
-		}
-		console.log('------');
-	};
-	GooPX.CannonSystem.prototype.removeCollider = function(){
-		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
-		console.log(ent);
-		console.log(this);
-		if(undefined !== ent.colliderComponent){
-			delete ent.rigidbodyComponent.shape;
-			ent.clearComponent('ColliderComponent');
-		}
-		else{
-			console.log('no cc to remove');
-		}
-		console.log('------');
-	};
-	
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
-		console.log(ent);
-		ent.traverse(this.removeRigidbody.bind(this));
-		ent.traverse(this.removeCollider.bind(this));
+		var parent = ent.transformComponent;
+		while(parent !== null){
+			console.log('Checking entity:');
+			ent = parent.entity;
+			console.log(ent);
+			if(undefined !== ent.rigidbodyComponent){
+				this.world.remove(ent.rigidbodyComponent.body);
+				delete ent.rigidbodyComponent.shape;
+				ent.clearComponent('RigidbodyComponent');
+				console.log('removed rbc');
+			}
+			if(undefined !== ent.colliderComponent){
+				delete ent.colliderComponent.shape;
+				ent.clearComponent('ColliderComponent');
+				console.log('removed cc');
+			}
+			parent = parent.transformComponent.parent;
+			console.log(____);
+		}
 		console.log('------');
 	};
 	
