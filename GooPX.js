@@ -103,7 +103,7 @@
 			this._accumulated += tpf;
 			while(this._accumulated >= fixedTimeStep){
 				world.step(fixedTimeStep);
-				this.accumulated -= fixedTimeStep;
+				this._accumulated -= fixedTimeStep;
 			}
 			//world.step(fixedTimeStep);
 		}
