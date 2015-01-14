@@ -148,7 +148,7 @@
 		}
 	};
 	
-	GooPX.CannonSystem.generateCollider = function(ent){
+	GooPX.CannonSystem.generateCollider = function(ent, rootEnt){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
 		
@@ -208,9 +208,10 @@
 				var child = ent.transformComponent.children[i].entity;
 				console.log('Creating collider for sub child:');
 				console.log(child);
-				var childShape = GooPX.CannonSystem.generateCollider(child);
+				rootEnt = rootEnt || ent;
+				var childShape = GooPX.CannonSystem.generateCollider(child, rootEnt);
 				if(childShape !== undefined){
-					child.setComponent(new GooPX.ColliderComponent(childShape));
+					child.setComponent(new GooPX.ColliderComponent({shape:childShape, isTrigger:rootEnt.isTrigger:}));
 				}
 				console.log('______');
 			}
