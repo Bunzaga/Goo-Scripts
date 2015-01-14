@@ -318,8 +318,8 @@
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
 		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Sphere(this.radius) : settings.shape;
 	}
-	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
-	GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
+	GooPX.SphereColliderComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.SphereColliderComponent.prototype.constructor = GooPX.SphereColliderComponent;
 	
 	GooPX.ColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
