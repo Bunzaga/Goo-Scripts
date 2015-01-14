@@ -85,23 +85,30 @@
 	};
 	
 	GooPX.CannonSystem.prototype.removeRigidbody = function(ent){
-		if(ent.rigidbodyComponent){
-			this.world.remove(ent.rigidbodyComponent.body);
-			delete ent.rigidbodyComponent.body;
-			ent.clearComponent('RigidbodyComponent');
-		}
+		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
+		console.log(ent);
+		console.log(this);
+		if(undefined === ent.rigidbodyComponent){console.log('no rbc to remove');return;}
+		console.log(this);
+		this.world.remove(ent.rigidbodyComponent.body);
+		delete ent.rigidbodyComponent.body;
+		ent.clearComponent('RigidbodyComponent');
+		console.log('------');
 	};
 	GooPX.CannonSystem.prototype.removeCollider = function(){
-		if(ent.colliderComponent){
-			delete ent.rigidbodyComponent.shape;
-			ent.clearComponent('ColliderComponent');
-		}
+		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
+		console.log(ent);
+		console.log(this);
+		if(undefined === ent.colliderComponent){console.log('no cc to remove');return;}
+		delete ent.rigidbodyComponent.shape;
+		ent.clearComponent('ColliderComponent');
+		console.log('------');
 	};
 	
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		console.log(ent);
-		ent.traverse(this.removeRigidbody).bind(this);
+		ent.traverse(this.removeRigidbody);
 		ent.traverse(this.removeCollider);
 		console.log('------');
 	};
