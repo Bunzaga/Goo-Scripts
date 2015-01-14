@@ -153,14 +153,19 @@
 				shape = new CANNON.Cylinder(
 					scl.x * md.radius,
 					scl.x * md.radius,
-					md.height * 0.5,
+					md.height,
 					10
 				);
 			}
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
 				console.log(md);
-				shape = GooPX.ConeCollider.create(scl.x * md.radius, scl.z * md.height);
+				shape = new CANNON.Cylinder(
+					scl.x * md.radius,
+					0,
+					md.height,
+					10
+				);
 			}
 			else if(md instanceof goo.Disk){
 				console.log('Goo Shape is a Disk');
