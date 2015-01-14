@@ -81,12 +81,12 @@
 	
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
-		if(ent.colliderComponent){
-			ent.clearComponent('ColliderComponent');
-		}
 		if(ent.rigidbodyComponent){
 			this.world.remove(ent.rigidbodyComponent.body);
 			ent.clearComponent('RigidbodyComponent');
+		}
+		if(ent.colliderComponent){
+			ent.clearComponent('ColliderComponent');
 		}
 		console.log('------');
 	}
@@ -257,6 +257,10 @@
 	};
 	GooPX.RigidbodyComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.RigidbodyComponent.prototype.constructor = GooPX.RigidbodyComponent;
+	
+	GooPX.RigidbodyComponent.prototype.detached = function(ent){
+		
+	};
 	
 	GooPX.RigidbodyComponent.prototype.setForce = function(force){
 		this.body.force.set(force.x, force.y, force.z);
