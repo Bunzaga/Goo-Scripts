@@ -24,7 +24,6 @@
 		world.gravity.y = this.gravity.y;
 		world.gravity.z = this.gravity.z;
 		this.setBroadphaseAlgorithm(this.broadphase);
-		this._accumulated = 0.0;
 		
 		offset = new CANNON.Vec3();
 		orientation = new CANNON.Quaternion();
@@ -257,7 +256,7 @@
 		this.type = 'RigidbodyComponent';
 		this.mass = settings === undefined || settings.mass === undefined ? 1 : settings.mass;
 		this.velocity = new goo.Vector3().copy(settings === undefined || settings.velocity === undefined ? goo.Vector3.ZERO : settings.velocity);
-		this.centerOfMassOffset = new goo.Vector3();
+		this.centerOfMassOffset = new goo.Vector3().copy(settings === undefined || settings.centerOfMass === undefined ? goo.Vector3.ZERO : settings.centerOfMass);
 		
 		this.body = new CANNON.Body({
 			mass: this.mass
