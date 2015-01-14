@@ -84,14 +84,14 @@
 		console.log('-----------');
 	};
 	
-	GooPX.CannonSystem.removeRigidbody = function(ent){
+	GooPX.CannonSystem.prototype.removeRigidbody = function(ent){
 		if(ent.rigidbodyComponent){
 			this.world.remove(ent.rigidbodyComponent.body);
 			delete ent.rigidbodyComponent.body;
 			ent.clearComponent('RigidbodyComponent');
 		}
 	};
-	GooPX.CannonSystem.removeCollider = function(){
+	GooPX.CannonSystem.prototype.removeCollider = function(){
 		if(ent.colliderComponent){
 			delete ent.rigidbodyComponent.shape;
 			ent.clearComponent('ColliderComponent');
@@ -101,8 +101,8 @@
 	GooPX.CannonSystem.prototype.deleted = function(ent){
 		console.log('GooPX.System.deleted()');
 		console.log(ent);
-		ent.traverse(GooPX.System.removeRigidbody);
-		ent.traverse(GooPX.System.removeCollider);
+		ent.traverse(this.removeRigidbody);
+		ent.traverse(this.removeCollider);
 		console.log('------');
 	};
 	
