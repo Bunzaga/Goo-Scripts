@@ -123,11 +123,13 @@
 			position.vadd(tmpVec, tmpVec);
 			
 			ent.transformComponent.setTranslation(tmpVec.x, tmpVec.y, tmpVec.z);
-			var shape = ent.colliderComponent.shape;
-			if(shape && shape._offset){
-				tmpVec.copy(shape._offset);
-				ent.transformComponent.transform.rotation.applyPost(tmpVec);
-				ent.transformComponent.transform.translation.addVector(tmpVec);
+			if(ent.colliderComponent){
+				var shape = ent.colliderComponent.shape;
+				if(shape._offset){
+					tmpVec.copy(shape._offset);
+					ent.transformComponent.transform.rotation.applyPost(tmpVec);
+					ent.transformComponent.transform.translation.addVector(tmpVec);
+				}
 			}
 
 			ent.transformComponent.updateTransform();
