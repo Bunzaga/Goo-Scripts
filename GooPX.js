@@ -196,8 +196,8 @@
 				collider.shape.collisionResponse = false;
 			}
 			if(collider._offset){
-				ent.transformComponent.transform.applyForwardVector(collider._offset, tmpVec);
-				rbc.centerOfMassOffset.addVector(tmpVec);
+			//	ent.transformComponent.transform.applyForwardVector(collider._offset, tmpVec);
+				rbc.centerOfMassOffset.addVector(collider._offset);
 			}
 			body.addShape(collider.shape);
 		}
