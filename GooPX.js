@@ -37,22 +37,6 @@
 	    	var world = this.world;
 	    	
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
-		// do something with RigidbodyComponent or entity here
-		if(undefined !== ent.colliderComponent){
-			console.log('The entity already has a ColliderComponent,');
-			if(undefined === ent.colliderComponent.shape){
-				console.log('No collider in the ColliderComponent, creating one.');
-				ent.colliderComponent.shape = GooPX.CannonSystem.generateCollider(ent, ent.colliderComponent.isTrigger);
-			}
-		}
-		else{
-			GooPX.CannonSystem.generateCollider(ent);
-		}
-		
-		if(undefined === ent.colliderComponent.shape){
-			console.log('no cannon shape for collider!');
-			ent.clearComponent('ColliderComponent');
-		}
 		
 		var rbc = ent.rigidbodyComponent;
 		GooPX.CannonSystem.addShapesToBody(ent);
@@ -63,14 +47,14 @@
 			return;
 		}
 		var trans = ent.transformComponent.transform;
-		if(ent.colliderComponent){
-			var shape = ent.colliderComponent.shape;
-			if(shape._offset){
-				tmpVec.copy(shape._offset);
-				trans.rotation.applyPost(tmpVec);
-				trans.translation.subv(tmpVec);
-			}
-		}
+		//if(ent.colliderComponent){
+		//	var shape = ent.colliderComponent.shape;
+		//	if(shape._offset){
+		//		tmpVec.copy(shape._offset);
+		//		trans.rotation.applyPost(tmpVec);
+		//		trans.translation.subv(tmpVec);
+		//	}
+		//}
 		rbc.setTranslation(trans.translation);
 		rbc.setRotation(trans.rotation);
 		rbc.setVelocity(rbc.velocity);
@@ -149,7 +133,7 @@
 			ent.transformComponent._dirty = true;
 		}
 	};
-	
+
 	GooPX.CannonSystem.generateCollider = function(ent, isTrigger){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
@@ -327,11 +311,20 @@
 		this.body.angularVelocity.set(angularVelocity.x, angularVelocity.y, angularVelocity.z);
 	};
 	
+	GooPX.SphereColliderComponent = function(settings){
+		goo.Component.call(this, arguments);
+		this.type = 'ColliderComponent';
+		this.radius = settings === undefined || settings.radius === undefined ? 1.0 : settings.radius;
+		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
+		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Sphere(this.radius) : settings.shape;
+	}
+	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
+	GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
+	
 	GooPX.ColliderComponent = function(settings){
 		goo.Component.call(this, arguments);
 		this.type = 'ColliderComponent';
-		this.shape = settings === undefined ? undefined : settings.shape;
-		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
+		
 	};
 	GooPX.ColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ColliderComponent.prototype.constructor = GooPX.ColliderComponent;
