@@ -193,7 +193,7 @@
 		}
 		else{
 			for(var i = ent.transformComponent.children.length; i--;){
-				GooPX.CannonSystem.generateCollider(ent.transformComponent.childredn[i].entity);	
+				GooPX.CannonSystem.generateCollider(ent.transformComponent.children[i].entity);	
 			}
 			//console.log('This is a parent entity or no MeshData');
 			//shape = 'new GooPX.CompoundCollider()';
