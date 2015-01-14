@@ -236,7 +236,7 @@
 		goo.Component.call(this, arguments);
 		this.type = 'RigidbodyComponent';
 		this.mass = settings === undefined || settings.mass === undefined ? 1 : settings.mass;
-		this._initialVelocity = new goo.Vector3().copy(settings === undefined || settings.velocity === undefined ? goo.Vector3.ZERO : settings.velocity);
+		this.velocity = new goo.Vector3().copy(settings === undefined || settings.velocity === undefined ? goo.Vector3.ZERO : settings.velocity);
 		this.centerOfMassOffset = new goo.Vector3();
 		
 		this.body = new CANNON.Body({
