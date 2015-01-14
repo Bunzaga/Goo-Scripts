@@ -59,8 +59,8 @@
 		
 		var rbc = ent.rigidbodyComponent;
 		GooPX.CannonSystem.addShapesToBody(ent);
-		console.log(body.shapes.length);
-		if(!body.shapes.length){
+		console.log(rbc.body.shapes.length);
+		if(!rbc.body.shapes.length){
 			console.warn('Could not add cannon shapes to body!');
 			entity.clearComponent('CannonRigidbodyComponent');
 			return;
@@ -70,7 +70,7 @@
 		rbc.setRotation(trans.rotation);
 		rbc.setVelocity(rbc.velocity);
 		
-		world.add(body);
+		world.add(rbc.body);
 		
 		// var c = entity.cannonDistanceJointComponent;
 		// if (c) {
