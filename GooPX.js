@@ -24,7 +24,7 @@
 		world.gravity.y = this.gravity.y;
 		world.gravity.z = this.gravity.z;
 		this.setBroadphaseAlgorithm(this.broadphase);
-	//	this._lastTime = performance.now() * 0.001;
+		this._accumulated = 0.0;
 		
 		offset = new CANNON.Vec3();
 		orientation = new CANNON.Quaternion();
@@ -95,15 +95,16 @@
 		var world = this.world;
 		
 		// Step the world forward in time
+		var fixedTimeStep = 1 / this.stepFrequency;
 		var maxSubSteps = this.maxSubSteps;
 		if (maxSubSteps > 0){
-			var fixedTimeStep = 1 / this.stepFrequency;
-			//var now = performance.now() * 0.001;
-			//var dt = now - this._lastTime;
-			//this._lastTime = now;
 			world.step(fixedTimeStep, tpf, maxSubSteps);
 		} else {
-			world.step(tpf);
+			this._accumulated += tpf;
+			while(this._accumulated >= fixedTimeStep){
+				world.step(fixedTimeStep);
+				this.accumulated -= fixedTimeStep;
+			}
 			//world.step(fixedTimeStep);
 		}
 		
