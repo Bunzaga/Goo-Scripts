@@ -52,7 +52,7 @@
 		
 		if(undefined === ent.colliderComponent.shape){
 			console.warn('No cannon shape available!');
-			ent.clearComponent('ColliderComponent');
+		//	ent.clearComponent('ColliderComponent');
 		//	return;
 		}
 		
@@ -210,7 +210,7 @@
 		var rbc = ent.rigidbodyComponent;
 		var body = rbc.body;
 		var collider = ent.colliderComponent;
-		if(undefined === collider) {
+		if(undefined === collider || undefined === collider.shape) {
 			// Needed for getting the Rigidbody-local transform of each collider
 			var bodyTransform = ent.transformComponent.worldTransform;
 			
