@@ -88,20 +88,28 @@
 		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
 		console.log(ent);
 		console.log(this);
-		if(undefined === ent.rigidbodyComponent){console.log('no rbc to remove');return;}
-		console.log(this);
-		this.world.remove(ent.rigidbodyComponent.body);
-		delete ent.rigidbodyComponent.body;
-		ent.clearComponent('RigidbodyComponent');
+		if(undefined !== ent.rigidbodyComponent){
+			console.log(this);
+			this.world.remove(ent.rigidbodyComponent.body);
+			delete ent.rigidbodyComponent.body;
+			ent.clearComponent('RigidbodyComponent');
+		}
+		else{
+			console.log('no rbc to remove');
+		}
 		console.log('------');
 	};
 	GooPX.CannonSystem.prototype.removeCollider = function(){
 		console.log('GooPX.CannonSystem.prototype.removeRigidbody()');
 		console.log(ent);
 		console.log(this);
-		if(undefined === ent.colliderComponent){console.log('no cc to remove');return;}
-		delete ent.rigidbodyComponent.shape;
-		ent.clearComponent('ColliderComponent');
+		if(undefined !== ent.colliderComponent){
+			delete ent.rigidbodyComponent.shape;
+			ent.clearComponent('ColliderComponent');
+		}
+		else{
+			console.log('no cc to remove');
+		}
 		console.log('------');
 	};
 	
