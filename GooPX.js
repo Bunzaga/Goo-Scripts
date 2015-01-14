@@ -1,5 +1,8 @@
 (function(window, document, undefined){
+	var tmpVec = new goo.Vector3();
+	var tmpQuat = new goo.Quaternion();
 	var GooPX = {};
+	
 	GooPX.CannonSystem = function(settings){
 		goo.System.call(this, 'GooPXSystem', ['RigidbodyComponent', 'ColliderComponent']);
 		this.priority = 1;
@@ -22,6 +25,7 @@
 	    	console.log('GooPX.System.inserted()');
 	    	console.log(ent);
 	    	var world = this.world;
+	    	
 	    	if(undefined === ent.rigidbodyComponent){console.log('No RigidbodyComponent!');return;}
 		// do something with RigidbodyComponent or entity here
 		if(undefined === ent.colliderComponent){
@@ -30,17 +34,23 @@
 		}
 		else{
 			console.log('The entity already has a ColliderComponent,');
-			if(undefined === ent.colliderComponent.collider){
+			if(undefined === ent.colliderComponent.shape){
 				console.log('No collider in the ColliderComponent, creating one.');
-				ent.colliderComponent.collider = GooPX.CannonSystem.generateCollider(ent);
+				ent.colliderComponent.shape = GooPX.CannonSystem.generateCollider(ent);
 			}
+		}
+		
+		if(undefined === ent.colliderComponent.shape){
+			console.warn('No cannon shape available!');
+			ent.clearComponent('ColliderComponent');
+			return;
 		}
 		
 		var rbc = ent.rigidbodyComponent;
 		var trans = ent.transformComponent.transform;
 		rbc.setTranslation(trans.translation);
-		rbc.setVelocity(rbc.velocity);
 		rbc.setRotation(trans.rotation);
+		rbc.setVelocity(rbc.velocity);
 		
 		world.add(body);
 		
@@ -50,8 +60,7 @@
 		//}
 		console.log('-----------');
 	};
-	var tmpVec = new goo.Vector3();
-	var tmpQuat = new goo.Quaternion();
+	
 	GooPX.CannonSystem.prototype.process = function(ents, tpf){
 		var world = this.world;
 		
@@ -90,8 +99,14 @@
 	GooPX.CannonSystem.generateCollider = function(ent){
 		console.log('GooPX.generateCollider()');
 		console.log(ent);
-		
-		var shape = undefined;
+		var body = ent.rigidbodyComponent.body;
+		var collider = ent.colliderComponent;
+		if(undefined === collider){
+			
+		}
+		else{
+			body.addShape(collider.shape);
+		}
 		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
 			/*scl.copy(ent.transformComponent.worldTransform.scale);
 			var md = ent.meshDataComponent.meshData;
@@ -132,11 +147,6 @@
 		else{
 			console.log('This is a parent entity or no MeshData');
 			//shape = 'new GooPX.CompoundCollider()';
-		}
-		
-		if (!body.shapes.length) {
-			ent.clearComponent('CannonRigidbodyComponent');
-			continue;
 		}
 		
 		console.log('-----------');
