@@ -49,6 +49,11 @@
 			GooPX.CannonSystem.generateCollider(ent);
 		}
 		
+		if(undefined === ent.colliderComponent.shape){
+			console.log('no cannon shape for collider!');
+			ent.clearComponent('ColliderComponent');
+		}
+		
 		var rbc = ent.rigidbodyComponent;
 		GooPX.CannonSystem.addShapesToBody(ent);
 		console.log(rbc.body.shapes.length);
@@ -230,6 +235,7 @@
 			var cmOffset = rbc.centerOfMassOffset;
 
 			ent.traverse(function (childEntity) {
+				if(ent !== childEntity){
 				var collider = childEntity.colliderComponent;
 				if (undefined !== collider) {
 					
@@ -258,7 +264,7 @@
 					
 					// Add the shape
 					body.addShape(collider.shape, offset, orientation);
-				}
+				}}
 			});
 
 		} else {
