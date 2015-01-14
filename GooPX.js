@@ -160,7 +160,7 @@
 			else if(md instanceof goo.Cone){
 				console.log('Goo Shape is a Cone');
 				shape = new CANNON.Cylinder(
-					0.1,
+					0.01,
 					scl.x * md.radius,
 					md.height * scl.z,
 					10
