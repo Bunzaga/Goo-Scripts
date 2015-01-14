@@ -123,7 +123,9 @@
 
 			tmpQuat.set(cannonQuat.x, cannonQuat.y, cannonQuat.z, cannonQuat.w);
 			ent.transformComponent.transform.rotation.copyQuaternion(tmpQuat);
-			ent.transformComponent.setUpdated();
+			ent.transformComponent.updateTransform();
+			ent.transformComponent.updateWorldTransform();
+			ent.transformComponent._dirty = true;
 		}
 	};
 	
