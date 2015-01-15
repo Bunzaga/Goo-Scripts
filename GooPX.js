@@ -261,7 +261,7 @@
 		this.height = settings === undefined || settings.height === undefined ? 2.0 : settings.height;
 		this.isTrigger = settings === undefined || settings.isTrigger === undefined ? false : settings.isTrigger;
 		this.shape = settings === undefined || settings.shape === undefined ? new CANNON.Cylinder(this.radiusTop, this.radiusBottom, this.height, 32) : settings.shape;
-		this._offset = new goo.Vector3(0, 0, this.height*0.5);
+	//	this._offset = new goo.Vector3(0, 0, this.height*0.5);
 	}
 	GooPX.ConeColliderComponent.prototype = Object.create(goo.Component.prototype);
 	GooPX.ConeColliderComponent.prototype.constructor = GooPX.ConeColliderComponent;
