@@ -113,77 +113,6 @@
 			ent.transformComponent._dirty = true;
 		}
 	};
-
-	GooPX.CannonSystem.generateCollider = function(ent, isTrigger){
-		console.log('GooPX.generateCollider()');
-		console.log(ent);
-		isTrigger = isTrigger === undefined ? false : isTrigger;
-		var shape = undefined;
-		if(ent.meshDataComponent && ent.meshDataComponent.meshData){
-			var scl = tmpVec;
-			scl.copy(ent.transformComponent.worldTransform.scale);
-			var md = ent.meshDataComponent.meshData;
-			
-			if(md instanceof goo.Sphere){
-				console.log('Goo Shape is a Sphere');
-				console.log('The radius is '+(md.radius * Math.max(scl.x, scl.y, scl.z)));
-				shape = new CANNON.Sphere(md.radius * Math.max(scl.x, scl.y, scl.z));
-			}
-			else if(md instanceof goo.Box){
-				console.log('Goo Shape is a Box');
-				offset.set(md.xExtent * scl.x, md.yExtent * scl.y, md.zExtent * scl.z);
-				shape = new CANNON.Box(offset);
-			}
-			else if(md instanceof goo.Quad){
-				console.log('Goo Shape is a Quad');
-				shape = 'new GooPX.QuadCollider()';
-			}
-			else if(md instanceof goo.Cylinder){
-				console.log('Goo Shape is a Cylinder');
-				shape = new CANNON.Cylinder(
-					scl.x * md.radius,
-					scl.x * md.radius,
-					md.height * scl.z,
-					10
-				);
-			}
-			else if(md instanceof goo.Cone){
-				console.log('Goo Shape is a Cone');
-				shape = new CANNON.Cylinder(
-					0.01,
-					scl.x * md.radius,
-					md.height * scl.z,
-					10
-				);
-				shape._offset = new goo.Vector3(0, 0, -md.height * scl.z * 0.5);
-			}
-			else if(md instanceof goo.Disk){
-				console.log('Goo Shape is a Disk');
-				shape = 'new GooPX.DiskCollider()';
-			}
-			// add one for capsule???
-			else{
-				//console.log('Goo Shape is a StaticMesh');
-				//shape = 'new GooPX.StaticMeshCollider()';	
-			}
-			console.log('MeshData:');
-			console.log(ent.meshDataComponent.meshData);
-		}
-		else{
-			for(var i = ent.transformComponent.children.length; i--;){
-				var child = ent.transformComponent.children[i].entity;
-				console.log('Creating collider for sub child:');
-				console.log(child);
-				var childShape = GooPX.CannonSystem.generateCollider(child, isTrigger);
-				if(childShape !== undefined){
-					child.setComponent(new GooPX.ColliderComponent({shape:childShape, isTrigger:isTrigger}));
-				}
-				console.log('______');
-			}
-		}
-		console.log('-----------');
-		return shape;
-	};
 	
 	GooPX.CannonSystem.addShapesToBody = function(ent){
 		console.log('GooPX.CannonSystem.addShapesToBody()');
@@ -195,7 +124,8 @@
 			if(true === collider.isTrigger) {
 				collider.shape.collisionResponse = false;
 			}
-			body.addShape(collider.shape, collider._offset);
+			//body.addShape(collider.shape, collider._offset);
+			body.addShape(collider.shape);
 		}
 		if(ent.transformComponent.children.length > 0){
 			var bodyTransform = ent.transformComponent.worldTransform;
@@ -209,10 +139,10 @@
 					if (undefined !== collider) {
 						// Look at the world transform and then get the transform relative to the root entity. This is needed for compounds with more than one level of recursion
 						gooTrans.copy(childEntity.transformComponent.worldTransform);
-						if(collider._offset){
-							gooTrans.applyForwardVector(collider._offset, tmpVec);
-							gooTrans.translation.addVector(tmpVec);
-						}
+						//if(collider._offset){
+						//	gooTrans.applyForwardVector(collider._offset, tmpVec);
+						//	gooTrans.translation.addVector(tmpVec);
+						//}
 						goo.Transform.combine(invBodyTransform, gooTrans, gooTrans2);
 						gooTrans2.update();
 						gooTrans2.updateNormalMatrix();
