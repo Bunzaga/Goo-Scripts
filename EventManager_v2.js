@@ -1,6 +1,6 @@
 // requires the NodeList object: https://bunzaga.github.io/Goo-Scripts/NodeList.js
 "use strict";
-(function(window, document, undefined){
+(function(window, undefined){
 	var EventManager = {};
 	var eventList = {};
 	EventManager.on = function(e, callback, priority){
@@ -59,4 +59,4 @@
 	};
 	var global = global || window;
 	global.EventManager = EventManager;
-}(window, document));
+}(window));
