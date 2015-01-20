@@ -307,6 +307,7 @@ AmmoUtil.CollisionFlags = {
   }
   AmmoUtil.createRigidBodyComponent = function(args, ent){
 	function RigidBodyComponent(){
+		goo.Component.call(this, arguments);
 		args = args || {};
   		this.type = 'RigidBodyComponent';
   		this.mass = args.mass || 0.0;
@@ -461,6 +462,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createBoxColliderComponent = function(args){
   	function BoxColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.halfExtents = args.halfExtents || [1,1,1];
   		this.type = 'ColliderComponent';
@@ -478,6 +480,7 @@ AmmoUtil.CollisionFlags = {
   }
   AmmoUtil.createSphereColliderComponent = function(args){
   	function SphereColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.radius = args.radius || 1;
   		this.type = 'ColliderComponent';
@@ -492,6 +495,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createConeZColliderComponent = function(args){
   	function ConeZColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.radius = args.radius || 1.0;
   		args.height = args.height || 1.0;
@@ -507,6 +511,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createCylinderZColliderComponent = function(args){
   	function CylinderZColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
@@ -524,6 +529,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createCylinderXColliderComponent = function(args){
   	function CylinderXColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
@@ -541,6 +547,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createCylinderYColliderComponent = function(args){
   	function CylinderYColliderComponent(){
+  		goo.Component.call(this, arguments);
   		args = args || {};
   		args.radius = args.radius || 1.0;
   		args.halfHeight = args.halfHeight || 1.0;
@@ -558,6 +565,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createMeshColliderComponent = function(args){
   	function MeshColliderComponent() {
+  		goo.Component.call(this, arguments);
   		this.type = 'ColliderComponent';
   		args.scale = args.scale || args.entity.transformComponent.transform.scale;
 		//scale = scale || [1,1,1];
@@ -600,6 +608,7 @@ AmmoUtil.CollisionFlags = {
   };
   AmmoUtil.createCompoundColliderComponent = function(args){
   	function CompoundColliderComponent() {
+  		goo.Component.call(this, arguments);
 	  	this.shape = new Ammo.btCompoundShape(true);
 	  	this.type = 'ColliderComponent';
 	  	var children = args.entity.transformComponent.children;
