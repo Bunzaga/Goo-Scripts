@@ -68,18 +68,20 @@
 		}
 		if(undefined !== buttons[btn]){
 			if(typeof callback === 'function'){
-				var node = eventList["MouseInput"+btn].first;
-				while(node != null){
-					if(node.callback === callback){
-						break;
+				if(undefined !== eventList['MouseInput'+btn]){
+					var node = eventList["MouseInput"+btn].first;
+					while(node != null){
+						if(node.callback === callback){
+							break;
+						}
+						node = node.next;
 					}
-					node = node.next;
-				}
-				if(node !== null){
-					eventList["MouseInput"+btn].remove(node);
-				}
-				if(null === eventList["MouseInput"+btn].first){
-					delete eventList["MouseInput"+btn];
+					if(node !== null){
+						eventList["MouseInput"+btn].remove(node);
+					}
+					if(null === eventList["MouseInput"+btn].first){
+						delete eventList["MouseInput"+btn];
+					}
 				}
 			}
 		}
