@@ -76,18 +76,20 @@
 			}
 			return KeyInput;
 		}
-		var node = eventList["Key"+key].first;
-		while(node != null){
-			if(node.callback === callback){
-				break;
+		if(undefined !== eventList['Key'+key]){
+			var node = eventList["Key"+key].first;
+			while(node != null){
+				if(node.callback === callback){
+					break;
+				}
+				node = node.next;
 			}
-			node = node.next;
-		}
-		if(node !== null){
-			eventList["Key"+key].remove(node);
-		}
-		if(null === eventList["Key"+key].first){
-			delete eventList["Key"+key];
+			if(node !== null){
+				eventList["Key"+key].remove(node);
+			}
+			if(null === eventList["Key"+key].first){
+				delete eventList["Key"+key];
+			}
 		}
 		return KeyInput;
 	};
