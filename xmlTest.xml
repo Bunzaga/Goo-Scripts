@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<parent id='0'>
+<child name='p0c0'>
+</child>
+<child name='p0c1'>
+</child>
+</parent>
+<parent id='1'>
+<child name='p1c0'>
+</child>
+<child name='p1c1'>
+</child>
+</parent>
+<parent id='2'>
+<child name='p2c0'>
+</child>
+<child name='p2c1'>
+</child>
+</parent
+</root>
