@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
 <parent id='0'>
 <child name='p0c0'>
@@ -17,5 +17,5 @@
 </child>
 <child name='p2c1'>
 </child>
-</parent
+</parent>
 </root>
